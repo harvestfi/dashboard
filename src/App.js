@@ -1,4 +1,3 @@
-import detectEthereumProvider from "@metamask/detect-provider";
 import React from "react";
 import styled from "styled-components";
 
@@ -8,6 +7,22 @@ import { MainTable, UnderlyingTable } from "./components/MainTable.js";
 import ErrorModal from "./components/ErrorModal";
 import Menu from "./components/Menu";
 import Header from "./components/Header";
+
+import Web3Modal from "web3modal";
+import WalletConnectProvider from "@walletconnect/web3-provider";
+
+const web3Modal = new Web3Modal({
+  network: "mainnet",  // optional
+  cacheProvider: true, // optional
+  providerOptions: {
+    walletconnect: {
+      package: WalletConnectProvider, // required
+      options: {
+        infuraId: "27e484dcd9e3efcfd25a83a78777cdf1" // required
+      }
+    }
+  }
+});
 
 const { ethers } = harvest;
 
@@ -96,7 +111,7 @@ class App extends React.Component {
   }
 
   connectMetamask() {
-    detectEthereumProvider().then((provider) => {
+    web3Modal.connect().then((provider) => {
       if (!provider) {
         this.setState({
           showErrorModal: true,
