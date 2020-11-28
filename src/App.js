@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
+import HarvestContext from './Context/HarvestContext';
 import styled, { ThemeProvider } from "styled-components";
 import { Row, Col } from "styled-bootstrap-grid";
 import { createGlobalStyle } from "styled-components";
@@ -8,6 +9,7 @@ import Loadable from 'react-loadable';
 import { darkTheme, lightTheme, fonts } from "./styles/appStyles.js";
 import axios from 'axios';
 import ReactModal from 'react-modal-resizable-draggable';
+import { motion } from "framer-motion";
 
 // images
 import logo from "./assets/gif_tractor.gif";
@@ -293,6 +295,35 @@ const Panel = styled.div`
     cursor:grab;
   }
 
+
+  .token-added-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    background-color: ${(props) => props.theme.style.lightBackground};
+    color: ${(props) => props.theme.style.primaryFontColor};
+    font-family: ${fonts.contentFont};
+    font-size: 2rem;
+    padding: 1rem 2rem;
+    border-radius: .5rem;
+    border: ${(props) => props.theme.style.mainBorder};
+    box-shadow: ${(props) => props.theme.style.panelBoxShadow};
+    margin: -5rem auto 0 auto;
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    @media(max-width: 768px) {
+      left: 30%;
+      right: 30%;
+    }
+
+    p {
+      text-align: center;
+    }
+
+  }
+
   
 
   
@@ -518,6 +549,8 @@ const ErrorModal = Loadable({
 
 function App() {
   
+
+  const [tokenAddedMessage,setTokenAddedMessage] = useState('')
   const [state, setState] = useState({
     provider: undefined,
     signer: undefined,
@@ -685,40 +718,43 @@ function App() {
  
 
   return (
-    <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
-      <GlobalStyle />
-        <Container>
-          <Row>
-            <Col col>
-              <Brand>
-                <img src={logo} alt="harvest finance logo" />{" "}
-                <span>harvest.dashboard</span>
-              </Brand>
-            </Col>
-          </Row>
+    <HarvestContext.Provider value={{state,tokenAddedMessage,setTokenAddedMessage}}>
+      <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
+        <GlobalStyle />
+          <Container>
+            <Row>
+              <Col col>
+                <Brand>
+                  <img src={logo} alt="harvest finance logo" />{" "}
+                  <span>harvest.dashboard</span>
+                </Brand>
+              </Col>
+            </Row>
 
-          <Row>
-            <Col>
-              <PanelTabContainer>
-                <PanelTabContainerLeft>
-                  <PanelTab>
-                    <a
-                      href="https://harvest.finance"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      harvest.finance
-                    </a>
-                  </PanelTab>
-                  <PanelTab className="wiki-tab">
-                    <a
-                      href="https://farm.chainwiki.dev/en/home"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      wiki
-                    </a>
-                  </PanelTab>
+            <Row>
+              <Col>
+                <PanelTabContainer>
+                  <PanelTabContainerLeft>
+                    <PanelTab>
+                      <a
+                        href="https://harvest.finance"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        harvest.finance
+                      </a>
+                    </PanelTab>
+                    <PanelTab className="wiki-tab">
+                      <a
+                        href="https://farm.chainwiki.dev/en/home"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        wiki
+                      </a>
+                    </PanelTab>
+
+                    
 
                   <PanelTab 
                   className="radio-tab"
@@ -730,20 +766,20 @@ function App() {
                 </PanelTabContainerLeft>
 
                 <PanelTabContainerRight>
-                  <PanelTab className='switch-panel'>
-                    <label className="switch">
-                      <input
-                        type="checkbox"
-                        checked={state.theme === "dark" ? true : false}
-                        onChange={() =>
-                          toggleTheme(state.theme === "dark" ? "light" : "dark")
-                        }
-                      />
-                      <span className="slider round"></span>
-                    </label>
-                  </PanelTab>
-                  
-                </PanelTabContainerRight>
+                    <PanelTab className='switch-panel'>
+                      <label className="switch">
+                        <input
+                          type="checkbox"
+                          checked={state.theme === "dark" ? true : false}
+                          onChange={() =>
+                            toggleTheme(state.theme === "dark" ? "light" : "dark")
+                          }
+                        />
+                        <span className="slider round"></span>
+                      </label>
+                    </PanelTab>
+                    
+                  </PanelTabContainerRight>
               </PanelTabContainer>
 
               <Panel>
@@ -778,6 +814,20 @@ function App() {
                     />
                   </Col>
                 </Row> : null}
+
+                {tokenAddedMessage ? 
+                  <motion.div
+                  key={tokenAddedMessage}
+                  initial={{ x:0,y: -100, opacity: 0 }}
+                  animate={{ x:0,y:0, opacity: 1 }}
+                  exit={{x:0,y: -100, opacity: 1 }}>
+                    <div className='token-added-message'>
+                      <p >{tokenAddedMessage}</p>
+                    </div>
+                  </motion.div>
+                   
+                  
+                  : null}
                 
 
                  
@@ -808,6 +858,7 @@ function App() {
         </Container>
         <ErrorModal state={state} onClose={() => closeErrorModal()} />
     </ThemeProvider>
+    </HarvestContext.Provider>
   );
 }
 

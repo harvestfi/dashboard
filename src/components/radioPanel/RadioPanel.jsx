@@ -21,7 +21,6 @@ position: relative;
 z-index: 400;
 height: 6rem;
 width: 30rem;
-
 .player-inner {
     width: 100%;
     padding-top: 4rem;
@@ -35,7 +34,6 @@ width: 30rem;
         margin-left: -8rem;
         
     }
-
     .player-controls {
         margin-left: 1rem;
         margin-top: -1.2rem;
@@ -45,12 +43,10 @@ width: 30rem;
         }
     }
 }
-
 @media(maxwidth: 500px) {
     width: 10rem;
     height:
 }
-
 `
 
 
