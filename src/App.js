@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
+import HarvestContext from './Context/HarvestContext';
 import styled, { ThemeProvider } from "styled-components";
 import { Row, Col } from "styled-bootstrap-grid";
 import { createGlobalStyle } from "styled-components";
@@ -7,17 +8,16 @@ import harvest from "./lib/index.js";
 import Loadable from 'react-loadable';
 import { darkTheme, lightTheme, fonts } from "./styles/appStyles.js";
 import axios from 'axios';
-import ReactModal from 'react-modal-resizable-draggable';
+
 
 // images
 import logo from "./assets/gif_tractor.gif";
 
 
 // components
-import Wallet from "./components/Wallet.jsx";
+import Wallet from "./components/Wallet";
+import Radio from './components/radio/Radio';
 import MainContent from './components/MainContent';
-import RadioPanel from './components/radioPanel/RadioPanel';
-
 import WelcomeText from './components/WelcomeText';
 
 const { ethers } = harvest;
@@ -475,37 +475,7 @@ const Container = styled.div`
   
 `;
 
-const RadioTitle=styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-text-align: center;
-font-family: ${fonts.headerFont};
-font-size: 1.7rem;
-position: relative:
-z-index: 400;
-pointer-events: auto;
-h4 {
-  margin-top: .2rem;
-}
-`;
 
-const CloseIcon = styled.span`
-  position: absolute;
-  right: 1.3rem;
-  top: .2rem;
-  font-size: 1.7rem;
-  cursor: pointer;
-  color: ${(props) => props.theme.style.buttonFontColor};
-
-  .fas {
-    position: relative;
-    z-index: 500;
-    &:hover {
-      top: 1.5px;
-    }
-  }
-`;
 
 
 
@@ -685,129 +655,109 @@ function App() {
  
 
   return (
-    <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
-      <GlobalStyle />
-        <Container>
-          <Row>
-            <Col col>
-              <Brand>
-                <img src={logo} alt="harvest finance logo" />{" "}
-                <span>harvest.dashboard</span>
-              </Brand>
-            </Col>
-          </Row>
+    <HarvestContext.Provider value={{state,
+                                    radio,
+                                    toggleRadio}}>
+      <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
+        <GlobalStyle />
+          <Container>
+            <Row>
+              <Col col>
+                <Brand>
+                  <img src={logo} alt="harvest finance logo" />{" "}
+                  <span>harvest.dashboard</span>
+                </Brand>
+              </Col>
+            </Row>
 
-          <Row>
-            <Col>
-              <PanelTabContainer>
-                <PanelTabContainerLeft>
-                  <PanelTab>
-                    <a
-                      href="https://harvest.finance"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      harvest.finance
-                    </a>
-                  </PanelTab>
-                  <PanelTab className="wiki-tab">
-                    <a
-                      href="https://farm.chainwiki.dev/en/home"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      wiki
-                    </a>
-                  </PanelTab>
+            <Row>
+              <Col>
+                <PanelTabContainer>
+                  <PanelTabContainerLeft>
+                    <PanelTab>
+                      <a
+                        href="https://harvest.finance"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        harvest.finance
+                      </a>
+                    </PanelTab>
+                    <PanelTab className="wiki-tab">
+                      <a
+                        href="https://farm.chainwiki.dev/en/home"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        wiki
+                      </a>
+                    </PanelTab>
 
-                  <PanelTab 
-                  className="radio-tab"
-                  onClick={toggleRadio}
-                  >
+                    <PanelTab 
+                    className="radio-tab"
+                    onClick={toggleRadio}
+                    >
+                      
+                      <p>radio</p>
+                    </PanelTab>
+                  </PanelTabContainerLeft>
+
+                  <PanelTabContainerRight>
+                    <PanelTab className='switch-panel'>
+                      <label className="switch">
+                        <input
+                          type="checkbox"
+                          checked={state.theme === "dark" ? true : false}
+                          onChange={() =>
+                            toggleTheme(state.theme === "dark" ? "light" : "dark")
+                          }
+                        />
+                        <span className="slider round"></span>
+                      </label>
+                    </PanelTab>
                     
-                    <p>radio</p>
-                  </PanelTab>
-                </PanelTabContainerLeft>
+                  </PanelTabContainerRight>
+                </PanelTabContainer>
 
-                <PanelTabContainerRight>
-                  <PanelTab className='switch-panel'>
-                    <label className="switch">
-                      <input
-                        type="checkbox"
-                        checked={state.theme === "dark" ? true : false}
-                        onChange={() =>
-                          toggleTheme(state.theme === "dark" ? "light" : "dark")
-                        }
-                      />
-                      <span className="slider round"></span>
-                    </label>
-                  </PanelTab>
+                <Panel>
+
+                <Radio />
+            
                   
-                </PanelTabContainerRight>
-              </PanelTabContainer>
-
-              <Panel>
-
-              {/* RADIO MODAL */}
-              <ReactModal
-                isOpen={radio}
-                onRequestClose={toggleRadio}
-                className={"my-modal-custom-class"}
-                initWidth={325} 
-                initHeight={100}
-                top={0}
-                left={0}
-                disableResize={true}
-                >
-                <RadioTitle>
-                  <h4>harvest radio</h4>
-                  <CloseIcon onClick={toggleRadio} ><i className="fas fa-times-circle "></i></CloseIcon>
-                </RadioTitle>
-                <RadioPanel toggleRadio={toggleRadio} />
-              </ReactModal>
-
-              {/* RADIO MODAL */}
-
-
-                 {state.address? <Row>
-                   
-                  <Col >
-                    <Wallet
-                      state={state}
-                     
-                    />
-                  </Col>
-                </Row> : null}
-                
-
+                    
                  
-                {/* MOVED MAIN COMPONENTS INTO ITS OWN COMPONENT */}
-                {/* The welcome text display on intial load and when a wallet is connected the main content renders */}
-                {state.provider ? (
-                  <MainContent 
-                  state={state} 
-                  setState={setState}
-                  openModal={openModal}/>
-                ) :
-                <Row >
-                  <Col >
-                    <WelcomeText 
-                      state={state}
-                      openModal={openModal}
-                      disconnect={disconnect}
-                      setConnection={setConnection}
-                      setAddress={setAddress}
-                      refresh={refresh}
-                     />
-                  </Col>
+
                   
-                  </Row>} 
-              </Panel>
-            </Col>
-          </Row>
-        </Container>
-        <ErrorModal state={state} onClose={() => closeErrorModal()} />
-    </ThemeProvider>
+ 
+                  {/* MOVED MAIN COMPONENTS INTO ITS OWN COMPONENT */}
+                  {/* The welcome text display on intial load and when a wallet is connected the main content renders */}
+                  {state.provider ? (
+                    <MainContent 
+                    state={state} 
+                    setState={setState}
+                    openModal={openModal}/>
+                  ) :
+                  <Row >
+                    <Col >
+                      <WelcomeText 
+                        state={state}
+                        openModal={openModal}
+                        disconnect={disconnect}
+                        setConnection={setConnection}
+                        setAddress={setAddress}
+                        refresh={refresh}
+                      />
+                    </Col>
+                    
+                    </Row>} 
+                </Panel>
+              </Col>
+            </Row>
+          </Container>
+          <ErrorModal state={state} onClose={() => closeErrorModal()} />
+      </ThemeProvider>
+    </HarvestContext.Provider>
+    
   );
 }
 
