@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
+import HarvestContext from './Context/HarvestContext';
 import styled, { ThemeProvider } from "styled-components";
 import { Row, Col } from "styled-bootstrap-grid";
 import { createGlobalStyle } from "styled-components";
@@ -685,7 +686,8 @@ function App() {
  
 
   return (
-    <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
+    <HarvestContext.Provider value={{state}}>
+          <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
       <GlobalStyle />
         <Container>
           <Row>
@@ -808,6 +810,8 @@ function App() {
         </Container>
         <ErrorModal state={state} onClose={() => closeErrorModal()} />
     </ThemeProvider>
+    </HarvestContext.Provider>
+    
   );
 }
 
