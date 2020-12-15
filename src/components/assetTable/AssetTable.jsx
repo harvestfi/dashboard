@@ -17,17 +17,14 @@ const TableContainer = styled.div`
   
  
   
-
   div[role="table"] {
     background-color: ${(props) => props.theme.style.panelBackground};
-
     padding-right: .35rem;
     padding-bottom: .35rem;
     
     
     
   }
-
   .rdt_TableHeadRow {
     
     border: ${(props) => props.theme.style.mainBorder};
@@ -36,7 +33,6 @@ const TableContainer = styled.div`
     border-top-right-radius: 0.5rem;
     border-top-left-radius: 0.5rem;
   }
-
   .rdt_TableBody {
    
     border-left: ${(props) => props.theme.style.mainBorder};
@@ -47,9 +43,7 @@ const TableContainer = styled.div`
     border-top-right-radius: 0;
     border-bottom-left-radius: .5rem;
     border-bottom-right-radius: .5rem;
-
   }
-
   .rdt_TableRow {
     
     font-family: ${fonts.contentFont};
@@ -60,7 +54,6 @@ const TableContainer = styled.div`
     
    
   }
-
   div[role="columnheader"] {
     color: ${(props) => props.theme.style.primaryFontColor};
     font-family: ${fonts.headerFont};
@@ -73,7 +66,6 @@ const TableContainer = styled.div`
     
     
     
-
     &:hover,
     &:visited,
     &:active,
