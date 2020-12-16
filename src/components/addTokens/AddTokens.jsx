@@ -11,14 +11,13 @@ import daiIcon from "../../assets/png_dai_56px@3x.png";
 import wbtcIcon from "../../assets/png_wbtc_56px@3x.png";
 import frenbtcIcon from "../../assets/png_frenbtc_56px@3x.png";
 import crvrenwbtcIcon from "../../assets/png_crvrenwbtc_56px@3x.png";
-import sushi from '../../assets/sushi_wbtc.svg'
-import yearn from '../../assets/yearn.png'
-import crv3 from '../../assets/3CRV.png'
-import wbtc from '../../assets/eth_wbtc.svg';
-import usdt from '../../assets/eth_usdt.svg';
-import usdc from '../../assets/eth_usdc.svg';
-import ethDai from '../../assets/eth_dai.svg';
-
+import sushi from "../../assets/sushi_wbtc.svg";
+import yearn from "../../assets/yearn.png";
+import crv3 from "../../assets/3CRV.png";
+import wbtc from "../../assets/eth_wbtc.svg";
+import usdt from "../../assets/eth_usdt.svg";
+import usdc from "../../assets/eth_usdc.svg";
+import ethDai from "../../assets/eth_dai.svg";
 
 const Panel = styled.div`
   display: flex;
@@ -40,7 +39,8 @@ const Panel = styled.div`
   .inner {
     overflow-x: scroll;
     height: 16rem;
-    scrollbar-color: ${(props) => props.theme.style.scrollBarColor} ${(props) => props.theme.style.lightBackground} ;
+    scrollbar-color: ${(props) => props.theme.style.scrollBarColor} ${(props) =>
+  props.theme.style.lightBackground} ;
     scrollbar-width: thin;
 
     ::-webkit-scrollbar {
@@ -114,8 +114,6 @@ const Panel = styled.div`
   
 `;
 
-
-
 const tokens = [
   {
     name: "FARM",
@@ -152,7 +150,6 @@ const tokens = [
     url: "https://harvestfi.github.io/add-3crv/",
     image: crv3,
   },
-  
 ];
 const tokens2 = [
   {
@@ -190,15 +187,13 @@ const tokens2 = [
     url: "https://harvestfi.github.io/add-eth-dai/",
     image: ethDai,
   },
-  
-]
+];
 
-const Token = ({ className,name, url, image }) => (
+const Token = ({ className, name, url, image }) => (
   <div className={className}>
     <a target="_blank" rel="noopener noreferrer" href={url}>
-    
-    <img alt={name} src={image}></img>
-    <span>{name}</span>
+      <img alt={name} src={image}></img>
+      <span>{name}</span>
     </a>
   </div>
 );
@@ -241,34 +236,26 @@ const StyledToken = styled(Token)`
   }
 `;
 
-
-
-
 const AddTokens = (props) => {
-
- 
   return (
-    <ThemeProvider theme={props.state.theme === "dark" ? darkTheme : lightTheme}>
-       <Panel>
+    <ThemeProvider
+      theme={props.state.theme === "dark" ? darkTheme : lightTheme}
+    >
+      <Panel>
         <h1>Add assets to wallet</h1>
         <div className="inner">
-        <div className="token-container first">
-          {tokens.map((t) => (
+          <div className="token-container first">
+            {tokens.map((t) => (
               <StyledToken key={t.name} {...t} />
             ))}
           </div>
           <div className="token-container">
-          {tokens2.map((t) => (
+            {tokens2.map((t) => (
               <StyledToken key={t.name} {...t} />
             ))}
           </div>
         </div>
-        
-          
-        
-        
-      </Panel> 
-      
+      </Panel>
     </ThemeProvider>
   );
 };

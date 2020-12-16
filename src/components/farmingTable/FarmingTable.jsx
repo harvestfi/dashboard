@@ -1,13 +1,10 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import DataTable from "react-data-table-component";
 import styled, { ThemeProvider } from "styled-components";
 import harvest from "../../lib/index";
 import { darkTheme, lightTheme, fonts } from "../../styles/appStyles";
 
-
-import FarmTableSkeleton from './FarmTableSkeleton';
-
-
+import FarmTableSkeleton from "./FarmTableSkeleton";
 
 const { utils } = harvest;
 
@@ -30,7 +27,8 @@ const TableContainer = styled.div`
     padding: .35rem;
     
     scrollbar-width: thin;
-    scrollbar-color: ${(props) => props.theme.style.scrollBarColor} ${(props) => props.theme.style.lightBackground} ;
+    scrollbar-color: ${(props) => props.theme.style.scrollBarColor} ${(props) =>
+  props.theme.style.lightBackground} ;
     ::-webkit-scrollbar {
       width: .1rem;
     }
@@ -99,34 +97,31 @@ div[role="columnheader"] {
   
 `;
 
-
-
 const MainTableInner = styled.div`
   width: 100%;
   margin: 0 auto;
   overflow-x: scroll;
-  scrollbar-color: ${(props) => props.theme.style.scrollBarColor} ${(props) => props.theme.style.lightBackground} ;
+  scrollbar-color: ${(props) => props.theme.style.scrollBarColor}
+    ${(props) => props.theme.style.lightBackground};
   scrollbar-width: thin;
   ::-webkit-scrollbar {
     width: 100%;
-    height: .8rem;
-    margin-top: -1.8rem
-    
+    height: 0.8rem;
+    margin-top: -1.8rem;
   }
-  ::-webkit-scrollbar-track:no-button { 
+  ::-webkit-scrollbar-track:no-button {
     width: 100%;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
     background-color: ${(props) => props.theme.style.lightBackground};
   }
   ::-webkit-scrollbar-button {
     color: ${(props) => props.theme.style.primaryFontColor};
-    
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: black;
     background-color: ${(props) => props.theme.style.scrollBarColor};
- }
+  }
 `;
 const MainTableRow = styled.div`
   display: grid;
@@ -135,23 +130,21 @@ const MainTableRow = styled.div`
   font-family: ${fonts.contentFont};
   padding: 1.5rem 1rem;
   width: 100%;
-  border-bottom: 1.2px solid rgba(53, 53, 53, .15);
-  @media(max-width: 1100px) {
+  border-bottom: 1.2px solid rgba(53, 53, 53, 0.15);
+  @media (max-width: 1100px) {
     width: 120%;
   }
-  @media(max-width: 800px) {
+  @media (max-width: 800px) {
     width: 150%;
   }
-  @media(max-width: 700px) {
+  @media (max-width: 700px) {
     width: 200%;
   }
-  @media(max-width:510px) {
+  @media (max-width: 510px) {
     width: 350%;
   }
-  
-  
+
   div {
-    
     min-width: 5rem;
   }
   .active {
@@ -179,25 +172,22 @@ const MainTableHeader = styled.div`
   padding: 1.5rem 1rem;
   border-bottom: 2px black solid;
   width: 100%;
-  @media(max-width: 1100px) {
+  @media (max-width: 1100px) {
     width: 120%;
   }
-  @media(max-width: 800px) {
+  @media (max-width: 800px) {
     width: 150%;
   }
-  @media(max-width: 700px) {
+  @media (max-width: 700px) {
     width: 200%;
   }
-  @media(max-width:510px) {
+  @media (max-width: 510px) {
     width: 350%;
   }
- 
-  
+
   p {
-   
     min-width: 5rem;
   }
-
 `;
 // const StyledTableHeader = styled(TableHeader)`
 //   display: grid;
@@ -206,9 +196,6 @@ const MainTableHeader = styled.div`
 //   font-size: 13px;
 //   text-align: left;
 // `;
-
-
-
 
 const columns = [
   {
@@ -249,7 +236,7 @@ const columns = [
     name: "Value",
     selector: "usdValueOf",
     sortable: true,
-    compact: true
+    compact: true,
   },
 ];
 
@@ -258,71 +245,72 @@ const noAssetColumns = [
     name: "You currently are not staking any assets",
     // selector: (data) => data.asset.name,
     selector: "asset",
-    center: true
+    center: true,
   },
-]
+];
 const noAssetData = [
   {
-    id:0,
-    asset: 'Stake assets to get started',
-    center: true
+    id: 0,
+    asset: "Stake assets to get started",
+    center: true,
   },
-]
+];
 
-
-
-
-
-const FarmingTable = ({ state,setState }) => {
-
-  const getThisReward= (reward) => {
-      setState({...state,minimumHarvestAmount: reward})
- }
-
-
-
-
+const FarmingTable = ({ state, setState }) => {
+  const getThisReward = (reward) => {
+    setState({ ...state, minimumHarvestAmount: reward });
+  };
 
   return (
-      <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
-        
-        {state.display ? 
+    <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
+      {state.display ? (
         <TableContainer>
-          {state.summaries.length === 0 ? <DataTable
-          noHeader={true}
-          noDivider={true}
-          columns={noAssetColumns}
-          noDataComponent={false}
-          data={noAssetData}
-           />:
-          <MainTableInner>
-          <MainTableHeader>{columns.map((col,i) => {
-            return (
-              <p key={i}>{col.name}</p>
-            )
-          })}</MainTableHeader>
-          {state.summaries.map(utils.prettyPosition).map((summary, index) => (
-          <MainTableRow key={summary.address}>
-            <div>{summary.name}</div>
-            <div className='active'>{String(summary.isActive)}</div>
-            <div className='rewards' onClick={() =>getThisReward(summary.earnedRewards)}>{parseFloat(summary.earnedRewards).toFixed(8)}</div>
-            <div className='rewardsToDate'>{parseFloat(summary.historicalRewards).toFixed(8)}</div>
-            <div>{parseFloat(summary.stakedBalance).toFixed(10)}</div>
-            <div className='pool'>{summary.percentOfPool}</div>
-            <div className='unstaked'>{parseFloat(summary.unstakedBalance).toFixed(10)}</div>
-            <div className='value'>{summary.usdValueOf}</div>
-            
-          </MainTableRow>
-        ))}
-         
-        </MainTableInner> }
-        </TableContainer> 
-        : <FarmTableSkeleton state={state} />}
-          
+          {state.summaries.length === 0 ? (
+            <DataTable
+              noHeader={true}
+              noDivider={true}
+              columns={noAssetColumns}
+              noDataComponent={false}
+              data={noAssetData}
+            />
+          ) : (
+            <MainTableInner>
+              <MainTableHeader>
+                {columns.map((col, i) => {
+                  return <p key={i}>{col.name}</p>;
+                })}
+              </MainTableHeader>
+              {state.summaries
+                .map(utils.prettyPosition)
+                .map((summary, index) => (
+                  <MainTableRow key={summary.address}>
+                    <div>{summary.name}</div>
+                    <div className="active">{String(summary.isActive)}</div>
+                    <div
+                      className="rewards"
+                      onClick={() => getThisReward(summary.earnedRewards)}
+                    >
+                      {parseFloat(summary.earnedRewards).toFixed(8)}
+                    </div>
+                    <div className="rewardsToDate">
+                      {parseFloat(summary.historicalRewards).toFixed(8)}
+                    </div>
+                    <div>{parseFloat(summary.stakedBalance).toFixed(10)}</div>
+                    <div className="pool">{summary.percentOfPool}</div>
+                    <div className="unstaked">
+                      {parseFloat(summary.unstakedBalance).toFixed(10)}
+                    </div>
+                    <div className="value">{summary.usdValueOf}</div>
+                  </MainTableRow>
+                ))}
+            </MainTableInner>
+          )}
+        </TableContainer>
+      ) : (
+        <FarmTableSkeleton state={state} />
+      )}
     </ThemeProvider>
-    
   );
 };
 
 export default FarmingTable;
-

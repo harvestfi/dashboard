@@ -1,65 +1,62 @@
-import React from 'react';
+import React from "react";
 import styled, { ThemeProvider } from "styled-components";
-import {darkTheme,lightTheme} from '../../styles/appStyles';
+import { darkTheme, lightTheme } from "../../styles/appStyles";
 
+const SkeletonPanel = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 200px;
+  background: none;
+  border: ${(props) => props.theme.style.mainBorder};
+  box-shadow: ${(props) => props.theme.style.panelBoxShadow};
+  border-radius: 0.5rem;
+  overflow: hidden;
 
+  .skeleton-header {
+    margin: 0;
+    height: 6rem;
+    width: 100%;
+    border-bottom: 2px solid black;
+  }
 
-const SkeletonPanel = styled.div `
-display: flex;
-flex-direction: column;
-align-items: center;
-width: 100%;
-height: 200px;
-background: none;
-border: ${(props) => props.theme.style.mainBorder};
-box-shadow: ${(props) => props.theme.style.panelBoxShadow};
-border-radius: .5rem;
-overflow: hidden;
+  &::before {
+    content: "";
+    position: relative;
+    left: -150px;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(
+      to right,
+      transparent 10%,
+      ${(props) => props.theme.style.blueBackground} 50%,
+      transparent 100%
+    );
+    animation: load 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
 
-
-    .skeleton-header {
-        margin: 0;
-        height: 6rem;
-        width: 100%;
-        border-bottom: 2px solid black;
-
+  @keyframes load {
+    from {
+      left: -100%;
     }
-
-    &::before {
-        content: '';
-        position: relative;
-        left: -150px;
-        top: 0;
-        height: 100%;
-        width: 100%;
-        background: linear-gradient(to right, transparent 10%, ${(props) => props.theme.style.blueBackground} 50%, transparent 100%);
-        animation: load 1.8s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+    to {
+      left: 100%;
     }
-
-    @keyframes load {
-        from {
-            left: -100%;
-        }
-        to   {
-            left: 100%;
-        }
-    }
-
-
+  }
 `;
 
-const FarmTableSkeleton = ({state}) => {
-    return (
-        <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
-            <SkeletonPanel>
-                {/* <div className="skeleton-header">
+const FarmTableSkeleton = ({ state }) => {
+  return (
+    <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
+      <SkeletonPanel>
+        {/* <div className="skeleton-header">
 
                 </div> */}
-                
-            </SkeletonPanel>
-        </ThemeProvider>
-        
-    );
-}
+      </SkeletonPanel>
+    </ThemeProvider>
+  );
+};
 
 export default FarmTableSkeleton;

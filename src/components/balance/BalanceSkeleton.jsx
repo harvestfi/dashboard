@@ -1,10 +1,8 @@
-import React from 'react';
+import React from "react";
 import styled, { ThemeProvider } from "styled-components";
-import {darkTheme,lightTheme} from '../../styles/appStyles';
+import { darkTheme, lightTheme } from "../../styles/appStyles";
 
-
-
-const SkeletonPanel = styled.div `
+const SkeletonPanel = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -32,7 +30,8 @@ overflow: hidden;
         top: 0;
         height: 100%;
         width: 100%;
-        background: linear-gradient(to right, transparent 10%, ${(props) => props.theme.style.blueBackground} 50%, transparent 100%);
+        background: linear-gradient(to right, transparent 10%, ${(props) =>
+          props.theme.style.blueBackground} 50%, transparent 100%);
         animation: load 1.8s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
     }
 
@@ -50,16 +49,12 @@ overflow: hidden;
 
 `;
 
-const BalanceSkeleton = ({state}) => {
-    return (
-        <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
-            <SkeletonPanel>
-                
-                
-            </SkeletonPanel>
-        </ThemeProvider>
-        
-    );
-}
+const BalanceSkeleton = ({ state }) => {
+  return (
+    <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
+      <SkeletonPanel></SkeletonPanel>
+    </ThemeProvider>
+  );
+};
 
 export default BalanceSkeleton;
