@@ -293,7 +293,8 @@ const FarmingTable = ({ state, setState }) => {
                       {parseFloat(summary.earnedRewards).toFixed(8)}
                     </div>
                     <div className="rewardsToDate">
-                      {parseFloat(summary.historicalRewards).toFixed(8)}
+                      {parseFloat(summary.historicalRewards).toFixed(8)}&nbsp;
+                      [${(parseFloat(state.farmPrice) * parseFloat(summary.historicalRewards)).toFixed(2)}]
                     </div>
                     <div>{parseFloat(summary.stakedBalance).toFixed(10)}</div>
                     <div className="pool">{summary.percentOfPool}</div>
