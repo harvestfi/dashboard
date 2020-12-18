@@ -2,57 +2,52 @@ import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme, fonts } from "../styles/appStyles";
 
-
 const WalletConnection = styled.div`
   border: ${(props) => props.theme.style.mainBorder};
   border-radius: 0.5rem;
   border-top-right-radius: 0rem;
   display: flex;
-  padding: .5rem;
+  padding: 0.5rem;
   background-color: ${(props) => props.theme.style.lightBackground};
   position: relative;
-  top: -.6rem;
+  top: -0.6rem;
   font-size: 2rem;
-  @media(max-width: 610px) {
+  @media (max-width: 610px) {
     width: 100%;
     font-size: 1.8rem;
-    
   }
-  @media(max-width: 580px) {
+  @media (max-width: 580px) {
     font-size: 1.7rem;
-    
   }
- 
-  @media(max-width: 550px) {
+
+  @media (max-width: 550px) {
     font-size: 1.7rem;
     width: 100%;
   }
-  @media(max-width: 540px) {
+  @media (max-width: 540px) {
     font-size: 1.6rem;
   }
-  @media(max-width: 510px) {
+  @media (max-width: 510px) {
     font-size: 1.5rem;
   }
-  @media(max-width: 480px) {
+  @media (max-width: 480px) {
     font-size: 1.4rem;
   }
-  @media(max-width: 450px) {
+  @media (max-width: 450px) {
     font-size: 1.3rem;
   }
-  @media(max-width: 415px) {
+  @media (max-width: 415px) {
     font-size: 1.2rem;
   }
-  @media(max-width: 385px) {
+  @media (max-width: 385px) {
     font-size: 1.1rem;
   }
-  @media(max-width: 360px) {
+  @media (max-width: 360px) {
     font-size: 1rem;
   }
-  @media(max-width: 328px) {
-    font-size: .9rem;
+  @media (max-width: 328px) {
+    font-size: 0.9rem;
   }
- 
-  
 
   a,
   a:visited,
@@ -68,7 +63,6 @@ const WalletConnection = styled.div`
       font-size: 1.8rem;
     }
   }
-  
 `;
 const WalletContainer = styled.div`
   display: flex;
@@ -77,7 +71,6 @@ const WalletContainer = styled.div`
   align-items: flex-end;
   color: ${(props) => props.theme.style.primaryFontColor};
   font-family: ${fonts.headerFont};
-  
 `;
 const WalletTab = styled.div`
   padding: 0.5rem 1rem;
@@ -88,17 +81,11 @@ const WalletTab = styled.div`
   font-family: ${fonts.headerFont};
   font-size: 2rem;
   position: relative;
-  top: .6rem;
+  top: 0.6rem;
 `;
 
-
-
-const Wallet = ({
-  state,
-}) => {
-  
+const Wallet = ({ state }) => {
   const renderConnectStatus = (provider, address) => {
-    
     return (
       <p>
         <span id="address">
@@ -113,8 +100,6 @@ const Wallet = ({
       </p>
     );
   };
-
-  
 
   return (
     <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>

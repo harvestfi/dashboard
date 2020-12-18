@@ -1,25 +1,22 @@
-import React, { useState, useEffect,useContext } from "react";
-import HarvestContext from './Context/HarvestContext';
+import React, { useState, useEffect, useContext } from "react";
+import HarvestContext from "./Context/HarvestContext";
 import styled, { ThemeProvider } from "styled-components";
 import { Row, Col } from "styled-bootstrap-grid";
 import { createGlobalStyle } from "styled-components";
 import { reset } from "styled-reset";
 import harvest from "./lib/index.js";
-import Loadable from 'react-loadable';
+import Loadable from "react-loadable";
 import { darkTheme, lightTheme, fonts } from "./styles/appStyles.js";
-import axios from 'axios';
-import ReactModal from 'react-modal-resizable-draggable';
+import axios from "axios";
 
 // images
 import logo from "./assets/gif_tractor.gif";
 
-
 // components
-import Wallet from "./components/Wallet.jsx";
-import MainContent from './components/MainContent';
-import RadioPanel from './components/radioPanel/RadioPanel';
-
-import WelcomeText from './components/WelcomeText';
+import Wallet from "./components/Wallet";
+import Radio from "./components/radio/Radio";
+import MainContent from "./components/MainContent";
+import WelcomeText from "./components/WelcomeText";
 
 const { ethers } = harvest;
 const GlobalStyle = createGlobalStyle`
@@ -194,20 +191,18 @@ const GlobalStyle = createGlobalStyle`
 
 // App
 const Brand = styled.div`
-
   padding-right: 1rem;
   padding-top: 2rem;
   display: flex;
   align-items: flex-start;
   margin-bottom: 4rem;
   height: 2.5rem;
-  
 
   img {
     width: 3rem;
     height: 3rem;
     margin-right: 1rem;
-    margin-left: .5rem;
+    margin-left: 0.5rem;
   }
 
   span {
@@ -216,7 +211,7 @@ const Brand = styled.div`
     font-size: 2.5rem;
   }
 
-  @media(min-width: 1500px) {
+  @media (min-width: 1500px) {
     margin: 3rem 0;
   }
 `;
@@ -294,6 +289,35 @@ const Panel = styled.div`
     cursor:grab;
   }
 
+
+  .token-added-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    background-color: ${(props) => props.theme.style.lightBackground};
+    color: ${(props) => props.theme.style.primaryFontColor};
+    font-family: ${fonts.contentFont};
+    font-size: 2rem;
+    padding: 1rem 2rem;
+    border-radius: .5rem;
+    border: ${(props) => props.theme.style.mainBorder};
+    box-shadow: ${(props) => props.theme.style.panelBoxShadow};
+    margin: -5rem auto 0 auto;
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    @media(max-width: 768px) {
+      left: 30%;
+      right: 30%;
+    }
+
+    p {
+      text-align: center;
+    }
+
+  }
+
   
 
   
@@ -330,8 +354,8 @@ const PanelTab = styled.div`
     
    
   }
-  @media(max-width: 605px) {
-    font-size: 1.9rem;
+  @media(max-width: 700px) {
+    font-size: 1.6rem;
     padding: 0.75rem 1rem 2.2rem 1rem;
     position: relative;
     top: .1rem;
@@ -341,17 +365,17 @@ const PanelTab = styled.div`
     margin-right: .5rem;
   }
   @media(max-width: 380px) {
-    font-size: 1.5rem;
-    padding: 0.75rem .75rem 2rem .75rem;
+    font-size: 1.2rem;
+    padding: 0.75rem .5rem 2rem .5rem;
     position: relative;
-    margin-right: .5rem;
+    margin-right: .0rem;
     top: .5rem;
     a {
       top: .4rem;
     }
   }
   @media(max-width: 333px) {
-    margin-right: .3rem;
+    
   }
   
 
@@ -389,6 +413,52 @@ const PanelTab = styled.div`
       
     }
     @media(max-width: 380px) {
+      margin-left: 0;
+      a {
+        font-size: 1.4rem;
+      }
+      
+    };
+    @media(max-width: 333px) {
+      margin-right: .3rem;
+    }
+  }
+
+  &.analytics-tab {
+    position: relative;
+    background-color: ${(props) => props.theme.style.wikiTabBackground};
+    top: 0.5rem;
+    margin-left: 2.5rem;
+    
+
+    &:hover {
+      top: 0rem;
+    }
+
+    a {
+      color: ${(props) => props.theme.style.primaryFontColor};
+      font-size: 1.9rem;
+      position: relative;
+      top: .1rem;
+    }
+    @media(max-width: 675px) {
+      
+      margin-left: .5rem;
+     
+      
+    }
+   
+    @media(max-width: 500px) {
+      top: 1.3rem;
+      margin-left: .5rem;
+      a {
+        font-size: 1.5rem;
+        top: -.1rem;;
+      }
+      
+    }
+    @media(max-width: 380px) {
+      margin-left: 0;
       a {
         font-size: 1.4rem;
       }
@@ -429,6 +499,13 @@ const PanelTab = styled.div`
         top: 0rem;
       }
 
+      @media(max-width: 700px) {
+        margin-left: .5rem;
+        p {
+          font-size: 1.9rem;
+        }
+        
+      }
 
       @media(max-width: 500px) {
         top: 1.4rem;
@@ -439,6 +516,7 @@ const PanelTab = styled.div`
         
       }
       @media(max-width: 380px) {
+        margin-left: 0;
         p {
           font-size: 1.4rem;
         }
@@ -468,57 +546,20 @@ const PanelTabContainerRight = styled.div`
 const Container = styled.div`
   width: 85%;
   margin: 0 auto;
-  @media(max-width: 1140px) {
+  @media (max-width: 1140px) {
     width: 95%;
   }
-  
- 
-  
 `;
-
-const RadioTitle=styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-text-align: center;
-font-family: ${fonts.headerFont};
-font-size: 1.7rem;
-position: relative:
-z-index: 400;
-pointer-events: auto;
-h4 {
-  margin-top: .2rem;
-}
-`;
-
-const CloseIcon = styled.span`
-  position: absolute;
-  right: 1.3rem;
-  top: .2rem;
-  font-size: 1.7rem;
-  cursor: pointer;
-  color: ${(props) => props.theme.style.buttonFontColor};
-
-  .fas {
-    position: relative;
-    z-index: 500;
-    &:hover {
-      top: 1.5px;
-    }
-  }
-`;
-
-
 
 const ErrorModal = Loadable({
-  loader: () => import('./components/ErrorModal'),
+  loader: () => import("./components/ErrorModal"),
   loading() {
-    return null
-  }
-})
+    return null;
+  },
+});
 
 function App() {
-  
+  const [tokenAddedMessage, setTokenAddedMessage] = useState("");
   const [state, setState] = useState({
     provider: undefined,
     signer: undefined,
@@ -532,32 +573,26 @@ function App() {
     display: false,
     minimumHarvestAmount: 0,
     apy: 0,
-    farmPrice: 0
+    farmPrice: 0,
   });
 
   const getPools = async () => {
-    await axios.get(
-      "https://api-ui.harvest.finance/pools?key=41e90ced-d559-4433-b390-af424fdc76d6",
-    ).then(res => {
-      let currentAPY = res.data[0].rewardAPY;
-      let currentPrice = res.data[0].lpTokenData.price;
-      
-      setState({...state,apy: currentAPY, farmPrice: currentPrice})
-      
-    })
-    .catch(err => {
-      console.log(err)
-    })
-    
-    
-    
-  };
-  
- 
+    await axios
+      .get(
+        "https://api-ui.harvest.finance/pools?key=41e90ced-d559-4433-b390-af424fdc76d6",
+      )
+      .then((res) => {
+        let currentAPY = res.data[0].rewardAPY;
+        let currentPrice = res.data[0].lpTokenData.price;
 
+        setState({ ...state, apy: currentAPY, farmPrice: currentPrice });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
-  
     const timer = setTimeout(() => {
       state.manager && refresh();
     }, 60000);
@@ -571,23 +606,19 @@ function App() {
     return () => clearTimeout(timer);
   });
   useEffect(() => {
-    getPools()
-  },[])
-
-
+    getPools();
+  }, []);
 
   useEffect(() => {
     if (state.address !== "") {
       refresh();
-      
     }
-   
   }, [state.address]);
   useEffect(() => {
-    if(state.usdValue) {
-      setState({...state,display: true})
+    if (state.usdValue) {
+      setState({ ...state, display: true });
     }
-  },[state.usdValue])
+  }, [state.usdValue]);
 
   const disconnect = () => {
     setState({
@@ -601,8 +632,6 @@ function App() {
       apy: 0,
       error: { message: null, type: null, display: false },
       theme: window.localStorage.getItem("HarvestFinance:Theme") || "light",
-      
-      
     });
   };
 
@@ -641,8 +670,9 @@ function App() {
       })
       .then((underlyings) => {
         setState({ ...state, underlyings: underlyings });
-      }).catch(err => {
-        console.log(err)
+      })
+      .catch((err) => {
+        console.log(err);
       });
 
     state.manager
@@ -665,11 +695,11 @@ function App() {
           summaries: summaries,
           usdValue: total,
         }));
-        
+
         return summaries;
-      }).catch(err => {
-        refresh()
-        
+      })
+      .catch((err) => {
+        refresh();
       });
   };
 
@@ -678,17 +708,24 @@ function App() {
     window.localStorage.setItem("HarvestFinance:Theme", theme);
   };
   //Radio Modal
-  const[radio,setRadio] =useState(false)
+  const [radio, setRadio] = useState(false);
 
   const toggleRadio = () => {
-    setRadio(!radio)
-  }
- 
+    setRadio(!radio);
+  };
 
   return (
-    <HarvestContext.Provider value={{state}}>
-          <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
-      <GlobalStyle />
+    <HarvestContext.Provider
+      value={{
+        state,
+        radio,
+        toggleRadio,
+        tokenAddedMessage,
+        setTokenAddedMessage,
+      }}
+    >
+      <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
+        <GlobalStyle />
         <Container>
           <Row>
             <Col col>
@@ -722,17 +759,23 @@ function App() {
                     </a>
                   </PanelTab>
 
-                  <PanelTab 
-                  className="radio-tab"
-                  onClick={toggleRadio}
-                  >
-                    
+                  <PanelTab className="analytics-tab">
+                    <a
+                      href="https://farmdashboard.xyz/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      analytics
+                    </a>
+                  </PanelTab>
+
+                  <PanelTab className="radio-tab" onClick={toggleRadio}>
                     <p>radio</p>
                   </PanelTab>
                 </PanelTabContainerLeft>
 
                 <PanelTabContainerRight>
-                  <PanelTab className='switch-panel'>
+                  <PanelTab className="switch-panel">
                     <label className="switch">
                       <input
                         type="checkbox"
@@ -744,74 +787,49 @@ function App() {
                       <span className="slider round"></span>
                     </label>
                   </PanelTab>
-                  
                 </PanelTabContainerRight>
               </PanelTabContainer>
 
               <Panel>
+                <Radio />
 
-              {/* RADIO MODAL */}
-              <ReactModal
-                isOpen={radio}
-                onRequestClose={toggleRadio}
-                className={"my-modal-custom-class"}
-                initWidth={325} 
-                initHeight={100}
-                top={0}
-                left={0}
-                disableResize={true}
-                >
-                <RadioTitle>
-                  <h4>harvest radio</h4>
-                  <CloseIcon onClick={toggleRadio} ><i className="fas fa-times-circle "></i></CloseIcon>
-                </RadioTitle>
-                <RadioPanel toggleRadio={toggleRadio} />
-              </ReactModal>
+                {state.address ? (
+                  <Row>
+                    <Col>
+                      <Wallet state={state} />
+                    </Col>
+                  </Row>
+                ) : null}
 
-              {/* RADIO MODAL */}
-
-
-                 {state.address? <Row>
-                   
-                  <Col >
-                    <Wallet
-                      state={state}
-                     
-                    />
-                  </Col>
-                </Row> : null}
-                
-
-                 
                 {/* MOVED MAIN COMPONENTS INTO ITS OWN COMPONENT */}
                 {/* The welcome text display on intial load and when a wallet is connected the main content renders */}
                 {state.provider ? (
-                  <MainContent 
-                  state={state} 
-                  setState={setState}
-                  openModal={openModal}/>
-                ) :
-                <Row >
-                  <Col >
-                    <WelcomeText 
-                      state={state}
-                      openModal={openModal}
-                      disconnect={disconnect}
-                      setConnection={setConnection}
-                      setAddress={setAddress}
-                      refresh={refresh}
-                     />
-                  </Col>
-                  
-                  </Row>} 
+                  <MainContent
+                    state={state}
+                    setState={setState}
+                    openModal={openModal}
+                  />
+                ) : (
+                  <Row>
+                    <Col>
+                      <WelcomeText
+                        state={state}
+                        openModal={openModal}
+                        disconnect={disconnect}
+                        setConnection={setConnection}
+                        setAddress={setAddress}
+                        refresh={refresh}
+                      />
+                    </Col>
+                  </Row>
+                )}
               </Panel>
             </Col>
           </Row>
         </Container>
         <ErrorModal state={state} onClose={() => closeErrorModal()} />
-    </ThemeProvider>
+      </ThemeProvider>
     </HarvestContext.Provider>
-    
   );
 }
 

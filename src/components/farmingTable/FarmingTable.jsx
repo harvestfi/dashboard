@@ -1,13 +1,12 @@
 import React, { useEffect, useContext } from "react";
 import HarvestContext from "../../Context/HarvestContext";
-import DataTable from "react-data-table-component";
 import styled, { ThemeProvider } from "styled-components";
 import harvest from "../../lib/index";
 import { darkTheme, lightTheme, fonts } from "../../styles/appStyles";
 
 import FarmTableSkeleton from "./FarmTableSkeleton";
 
-const { utils, ethers } = harvest;
+const { utils } = harvest;
 
 const TableContainer = styled.div`
   display: flex;
