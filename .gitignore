@@ -26,3 +26,5 @@ scripts/*.json
 *.csv
 node_modules
 dist
+
+debug.log
