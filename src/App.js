@@ -718,6 +718,7 @@ function App() {
     <HarvestContext.Provider
       value={{
         state,
+        setState,
         radio,
         toggleRadio,
         tokenAddedMessage,
