@@ -8,6 +8,8 @@ import harvest from "./lib/index.js";
 import Loadable from "react-loadable";
 import { darkTheme, lightTheme, fonts } from "./styles/appStyles.js";
 import axios from "axios";
+import ReactModal from "react-modal-resizable-draggable";
+import { motion } from "framer-motion";
 
 // images
 import logo from "./assets/gif_tractor.gif";
@@ -290,6 +292,35 @@ const Panel = styled.div`
     cursor:grab;
   }
 
+
+  .token-added-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    background-color: ${(props) => props.theme.style.lightBackground};
+    color: ${(props) => props.theme.style.primaryFontColor};
+    font-family: ${fonts.contentFont};
+    font-size: 2rem;
+    padding: 1rem 2rem;
+    border-radius: .5rem;
+    border: ${(props) => props.theme.style.mainBorder};
+    box-shadow: ${(props) => props.theme.style.panelBoxShadow};
+    margin: -5rem auto 0 auto;
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    @media(max-width: 768px) {
+      left: 30%;
+      right: 30%;
+    }
+
+    p {
+      text-align: center;
+    }
+
+  }
+
   
 
   
@@ -326,8 +357,8 @@ const PanelTab = styled.div`
     
    
   }
-  @media(max-width: 605px) {
-    font-size: 1.9rem;
+  @media(max-width: 700px) {
+    font-size: 1.6rem;
     padding: 0.75rem 1rem 2.2rem 1rem;
     position: relative;
     top: .1rem;
@@ -337,17 +368,17 @@ const PanelTab = styled.div`
     margin-right: .5rem;
   }
   @media(max-width: 380px) {
-    font-size: 1.5rem;
-    padding: 0.75rem .75rem 2rem .75rem;
+    font-size: 1.2rem;
+    padding: 0.75rem .5rem 2rem .5rem;
     position: relative;
-    margin-right: .5rem;
+    margin-right: .0rem;
     top: .5rem;
     a {
       top: .4rem;
     }
   }
   @media(max-width: 333px) {
-    margin-right: .3rem;
+    
   }
   
 
@@ -385,6 +416,52 @@ const PanelTab = styled.div`
       
     }
     @media(max-width: 380px) {
+      margin-left: 0;
+      a {
+        font-size: 1.4rem;
+      }
+      
+    };
+    @media(max-width: 333px) {
+      margin-right: .3rem;
+    }
+  }
+
+  &.analytics-tab {
+    position: relative;
+    background-color: ${(props) => props.theme.style.wikiTabBackground};
+    top: 0.5rem;
+    margin-left: 2.5rem;
+    
+
+    &:hover {
+      top: 0rem;
+    }
+
+    a {
+      color: ${(props) => props.theme.style.primaryFontColor};
+      font-size: 1.9rem;
+      position: relative;
+      top: .1rem;
+    }
+    @media(max-width: 675px) {
+      
+      margin-left: .5rem;
+     
+      
+    }
+   
+    @media(max-width: 500px) {
+      top: 1.3rem;
+      margin-left: .5rem;
+      a {
+        font-size: 1.5rem;
+        top: -.1rem;;
+      }
+      
+    }
+    @media(max-width: 380px) {
+      margin-left: 0;
       a {
         font-size: 1.4rem;
       }
@@ -425,6 +502,13 @@ const PanelTab = styled.div`
         top: 0rem;
       }
 
+      @media(max-width: 700px) {
+        margin-left: .5rem;
+        p {
+          font-size: 1.9rem;
+        }
+        
+      }
 
       @media(max-width: 500px) {
         top: 1.4rem;
@@ -435,6 +519,7 @@ const PanelTab = styled.div`
         
       }
       @media(max-width: 380px) {
+        margin-left: 0;
         p {
           font-size: 1.4rem;
         }
@@ -479,6 +564,7 @@ const ErrorModal = Loadable({
 function App() {
   const [isConnecting, setIsConnecting] = useState(false);
 
+  const [tokenAddedMessage, setTokenAddedMessage] = useState("");
   const [state, setState] = useState({
     provider: undefined,
     signer: undefined,
@@ -636,7 +722,15 @@ function App() {
 
   return (
     <HarvestContext.Provider
-      value={{ state, setState, radio, toggleRadio, setIsConnecting }}
+      value={{
+        state,
+        setState,
+        radio,
+        toggleRadio,
+        tokenAddedMessage,
+        setTokenAddedMessage,
+        setIsConnecting,
+      }}
     >
       <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
         <GlobalStyle />
@@ -673,6 +767,16 @@ function App() {
                     </a>
                   </PanelTab>
 
+                  <PanelTab className="analytics-tab">
+                    <a
+                      href="https://farmdashboard.xyz/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      analytics
+                    </a>
+                  </PanelTab>
+
                   <PanelTab className="radio-tab" onClick={toggleRadio}>
                     <p>radio</p>
                   </PanelTab>
@@ -696,6 +800,14 @@ function App() {
 
               <Panel>
                 <Radio />
+
+                {state.address ? (
+                  <Row>
+                    <Col>
+                      <Wallet state={state} />
+                    </Col>
+                  </Row>
+                ) : null}
 
                 {/* MOVED MAIN COMPONENTS INTO ITS OWN COMPONENT */}
                 {/* The welcome text display on intial load and when a wallet is connected the main content renders */}

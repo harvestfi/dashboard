@@ -6,18 +6,18 @@ const Container = styled.div`
   ${({ isOpen }) => {
     if (isOpen) {
       return css`
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      width: 100vw;
-      height: 150vh;
-      background-color: #07070767;
-      bottom: 70%;
-      transform: translateY(50%);
-      z-index: 200;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        width: 100vw;
+        height: 150vh;
+        background-color: #07070767;
+        bottom: 70%;
+        transform: translateY(50%);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
       `;
     } else {
       return css`
@@ -75,8 +75,9 @@ const ErrorModal = ({ state, onClose }) => (
       <Inner>
         <h4 className="error-title">Whoa, partner!</h4>
         <p>{state.error.message}</p>
-        <CloseIcon onClick={onClose}><i className="fas fa-times-circle fa-2x"></i></CloseIcon>
-        
+        <CloseIcon onClick={onClose}>
+          <i className="fas fa-times-circle fa-2x"></i>
+        </CloseIcon>
       </Inner>
     </Container>
   </ThemeProvider>

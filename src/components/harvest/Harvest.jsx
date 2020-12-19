@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme, fonts } from "../../styles/appStyles";
 import harvest from "../../lib/index.js";
-const { utils,ethers } = harvest;
+const { utils, ethers } = harvest;
 
 const Panel = styled.div`
   display: flex;
@@ -77,82 +77,85 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const Harvest = ({ state,setState }) => {
- 
+const Harvest = ({ state, setState }) => {
   const harvest = async () => {
-    
-    const activePools = state.manager.pools
+    const activePools = state.manager.pools;
 
     for (let i = 0; i < activePools.length; i++) {
-       await activePools[i].earnedRewards(state.address)
-      .then(res => {
-        
-        if(state.minimumHarvestAmount * 1000000000000 <= parseFloat((res.toString() / 1000000).toFixed(10))) {
-          //The original code here would harvest all farms regardless of the amount specified.
-          //Now it checks if the rewards are equal to or above specfied amount before harvesting
-          activePools[i].getReward()
-          .catch((e) => console.log("Rejected Transaction"));
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+      await activePools[i]
+        .earnedRewards(state.address)
+        .then((res) => {
+          if (
+            state.minimumHarvestAmount * 1000000000000 <=
+            parseFloat((res.toString() / 1000000).toFixed(10))
+          ) {
+            //The original code here would harvest all farms regardless of the amount specified.
+            //Now it checks if the rewards are equal to or above specfied amount before harvesting
+            activePools[i]
+              .getReward()
+              .catch((e) => console.log("Rejected Transaction"));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-    setState({...state,minimumHarvestAmount: 0})
+    setState({ ...state, minimumHarvestAmount: 0 });
   };
 
-//   const getMinRewards= () => {
-//     let result = state.summaries.map(utils.prettyPosition)
-//     let min = 10;
-//     for(let i = 0; i < result.length; i++) {
-//          if (result[i].earnedRewards > 0 && result[i].earnedRewards < min ) {
-//            min = result[i].earnedRewards
-//          }
-//     }
-//     console.log(min)
-//     setState({...state,minimumHarvestAmount: min})
-//  }
+  //   const getMinRewards= () => {
+  //     let result = state.summaries.map(utils.prettyPosition)
+  //     let min = 10;
+  //     for(let i = 0; i < result.length; i++) {
+  //          if (result[i].earnedRewards > 0 && result[i].earnedRewards < min ) {
+  //            min = result[i].earnedRewards
+  //          }
+  //     }
+  //     console.log(min)
+  //     setState({...state,minimumHarvestAmount: min})
+  //  }
 
   return (
     <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
       <Panel>
-         
-      <div className='panel-text'>
-        <p>
-          Harvest all with at least
-          <input
-            type="number"
-            onChange={(event) => setState({...state,minimumHarvestAmount :event.target.value})}
-            placeholder="min"
-            value={state.minimumHarvestAmount}
-            step="any"
-          />
-          FARM 
-        </p>
-        {state.minimumHarvestAmount === 0 ? "" :  <button
-          className="button clear"
-          onClick={(event) => setState({...state,minimumHarvestAmount :0})}
-        >
-          clear
-        </button>}
-      </div>
-      
+        <div className="panel-text">
+          <p>
+            Harvest all with at least
+            <input
+              type="number"
+              onChange={(event) =>
+                setState({ ...state, minimumHarvestAmount: event.target.value })
+              }
+              placeholder="min"
+              value={state.minimumHarvestAmount}
+              step="any"
+            />
+            FARM
+          </p>
+          {state.minimumHarvestAmount === 0 ? (
+            ""
+          ) : (
+            <button
+              className="button clear"
+              onClick={(event) =>
+                setState({ ...state, minimumHarvestAmount: 0 })
+              }
+            >
+              clear
+            </button>
+          )}
+        </div>
 
-      <ButtonContainer>
-         <button
-          className="button"
-          disabled={!state.provider || state.minimumHarvestAmount === 0}
-          onClick={harvest}
-        >
-          harvest all
-        </button>
-
-       
-      </ButtonContainer>
-      
-      
-    </Panel>
-       
+        <ButtonContainer>
+          <button
+            className="button"
+            disabled={!state.provider || state.minimumHarvestAmount === 0}
+            onClick={harvest}
+          >
+            harvest all
+          </button>
+        </ButtonContainer>
+      </Panel>
     </ThemeProvider>
   );
 };

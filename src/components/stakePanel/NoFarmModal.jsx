@@ -18,15 +18,11 @@ const Container = styled.div`
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        @media(max-width: 990px) {
-          
+        @media (max-width: 990px) {
           transform: translateX(-8%);
-          
         }
-        @media(max-width: 600px) {
-          
+        @media (max-width: 600px) {
           transform: translateX(-12%);
-          
         }
       `;
     } else {
@@ -59,7 +55,7 @@ const Inner = styled.div`
   p {
     font-size: 2.1rem;
     line-height: 24px;
-    
+
     font-family: ${fonts.contentFont};
     margin-bottom: 0;
   }
@@ -68,20 +64,18 @@ const Inner = styled.div`
     text-decoration: none;
     color: ${(props) => props.theme.style.buttonFontColor};
     font-family: ${fonts.headerFont};
-    
   }
 
   button {
-      margin-top: 1rem;
-      font-size: 1.9rem;
-      position: relative;
-      
-      &:hover {
-          top: 1.5px;
-      }
-      
+    margin-top: 1rem;
+    font-size: 1.9rem;
+    position: relative;
+
+    &:hover {
+      top: 1.5px;
+    }
   }
-  @media(max-width: 600px) {
+  @media (max-width: 600px) {
     width: 80%;
     margin: 0 auto;
   }
@@ -94,7 +88,6 @@ const CloseIcon = styled.span`
   font-size: 1.2rem;
   font-family: ${fonts.headerFont};
   cursor: pointer;
-  
 
   .fas {
     color: ${(props) => props.theme.style.primaryFontColor};
@@ -105,21 +98,29 @@ const CloseIcon = styled.span`
   }
 `;
 
-const NoFarmModal = ({ state,modal,onClose,message }) => (
+const NoFarmModal = ({ state, modal, onClose, message }) => (
   <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
     <Container isOpen={modal.open}>
       <Inner>
         <h4 className="error-title">Hold up, partner!</h4>
         <p>{modal.message}</p>
-        {modal.noFarm ? <button className="button">
-            <a 
+        {modal.noFarm ? (
+          <button className="button">
+            <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://app.uniswap.org/#/swap?inputCurrency=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&outputCurrency=0xa0246c9032bC3A600820415aE600c6388619A14D">Buy Farm!</a>
-        </button> : ''}
-        
-        <CloseIcon onClick={onClose}><i className="fas fa-times-circle fa-2x"></i></CloseIcon>
-        
+              href="https://app.uniswap.org/#/swap?inputCurrency=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&outputCurrency=0xa0246c9032bC3A600820415aE600c6388619A14D"
+            >
+              Buy Farm!
+            </a>
+          </button>
+        ) : (
+          ""
+        )}
+
+        <CloseIcon onClick={onClose}>
+          <i className="fas fa-times-circle fa-2x"></i>
+        </CloseIcon>
       </Inner>
     </Container>
   </ThemeProvider>
