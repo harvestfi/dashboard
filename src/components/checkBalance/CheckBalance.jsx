@@ -129,7 +129,7 @@ const CheckBalance = (props) => {
       </>
 
       <Panel>
-        <Radio />
+        {isCheckingBalance ? <Radio /> : ""}
         {isCheckingBalance ? (
           ""
         ) : (
