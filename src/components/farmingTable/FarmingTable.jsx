@@ -1,6 +1,5 @@
 import React, { useEffect, useContext } from "react";
 import HarvestContext from "../../Context/HarvestContext";
-import DataTable from "react-data-table-component";
 import styled, { ThemeProvider } from "styled-components";
 import harvest from "../../lib/index";
 import { darkTheme, lightTheme, fonts } from "../../styles/appStyles";
@@ -23,72 +22,6 @@ const TableContainer = styled.div`
   border-top-left-radius: 0rem;
   position: relative;
   z-index: 50;
- 
-  
-  div[role="table"] {
-    width: 99%;
-    height: 100%
-    background-color: ${(props) => props.theme.style.lightBackground}
-    padding: .35rem;
-    
-    scrollbar-width: thin;
-    scrollbar-color: ${(props) => props.theme.style.scrollBarColor} ${(props) =>
-  props.theme.style.lightBackground} ;
-    ::-webkit-scrollbar {
-      width: .1rem;
-    }
-}
-.rdt_TableHeadRow {
-    
-  border-bottom: ${(props) => props.theme.style.mainBorder};
-  box-shadow: ${(props) => props.theme.style.panelBoxShadow};
-  background-color: ${(props) => props.theme.style.lightBackground};
-  border-top-right-radius: 0.5rem;
-  border-top-left-radius: 0.5rem;
-}
-.rdt_TableBody {
-  box-shadow: ${(props) => props.theme.style.panelBoxShadow};
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-bottom-left-radius: .5rem;
-  border-bottom-right-radius: .5rem;
-}
-.rdt_TableRow {
-  background-color: ${(props) => props.theme.style.lightBackground};
-  font-family: ${fonts.contentFont};
-  color: ${(props) => props.theme.style.primaryFontColor};
-  font-size: 1.5rem;
-  
-  @media(max-width: 1090px) {
-    font-size: 1.2rem;
-    
-  }
-  @media(max-width: 760px) {
-    font-size: 1.5rem;
-    
-  }
-  @media(max-width: 330px) {
-    font-size: .9rem;
-  }
-}
-div[role="columnheader"] {
-  color: ${(props) => props.theme.style.primaryFontColor};
-  background-color: ${(props) => props.theme.style.lightBackground};
-  font-family: ${fonts.headerFont};
-  font-size: 1.7rem;
-  letter-spacing: -1.5px;
-  
-  
-  &:hover,
-  &:visited,
-  &:active,
-  &:focus {
-    color: ${(props) => props.theme.style.primaryFontColor};
-  }
-}
-  
-  
-  
 `;
 
 const MainTableInner = styled.div`
@@ -303,8 +236,6 @@ const noAssetColumns = [
   {
     name: "You currently are not staking any assets",
   },
-];
-const noAssetData = [
   {
     asset: "Stake assets to get started",
   },
@@ -352,13 +283,17 @@ const FarmingTable = () => {
       {state.display ? (
         <TableContainer>
           {state.summaries.length === 0 ? (
-            <DataTable
-              noHeader={true}
-              noDivider={true}
-              columns={noAssetColumns}
-              noDataComponent={false}
-              data={noAssetData}
-            />
+            <NoAssetTable>
+              <div className="header">
+                <p>You currently are not staking any assets</p>
+              </div>
+              <div className="content">
+                <div className="name">
+                  {" "}
+                  <p>Stake assets to start earning!</p>{" "}
+                </div>
+              </div>
+            </NoAssetTable>
           ) : (
             <MainTableInner>
               <MainTableHeader>
@@ -386,10 +321,10 @@ const FarmingTable = () => {
                       {parseFloat(summary.stakedBalance).toFixed(6)}
                     </div>
                     <div className="pool">{summary.percentOfPool}</div>
+                    <div className="value">{summary.usdValueOf}</div>
                     <div className="unstaked">
                       {parseFloat(summary.unstakedBalance).toFixed(6)}
                     </div>
-                    <div className="value">{summary.usdValueOf}</div>
                   </MainTableRow>
                 ))}
             </MainTableInner>
@@ -403,3 +338,32 @@ const FarmingTable = () => {
 };
 
 export default FarmingTable;
+
+const NoAssetTable = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .header {
+    font-size: 2rem;
+    font-family: ${fonts.headerFont};
+    padding: 1.5rem 1rem;
+    border-bottom: 2px black solid;
+    width: 100%;
+    p {
+      text-align: center;
+    }
+  }
+  .content {
+    width: 100%;
+    font-size: 1.7rem;
+    font-family: ${fonts.contentFont};
+    padding: 1.5rem 1rem;
+    width: 100%;
+    border-bottom: 1.2px solid rgba(53, 53, 53, 0.15);
+    p {
+      text-align: center;
+    }
+  }
+`;

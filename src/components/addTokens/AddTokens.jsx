@@ -174,12 +174,13 @@ const tokens = [
   },
   {
     name: "3CRV",
-    url: "https://harvestfi.github.io/add-3crv/",
+    symbol: "3CRV",
     image: crv3,
     address: "0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490",
     decimals: 18,
     tokenImage:
       "https://assets.coingecko.com/coins/images/12972/large/3pool_128.png?1603948039",
+    url: "https://harvestfi.github.io/add-3crv/",
   },
 ];
 const tokens2 = [

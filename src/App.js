@@ -8,8 +8,6 @@ import harvest from "./lib/index.js";
 import Loadable from "react-loadable";
 import { darkTheme, lightTheme, fonts } from "./styles/appStyles.js";
 import axios from "axios";
-import ReactModal from "react-modal-resizable-draggable";
-import { motion } from "framer-motion";
 
 // images
 import logo from "./assets/gif_tractor.gif";

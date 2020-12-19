@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme } from "../../styles/appStyles";
+import { darkTheme, lightTheme, fonts } from "../../styles/appStyles";
 
 const SkeletonPanel = styled.div`
   display: flex;
@@ -15,14 +15,15 @@ const SkeletonPanel = styled.div`
   overflow: hidden;
   position: relative;
   z-index: 300;
-
-  .skeleton-header {
+  <<<<<<<
+    HEAD
+    =======>>>>>>>5447f8396567c47b1a4117482f07687467fcc96d
+    .skeleton-header {
     margin: 0;
     height: 6rem;
     width: 100%;
     border-bottom: 2px solid black;
   }
-
   &::before {
     content: "";
     position: relative;
@@ -38,7 +39,6 @@ const SkeletonPanel = styled.div`
     );
     animation: load 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
-
   @keyframes load {
     from {
       left: -100%;
@@ -67,7 +67,6 @@ const PanelTab = styled.div`
   box-shadow: ${(props) => props.theme.style.panelTabBoxShadow};
   position: relative;
   top: 1.2rem;
-
   &::before {
     content: "";
     position: relative;
@@ -83,7 +82,6 @@ const PanelTab = styled.div`
     );
     animation: load 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
-
   @keyframes load {
     from {
       left: -100%;
