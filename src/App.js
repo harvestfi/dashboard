@@ -17,6 +17,7 @@ import Wallet from "./components/Wallet";
 import Radio from "./components/radio/Radio";
 import MainContent from "./components/MainContent";
 import WelcomeText from "./components/WelcomeText";
+import CheckBalance from "./components/checkBalance/CheckBalance";
 
 const { ethers } = harvest;
 const GlobalStyle = createGlobalStyle`
@@ -476,6 +477,8 @@ const ErrorModal = Loadable({
 });
 
 function App() {
+  const [isConnecting, setIsConnecting] = useState(false);
+
   const [state, setState] = useState({
     provider: undefined,
     signer: undefined,
@@ -549,6 +552,7 @@ function App() {
       error: { message: null, type: null, display: false },
       theme: window.localStorage.getItem("HarvestFinance:Theme") || "light",
     });
+    setIsConnecting(false);
   };
 
   const closeErrorModal = () => {
@@ -631,7 +635,9 @@ function App() {
   };
 
   return (
-    <HarvestContext.Provider value={{ state, radio, toggleRadio }}>
+    <HarvestContext.Provider
+      value={{ state, setState, radio, toggleRadio, setIsConnecting }}
+    >
       <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
         <GlobalStyle />
         <Container>
@@ -716,6 +722,17 @@ function App() {
               </Panel>
             </Col>
           </Row>
+          {isConnecting ? (
+            ""
+          ) : (
+            <Row>
+              <Col style={{ marginTop: "3rem", marginBottom: "3rem" }}>
+                <Panel>
+                  <CheckBalance state={state} />
+                </Panel>
+              </Col>
+            </Row>
+          )}
         </Container>
         <ErrorModal state={state} onClose={() => closeErrorModal()} />
       </ThemeProvider>
