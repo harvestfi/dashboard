@@ -321,10 +321,10 @@ const FarmingTable = () => {
                       {parseFloat(summary.stakedBalance).toFixed(6)}
                     </div>
                     <div className="pool">{summary.percentOfPool}</div>
-                    <div className="value">{summary.usdValueOf}</div>
                     <div className="unstaked">
                       {parseFloat(summary.unstakedBalance).toFixed(6)}
                     </div>
+                    <div className="value">{summary.usdValueOf}</div>
                   </MainTableRow>
                 ))}
             </MainTableInner>
