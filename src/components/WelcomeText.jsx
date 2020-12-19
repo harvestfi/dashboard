@@ -98,9 +98,10 @@ const WelcomeText = ({
   openModal,
   state,
 }) => {
-  const { setIsConnecting } = useContext(HarvestContext);
+  const { setIsConnecting, setCheckingBalance } = useContext(HarvestContext);
   const connectMetamask = () => {
     setIsConnecting(true);
+    setCheckingBalance(false);
     web3Modal
       .connect()
       .then((provider) => {

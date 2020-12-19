@@ -3,11 +3,10 @@ import styled, { ThemeProvider } from "styled-components";
 import { Row, Col } from "styled-bootstrap-grid";
 import { darkTheme, lightTheme, fonts } from "../../styles/appStyles";
 import harvest from "../../lib/index";
+import { motion } from "framer-motion";
 
 //COMPONENTS
-import Wallet from "../Wallet";
-import FarmingTable from "../farmingTable/FarmingTable";
-import AssetTable from "../assetTable/AssetTable";
+import MainContent from "../MainContent";
 
 //CONTEXT
 import HarvestContext from "../../Context/HarvestContext";
@@ -15,19 +14,28 @@ import HarvestContext from "../../Context/HarvestContext";
 const { ethers } = harvest;
 
 const CheckBalance = (props) => {
-  const { state, setState } = useContext(HarvestContext);
-  const [isChecking, setIsChecking] = useState(false);
+  const {
+    state,
+    setState,
+    setConnection,
+    isCheckingBalance,
+    setCheckingBalance,
+    setTokenAddedMessage,
+  } = useContext(HarvestContext);
+  const [validationMessage, setValidationMessage] = useState("");
   const [addressToCheck, setAddressToCheck] = useState("");
 
   const checkBalances = async (address) => {
-    if (addressToCheck) {
-      setIsChecking(true);
+    setAddressToCheck("");
+    setCheckingBalance(true);
+    if (validateAddress(addressToCheck)) {
       const provider = window.web3.currentProvider;
       const ethersProvider = new ethers.providers.Web3Provider(provider);
       const signer = ethersProvider.getSigner();
       const manager = harvest.manager.PoolManager.allPastPools(
         signer ? signer : provider,
       );
+      setConnection(provider, signer, manager);
       manager
         .aggregateUnderlyings(addressToCheck)
         .then((underlying) => {
@@ -65,6 +73,13 @@ const CheckBalance = (props) => {
         .catch((err) => {
           console.log(err);
         });
+    } else {
+      setAddressToCheck("");
+      setValidationMessage("You must enter a valid address");
+      const timer = setTimeout(() => {
+        setValidationMessage("");
+      }, 2500);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -74,15 +89,44 @@ const CheckBalance = (props) => {
 
   const clear = () => {
     setAddressToCheck("");
-    setIsChecking(false);
+    setCheckingBalance(false);
+  };
+
+  const setCheck = (address) => {
+    setCheckingBalance(true);
+    checkBalances(address);
+  };
+
+  const validateAddress = (address) => {
+    try {
+      ethers.utils.getAddress(address);
+    } catch (e) {
+      return false;
+    }
+    return true;
   };
 
   return (
     <ThemeProvider
       theme={props.state.theme === "dark" ? darkTheme : lightTheme}
     >
+      <>
+        {validationMessage ? (
+          <motion.div
+            key={validationMessage}
+            initial={{ x: 0, y: -100, opacity: 0 }}
+            animate={{ x: 0, y: 0, opacity: 1 }}
+            exit={{ x: 0, y: -100, opacity: 1 }}
+          >
+            <div className="token-added-message">
+              <p>{validationMessage}</p>
+            </div>
+          </motion.div>
+        ) : null}
+      </>
+
       <Panel>
-        {isChecking ? (
+        {isCheckingBalance ? (
           ""
         ) : (
           <div className="read-only-header">
@@ -99,44 +143,17 @@ const CheckBalance = (props) => {
           </div>
         )}
 
-        {isChecking ? (
+        {isCheckingBalance ? (
           ""
         ) : (
           <button
-            onClick={() => checkBalances(addressToCheck)}
+            onClick={() => setCheck(addressToCheck)}
             className="check-all button"
           >
             Check Balance
           </button>
         )}
-        {isChecking ? (
-          <Row>
-            <Col>
-              <Wallet
-                state={state}
-                address={addressToCheck}
-                provider={window.web3.currentProvider}
-              />
-            </Col>
-          </Row>
-        ) : null}
-
-        {isChecking ? (
-          <div className="read-only-tables">
-            <FarmingTable state={state} />
-            <AssetTable state={state} style={{ marginTop: "3rem" }} />
-          </div>
-        ) : (
-          ""
-        )}
-
-        {isChecking ? (
-          <button onClick={clear} className="clear button">
-            Clear
-          </button>
-        ) : (
-          ""
-        )}
+        {isCheckingBalance ? <MainContent state={state} /> : null}
       </Panel>
     </ThemeProvider>
   );
@@ -159,6 +176,8 @@ const Panel = styled.div`
   border-radius: 0.5rem;
   box-sizing: border-box;
   box-shadow: ${(props) => props.theme.style.panelBoxShadow};
+  z-index: 1;
+  position: relative;
  
   h1 {
     font-family: ${fonts.headerFont};
@@ -181,7 +200,7 @@ const Panel = styled.div`
   }
 
   .button {
-    width: 12%;
+    width: max-content;
     margin: 2rem auto 2rem auto;
     font-size: 2rem;
     font-family: ${fonts.headerFont};
@@ -210,6 +229,36 @@ const Panel = styled.div`
     margin-bottom: 1.5rem;
     height: 32rem;
   }
+
+  .validation-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    background-color: ${(props) => props.theme.style.lightBackground};
+    color: ${(props) => props.theme.style.primaryFontColor};
+    font-family: ${fonts.contentFont};
+    font-size: 2rem;
+    padding: 1rem 2rem;
+    border-radius: .5rem;
+    border: ${(props) => props.theme.style.mainBorder};
+    box-shadow: ${(props) => props.theme.style.panelBoxShadow};
+    margin: -5rem auto 0 auto;
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    @media(max-width: 768px) {
+      left: 30%;
+      right: 30%;
+    }
+
+    p {
+      text-align: center;
+    }
+
+    }
+
+    }
  
   
 `;
