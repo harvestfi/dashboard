@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 
 //COMPONENTS
 import MainContent from "../MainContent";
+import Radio from "../radio/Radio";
 
 //CONTEXT
 import HarvestContext from "../../Context/HarvestContext";
@@ -26,9 +27,9 @@ const CheckBalance = (props) => {
   const [addressToCheck, setAddressToCheck] = useState("");
 
   const checkBalances = async (address) => {
-    setAddressToCheck("");
-    setCheckingBalance(true);
     if (validateAddress(addressToCheck)) {
+      setAddressToCheck("");
+      setCheckingBalance(true);
       const provider = window.web3.currentProvider;
       const ethersProvider = new ethers.providers.Web3Provider(provider);
       const signer = ethersProvider.getSigner();
@@ -73,13 +74,6 @@ const CheckBalance = (props) => {
         .catch((err) => {
           console.log(err);
         });
-    } else {
-      setAddressToCheck("");
-      setValidationMessage("You must enter a valid address");
-      const timer = setTimeout(() => {
-        setValidationMessage("");
-      }, 2500);
-      return () => clearTimeout(timer);
     }
   };
 
@@ -93,8 +87,17 @@ const CheckBalance = (props) => {
   };
 
   const setCheck = (address) => {
-    setCheckingBalance(true);
-    checkBalances(address);
+    if (address && validateAddress(addressToCheck)) {
+      setCheckingBalance(true);
+      checkBalances(address);
+    } else {
+      setAddressToCheck("");
+      setValidationMessage("You must enter a valid address");
+      const timer = setTimeout(() => {
+        setValidationMessage("");
+      }, 2500);
+      return () => clearTimeout(timer);
+    }
   };
 
   const validateAddress = (address) => {
@@ -126,6 +129,7 @@ const CheckBalance = (props) => {
       </>
 
       <Panel>
+        <Radio />
         {isCheckingBalance ? (
           ""
         ) : (

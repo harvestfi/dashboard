@@ -15,9 +15,12 @@ import AddTokens from "../components/addTokens/AddTokens";
 import Loadable from "react-loadable";
 
 const MainContent = ({ state, setState, openModal, isConnecting }) => {
-  const { isCheckingBalance, setCheckingBalance, disconnect } = useContext(
-    HarvestContext,
-  );
+  const {
+    setRadio,
+    isCheckingBalance,
+    setCheckingBalance,
+    disconnect,
+  } = useContext(HarvestContext);
   const FarmingTable = Loadable({
     loader: () => import("./farmingTable/FarmingTable"),
     loading() {
@@ -26,6 +29,7 @@ const MainContent = ({ state, setState, openModal, isConnecting }) => {
   });
 
   const clear = () => {
+    setRadio(false);
     setCheckingBalance(false);
   };
   return (
