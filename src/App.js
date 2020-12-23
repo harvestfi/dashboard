@@ -19,6 +19,8 @@ import Radio from "./components/radio/Radio";
 import MainContent from "./components/MainContent";
 import WelcomeText from "./components/WelcomeText";
 import CheckBalance from "./components/checkBalance/CheckBalance";
+import TokenMessage from "./components/statusMessages/TokenMessage";
+import HarvestAndStakeMessage from "./components/statusMessages/HarvestAndStakeMessage";
 
 const { ethers } = harvest;
 const GlobalStyle = createGlobalStyle`
@@ -292,33 +294,7 @@ const Panel = styled.div`
   }
 
 
-  .token-added-message {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: max-content;
-    background-color: ${(props) => props.theme.style.lightBackground};
-    color: ${(props) => props.theme.style.primaryFontColor};
-    font-family: ${fonts.contentFont};
-    font-size: 2rem;
-    padding: 1rem 2rem;
-    border-radius: .5rem;
-    border: ${(props) => props.theme.style.mainBorder};
-    box-shadow: ${(props) => props.theme.style.panelBoxShadow};
-    margin: -5rem auto 0 auto;
-    position: absolute;
-    left: 0%;
-    right: 0%;
-    @media(max-width: 768px) {
-      left: 30%;
-      right: 30%;
-    }
-
-    p {
-      text-align: center;
-    }
-
-  }
+ 
 `;
 
 const Container = styled.div`
@@ -340,6 +316,10 @@ function App() {
   const [isConnecting, setIsConnecting] = useState(false);
   const [isCheckingBalance, setCheckingBalance] = useState(false);
   const [tokenAddedMessage, setTokenAddedMessage] = useState("");
+  const [harvestAndStakeMessage, setHarvestAndStakeMessage] = useState({
+    first: "",
+    second: "",
+  });
   const [state, setState] = useState({
     provider: undefined,
     signer: undefined,
@@ -351,15 +331,16 @@ function App() {
     error: { message: null, type: null, display: false },
     theme: window.localStorage.getItem("HarvestFinance:Theme") || "light",
     display: false,
-    minimumHarvestAmount: 0,
+    minimumHarvestAmount: "0",
     apy: 0,
     farmPrice: 0,
+    totalFarmEarned: 0,
   });
 
   const getPools = async () => {
     await axios
       .get(
-        "https://api-ui.harvest.finance/pools?key=41e90ced-d559-4433-b390-af424fdc76d6",
+        `https://api-ui.harvest.finance/pools?key=41e90ced-d559-4433-b390-af424fdc76d6`,
       )
       .then((res) => {
         let currentAPY = res.data[0].rewardAPY;
@@ -506,6 +487,8 @@ function App() {
         setCheckingBalance,
         setConnection,
         disconnect,
+        harvestAndStakeMessage,
+        setHarvestAndStakeMessage,
       }}
     >
       <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
@@ -542,6 +525,9 @@ function App() {
                           </Col>
                         </Row>
                       ) : null}
+
+                      <TokenMessage />
+                      <HarvestAndStakeMessage />
 
                       {/* MOVED MAIN COMPONENTS INTO ITS OWN COMPONENT */}
                       {/* The welcome text display on intial load and when a wallet is connected the main content renders */}

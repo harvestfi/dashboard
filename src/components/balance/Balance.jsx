@@ -29,7 +29,9 @@ const BluePanel = styled.div`
   span {
     font-size: 1.3rem;
   }
-
+  @media (min-width: 1108px) {
+    height: 100%;
+  }
   @media (max-width: 1107px) {
     padding: 3.65rem 0.7rem 4rem 1.5rem;
     margin-right: 0px;
@@ -47,7 +49,7 @@ const Balance = ({ state }) => {
 
   useEffect(() => {
     balance();
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, [state.summaries]);
 
   const balance = () => {

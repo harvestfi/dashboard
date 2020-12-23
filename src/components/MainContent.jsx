@@ -6,7 +6,7 @@ import { fonts } from "../styles/appStyles";
 import FarmTableSkeleton from "../components/farmingTable/FarmTableSkeleton.jsx";
 import AssetTable from "../components/assetTable/AssetTable.jsx";
 import Harvest from "../components/harvest/Harvest.jsx";
-import StakePanel from "../components/stakePanel/StakePanel.jsx";
+import TotalFarmEarned from "../components/totalFarmEarned/TotalFarmEarned.jsx";
 import Balance from "../components/balance/Balance.jsx";
 import APY from "../components/apy/APY.jsx";
 import FarmPrice from "../components/farmPrice/FarmPrice";
@@ -45,11 +45,11 @@ const MainContent = ({ state, setState, openModal, isConnecting }) => {
       ) : (
         <Row style={{ marginTop: "15px" }}>
           {/* Git hub pages would not recognize the margin from the bootstrap grid */}
-          <Col lg="6">
+          <Col lg="8">
             <Harvest state={state} setState={setState} openModal={openModal} />
           </Col>
-          <Col lg="4">
-            <StakePanel state={state} openModal={openModal} />
+          <Col lg="2">
+            <APY apy={state.apy} display={state.display} theme={state.theme} />
           </Col>
           <Col lg="2">
             <Balance state={state} />
@@ -65,7 +65,7 @@ const MainContent = ({ state, setState, openModal, isConnecting }) => {
             <AddTokens state={state} />
           </Col>
           <Col lg="2">
-            <APY apy={state.apy} display={state.display} theme={state.theme} />
+            <TotalFarmEarned />
             <FarmPrice
               price={state.farmPrice}
               display={state.display}

@@ -234,15 +234,12 @@ const columns = [
 
 const noAssetColumns = [
   {
-    name: "You currently are not staking any assets",
-  },
-  {
-    asset: "Stake assets to get started",
+    name: "Value",
   },
 ];
 
 const FarmingTable = () => {
-  const { state, setState, setUnstakedFarm } = useContext(HarvestContext);
+  const { state, setState } = useContext(HarvestContext);
   const getThisReward = (reward) => {
     console.log(reward);
     setState({ ...state, minimumHarvestAmount: reward });
@@ -252,14 +249,10 @@ const FarmingTable = () => {
     let total = 0;
     if (state.summaries.length !== 0) {
       state.summaries.map(utils.prettyPosition).map((summary, index) => {
-        if (summary.name === "FARM Profit Sharing") {
-          setUnstakedFarm(summary.unstakedBalance.toString());
-        }
+        total += parseFloat(summary.historicalRewards);
         setState({
           ...state,
-          totalFarmEarned: (state.totalFarmEarned += parseFloat(
-            summary.historicalRewards,
-          )),
+          totalFarmEarned: (state.totalFarmEarned = total),
         });
       });
     }
@@ -270,6 +263,12 @@ const FarmingTable = () => {
       getTotalFarmEarned();
     }
   }, [state.summaries]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      getTotalFarmEarned();
+    }, 60000);
+    return () => clearTimeout(timer);
+  });
 
   return (
     <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
@@ -315,7 +314,7 @@ const FarmingTable = () => {
                       className="earned-rewards"
                       onClick={() => getThisReward(summary.earnedRewards)}
                     >
-                      {Math.floor(parseFloat(summary.earnedRewards)).toFixed(6)}
+                      {parseFloat(summary.earnedRewards).toFixed(6)}
                     </div>
                     <div className="staked">
                       {parseFloat(summary.stakedBalance).toFixed(6)}
