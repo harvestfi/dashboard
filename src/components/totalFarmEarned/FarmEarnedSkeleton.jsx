@@ -7,7 +7,7 @@ const SkeletonPanel = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 10rem;
   background: none;
   border: ${(props) => props.theme.style.mainBorder};
   box-shadow: ${(props) => props.theme.style.panelBoxShadow};
@@ -51,7 +51,7 @@ const SkeletonPanel = styled.div`
   }
 `;
 
-const APYSkeleton = ({ theme }) => {
+const FarmEarnedSkeleton = ({ theme }) => {
   return (
     <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
       <SkeletonPanel></SkeletonPanel>
@@ -59,4 +59,4 @@ const APYSkeleton = ({ theme }) => {
   );
 };
 
-export default APYSkeleton;
+export default FarmEarnedSkeleton;

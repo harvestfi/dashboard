@@ -1,8 +1,195 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import HarvestContext from "../../Context/HarvestContext";
 import styled, { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme, fonts } from "../../styles/appStyles";
 import harvest from "../../lib/index.js";
 const { utils, ethers } = harvest;
+
+const Harvest = () => {
+  const {
+    state,
+    setState,
+    harvestAndStakeMessage,
+    setHarvestAndStakeMessage,
+  } = useContext(HarvestContext);
+
+  const [isHarvesting, setHarvesting] = useState(false);
+
+  const harvest = async () => {
+    setHarvesting(true);
+    setState({ ...state, minimumHarvestAmount: "0" });
+
+    console.log("harvesting");
+
+    setHarvestAndStakeMessage({
+      ...harvestAndStakeMessage,
+      first: "Harvesting your rewards.",
+      second: "",
+    });
+    await state.manager
+      .getRewards(ethers.utils.parseUnits(state.minimumHarvestAmount, 18))
+      .then(async (vals) => {
+        let i = 0;
+        while (i < vals.length) {
+          await vals[i].getReward.wait();
+          i++;
+        }
+      })
+      .catch((err) => {
+        if (err.code === 4001) {
+          console.log("Transaction rejected.");
+        }
+      });
+
+    setHarvestAndStakeMessage({
+      ...harvestAndStakeMessage,
+      first: ``,
+      second: "",
+    });
+    setHarvesting(false);
+  };
+
+  const pool = state.manager.pools.find((pool) => {
+    return pool.address === "0x25550Cccbd68533Fa04bFD3e3AC4D09f9e00Fc50";
+  });
+
+  const stake = async () => {
+    // const allowance = await pool.lptoken.allowance(state.address, pool.address);
+
+    const amount =
+      state.minimumHarvestAmount > 0
+        ? ethers.utils.parseUnits(state.minimumHarvestAmount.toString(), 18)
+        : await pool.unstakedBalance(state.address);
+
+    console.log(
+      state.minimumHarvestAmount,
+      parseFloat(amount / 10 ** 18).toString(),
+    );
+    await pool
+      .stake(amount)
+      .then(async (res) => {
+        setHarvestAndStakeMessage({
+          ...harvestAndStakeMessage,
+          first: "Staking your FARM",
+          second: "",
+        });
+        await res.wait().then(() => {
+          setHarvesting(false);
+          setHarvestAndStakeMessage({
+            ...harvestAndStakeMessage,
+            first: `Success!`,
+            second: `Your FARM has been staked!`,
+          });
+          const timer = setTimeout(() => {
+            setHarvestAndStakeMessage({
+              ...harvestAndStakeMessage,
+              first: ``,
+              second: "",
+            });
+          }, 2500);
+          return () => clearTimeout(timer);
+        });
+      })
+      .catch((e) => {
+        if (e.code !== 4001 || e.code !== -32603) {
+          setHarvesting(false);
+          setHarvestAndStakeMessage({
+            ...harvestAndStakeMessage,
+            first: ``,
+            second: "",
+          });
+          console.log(
+            `You do not have enough to stake ${ethers.utils.formatEther(
+              amount,
+            )} FARM`,
+          );
+        }
+      });
+  };
+
+  const harvestAllAndStake = async () => {
+    console.log("harvesting");
+    setHarvesting(true);
+    setHarvestAndStakeMessage({
+      ...harvestAndStakeMessage,
+      first: "Harvesting your rewards and staking.",
+      second: "This could take a while",
+    });
+    await state.manager
+      .getRewards(ethers.utils.parseUnits(state.minimumHarvestAmount, 18))
+      .then(async (vals) => {
+        let i = 0;
+        while (i < vals.length) {
+          await vals[i].getReward.wait();
+          i++;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setState({ ...state, minimumHarvestAmount: "0" });
+
+    stake();
+  };
+
+  return (
+    <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
+      <Panel>
+        <div className="panel-text">
+          <p>
+            Harvest all with at least
+            <input
+              type="number"
+              onChange={(event) =>
+                setState({ ...state, minimumHarvestAmount: event.target.value })
+              }
+              placeholder="min"
+              value={state.minimumHarvestAmount}
+              step="any"
+            />
+            FARM
+          </p>
+          {state.minimumHarvestAmount === "0" ? (
+            ""
+          ) : (
+            <button
+              className="button clear"
+              onClick={(event) =>
+                setState({ ...state, minimumHarvestAmount: "0" })
+              }
+            >
+              clear
+            </button>
+          )}
+        </div>
+
+        <ButtonContainer>
+          {isHarvesting ? (
+            <HarvestingButton>harvest all</HarvestingButton>
+          ) : (
+            <button className="buttons" onClick={harvest}>
+              harvest all
+            </button>
+          )}
+          {isHarvesting ? (
+            <HarvestingButton>
+              harvest all and stake in FARM pool
+            </HarvestingButton>
+          ) : (
+            <button
+              className="buttons harvest-and-stake"
+              onClick={harvestAllAndStake}
+            >
+              harvest all and stake in FARM pool
+            </button>
+          )}
+        </ButtonContainer>
+      </Panel>
+    </ThemeProvider>
+  );
+};
+
+export default Harvest;
 
 const Panel = styled.div`
   display: flex;
@@ -16,14 +203,33 @@ const Panel = styled.div`
   box-sizing: border-box;
   box-shadow: ${(props) => props.theme.style.panelBoxShadow};
   
+ 
   input[type="number"] {
+    -moz-appearance: textfield;
+    background-color: ${(props) => props.theme.style.lightBackground};
+    border: 0.2rem solid #363636;
+    font-size: 1.4rem;
     margin: 0 1rem;
+    color: ${(props) => props.theme.style.primaryFontColor};
+    width: 12rem;
+    text-align: center;
+    border-radius: 0.5rem;
+    padding: 0.3rem 0.7rem;
+    @media(max-width: 1400px) {
+      width: 6rem;
+    }
+    @media(max-width: 1280px) {
+      width: 5rem;
+    }
   }
-
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
   @media only screen and (max-width: 990px) {
     margin-bottom: 1.5rem;
   }
-
   .panel-text {
     display: flex;
     justify-content: center;
@@ -43,33 +249,43 @@ const Panel = styled.div`
     @media(1340px) {
       font-size: 1.6rem
     }
-
    
 `;
 
 const ButtonContainer = styled.div`
-  width: 100%;
+  width: 80%;
+  margin: 1.5rem auto 0 auto;
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 1.5rem;
-
  
-  button {
-    width: 14.5rem;
+    
+  .buttons {
+    margin-left: 6rem;
+    width: max-content;
     font-size: 2rem;
     font-family: ${fonts.headerFont};
+    color: ${(props) => props.theme.style.buttonFontColor};
     position: relative;
     margin-top: 4px;
-    margin-right: .5rem;
+    background: ${(props) => props.theme.style.highlight};
+    border: ${(props) => props.theme.style.smallBorder};
+    box-shadow: ${(props) => props.theme.style.buttonBoxShadow};
+    border-radius: 0.8rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    
     
     &:hover {
       top: 1.5px;
     }
-
+    &.harvest-and-stake {
+      margin-left: 5%;
+    }
     .button.clear {
       margin-left: 1rem;
     }
-
+    
     
   }
   
@@ -77,87 +293,46 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const Harvest = ({ state, setState }) => {
-  const harvest = async () => {
-    const activePools = state.manager.pools;
-
-    for (let i = 0; i < activePools.length; i++) {
-      await activePools[i]
-        .earnedRewards(state.address)
-        .then((res) => {
-          if (
-            state.minimumHarvestAmount * 1000000000000 <=
-            parseFloat((res.toString() / 1000000).toFixed(10))
-          ) {
-            //The original code here would harvest all farms regardless of the amount specified.
-            //Now it checks if the rewards are equal to or above specfied amount before harvesting
-            activePools[i]
-              .getReward()
-              .catch((e) => console.log("Rejected Transaction"));
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+const HarvestingButton = styled.button`
+  margin-left: 6rem;
+  width: max-content;
+  font-size: 2rem;
+  font-family: ${fonts.headerFont};
+  position: relative;
+  margin-top: 4px;
+  background-color: ${(props) => props.theme.style.blueBackground};
+  border: ${(props) => props.theme.style.smallBorder};
+  box-shadow: ${(props) => props.theme.style.buttonBoxShadow};
+  border-radius: 0.8rem;
+  padding: 0.5rem 1rem;
+  cursor: none;
+  color: ${(props) => props.theme.style.buttonFontColor};
+  overflow: hidden;
+  z-index: 300;
+  &::before {
+    content: "";
+    position: relative;
+    left: -50px;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(
+      to right,
+      transparent 10%,
+      ${(props) => props.theme.style.blueBackground} 50%,
+      transparent 100%
+    );
+    animation: waiting 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+  &:hover {
+    top: none;
+  }
+  @keyframes waiting {
+    from {
+      left: -100%;
     }
-    setState({ ...state, minimumHarvestAmount: 0 });
-  };
-
-  //   const getMinRewards= () => {
-  //     let result = state.summaries.map(utils.prettyPosition)
-  //     let min = 10;
-  //     for(let i = 0; i < result.length; i++) {
-  //          if (result[i].earnedRewards > 0 && result[i].earnedRewards < min ) {
-  //            min = result[i].earnedRewards
-  //          }
-  //     }
-  //     console.log(min)
-  //     setState({...state,minimumHarvestAmount: min})
-  //  }
-
-  return (
-    <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
-      <Panel>
-        <div className="panel-text">
-          <p>
-            Harvest all with at least
-            <input
-              type="number"
-              onChange={(event) =>
-                setState({ ...state, minimumHarvestAmount: event.target.value })
-              }
-              placeholder="min"
-              value={state.minimumHarvestAmount}
-              step="any"
-            />
-            FARM
-          </p>
-          {state.minimumHarvestAmount === 0 ? (
-            ""
-          ) : (
-            <button
-              className="button clear"
-              onClick={(event) =>
-                setState({ ...state, minimumHarvestAmount: 0 })
-              }
-            >
-              clear
-            </button>
-          )}
-        </div>
-
-        <ButtonContainer>
-          <button
-            className="button"
-            disabled={!state.provider || state.minimumHarvestAmount === 0}
-            onClick={harvest}
-          >
-            harvest all
-          </button>
-        </ButtonContainer>
-      </Panel>
-    </ThemeProvider>
-  );
-};
-
-export default Harvest;
+    to {
+      left: 100%;
+    }
+  }
+`;

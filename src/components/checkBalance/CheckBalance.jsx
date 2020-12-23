@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 //COMPONENTS
 import MainContent from "../MainContent";
 import Radio from "../radio/Radio";
+import Wallet from "../Wallet";
 
 //CONTEXT
 import HarvestContext from "../../Context/HarvestContext";
@@ -21,14 +22,12 @@ const CheckBalance = (props) => {
     setConnection,
     isCheckingBalance,
     setCheckingBalance,
-    setTokenAddedMessage,
   } = useContext(HarvestContext);
   const [validationMessage, setValidationMessage] = useState("");
   const [addressToCheck, setAddressToCheck] = useState("");
 
   const checkBalances = async (address) => {
     if (validateAddress(addressToCheck)) {
-      setAddressToCheck("");
       setCheckingBalance(true);
       const provider = window.web3.currentProvider;
       const ethersProvider = new ethers.providers.Web3Provider(provider);
@@ -81,13 +80,8 @@ const CheckBalance = (props) => {
     setAddressToCheck(e.target.value);
   };
 
-  const clear = () => {
-    setAddressToCheck("");
-    setCheckingBalance(false);
-  };
-
   const setCheck = (address) => {
-    if (address && validateAddress(addressToCheck)) {
+    if (address && validateAddress(address)) {
       setCheckingBalance(true);
       checkBalances(address);
     } else {
@@ -121,15 +115,26 @@ const CheckBalance = (props) => {
             animate={{ x: 0, y: 0, opacity: 1 }}
             exit={{ x: 0, y: -100, opacity: 1 }}
           >
-            <div className="token-added-message">
+            <ValidationMessage className="validation-message">
               <p>{validationMessage}</p>
-            </div>
+            </ValidationMessage>
           </motion.div>
         ) : null}
       </>
 
       <Panel>
         {isCheckingBalance ? <Radio /> : ""}
+        {isCheckingBalance ? (
+          <Row>
+            <Col>
+              <Wallet
+                theme={state.theme}
+                address={addressToCheck}
+                provider={state.provider}
+              />
+            </Col>
+          </Row>
+        ) : null}
         {isCheckingBalance ? (
           ""
         ) : (
@@ -234,35 +239,34 @@ const Panel = styled.div`
     height: 32rem;
   }
 
-  .validation-message {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: max-content;
-    background-color: ${(props) => props.theme.style.lightBackground};
-    color: ${(props) => props.theme.style.primaryFontColor};
-    font-family: ${fonts.contentFont};
-    font-size: 2rem;
-    padding: 1rem 2rem;
-    border-radius: .5rem;
-    border: ${(props) => props.theme.style.mainBorder};
-    box-shadow: ${(props) => props.theme.style.panelBoxShadow};
-    margin: -5rem auto 0 auto;
-    position: absolute;
-    left: 0%;
-    right: 0%;
-    @media(max-width: 768px) {
-      left: 30%;
-      right: 30%;
-    }
-
-    p {
-      text-align: center;
-    }
-
-    }
-
-    }
+  
  
   
+`;
+
+const ValidationMessage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+  background-color: ${(props) => props.theme.style.lightBackground};
+  color: ${(props) => props.theme.style.primaryFontColor};
+  font-family: ${fonts.contentFont};
+  font-size: 2rem;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  border: ${(props) => props.theme.style.mainBorder};
+  box-shadow: ${(props) => props.theme.style.panelBoxShadow};
+  margin: -5rem auto 0 auto;
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  @media (max-width: 768px) {
+    left: 30%;
+    right: 30%;
+  }
+
+  p {
+    text-align: center;
+  }
 `;
