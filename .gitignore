@@ -26,3 +26,4 @@ scripts/*.json
 *.csv
 node_modules
 dist
+.env
