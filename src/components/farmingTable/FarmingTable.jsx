@@ -232,12 +232,6 @@ const columns = [
   },
 ];
 
-const noAssetColumns = [
-  {
-    name: "Value",
-  },
-];
-
 const FarmingTable = () => {
   const { state, setState } = useContext(HarvestContext);
   const getThisReward = (reward) => {

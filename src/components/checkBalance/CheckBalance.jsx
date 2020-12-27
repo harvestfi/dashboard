@@ -115,7 +115,7 @@ const CheckBalance = (props) => {
             animate={{ x: 0, y: 0, opacity: 1 }}
             exit={{ x: 0, y: -100, opacity: 1 }}
           >
-            <ValidationMessage className="validation-message">
+            <ValidationMessage>
               <p>{validationMessage}</p>
             </ValidationMessage>
           </motion.div>
