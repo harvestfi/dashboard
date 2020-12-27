@@ -80,8 +80,13 @@ const CheckBalance = (props) => {
     setAddressToCheck(e.target.value);
   };
 
+  const clear = () => {
+    setAddressToCheck("");
+    setCheckingBalance(false);
+  };
+
   const setCheck = (address) => {
-    if (address && validateAddress(address)) {
+    if (address && validateAddress(addressToCheck)) {
       setCheckingBalance(true);
       checkBalances(address);
     } else {
@@ -115,7 +120,7 @@ const CheckBalance = (props) => {
             animate={{ x: 0, y: 0, opacity: 1 }}
             exit={{ x: 0, y: -100, opacity: 1 }}
           >
-            <ValidationMessage className="validation-message">
+            <ValidationMessage>
               <p>{validationMessage}</p>
             </ValidationMessage>
           </motion.div>

@@ -6,7 +6,7 @@ import { darkTheme, lightTheme, fonts } from "../../styles/appStyles";
 
 import FarmTableSkeleton from "./FarmTableSkeleton";
 
-const { utils } = harvest;
+const { utils, ethers } = harvest;
 
 const TableContainer = styled.div`
   display: flex;
@@ -227,9 +227,6 @@ const columns = [
   {
     name: "Unstaked",
   },
-  {
-    name: "Value",
-  },
 ];
 
 const FarmingTable = () => {
@@ -308,7 +305,7 @@ const FarmingTable = () => {
                       className="earned-rewards"
                       onClick={() => getThisReward(summary.earnedRewards)}
                     >
-                      {parseFloat(summary.earnedRewards).toFixed(6)}
+                      {Math.floor(parseFloat(summary.earnedRewards)).toFixed(6)}
                     </div>
                     <div className="staked">
                       {parseFloat(summary.stakedBalance).toFixed(6)}

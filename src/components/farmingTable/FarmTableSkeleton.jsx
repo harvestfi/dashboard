@@ -15,6 +15,7 @@ const SkeletonPanel = styled.div`
   overflow: hidden;
   position: relative;
   z-index: 300;
+
   .skeleton-header {
     margin: 0;
     height: 6rem;

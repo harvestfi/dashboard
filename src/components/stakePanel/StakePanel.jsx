@@ -81,7 +81,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const StakePanel = ({ state, openModal }) => {
+const StakePanel = ({ state, openModal, manager }) => {
   const [modal, setModal] = useState({
     open: false,
     message: "",

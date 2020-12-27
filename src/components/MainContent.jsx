@@ -61,7 +61,6 @@ const MainContent = ({ state, setState, openModal, isConnecting }) => {
       ) : (
         <Row style={{ marginTop: "15px" }}>
           {/* Git hub pages would not recognize the margin from the bootstrap grid */}
-
           <Col lg="10">
             <AddTokens state={state} />
           </Col>
