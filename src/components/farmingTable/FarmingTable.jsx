@@ -308,7 +308,7 @@ const FarmingTable = () => {
                       className="earned-rewards"
                       onClick={() => getThisReward(summary.earnedRewards)}
                     >
-                      {Math.floor(parseFloat(summary.earnedRewards)).toFixed(6)}
+                      {parseFloat(summary.earnedRewards).toFixed(6)}
                     </div>
                     <div className="staked">
                       {parseFloat(summary.stakedBalance).toFixed(6)}
