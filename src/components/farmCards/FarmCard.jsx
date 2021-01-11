@@ -1,6 +1,6 @@
 import React from "react";
 
-import { FarmCardContainer, UnderlayingBalanceContainer } from "./FarmCardStyles";
+import { FarmCardContainer, UnderlyingBalanceContainer } from "./FarmCardStyles";
 
 export default function FarmCard({ summary_information }) {
 
@@ -35,9 +35,9 @@ export default function FarmCard({ summary_information }) {
                 </div>
 
             </div>
-            <UnderlayingBalanceContainer>
-                <label className="underlaying_balance_label">Underlaying Balance:</label> <span className="underlaying_balance_value">{summary_information.name === "FARM Profit Sharing" ? "N/A" : parseFloat(summary_information.underlyingBalance).toFixed(6)}</span>
-            </UnderlayingBalanceContainer>
+            <UnderlyingBalanceContainer>
+                <label className="underlying_balance_label">Underlying Balance:</label> <span className="underlying_balance_value">{summary_information.name === "FARM Profit Sharing" ? "N/A" : parseFloat(summary_information.underlyingBalance).toFixed(6)}</span>
+            </UnderlyingBalanceContainer>
             <div className="card_input_area">
                 {/* TODO: Add reward harvest/stake functions for this to be relevant*/}
                 {/* {isCheckingBalance ? (<></>) : 

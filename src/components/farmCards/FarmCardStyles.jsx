@@ -114,14 +114,14 @@ export const FarmCardButtonsContainer = styled.div`
     }
 `
 
-export const UnderlayingBalanceContainer = styled.div`
+export const UnderlyingBalanceContainer = styled.div`
     text-align: left;
     margin: 10px 0;
-    .underlaying_balance_label {
+    .underlying_balance_label {
         font-size: 16px;
         font-weight: bold;
     }
-    .underlaying_balance_value {
+    .underlying_balance_value {
         font-size: 16px;
     }
 `
