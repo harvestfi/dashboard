@@ -30,6 +30,16 @@ const assets = [
     address: "0x68A118Ef45063051Eac49c7e647CE5Ace48a68a5",
   },
   {
+    name: "BSG",
+    decimals: 18,
+    address: "0xB34Ab2f65c6e4F764fFe740ab83F982021Faed6d",
+  },
+  {
+    name: "BSGS",
+    decimals: 18,
+    address: "0xA9d232cC381715aE791417B624D7C4509D2c28DB",
+  },
+  {
     name: "BUSD",
     decimals: 18,
     address: "0x4Fabb145d64652a948d72533023f6E7A623C7C53",
@@ -65,6 +75,11 @@ const assets = [
     address: "0x845838DF265Dcd2c412A1Dc9e959c7d08537f8a2",
   },
   {
+    name: "CRV-EURS",
+    decimals: 18,
+    address: "0x194eBd173F6cDacE046C53eACcE9B953F28411d1",
+  },
+  {
     name: "CRV-OBTC",
     decimals: 18,
     address: "0x2fE94ea3d5d4a175184081439753DE15AeF9d614",
@@ -75,6 +90,11 @@ const assets = [
     address: "0x4f3E8F405CF5aFC05D68142F3783bDfE13811522",
   },
   {
+    name: "CRV-UST",
+    decimals: 18,
+    address: "0x94e131324b6054c0D789b190b2dAC504e4361b53",
+  },
+  {
     name: "DAI",
     decimals: 18,
     address: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -83,6 +103,16 @@ const assets = [
     name: "DPI",
     decimals: 18,
     address: "0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b",
+  },
+  {
+    name: "DSD",
+    decimals: 18,
+    address: "0xBD2F0Cd039E0BFcf88901C98c0bFAc5ab27566e3",
+  },
+  {
+    name: "ESD",
+    decimals: 18,
+    address: "0x36F3FD68E7325a35EB768F1AedaAe9EA0689d723",
   },
   {
     name: "FARM",
@@ -465,23 +495,39 @@ const assets = [
   },
   {
     name: "1INCH_ETH-DAI_LP",
+    //type: "uniswap", // disable until ETH is handled properly
     decimals: 18,
     address: "0x7566126f2fD0f2Dddae01Bb8A6EA49b760383D5A",
   },
   {
     name: "1INCH_ETH-WBTC_LP",
+    //type: "uniswap", // disable until ETH is handled properly
     decimals: 18,
     address: "0x6a11F3E5a01D129e566d783A7b6E8862bFD66CcA",
   },
   {
     name: "1INCH_ETH-USDT_LP",
+    //type: "uniswap", // disable until ETH is handled properly
     decimals: 18,
     address: "0xbBa17b81aB4193455Be10741512d0E71520F43cB",
   },
   {
     name: "1INCH_ETH-USDC_LP",
+    //type: "uniswap", // disable until ETH is handled properly
     decimals: 18,
     address: "0xb4dB55a20E0624eDD82A0Cf356e3488B4669BD27",
+  },
+  {
+    name: "UNI_DAI-BSGS_LP",
+    //type: "uniswap", // disable until it's in Coingecko
+    decimals: 18,
+    address: "0x980a07E4F64d21a0cB2eF8D4AF362a79b9f5c0DA",
+  },
+  {
+    name: "UNI_DAI-BSG_LP",
+    //type: "uniswap", // disable until it's in Coingecko
+    decimals: 18,
+    address: "0x4A9596E5d2f9bEF50E4De092AD7181aE3C40353e",
   },
 ];
 
@@ -943,6 +989,55 @@ assets.push({
   underlyingAsset: assetByName("1INCH_ETH-USDC_LP"),
   decimals: 18,
   address: "0xD162395C21357b126C5aFED6921BC8b13e48D690",
+});
+assets.push({
+  name: "fCRV-EURS",
+  type: "ftoken",
+  underlyingAsset: assetByName("CRV-EURS"),
+  decimals: 18,
+  address: "0x6eb941BD065b8a5bd699C5405A928c1f561e2e5a",
+});
+assets.push({
+  name: "fCRV-USDT",
+  type: "ftoken",
+  underlyingAsset: assetByName("CRV-USDT"),
+  decimals: 18,
+  address: "0x84A1DfAdd698886A614fD70407936816183C0A02",
+});
+assets.push({
+  name: "fUNI_DAI-BSGS_LP",
+  type: "ftoken",
+  underlyingAsset: assetByName(""),
+  decimals: 18,
+  address: "0x633C4861A4E9522353EDa0bb652878B079fb75Fd",
+});
+assets.push({
+  name: "fUNI_DAI-BSG_LP",
+  type: "ftoken",
+  underlyingAsset: assetByName(""),
+  decimals: 18,
+  address: "0x639d4f3F41daA5f4B94d63C2A5f3e18139ba9E54",
+});
+assets.push({
+  name: "fDSD",
+  type: "ftoken",
+  underlyingAsset: assetByName("DSD"),
+  decimals: 18,
+  address: "0x8Bf3c1c7B1961764Ecb19b4FC4491150ceB1ABB1",
+});
+assets.push({
+  name: "fESD",
+  type: "ftoken",
+  underlyingAsset: assetByName("ESD"),
+  decimals: 18,
+  address: "0x45a9e027DdD8486faD6fca647Bb132AD03303EC2",
+});
+assets.push({
+  name: "fBAC",
+  type: "ftoken",
+  underlyingAsset: assetByName("BAC"),
+  decimals: 18,
+  address: "0x371E78676cd8547ef969f89D2ee8fA689C50F86B",
 });
 
 // name overrides asset.name for display
