@@ -1,7 +1,7 @@
-import data from "./data/deploys.js";
-import ethers from "ethers";
-import { RewardsPool } from "./pool.js";
-import { UnderlyingBalances } from "./tokens.js";
+import ethers from 'ethers'
+import data from './data/deploys.js'
+import { RewardsPool } from './pool.js'
+import { UnderlyingBalances } from './tokens.js'
 
 /**
  * Reward pool wrapper
@@ -14,8 +14,8 @@ export class PoolManager {
    * @param {Object} provider web3 provider
    */
   constructor(pools, provider) {
-    this.pools = pools;
-    this.provider = provider;
+    this.pools = pools
+    this.provider = provider
   }
 
   /**
@@ -23,35 +23,39 @@ export class PoolManager {
    * @return {PoolManager} manager
    */
   static weekOne(provider) {
-    return new PoolManager(RewardsPool.weekOne(provider), provider);
+    return new PoolManager(RewardsPool.weekOne(provider), provider)
   }
+
   /**
    * @param {ethers.Provider} provider provider
    * @return {PoolManager} manager
    */
   static weekTwo(provider) {
-    return new PoolManager(RewardsPool.weekTwo(provider), provider);
+    return new PoolManager(RewardsPool.weekTwo(provider), provider)
   }
+
   /**
    * @param {ethers.Provider} provider provider
    * @return {PoolManager} manager
    */
   static activePools(provider) {
-    return new PoolManager(RewardsPool.activePools(provider), provider);
+    return new PoolManager(RewardsPool.activePools(provider), provider)
   }
+
   /**
    * @param {ethers.Provider} provider provider
    * @return {PoolManager} manager
    */
   static inactivePools(provider) {
-    return new PoolManager(RewardsPool.inactivePools(provider), provider);
+    return new PoolManager(RewardsPool.inactivePools(provider), provider)
   }
+
   /**
    * @param {ethers.Provider} provider provider
    * @return {PoolManager} manager
    */
   static allPastPools(provider) {
-    return new PoolManager(RewardsPool.allPastPools(provider), provider);
+    return new PoolManager(RewardsPool.allPastPools(provider), provider)
   }
 
   /**
@@ -62,26 +66,26 @@ export class PoolManager {
    * @return {Array} results
    */
   static _mapToPools(pools, functionPath, args, propName) {
-    const f = async (pool) => {
-      const prop = propName ? propName : functionPath[functionPath.length - 1];
+    const f = async pool => {
+      const prop = propName || functionPath[functionPath.length - 1]
 
       // traverse props iteratively
-      let func = pool;
+      let func = pool
       /* eslint-disable-next-line guard-for-in */
-      functionPath.forEach((elem) => {
-        func = func[elem];
-        if (!func) return;
-      });
+      functionPath.forEach(elem => {
+        func = func[elem]
+        if (!func) return
+      })
 
       if (func) {
-        const output = {};
-        output.name = pool.name;
-        output.address = pool.address;
-        output[prop] = await func.apply(pool, [...args]);
-        return output;
+        const output = {}
+        output.name = pool.name
+        output.address = pool.address
+        output[prop] = await func.apply(pool, [...args])
+        return output
       }
-    };
-    return Promise.all(pools.map(f));
+    }
+    return Promise.all(pools.map(f))
   }
 
   /**
@@ -89,12 +93,7 @@ export class PoolManager {
    * @return {Array} balances
    */
   staked(address) {
-    return PoolManager._mapToPools(
-      this.pools,
-      ["balanceOf"],
-      [address],
-      "stakedBalance",
-    );
+    return PoolManager._mapToPools(this.pools, ['balanceOf'], [address], 'stakedBalance')
   }
 
   /**
@@ -102,12 +101,7 @@ export class PoolManager {
    * @return {Array} balances
    */
   unstaked(address) {
-    return PoolManager._mapToPools(
-      this.pools,
-      ["unstakedBalance"],
-      [address],
-      "unstakedBalance",
-    );
+    return PoolManager._mapToPools(this.pools, ['unstakedBalance'], [address], 'unstakedBalance')
   }
 
   /**
@@ -115,12 +109,7 @@ export class PoolManager {
    * @return {Array} rewards
    */
   earned(address) {
-    return PoolManager._mapToPools(
-      this.pools,
-      ["earned"],
-      [address],
-      "earnedRewards",
-    );
+    return PoolManager._mapToPools(this.pools, ['earned'], [address], 'earnedRewards')
   }
 
   /**
@@ -128,12 +117,7 @@ export class PoolManager {
    * @return {Array} rewards
    */
   usdValues(address) {
-    return PoolManager._mapToPools(
-      this.pools,
-      ["usdValueOf"],
-      [address],
-      "usdValue",
-    );
+    return PoolManager._mapToPools(this.pools, ['usdValueOf'], [address], 'usdValue')
   }
 
   /**
@@ -143,10 +127,10 @@ export class PoolManager {
   historicalRewards(address) {
     return PoolManager._mapToPools(
       this.pools,
-      ["historicalRewards"],
+      ['historicalRewards'],
       [address],
-      "historicalRewards",
-    );
+      'historicalRewards',
+    )
   }
 
   /**
@@ -154,13 +138,13 @@ export class PoolManager {
    * @return {BigNumber} total rewards
    */
   usdValueOf(address) {
-    return this.usdValues(address).then((rewards) => {
-      let total = ethers.BigNumber.from(0);
-      rewards.forEach((reward) => {
-        total = total.add(reward);
-      });
-      return total;
-    });
+    return this.usdValues(address).then(rewards => {
+      let total = ethers.BigNumber.from(0)
+      rewards.forEach(reward => {
+        total = total.add(reward)
+      })
+      return total
+    })
   }
 
   /**
@@ -171,10 +155,10 @@ export class PoolManager {
   underlying(address, passthrough) {
     return PoolManager._mapToPools(
       this.pools,
-      ["underlyingBalanceOf"],
+      ['underlyingBalanceOf'],
       [address, passthrough],
-      "underlyingBalances",
-    ).then((vs) => vs.filter((v) => !!v));
+      'underlyingBalances',
+    ).then(vs => vs.filter(v => !!v))
   }
 
   /**
@@ -184,13 +168,13 @@ export class PoolManager {
    * @return {Array} lp token balances
    */
   aggregateUnderlyings(address) {
-    return this.underlying(address, true).then((underlyings) => {
-      let aggregateUnderlyings = new UnderlyingBalances();
+    return this.underlying(address, true).then(underlyings => {
+      const aggregateUnderlyings = new UnderlyingBalances()
       underlyings.reduce((acc, next) => {
-        return acc.combine(next.underlyingBalances);
-      }, aggregateUnderlyings);
-      return aggregateUnderlyings;
-    });
+        return acc.combine(next.underlyingBalances)
+      }, aggregateUnderlyings)
+      return aggregateUnderlyings
+    })
   }
 
   /**
@@ -203,12 +187,7 @@ export class PoolManager {
    * @return {Array} summaries
    */
   summary(address) {
-    return PoolManager._mapToPools(
-      this.pools,
-      ["summary"],
-      [address],
-      "summary",
-    );
+    return PoolManager._mapToPools(this.pools, ['summary'], [address], 'summary')
   }
 
   /**
@@ -218,46 +197,44 @@ export class PoolManager {
    */
   getRewards(min, overrides) {
     if (!ethers.Signer.isSigner(this.provider)) {
-      throw new Error("No signer");
+      throw new Error('No signer')
     }
-    overrides = overrides ? overrides : {};
+    overrides = overrides || {}
 
-    const address = this.provider.getAddress();
-    const lowerBound = min ? min : ethers.constants.WeiPerEther;
+    const address = this.provider.getAddress()
+    const lowerBound = min || ethers.constants.WeiPerEther
 
-    const promises = this.pools.map(async (pool) => {
-      if (pool.name !== "FARM Profit Sharing") {
-        const earned = await pool.earned(address);
+    const promises = this.pools.map(async pool => {
+      if (pool.name !== 'FARM Profit Sharing') {
+        const earned = await pool.earned(address)
 
         if (earned.gt(lowerBound)) {
           return {
             name: pool.name,
             getReward: await pool.getReward(overrides),
-          };
+          }
         }
       }
-    });
+    })
 
-    return Promise.all(promises).then((vals) => vals.filter((val) => !!val));
+    return Promise.all(promises).then(vals => vals.filter(val => !!val))
   }
 
   _exitPools(pools, overrides) {
     if (!ethers.Signer.isSigner(this.provider)) {
-      throw new Error("No signer");
+      throw new Error('No signer')
     }
-    const promises = pools.map(async (pool) => {
-      const staked = await pool.staked(this.provider.getAddress());
+    const promises = pools.map(async pool => {
+      const staked = await pool.staked(this.provider.getAddress())
       if (staked.gt(0)) {
         return {
           name: pool.name,
           exit: await pool.exit(overrides),
-        };
+        }
       }
-    });
+    })
 
-    return Promise.all(promises).then((vals) =>
-      vals.filter((val) => typeof val !== "undefined"),
-    );
+    return Promise.all(promises).then(vals => vals.filter(val => typeof val !== 'undefined'))
   }
 
   /**
@@ -265,7 +242,7 @@ export class PoolManager {
    * @return {Array} array of txns
    */
   exitAll(overrides) {
-    return this._exitPools(this.pools, overrides);
+    return this._exitPools(this.pools, overrides)
   }
 
   /**
@@ -275,9 +252,9 @@ export class PoolManager {
    */
   exitInactive(overrides) {
     return this._exitPools(
-      this.pools.filter((pool) => !pool.isActive()),
+      this.pools.filter(pool => !pool.isActive()),
       overrides,
-    );
+    )
   }
 
   /**
@@ -288,29 +265,26 @@ export class PoolManager {
    */
   stakeUnstaked(minimum, approveForever) {
     if (!ethers.Signer.isSigner(this.provider)) {
-      throw new Error("No signer");
+      throw new Error('No signer')
     }
 
-    const me = this.provider.getAddress();
+    const me = this.provider.getAddress()
 
-    const f = async (pool) => {
+    const f = async pool => {
       // 1 extra API call
-      const unstaked = await pool.unstakedBalance(me);
-      const adjusted = ethers.constants.WeiPerEther.div(pool.lptoken.baseUnit);
-      if (unstaked.lt(adjusted)) return; // respect minimum
+      const unstaked = await pool.unstakedBalance(me)
+      const adjusted = ethers.constants.WeiPerEther.div(pool.lptoken.baseUnit)
+      if (unstaked.lt(adjusted)) return // respect minimum
 
-      const stakeUnstaked = await pool.approveAndStake(
-        unstaked,
-        approveForever,
-      );
-      if (!stakeUnstaked) return;
+      const stakeUnstaked = await pool.approveAndStake(unstaked, approveForever)
+      if (!stakeUnstaked) return
       return {
         name: pool.name,
         stakeUnstaked,
-      };
-    };
+      }
+    }
 
-    return this.pools.map(f).filter((res) => !!res);
+    return this.pools.map(f).filter(res => !!res)
   }
 }
 
@@ -319,4 +293,4 @@ export default {
   ethers,
   RewardsPool,
   PoolManager,
-};
+}
