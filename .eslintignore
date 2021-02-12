@@ -1,0 +1,7 @@
+build/
+node_modules/
+dist/
+src/assets/*
+src/styles/*
+src/serviceWorker.js
+src/setupTests.js
