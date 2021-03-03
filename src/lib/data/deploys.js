@@ -594,14 +594,14 @@ const assets = [
     decimals: 18,
     address: '0x795065dCc9f64b5614C407a6EFDC400DA6221FB0',
   },
-]
+];
 
 /**
  * @param {String} name the name of the asset to find
  * @return {Object} the asset object
  */
 function assetByName(name) {
-  return assets.find(asset => asset.name === name)
+  return assets.find(asset => asset.name === name);
 }
 
 /**
@@ -609,7 +609,7 @@ function assetByName(name) {
  * @return {Object} the asset object
  */
 function assetByAddress(address) {
-  return assets.find(asset => asset.address.toLowerCase() === address.toLowerCase())
+  return assets.find(asset => asset.address.toLowerCase() === address.toLowerCase());
 }
 
 // TODO: refactor and improve
@@ -623,7 +623,7 @@ assets.push({
     assets: [assetByName('WBTC'), assetByName('RENBTC')],
   },
   address: '0x49849C98ae39Fff122806C06791Fa73784FB3675',
-})
+});
 assets.push({
   name: 'CRV-RENWSBTC',
   decimals: 18,
@@ -633,7 +633,7 @@ assets.push({
     assets: [assetByName('WBTC'), assetByName('RENBTC'), assetByName('SBTC')],
   },
   address: '0x075b1bb99792c9E1041bA13afEf80C91a1e70fB3',
-})
+});
 assets.push({
   name: 'CRV-TBTC',
   decimals: 18,
@@ -643,7 +643,7 @@ assets.push({
     assets: [assetByName('TBTC'), assetByName('CRV-RENWSBTC')],
   },
   address: '0x64eda51d3Ad40D56b9dFc5554E06F94e1Dd786Fd',
-})
+});
 assets.push({
   name: 'CRV-3POOL',
   decimals: 18,
@@ -653,7 +653,7 @@ assets.push({
     assets: [assetByName('DAI'), assetByName('USDC'), assetByName('USDT')],
   },
   address: '0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490',
-})
+});
 assets.push({
   name: 'CRV-HBTC',
   decimals: 18,
@@ -663,7 +663,7 @@ assets.push({
     assets: [assetByName('HBTC'), assetByName('WBTC')],
   },
   address: '0xb19059ebb43466C323583928285a49f558E572Fd',
-})
+});
 assets.push({
   name: 'CRV-HUSD',
   decimals: 18,
@@ -673,7 +673,7 @@ assets.push({
     assets: [assetByName('HUSD'), assetByName('CRV-3POOL')],
   },
   address: '0x5B5CFE992AdAC0C9D48E05854B2d91C73a003858',
-})
+});
 // assets.push({
 //  name: 'CRV-YPOOL',
 //  decimals: 18,
@@ -737,420 +737,420 @@ assets.push({
   underlyingAsset: assetByName('WETH_USDT_LP'),
   decimals: 18,
   address: '0xb19ebfb37a936cce783142955d39ca70aa29d43c',
-})
+});
 assets.push({
   name: 'fWETH_USDC_LP_v0',
   type: 'ftoken',
   underlyingAsset: assetByName('WETH_USDC_LP'),
   decimals: 18,
   address: '0x63671425ef4d25ec2b12c7d05de855c143f16e3b',
-})
+});
 assets.push({
   name: 'fWETH_DAI_LP_v0',
   type: 'ftoken',
   underlyingAsset: assetByName('WETH_DAI_LP'),
   decimals: 18,
   address: '0x1a9f22b4c385f78650e7874d64e442839dc32327',
-})
+});
 assets.push({
   name: 'fWETH_WBTC_LP_v0',
   type: 'ftoken',
   underlyingAsset: assetByName('WETH_WBTC_LP'),
   decimals: 18,
   address: '0xb1feb6ab4ef7d0f41363da33868e85eb0f3a57ee',
-})
+});
 assets.push({
   name: 'fWETH_USDT_LP',
   type: 'ftoken',
   underlyingAsset: assetByName('WETH_USDT_LP'),
   decimals: 18,
   address: '0x7DDc3ffF0612E75Ea5ddC0d6Bd4e268f70362Cff',
-})
+});
 assets.push({
   name: 'fWETH_USDC_LP',
   type: 'ftoken',
   underlyingAsset: assetByName('WETH_USDC_LP'),
   decimals: 18,
   address: '0xA79a083FDD87F73c2f983c5551EC974685D6bb36',
-})
+});
 assets.push({
   name: 'fWETH_DAI_LP',
   type: 'ftoken',
   underlyingAsset: assetByName('WETH_DAI_LP'),
   decimals: 18,
   address: '0x307E2752e8b8a9C29005001Be66B1c012CA9CDB7',
-})
+});
 assets.push({
   name: 'fWETH_WBTC_LP',
   type: 'ftoken',
   underlyingAsset: assetByName('WETH_WBTC_LP'),
   decimals: 18,
   address: '0x01112a60f427205dcA6E229425306923c3Cc2073',
-})
+});
 assets.push({
   name: 'fWETH_DPI_LP',
   type: 'ftoken',
   underlyingAsset: assetByName('WETH_DPI_LP'),
   decimals: 18,
   address: '0x2a32dcBB121D48C106F6d94cf2B4714c0b4Dfe48',
-})
+});
 assets.push({
   name: 'fBAC_DAI_LP',
   type: 'ftoken',
   underlyingAsset: assetByName('BAC_DAI_LP'),
   decimals: 18,
   address: '0x6Bccd7E983E438a56Ba2844883A664Da87E4C43b',
-})
+});
 assets.push({
   name: 'fDAI_BAS_LP',
   type: 'ftoken',
   underlyingAsset: assetByName('DAI_BAS_LP'),
   decimals: 18,
   address: '0xf8b7235fcfd5a75cfdcc0d7bc813817f3dd17858',
-})
+});
 assets.push({
   name: 'fSLP_WBTC_TBTC',
   type: 'ftoken',
   underlyingAsset: assetByName('WBTC_TBTC_SLP'),
   decimals: 18,
   address: '0xF553E1f826f42716cDFe02bde5ee76b2a52fc7EB',
-})
+});
 assets.push({
   name: 'fSLP_WETH_DAI',
   type: 'ftoken',
   underlyingAsset: assetByName('WETH_DAI_SLP'),
   decimals: 18,
   address: '0x203E97aa6eB65A1A02d9E80083414058303f241E',
-})
+});
 assets.push({
   name: 'fSLP_WETH_USDT',
   type: 'ftoken',
   underlyingAsset: assetByName('WETH_USDT_SLP'),
   decimals: 18,
   address: '0x64035b583c8c694627A199243E863Bb33be60745',
-})
+});
 assets.push({
   name: 'fSLP_WETH_USDC',
   type: 'ftoken',
   underlyingAsset: assetByName('WETH_USDC_SLP'),
   decimals: 18,
   address: '0x01bd09A1124960d9bE04b638b142Df9DF942b04a',
-})
+});
 assets.push({
   name: 'fSLP_WETH_WBTC',
   type: 'ftoken',
   underlyingAsset: assetByName('WETH_WBTC_SLP'),
   decimals: 18,
   address: '0x5C0A3F55AAC52AA320Ff5F280E77517cbAF85524',
-})
+});
 assets.push({
   name: 'fSLP_MIC_USDT',
   type: 'ftoken',
   underlyingAsset: assetByName('MIC_USDT_SLP') /* <- underlying asset is a LP token */,
   decimals: 18,
   address: '0x6F14165c6D529eA3Bfe1814d0998449e9c8D157D' /* <- VaultProxy */,
-})
+});
 assets.push({
   name: 'fSLP_MIS_USDT',
   type: 'ftoken',
   underlyingAsset: assetByName('MIS_USDT_SLP'),
   decimals: 18,
   address: '0x145f39B3c6e6a885AA6A8fadE4ca69d64bab69c8',
-})
+});
 assets.push({
   name: 'fWETH_v0',
   type: 'ftoken',
   underlyingAsset: assetByName('WETH'),
   decimals: 18,
   address: '0x8e298734681adbfc41ee5d17ff8b0d6d803e7098',
-})
+});
 assets.push({
   name: 'fWETH',
   type: 'ftoken',
   underlyingAsset: assetByName('WETH'),
   decimals: 18,
   address: '0xFE09e53A81Fe2808bc493ea64319109B5bAa573e',
-})
+});
 assets.push({
   name: 'fDAI_v0',
   type: 'ftoken',
   underlyingAsset: assetByName('DAI'),
   decimals: 18,
   address: '0xe85c8581e60d7cd32bbfd86303d2a4fa6a951dac',
-})
+});
 assets.push({
   name: 'fDAI',
   type: 'ftoken',
   underlyingAsset: assetByName('DAI'),
   decimals: 18,
   address: '0xab7fa2b2985bccfc13c6d86b1d5a17486ab1e04c',
-})
+});
 assets.push({
   name: 'fUSDC_v0',
   type: 'ftoken',
   underlyingAsset: assetByName('USDC'),
   decimals: 6,
   address: '0xc3f7ffb5d5869b3ade9448d094d81b0521e8326f',
-})
+});
 assets.push({
   name: 'fUSDC',
   type: 'ftoken',
   underlyingAsset: assetByName('USDC'),
   decimals: 6,
   address: '0xf0358e8c3CD5Fa238a29301d0bEa3D63A17bEdBE',
-})
+});
 assets.push({
   name: 'fUSDT_v0',
   type: 'ftoken',
   underlyingAsset: assetByName('USDT'),
   decimals: 6,
   address: '0xc7ee21406bb581e741fbb8b21f213188433d9f2f',
-})
+});
 assets.push({
   name: 'fUSDT',
   type: 'ftoken',
   underlyingAsset: assetByName('USDT'),
   decimals: 6,
   address: '0x053c80eA73Dc6941F518a68E2FC52Ac45BDE7c9C',
-})
+});
 assets.push({
   name: 'fTUSD',
   type: 'ftoken',
   underlyingAsset: assetByName('TUSD'),
   decimals: 18,
   address: '0x7674622c63Bee7F46E86a4A5A18976693D54441b',
-})
+});
 assets.push({
   name: 'fWBTC_v0',
   type: 'ftoken',
   underlyingAsset: assetByName('WBTC'),
   decimals: 8,
   address: '0xc07EB91961662D275E2D285BdC21885A4Db136B0',
-})
+});
 assets.push({
   name: 'fWBTC',
   type: 'ftoken',
   underlyingAsset: assetByName('WBTC'),
   decimals: 8,
   address: '0x5d9d25c7C457dD82fc8668FFC6B9746b674d4EcB',
-})
+});
 assets.push({
   name: 'fRENBTC_v0',
   type: 'ftoken',
   underlyingAsset: assetByName('RENBTC'),
   decimals: 8,
   address: '0xfBe122D0ba3c75e1F7C80bd27613c9f35B81FEeC',
-})
+});
 assets.push({
   name: 'fRENBTC',
   type: 'ftoken',
   underlyingAsset: assetByName('RENBTC'),
   decimals: 8,
   address: '0xC391d1b08c1403313B0c28D47202DFDA015633C4',
-})
+});
 assets.push({
   name: 'fCRV-RENWBTC_v0',
   type: 'ftoken',
   underlyingAsset: assetByName('CRV-RENWBTC'),
   decimals: 18,
   address: '0x192E9d29D43db385063799BC239E772c3b6888F3',
-})
+});
 assets.push({
   name: 'fCRV-RENWBTC',
   type: 'ftoken',
   underlyingAsset: assetByName('CRV-RENWBTC'),
   decimals: 18,
   address: '0x9aA8F427A17d6B0d91B6262989EdC7D45d6aEdf8',
-})
+});
 assets.push({
   name: 'fCRV-TBTC',
   type: 'ftoken',
   underlyingAsset: assetByName('CRV-TBTC'),
   decimals: 18,
   address: '0x640704D106E79e105FDA424f05467F005418F1B5',
-})
+});
 assets.push({
   name: 'fCRV-3POOL',
   type: 'ftoken',
   underlyingAsset: assetByName('CRV-3POOL'),
   decimals: 18,
   address: '0x71B9eC42bB3CB40F017D8AD8011BE8e384a95fa5',
-})
+});
 assets.push({
   name: 'fCRV-YPOOL',
   type: 'ftoken',
   underlyingAsset: assetByName('CRV-YPOOL'),
   decimals: 18,
   address: '0x0FE4283e0216F94f5f9750a7a11AC54D3c9C38F3',
-})
+});
 assets.push({
   name: 'fCRV-USDN',
   type: 'ftoken',
   underlyingAsset: assetByName('CRV-USDN'),
   decimals: 18,
   address: '0x683E683fBE6Cf9b635539712c999f3B3EdCB8664',
-})
+});
 assets.push({
   name: 'fCRV-BUSD',
   type: 'ftoken',
   underlyingAsset: assetByName('CRV-BUSD'),
   decimals: 18,
   address: '0x4b1cBD6F6D8676AcE5E412C78B7a59b4A1bbb68a',
-})
+});
 assets.push({
   name: 'fCRV-COMPOUND',
   type: 'ftoken',
   underlyingAsset: assetByName('CRV-COMPOUND'),
   decimals: 18,
   address: '0x998cEb152A42a3EaC1f555B1E911642BeBf00faD',
-})
+});
 assets.push({
   name: 'fCRV-HUSD',
   type: 'ftoken',
   underlyingAsset: assetByName('CRV-HUSD'),
   decimals: 18,
   address: '0x29780C39164Ebbd62e9DDDE50c151810070140f2',
-})
+});
 assets.push({
   name: 'fCRV-HBTC',
   type: 'ftoken',
   underlyingAsset: assetByName('CRV-HBTC'),
   decimals: 18,
   address: '0xCC775989e76ab386E9253df5B0c0b473E22102E2',
-})
+});
 assets.push({
   name: 'fCRV-OBTC',
   type: 'ftoken',
   underlyingAsset: assetByName('CRV-OBTC'),
   decimals: 18,
   address: '0x966A70A4d3719A6De6a94236532A0167d5246c72',
-})
+});
 assets.push({
   name: 'f1INCH_ETH-DAI_LP',
   type: 'ftoken',
   underlyingAsset: assetByName('1INCH_ETH-DAI_LP'),
   decimals: 18,
   address: '0x8e53031462E930827a8d482e7d80603B1f86e32d',
-})
+});
 assets.push({
   name: 'f1INCH_ETH-WBTC_LP',
   type: 'ftoken',
   underlyingAsset: assetByName('1INCH_ETH-WBTC_LP'),
   decimals: 18,
   address: '0x859222DD0B249D0ea960F5102DaB79B294d6874a',
-})
+});
 assets.push({
   name: 'f1INCH_ETH-USDT_LP',
   type: 'ftoken',
   underlyingAsset: assetByName('1INCH_ETH-USDT_LP'),
   decimals: 18,
   address: '0x4bf633A09bd593f6fb047Db3B4C25ef5B9C5b99e',
-})
+});
 assets.push({
   name: 'f1INCH_ETH-USDC_LP',
   type: 'ftoken',
   underlyingAsset: assetByName('1INCH_ETH-USDC_LP'),
   decimals: 18,
   address: '0xD162395C21357b126C5aFED6921BC8b13e48D690',
-})
+});
 assets.push({
   name: 'fCRV-EURS',
   type: 'ftoken',
   underlyingAsset: assetByName('CRV-EURS'),
   decimals: 18,
   address: '0x6eb941BD065b8a5bd699C5405A928c1f561e2e5a',
-})
+});
 assets.push({
   name: 'fCRV-UST',
   type: 'ftoken',
   underlyingAsset: assetByName('CRV-UST'),
   decimals: 18,
   address: '0x84A1DfAdd698886A614fD70407936816183C0A02',
-})
+});
 assets.push({
   name: 'fUNI-DAI:BSGS',
   type: 'ftoken',
   underlyingAsset: assetByName('UNI_DAI-BSGS_LP'),
   decimals: 18,
   address: '0x633C4861A4E9522353EDa0bb652878B079fb75Fd',
-})
+});
 assets.push({
   name: 'fUNI-DAI:BSG',
   type: 'ftoken',
   underlyingAsset: assetByName('UNI_DAI-BSG_LP'),
   decimals: 18,
   address: '0x639d4f3F41daA5f4B94d63C2A5f3e18139ba9E54',
-})
+});
 assets.push({
   name: 'fDSD',
   type: 'ftoken',
   underlyingAsset: assetByName('DSD'),
   decimals: 18,
   address: '0x8Bf3c1c7B1961764Ecb19b4FC4491150ceB1ABB1',
-})
+});
 assets.push({
   name: 'fESD',
   type: 'ftoken',
   underlyingAsset: assetByName('ESD'),
   decimals: 18,
   address: '0x45a9e027DdD8486faD6fca647Bb132AD03303EC2',
-})
+});
 assets.push({
   name: 'fBAC',
   type: 'ftoken',
   underlyingAsset: assetByName('BAC'),
   decimals: 18,
   address: '0x371E78676cd8547ef969f89D2ee8fA689C50F86B',
-})
+});
 assets.push({
   name: 'fCRV-stETH',
   type: 'ftoken',
   underlyingAsset: assetByName('CRV-STETH'),
   decimals: 18,
   address: '0xc27bfE32E0a934a12681C1b35acf0DBA0e7460Ba',
-})
+});
 assets.push({
   name: 'fUNI-mTSLA:UST',
   type: 'ftoken',
   underlyingAsset: assetByName('UNI_MTSLA-UST_LP'),
   decimals: 18,
   address: '0xC800982d906671637E23E031e907d2e3487291Bc',
-})
+});
 assets.push({
   name: 'fUNI-mGOOGL:UST',
   type: 'ftoken',
   underlyingAsset: assetByName('UNI_MGOOGL-UST_LP'),
   decimals: 18,
   address: '0x07DBe6aA35EF70DaD124f4e2b748fFA6C9E1963a',
-})
+});
 assets.push({
   name: 'fUNI-mAMZN:UST',
   type: 'ftoken',
   underlyingAsset: assetByName('UNI_MAMZN-UST_LP'),
   decimals: 18,
   address: '0x8334A61012A779169725FcC43ADcff1F581350B7',
-})
+});
 assets.push({
   name: 'fUNI-UST:mAAPL',
   type: 'ftoken',
   underlyingAsset: assetByName('UNI_UST-MAAPL_LP'),
   decimals: 18,
   address: '0x11804D69AcaC6Ae9466798325fA7DE023f63Ab53',
-})
+});
 assets.push({
   name: 'fCRV-GUSD',
   type: 'ftoken',
   underlyingAsset: assetByName('CRV-GUSD'),
   decimals: 18,
   address: '0xB8671E33fcFC7FEA2F7a3Ea4a117F065ec4b009E',
-})
+});
 assets.push({
   name: 'fSUSHI-SUSHI:ETH',
   type: 'ftoken',
   underlyingAsset: assetByName('SUSHI_SUSHI-ETH_LP'),
   decimals: 18,
   address: '0x5aDe382F38A09A1F8759D06fFE2067992ab5c78e',
-})
+});
 
 // name overrides asset.name for display
 const weekOnePools = [
@@ -1231,7 +1231,7 @@ const weekOnePools = [
     address: '0xC6f39CFf6797baC5e29275177b6E8e315cF87D95',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekTwoPools = [
   {
@@ -1341,7 +1341,7 @@ const weekTwoPools = [
     address: '0x7AF4458D3aBD61C3fd187Bb9f1Bbf917Cd4be9B8',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekThreePools = [
   {
@@ -1426,7 +1426,7 @@ const weekThreePools = [
     address: '0x489c78aa0969118439176c14af22b3b56bd1d46e',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekFourPools = [
   {
@@ -1501,7 +1501,7 @@ const weekFourPools = [
     address: '0x8bcbf139b8d7b26f37d89f2c8aa9de810b5a3814',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekFivePools = [
   {
@@ -1572,7 +1572,7 @@ const weekFivePools = [
     address: '0x3bdc3e2572a5540bb1eb1e55bb8749d33fd1a105',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekSixPools = [
   {
@@ -1648,7 +1648,7 @@ const weekSixPools = [
     address: '0x3bdc3e2572a5540bb1eb1e55bb8749d33fd1a105',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekSevenPools = [
   {
@@ -1734,7 +1734,7 @@ const weekSevenPools = [
     address: '0x5365A2C47b90EE8C9317faC20edC3ce7037384FB',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekEightPools = [
   {
@@ -1825,7 +1825,7 @@ const weekEightPools = [
     address: '0x9523FdC055F503F73FF40D7F66850F409D80EF34',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekTenPools = [
   {
@@ -1926,7 +1926,7 @@ const weekTenPools = [
     address: '0x6D1b6Ea108AA03c6993d8010690264BA96D349A8',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekElevenPools = [
   {
@@ -2032,7 +2032,7 @@ const weekElevenPools = [
     address: '0x017eC1772A45d2cf68c429A820eF374f0662C57c',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekTwelvePools = [
   {
@@ -2147,7 +2147,7 @@ const weekTwelvePools = [
     address: '0xC0f51a979e762202e9BeF0f62b07F600d0697DE1',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekThirteenPools = [
   {
@@ -2268,7 +2268,7 @@ const weekThirteenPools = [
     address: '0xAd91695b4BeC2798829ac7a4797E226C78f22Abd',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekFifteenPools = [
   {
@@ -2411,7 +2411,7 @@ const weekFifteenPools = [
     address: '0x6555c79a8829b793F332f1535B0eFB1fE4C11958',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekNineteenPools = [
   {
@@ -2554,7 +2554,7 @@ const weekNineteenPools = [
     address: '0x6555c79a8829b793F332f1535B0eFB1fE4C11958',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekTwentyPools = [
   {
@@ -2744,7 +2744,7 @@ const weekTwentyPools = [
     address: '0x9a9A6148f7b0A9767AC1fdC67343D1e3E219FdDf',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekTwentyOnePools = [
   {
@@ -2999,7 +2999,7 @@ const weekTwentyOnePools = [
     address: '0x538613A19Eb84D86a4CcfcB63548244A52Ab0B68',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekTwentyTwoPools = [
   {
@@ -3235,7 +3235,7 @@ const weekTwentyTwoPools = [
     address: '0x16fBb193f99827C92A4CC22EFe8eD7390465BFa3',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const weekTwentyThreePools = [
   {
@@ -3471,7 +3471,7 @@ const weekTwentyThreePools = [
     address: '0x16fBb193f99827C92A4CC22EFe8eD7390465BFa3',
     rewardAsset: assetByName('FARM'),
   },
-]
+];
 
 const periods = [
   weekOnePools,
@@ -3492,7 +3492,7 @@ const periods = [
   weekTwentyOnePools,
   weekTwentyTwoPools,
   weekTwentyThreePools,
-]
+];
 
 /**
  * @param {Set} setA
@@ -3500,16 +3500,16 @@ const periods = [
  * @return {Set} union
  */
 function union(setA, setB) {
-  const has = []
-  setA.forEach(val => has.push(val.address))
+  const has = [];
+  setA.forEach(val => has.push(val.address));
 
-  const _union = new Set(setA)
+  const _union = new Set(setA);
 
-  for (const elem of setB) {
-    // if B's elem not in A, add to union
-    if (!has.find(e => e === elem.address)) _union.add(elem)
-  }
-  return _union
+  setB.forEach(elem => {
+    if (!has.find(e => e === elem.address)) _union.add(elem);
+  });
+
+  return _union;
 }
 
 /**
@@ -3518,27 +3518,29 @@ function union(setA, setB) {
  * @return {Set} difference
  */
 function difference(setA, setB) {
-  const has = []
-  setB.forEach(val => has.push(val.address))
+  const has = [];
+  setB.forEach(val => has.push(val.address));
 
-  const _difference = new Set(setA)
+  const _difference = new Set(setA);
   for (const elem of setA) {
     // if A's elem in B, remove from difference
-    if (has.find(e => e === elem.address)) _difference.delete(elem)
+    if (has.find(e => e === elem.address)) _difference.delete(elem);
   }
-  return _difference
+  return _difference;
 }
 
 // SETUP
 
 // Get a deduped set of all past pools
-let allPastPools = new Set()
-const sets = periods.map(period => new Set(period))
-sets.forEach(set => (allPastPools = union(allPastPools, set)))
+let allPastPools = new Set();
+const sets = periods.map(period => new Set(period));
+sets.forEach(set => {
+  allPastPools = union(allPastPools, set);
+});
 
 // Inactive pools are in all past pools, but not the most recent week
-const inactivePools = difference(allPastPools, sets[sets.length - 1])
-const activePools = sets[sets.length - 1]
+const inactivePools = difference(allPastPools, sets[sets.length - 1]);
+const activePools = sets[sets.length - 1];
 
 /**
  * @param {String} address
@@ -3547,10 +3549,10 @@ const activePools = sets[sets.length - 1]
 function isAddressActive(address) {
   for (const value of activePools) {
     if (value.address === address) {
-      return true
+      return true;
     }
   }
-  return false
+  return false;
 }
 
 /**
@@ -3558,7 +3560,7 @@ function isAddressActive(address) {
  * @return {Object} the asset object
  */
 function poolByName(name) {
-  return [...allPastPools].find(pool => pool.name === name)
+  return [...allPastPools].find(pool => pool.name === name);
 }
 
 /**
@@ -3566,7 +3568,7 @@ function poolByName(name) {
  * @return {Object} the pool object
  */
 function poolByAddress(address) {
-  return [...allPastPools].find(pool => pool.address.toLowerCase() === address.toLowerCase())
+  return [...allPastPools].find(pool => pool.address.toLowerCase() === address.toLowerCase());
 }
 
 /**
@@ -3574,17 +3576,26 @@ function poolByAddress(address) {
  * @return {bool} isActive
  */
 function isActive(pool) {
-  return isAddressActive(pool.address)
+  return isAddressActive(pool.address);
 }
 
 // prevent modification
-assets.forEach(Object.freeze)
-Object.freeze(periods)
+assets.forEach(Object.freeze);
+Object.freeze(periods);
 periods.forEach(week => {
-  week.forEach(Object.freeze)
-  Object.freeze(week)
-})
-Object.freeze(allPastPools)
+  week.forEach(Object.freeze);
+  Object.freeze(week);
+});
+Object.freeze(allPastPools);
+
+const testPools = [
+  {
+    name: 'f1INCH-ETH:USDT',
+    asset: assetByName('f1INCH_ETH-USDT_LP'),
+    address: '0x2A80e0B572e7EF61Ef81EF05eC024e1e52Bd70BD',
+    rewardAsset: assetByName('FARM'),
+  },
+];
 
 export default {
   activePools: Object.freeze([...activePools]),
@@ -3618,4 +3629,5 @@ export default {
   weekTwentyOnePools,
   weekTwentyTwoPools,
   weekTwentyThreePools,
-}
+  testPools,
+};

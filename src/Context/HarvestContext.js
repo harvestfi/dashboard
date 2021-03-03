@@ -1,5 +1,5 @@
-import { createContext } from 'react'
+import { createContext } from 'react';
 
-const HarvestContext = createContext()
+const HarvestContext = createContext();
 
-export default HarvestContext
+export default HarvestContext;

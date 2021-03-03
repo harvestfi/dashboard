@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from 'react'
-import { ThemeProvider } from 'styled-components'
-import { Row, Col } from 'styled-bootstrap-grid'
-import Loadable from 'react-loadable'
-import axios from 'axios'
-import Web3Modal from 'web3modal'
-import WalletConnectProvider from '@walletconnect/web3-provider'
-import HarvestContext from './Context/HarvestContext'
-import harvest from './lib/index.js'
-import { darkTheme, lightTheme } from './styles/appStyles.js'
+import React, { useState, useEffect } from 'react';
+import { ThemeProvider } from 'styled-components';
+import { Row, Col } from 'styled-bootstrap-grid';
+import Loadable from 'react-loadable';
+import axios from 'axios';
+import Web3Modal from 'web3modal';
+import WalletConnectProvider from '@walletconnect/web3-provider';
+import HarvestContext from './Context/HarvestContext';
+import harvest from './lib';
+import { darkTheme, lightTheme } from './styles/appStyles';
 
 // images
-import logo from './assets/gif_tractor.gif'
+import logo from './assets/gif_tractor.gif';
 // styles
-import { Topbar, GlobalStyle, Brand, Panel, Container } from './styles/AppJsStyles'
+import { Topbar, GlobalStyle, Brand, Panel, Container } from './styles/AppJsStyles';
 
 // components
-import TabContainer from './components/tabContainer/TabContainer'
-import SettingsModal from './components/userSettings/SettingsModal'
-import Radio from './components/radio/Radio'
-import MainContent from './components/MainContent'
-import WelcomeText from './components/WelcomeText'
-import CheckBalance from './components/checkBalance/CheckBalance'
-import TokenMessage from './components/statusMessages/TokenMessage'
-import HarvestAndStakeMessage from './components/statusMessages/HarvestAndStakeMessage'
-import Sidedrawer from './components/userSettings/sidedrawer/Sidedrawer'
+import TabContainer from './components/tabContainer/TabContainer';
+import SettingsModal from './components/userSettings/SettingsModal';
+import Radio from './components/radio/Radio';
+import MainContent from './components/MainContent';
+import WelcomeText from './components/WelcomeText';
+import CheckBalance from './components/checkBalance/CheckBalance';
+import TokenMessage from './components/statusMessages/TokenMessage';
+import HarvestAndStakeMessage from './components/statusMessages/HarvestAndStakeMessage';
+import Sidedrawer from './components/userSettings/sidedrawer/Sidedrawer';
 
-const { ethers } = harvest
+const { ethers } = harvest;
 
 const web3Modal = new Web3Modal({
   network: 'mainnet', // optional
@@ -38,34 +38,34 @@ const web3Modal = new Web3Modal({
       },
     },
   },
-})
+});
 
 const ErrorModal = Loadable({
   loader: () => import('./components/ErrorModal'),
   loading() {
-    return null
+    return null;
   },
-})
+});
 
 function App() {
   // for currency conversion
   const [baseCurrency, setBaseCurrency] = useState(
     window.localStorage.getItem('HarvestFinance:currency') || 'USD',
-  )
-  const [exchangeRates, setExchangeRates] = useState({})
-  const [currentExchangeRate, setCurrentExchangeRate] = useState(1)
+  );
+  const [exchangeRates, setExchangeRates] = useState({});
+  const [currentExchangeRate, setCurrentExchangeRate] = useState(1);
   // for currency conversion
-  const [openDrawer, setOpenDrawer] = useState(false)
-  const [settingsOpen, setSettingsOpen] = useState(false)
-  const [isConnecting, setIsConnecting] = useState(false)
-  const [isRefreshing, setRefreshing] = useState(false)
-  const [isCheckingBalance, setCheckingBalance] = useState(false)
-  const [tokenAddedMessage, setTokenAddedMessage] = useState('')
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [isRefreshing, setRefreshing] = useState(false);
+  const [isCheckingBalance, setCheckingBalance] = useState(false);
+  const [tokenAddedMessage, setTokenAddedMessage] = useState('');
   const [harvestAndStakeMessage, setHarvestAndStakeMessage] = useState({
     first: '',
     second: '',
-  })
-  const [addressToCheck, setAddressToCheck] = useState('')
+  });
+  const [addressToCheck, setAddressToCheck] = useState('');
   const [state, setState] = useState({
     provider: undefined,
     signer: undefined,
@@ -81,143 +81,43 @@ function App() {
     apy: 0,
     farmPrice: 0,
     totalFarmEarned: 0,
-  })
+  });
 
   const getPools = async () => {
     await axios
       .get(`https://api-ui.harvest.finance/pools?key=${process.env.REACT_APP_HARVEST_KEY}`)
       .then(res => {
-        const currentAPY = res.data[0].rewardAPY
+        const currentAPY = res.data[0].rewardAPY;
 
-        setState(state => ({ ...state, apy: currentAPY }))
+        setState(state => ({ ...state, apy: currentAPY }));
       })
       .catch(err => {
-        console.log(err)
-      })
+        console.log(err);
+      });
     axios
       .get(
         `${process.env.REACT_APP_ETH_PARSER_URL}/price/token/0xa0246c9032bC3A600820415aE600c6388619A14D`,
       )
       .then(res => {
-        console.log(res.data.data)
-        const farmPrice = res.data.data
-        setState(state => ({ ...state, farmPrice }))
-      })
-  }
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      state.manager && refresh()
-    }, 60000)
-    return () => clearTimeout(timer)
-  })
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      getPools()
-    }, 60000)
-    return () => clearTimeout(timer)
-  })
-  useEffect(() => {
-    getPools()
-    memoizeExchangeRates()
-    // eslint-disable-next-line
-  }, []);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      memoizeExchangeRates()
-    }, 600000)
-    return () => clearTimeout(timer)
-  })
-
-  useEffect(() => {
-    if (state.address !== '') {
-      refresh()
-    }
-    // eslint-disable-next-line
-  }, [state.address]);
-  useEffect(() => {
-    if (state.usdValue) {
-      setState(state => ({ ...state, display: true }))
-    }
-    // eslint-disable-next-line
-  }, [state.usdValue]);
-
-  const memoizeExchangeRates = () => {
-    axios
-      .get('https://api.ratesapi.io/api/latest?base=USD')
-      .then(res => {
-        setExchangeRates(res.data.rates)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-
-  const disconnect = () => {
-    setState(state => ({
-      provider: undefined,
-      signer: undefined,
-      manager: undefined,
-      address: '',
-      summaries: [],
-      underlyings: [],
-      usdValue: 0,
-      apy: 0,
-      error: { message: null, type: null, display: false },
-      theme: window.localStorage.getItem('HarvestFinance:Theme'),
-    }))
-    setIsConnecting(false)
-    web3Modal.clearCachedProvider()
-  }
-
-  const closeErrorModal = () => {
-    setState(state => ({
-      ...state,
-      error: { message: null, type: null, display: false },
-    }))
-  }
-
-  const openModal = (message, type) => {
-    setState(state => ({
-      ...state,
-      error: { message, type, display: true },
-    }))
-  }
-
-  const toggleUserSettings = () => {
-    setSettingsOpen(!settingsOpen)
-  }
-  const toggleSideDrawer = () => {
-    setOpenDrawer(!openDrawer)
-  }
-
-  const setConnection = (provider, signer, manager) => {
-    setState(state => ({
-      ...state,
-      provider,
-      signer,
-      manager,
-    }))
-  }
-
-  const setAddress = address => {
-    setState(state => ({ ...state, address }))
-  }
+        console.log(res.data.data);
+        const farmPrice = res.data.data;
+        setState(state => ({ ...state, farmPrice }));
+      });
+  };
 
   const refresh = () => {
-    setRefreshing(true)
+    setRefreshing(true);
     state.manager
       .aggregateUnderlyings(state.address)
       .then(underlying => {
-        return underlying.toList().filter(u => !u.balance.isZero())
+        return underlying.toList().filter(u => !u.balance.isZero());
       })
       .then(underlyings => {
-        setState(state => ({ ...state, underlyings }))
+        setState(state => ({ ...state, underlyings }));
       })
       .catch(err => {
-        console.log(err)
-      })
+        console.log(err);
+      });
 
     state.manager
       .summary(state.address)
@@ -230,43 +130,147 @@ function App() {
         ),
       )
       .then(summaries => {
-        let total = ethers.BigNumber.from(0)
+        let total = ethers.BigNumber.from(0);
         summaries.forEach(pos => {
-          total = total.add(pos.summary.usdValueOf)
-        })
+          total = total.add(pos.summary.usdValueOf);
+        });
         setState(state => ({
           ...state,
           summaries,
           usdValue: total,
-        }))
-        setRefreshing(false)
+        }));
+        setRefreshing(false);
 
-        return summaries
+        return summaries;
+      })
+      .catch(_err => {
+        refresh();
+      });
+  };
+
+  const memoizeExchangeRates = () => {
+    axios
+      .get('https://api.ratesapi.io/api/latest?base=USD')
+      .then(res => {
+        setExchangeRates(res.data.rates);
       })
       .catch(err => {
-        refresh()
-      })
-  }
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (state.manager) {
+        refresh();
+      }
+    }, 60000);
+    return () => clearTimeout(timer);
+  });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      getPools();
+    }, 60000);
+    return () => clearTimeout(timer);
+  });
+
+  useEffect(() => {
+    getPools();
+    memoizeExchangeRates();
+    // eslint-disable-next-line
+  }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      memoizeExchangeRates();
+    }, 600000);
+    return () => clearTimeout(timer);
+  });
+
+  useEffect(() => {
+    if (state.address !== '') {
+      refresh();
+    }
+    // eslint-disable-next-line
+  }, [state.address]);
+  useEffect(() => {
+    if (state.usdValue) {
+      setState(state => ({ ...state, display: true }));
+    }
+    // eslint-disable-next-line
+  }, [state.usdValue]);
+
+  const disconnect = () => {
+    setState(state => ({
+      ...state,
+      provider: undefined,
+      signer: undefined,
+      manager: undefined,
+      address: '',
+      summaries: [],
+      underlyings: [],
+      usdValue: 0,
+      apy: 0,
+      error: { message: null, type: null, display: false },
+      theme: window.localStorage.getItem('HarvestFinance:Theme'),
+    }));
+    setIsConnecting(false);
+    web3Modal.clearCachedProvider();
+  };
+
+  const closeErrorModal = () => {
+    setState(state => ({
+      ...state,
+      error: { message: null, type: null, display: false },
+    }));
+  };
+
+  const openModal = (message, type) => {
+    setState(state => ({
+      ...state,
+      error: { message, type, display: true },
+    }));
+  };
+
+  const toggleUserSettings = () => {
+    setSettingsOpen(!settingsOpen);
+  };
+  const toggleSideDrawer = () => {
+    setOpenDrawer(!openDrawer);
+  };
+
+  const setConnection = (provider, signer, manager) => {
+    setState(state => ({
+      ...state,
+      provider,
+      signer,
+      manager,
+    }));
+  };
+
+  const setAddress = address => {
+    setState(state => ({ ...state, address }));
+  };
 
   // Radio Modal
-  const [radio, setRadio] = useState(false)
+  const [radio, setRadio] = useState(false);
 
   const toggleRadio = () => {
-    setRadio(!radio)
-  }
+    setRadio(!radio);
+  };
 
   // currency conversion helpers
   const currencyFormatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: baseCurrency,
-  })
+  });
 
   const prettyBalance = balance => {
-    return currencyFormatter.format(balance / 1000000)
-  }
+    return currencyFormatter.format(balance / 1000000);
+  };
   const convertStandardNumber = num => {
-    return num ? currencyFormatter.format(num) : '$0.00'
-  }
+    return num ? currencyFormatter.format(num) : '$0.00';
+  };
 
   return (
     <HarvestContext.Provider
@@ -378,7 +382,7 @@ function App() {
         <ErrorModal state={state} onClose={() => closeErrorModal()} />
       </ThemeProvider>
     </HarvestContext.Provider>
-  )
+  );
 }
 
-export default App
+export default App;

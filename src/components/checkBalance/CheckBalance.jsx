@@ -1,21 +1,21 @@
-import React, { useState, useContext } from "react";
-import styled, { ThemeProvider } from "styled-components";
-import { Row, Col } from "styled-bootstrap-grid";
-import { darkTheme, lightTheme, fonts } from "../../styles/appStyles";
-import harvest from "../../lib/index";
-import { motion } from "framer-motion";
+import React, { useState, useContext } from 'react';
+import styled, { ThemeProvider } from 'styled-components';
+import { Row, Col } from 'styled-bootstrap-grid';
+import { motion } from 'framer-motion';
+import { darkTheme, lightTheme, fonts } from '../../styles/appStyles';
+import harvest from '../../lib/index';
 
-//COMPONENTS
-import MainContent from "../MainContent";
-import Radio from "../radio/Radio";
-import Wallet from "../Wallet";
+// COMPONENTS
+import MainContent from '../MainContent';
+import Radio from '../radio/Radio';
+import Wallet from '../Wallet';
 
-//CONTEXT
-import HarvestContext from "../../Context/HarvestContext";
+// CONTEXT
+import HarvestContext from '../../Context/HarvestContext';
 
 const { ethers } = harvest;
 
-const CheckBalance = (props) => {
+const CheckBalance = props => {
   const {
     state,
     setState,
@@ -23,81 +23,78 @@ const CheckBalance = (props) => {
     isCheckingBalance,
     setCheckingBalance,
     addressToCheck,
-    setAddressToCheck
+    setAddressToCheck,
   } = useContext(HarvestContext);
-  const [validationMessage, setValidationMessage] = useState("");
+  const [validationMessage, setValidationMessage] = useState('');
 
-  const checkBalances = async (address) => {
+  const checkBalances = async address => {
     if (validateAddress(addressToCheck)) {
       setCheckingBalance(true);
       const provider = window.web3.currentProvider;
       const ethersProvider = new ethers.providers.Web3Provider(provider);
       const signer = ethersProvider.getSigner();
-      const manager = harvest.manager.PoolManager.allPastPools(
-        signer ? signer : provider,
-      );
+      const manager = harvest.manager.PoolManager.allPastPools(signer || provider);
       setConnection(provider, signer, manager);
       manager
         .aggregateUnderlyings(addressToCheck)
-        .then((underlying) => {
-          return underlying.toList().filter((u) => !u.balance.isZero());
+        .then(underlying => {
+          return underlying.toList().filter(u => !u.balance.isZero());
         })
-        .then((underlyings) => {
-          setState((state) => ({ ...state, underlyings: underlyings }));
+        .then(underlyings => {
+          setState(state => ({ ...state, underlyings }));
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
       manager
         .summary(addressToCheck)
-        .then((summaries) =>
+        .then(summaries =>
           summaries.filter(
-            (p) =>
+            p =>
               !p.summary.earnedRewards.isZero() ||
               !p.summary.stakedBalance.isZero() ||
               (p.summary.isActive && !p.summary.unstakedBalance.isZero()),
           ),
         )
-        .then((summaries) => {
+        .then(summaries => {
           let total = ethers.BigNumber.from(0);
-          summaries.forEach((pos) => {
+          summaries.forEach(pos => {
             total = total.add(pos.summary.usdValueOf);
           });
-          setState((state) => ({
+          setState(state => ({
             ...state,
-            summaries: summaries,
+            summaries,
             usdValue: total,
           }));
 
           return summaries;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     }
   };
 
-  const changeHandler = (e) => {
+  const changeHandler = e => {
     setAddressToCheck(e.target.value);
   };
 
-  const setCheck = (address) => {
+  const setCheck = address => {
     if (address && validateAddress(address)) {
-      setState((state) => ({ ...state, address: addressToCheck }));
+      setState(state => ({ ...state, address: addressToCheck }));
       setCheckingBalance(true);
       checkBalances(address);
-
     } else {
-      setAddressToCheck("");
-      setValidationMessage("You must enter a valid address");
+      setAddressToCheck('');
+      setValidationMessage('You must enter a valid address');
       const timer = setTimeout(() => {
-        setValidationMessage("");
+        setValidationMessage('');
       }, 2500);
       return () => clearTimeout(timer);
     }
   };
 
-  const validateAddress = (address) => {
+  const validateAddress = address => {
     try {
       ethers.utils.getAddress(address);
     } catch (e) {
@@ -107,9 +104,7 @@ const CheckBalance = (props) => {
   };
 
   return (
-    <ThemeProvider
-      theme={props.state.theme === "dark" ? darkTheme : lightTheme}
-    >
+    <ThemeProvider theme={props.state.theme === 'dark' ? darkTheme : lightTheme}>
       <>
         {validationMessage ? (
           <motion.div
@@ -126,69 +121,63 @@ const CheckBalance = (props) => {
       </>
 
       <Panel>
-        {isCheckingBalance ? <Radio /> : ""}
+        {isCheckingBalance ? <Radio /> : ''}
         {isCheckingBalance ? (
           <Row>
             <Col>
-              <Wallet
-                theme={state.theme}
-                address={addressToCheck}
-                provider={state.provider}
-              />
+              <Wallet theme={state.theme} address={addressToCheck} provider={state.provider} />
             </Col>
           </Row>
         ) : null}
         {isCheckingBalance ? (
-          ""
+          ''
         ) : (
-            <div className="read-only-header">
-              <h1>Or enter a wallet address for read-only mode</h1>
-              <div className="address-input">
-                <input
-                  type="text"
-                  value={addressToCheck}
-                  placeholder="Enter address"
-                  onChange={changeHandler}
-                />
-              </div>
-              {/* //address-input */}
+          <div className="read-only-header">
+            <h1>Or enter a wallet address for read-only mode</h1>
+            <div className="address-input">
+              <input
+                type="text"
+                value={addressToCheck}
+                placeholder="Enter address"
+                onChange={changeHandler}
+              />
             </div>
-          )}
+            {/* //address-input */}
+          </div>
+        )}
 
         {isCheckingBalance ? (
-          ""
+          ''
         ) : (
-            <button
-              onClick={() => setCheck(addressToCheck)}
-              className="check-all button"
-            >
-              Check Balance
-            </button>
-          )}
-        {isCheckingBalance ? <MainContent setAddressToCheck={setAddressToCheck} state={state} /> : null}
+          <button onClick={() => setCheck(addressToCheck)} className="check-all button">
+            Check Balance
+          </button>
+        )}
+        {isCheckingBalance ? (
+          <MainContent setAddressToCheck={setAddressToCheck} state={state} />
+        ) : null}
       </Panel>
     </ThemeProvider>
   );
 };
 export default CheckBalance;
 const Panel = styled.div`
-  
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin: 2rem auto;
-  background-color: ${(props) => props.theme.style.panelBackground};
-  color: ${(props) => props.theme.style.primaryFontColor};
+  background-color: ${props => props.theme.style.panelBackground};
+  color: ${props => props.theme.style.primaryFontColor};
   font-size: 1.7rem;
   font-family: ${fonts.contentFont};
-  padding:  1rem 1.5rem 0rem 1.5rem;
-  border: ${(props) => props.theme.style.mainBorder};
+  padding: 1rem 1.5rem 0rem 1.5rem;
+  border: ${props => props.theme.style.mainBorder};
   border-radius: 0.5rem;
   box-sizing: border-box;
-  box-shadow: ${(props) => props.theme.style.panelBoxShadow};
+  box-shadow: ${props => props.theme.style.panelBoxShadow};
   z-index: 1;
   position: relative;
- 
+
   h1 {
     font-family: ${fonts.headerFont};
     margin-bottom: 2.2rem;
@@ -200,13 +189,13 @@ const Panel = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-      input {
-        width: 30%;
-        text-align: center;
-        border-radius: .5rem;
-        font-size: 1.7rem;
-        font-family: ${fonts.contentFont}
-      }
+    input {
+      width: 30%;
+      text-align: center;
+      border-radius: 0.5rem;
+      font-size: 1.7rem;
+      font-family: ${fonts.contentFont};
+    }
   }
   .button {
     width: max-content;
@@ -234,14 +223,14 @@ const ValidationMessage = styled.div`
   justify-content: center;
   align-items: center;
   width: max-content;
-  background-color: ${(props) => props.theme.style.lightBackground};
-  color: ${(props) => props.theme.style.primaryFontColor};
+  background-color: ${props => props.theme.style.lightBackground};
+  color: ${props => props.theme.style.primaryFontColor};
   font-family: ${fonts.contentFont};
   font-size: 2rem;
   padding: 1rem 2rem;
   border-radius: 0.5rem;
-  border: ${(props) => props.theme.style.mainBorder};
-  box-shadow: ${(props) => props.theme.style.panelBoxShadow};
+  border: ${props => props.theme.style.mainBorder};
+  box-shadow: ${props => props.theme.style.panelBoxShadow};
   margin: -5rem auto 0 auto;
   position: absolute;
   left: 0%;
