@@ -1,7 +1,8 @@
+/* eslint-disable no-use-before-define */
 import ethers from 'ethers';
-import { ERC20_ABI, UNISWAP_PAIR_ABI, BALANCER_ABI, CURVE_ABI, FTOKEN_ABI } from './data/ABIs.js';
-import data from './data/deploys.js';
-import EthParser from './ethParser.js';
+import { ERC20_ABI, UNISWAP_PAIR_ABI, BALANCER_ABI, CURVE_ABI, FTOKEN_ABI } from './data/ABIs';
+import data from './data/deploys';
+import EthParser from './ethParser';
 
 /**
  * UnderlyingBalances
@@ -22,12 +23,13 @@ export class UnderlyingBalances {
 
   usdValueOf(provider) {
     const promises = Object.entries(this.balances).map(([name, balance]) => {
+      // eslint-disable-next-line no-use-before-define
       const asset = Token.fromName(name, provider);
       return asset.usdValueOf(balance);
     });
     return Promise.all(promises).then(vals => {
       let total = ethers.BigNumber.from(0);
-      vals.forEach(val => (total = total.add(val)));
+      total = vals.reduce((previousValue, currentValue) => previousValue.add(currentValue));
       return total;
     });
   }
@@ -72,7 +74,7 @@ export class ERC20Extended extends ethers.Contract {
     this.asset = data.assetByAddress(address);
     this.tokenDecimals = this.asset.decimals;
     this.name = this.asset.name;
-    this.baseUnit = new ethers.BigNumber.from(10).pow(this.tokenDecimals);
+    this.baseUnit = ethers.BigNumber.from(10).pow(this.tokenDecimals);
   }
 
   /**
@@ -171,7 +173,7 @@ export class Token extends ERC20Extended {
 }
 
 class HasUnderlying extends Token {
-  async currentTokens() {
+  static async currentTokens() {
     throw Error('currentTokens is abstract, and must be implemented on a subclass');
   }
 
@@ -209,6 +211,7 @@ class HasUnderlying extends Token {
       const balance = reserve.balance.mul(tokens).div(total);
       if (reserve.asset.type && passthrough) {
         const token = Token.fromAsset(reserve.asset, this.provider);
+        // eslint-disable-next-line no-await-in-loop
         shares.combine(await token.calcShare(balance, passthrough));
       } else {
         shares.ingest([
@@ -241,7 +244,8 @@ class HasUnderlying extends Token {
   async usdValueOf(amount) {
     if (amount.isZero()) return ethers.BigNumber.from(0);
     const shares = await this.calcShare(amount, true);
-    return await shares.usdValueOf(this.provider);
+    const sharesUsdValue = await shares.usdValueOf(this.provider);
+    return sharesUsdValue;
   }
 }
 
@@ -294,8 +298,14 @@ export class UniswapToken extends HasUnderlying {
   constructor(asset, provider) {
     super(asset, UNISWAP_PAIR_ABI, provider);
 
-    this.reserve0 = async () => await this.getReserves()[0];
-    this.reserve1 = async () => await this.getReserves()[1];
+    this.reserve0 = async () => {
+      const reserveRes = await this.getReserves()[0];
+      return reserveRes;
+    };
+    this.reserve1 = async () => {
+      const reserveRes = await this.getReserves()[1];
+      return reserveRes;
+    };
   }
 
   /**
