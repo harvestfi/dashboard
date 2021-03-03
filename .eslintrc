@@ -64,6 +64,7 @@
     "no-shadow": "off",
     "jsx-a11y/click-events-have-key-events": "off",
     "no-restricted-syntax": "off",
-    "max-classes-per-file": "off"
+    "max-classes-per-file": "off",
+    "guard-for-in": "off"
   }
 }

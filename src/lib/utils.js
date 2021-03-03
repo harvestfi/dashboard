@@ -39,7 +39,7 @@ export function prettyPosition(sum) {
     },
   } = sum;
 
-  const formattedUnderlyingBalance = (function () {
+  const formattedUnderlyingBalance = (function format() {
     if (underlyingBalanceOf) {
       if (underlyingBalanceOf.balances) {
         for (const balance in underlyingBalanceOf.balances) {
@@ -90,7 +90,7 @@ export function prettyUnderlying(u) {
   const underlyingBalancesList = u.underlyingBalances.toList();
 
   if (underlyingBalancesList[0].balance.isZero()) {
-    return;
+    return {};
   }
 
   /**
