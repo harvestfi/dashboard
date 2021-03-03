@@ -58,6 +58,7 @@
     ],
     "prettier/prettier": ["error"],
     "react/display-name": 0,
-    "import/no-cycle": 0
+    "import/no-cycle": 0,
+    "radix": "off"
   }
 }

@@ -2,7 +2,7 @@
     {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "[javascript]": {
-          "editor.defaultFormatter": "Wscats.qf"
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
         },
         "[javascriptreact]": {
           "editor.defaultFormatter": "vscode.typescript-language-features"
