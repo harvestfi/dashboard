@@ -1,9 +1,9 @@
-import React, { useEffect, useContext } from 'react'
-import styled, { ThemeProvider } from 'styled-components'
-import { Contract, providers } from 'ethers'
-import HarvestContext from '../../Context/HarvestContext'
-import { darkTheme, lightTheme, fonts } from '../../styles/appStyles'
-import { tokens, tokens2 } from './AvailableTokens'
+import React, { useEffect, useContext } from 'react';
+import styled, { ThemeProvider } from 'styled-components';
+import { Contract, providers } from 'ethers';
+import HarvestContext from '../../Context/HarvestContext';
+import { darkTheme, lightTheme, fonts } from '../../styles/appStyles';
+import { tokens, tokens2 } from './AvailableTokens';
 
 const Panel = styled.div`
   display: flex;
@@ -22,8 +22,9 @@ const Panel = styled.div`
   .inner {
     overflow-x: scroll;
     height: 16rem;
-    scrollbar-color: ${props => props.theme.style.scrollBarColor}
-      ${props => props.theme.style.lightBackground};
+    scrollbar-color: ${({ theme }) => {
+      return `${theme.style.scrollBarColor} ${theme.style.lightBackground}`;
+    }};
     scrollbar-width: thin;
 
     ::-webkit-scrollbar {
@@ -73,7 +74,7 @@ const Panel = styled.div`
     margin-bottom: 1.5rem;
     height: 32rem;
   }
-`
+`;
 
 const StyledToken = styled.div`
   display: flex;
@@ -103,19 +104,19 @@ const StyledToken = styled.div`
   span {
     font-size: 1.5rem;
   }
-`
+`;
 
 const AddTokens = props => {
-  const { state } = props
-  const { tokenAddedMessage, setTokenAddedMessage } = useContext(HarvestContext)
+  const { state } = props;
+  const { tokenAddedMessage, setTokenAddedMessage } = useContext(HarvestContext);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setTokenAddedMessage('')
-    }, 1500)
-    return () => clearTimeout(timer)
+      setTokenAddedMessage('');
+    }, 1500);
+    return () => clearTimeout(timer);
     // eslint-disable-next-line
-  }, [tokenAddedMessage])
+  }, [tokenAddedMessage]);
 
   const checkForToken = async t => {
     // The minimum ABI to get ERC20 Token balance
@@ -136,17 +137,17 @@ const AddTokens = props => {
         outputs: [{ name: '', type: 'uint8' }],
         type: 'function',
       },
-    ]
+    ];
     // Get ERC20 Token contract instance
-    const contract = new Contract(t.address, minABI, providers.getDefaultProvider())
+    const contract = new Contract(t.address, minABI, providers.getDefaultProvider());
     // calculate a balance
-    const balance = await contract.balanceOf(props.state.address)
-    console.log(parseInt(balance) > 0)
-    return parseInt(balance)
-  }
+    const balance = await contract.balanceOf(props.state.address);
+    console.log(parseInt(balance) > 0);
+    return parseInt(balance);
+  };
 
   const addTokenToWallet = t => {
-    setTokenAddedMessage('')
+    setTokenAddedMessage('');
 
     window.ethereum
       .request({
@@ -165,25 +166,25 @@ const AddTokens = props => {
       .then(async response => {
         // console.log(await checkForToken(t))
         if ((await checkForToken(t)) > 0 && response) {
-          setTokenAddedMessage(`${t.name} is already in your wallet.`)
+          setTokenAddedMessage(`${t.name} is already in your wallet.`);
         } else if (response) {
-          setTokenAddedMessage(`${t.name} was added to your wallet.`)
+          setTokenAddedMessage(`${t.name} was added to your wallet.`);
         } else {
-          setTokenAddedMessage(`${t.name} was not added to your wallet.`)
+          setTokenAddedMessage(`${t.name} was not added to your wallet.`);
         }
       })
-      .catch(console.error)
-  }
+      .catch(console.error);
+  };
 
   return (
-    <ThemeProvider theme={props.state.theme === 'dark' ? darkTheme : lightTheme}>
+    <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
       <Panel>
         <h1>Add assets to wallet</h1>
         <div className="inner">
           <div className="token-container first">
             {tokens.map(t => (
               <StyledToken onClick={() => addTokenToWallet(t)} key={t.name} {...t}>
-                <img alt={t.name} src={t.image}></img>
+                <img alt={t.name} src={t.image} />
                 <span>{t.name}</span>
               </StyledToken>
             ))}
@@ -191,7 +192,7 @@ const AddTokens = props => {
           <div className="token-container">
             {tokens2.map(t => (
               <StyledToken onClick={() => addTokenToWallet(t)} key={t.name} {...t}>
-                <img alt={t.name} src={t.image}></img>
+                <img alt={t.name} src={t.image} />
                 <span>{t.name}</span>
               </StyledToken>
             ))}
@@ -199,7 +200,7 @@ const AddTokens = props => {
         </div>
       </Panel>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default AddTokens
+export default AddTokens;
