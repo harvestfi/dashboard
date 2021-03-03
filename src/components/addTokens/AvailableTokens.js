@@ -1,18 +1,18 @@
 // images
-import logo from '../../assets/logo.png'
-import usdcIcon from '../../assets/png_usdc_56px@3x.png'
-import usdtIcon from '../../assets/png_usdt_56px@3x.png'
-import daiIcon from '../../assets/png_dai_56px@3x.png'
-import wbtcIcon from '../../assets/png_wbtc_56px@3x.png'
-import frenbtcIcon from '../../assets/png_frenbtc_56px@3x.png'
-import crvrenwbtcIcon from '../../assets/png_crvrenwbtc_56px@3x.png'
-import sushi from '../../assets/sushi_wbtc.svg'
-import yearn from '../../assets/yearn.png'
-import crv3 from '../../assets/3CRV.png'
-import wbtc from '../../assets/eth_wbtc.svg'
-import usdt from '../../assets/eth_usdt.svg'
-import usdc from '../../assets/eth_usdc.svg'
-import ethDai from '../../assets/eth_dai.svg'
+import logo from '../../assets/logo.png';
+import usdcIcon from '../../assets/png_usdc_56px@3x.png';
+import usdtIcon from '../../assets/png_usdt_56px@3x.png';
+import daiIcon from '../../assets/png_dai_56px@3x.png';
+import wbtcIcon from '../../assets/png_wbtc_56px@3x.png';
+import frenbtcIcon from '../../assets/png_frenbtc_56px@3x.png';
+import crvrenwbtcIcon from '../../assets/png_crvrenwbtc_56px@3x.png';
+import sushi from '../../assets/sushi_wbtc.svg';
+import yearn from '../../assets/yearn.png';
+import crv3 from '../../assets/3CRV.png';
+import wbtc from '../../assets/eth_wbtc.svg';
+import usdt from '../../assets/eth_usdt.svg';
+import usdc from '../../assets/eth_usdc.svg';
+import ethDai from '../../assets/eth_dai.svg';
 
 export const tokens = [
   {
@@ -78,7 +78,7 @@ export const tokens = [
     tokenImage: 'https://assets.coingecko.com/coins/images/12972/large/3pool_128.png?1603948039',
     url: 'https://harvestfi.github.io/add-3crv/',
   },
-]
+];
 export const tokens2 = [
   {
     name: 'frenBTC',
@@ -138,4 +138,4 @@ export const tokens2 = [
     tokenImage:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA1CpdQQxENdYdzlXdQhPj2sNqoVqtK5AQFQ&usqp=CAU',
   },
-]
+];

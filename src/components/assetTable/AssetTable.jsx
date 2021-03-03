@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
-import HarvestContext from "../../Context/HarvestContext";
-import styled, { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme, fonts } from "../../styles/appStyles";
-import AssetTableSkeleton from "./AssetTableSkeleton";
-import harvest from "../../lib/index.js";
+import React, { useContext } from 'react';
+import styled, { ThemeProvider } from 'styled-components';
+import HarvestContext from '../../Context/HarvestContext';
+import { darkTheme, lightTheme, fonts } from '../../styles/appStyles';
+import AssetTableSkeleton from './AssetTableSkeleton';
+import harvest from '../../lib';
+
 const { ethers } = harvest;
 
 const TableContainer = styled.div`
@@ -12,11 +13,11 @@ const TableContainer = styled.div`
   align-items: center;
   width: 100%;
   padding-bottom: 3rem;
-  border: ${(props) => props.theme.style.mainBorder};
-  box-shadow: ${(props) => props.theme.style.panelBoxShadow};
-  color: ${(props) => props.theme.style.primaryFontColor};
-  background-color: ${(props) => props.theme.style.lightBackground};
-  border-radius: .5rem;
+  border: ${props => props.theme.style.mainBorder};
+  box-shadow: ${props => props.theme.style.panelBoxShadow};
+  color: ${props => props.theme.style.primaryFontColor};
+  background-color: ${props => props.theme.style.lightBackground};
+  border-radius: 0.5rem;
   border-top-left-radius: 0rem;
   position: relative;
   z-index: 50;
@@ -30,18 +31,18 @@ const PanelTabContainerLeft = styled.div`
 const PanelTab = styled.div`
   margin-right: 0.75rem;
   border-radius: 1.2rem;
-  border-top: ${(props) => props.theme.style.mainBorder};
-  border-left: ${(props) => props.theme.style.mainBorder};
-  border-right: ${(props) => props.theme.style.mainBorder};
+  border-top: ${props => props.theme.style.mainBorder};
+  border-left: ${props => props.theme.style.mainBorder};
+  border-right: ${props => props.theme.style.mainBorder};
   padding: 0.75rem 2rem 2rem 2rem;
-  background-color: ${(props) => props.theme.style.highlight};
-  box-shadow: ${(props) => props.theme.style.panelTabBoxShadow};
+  background-color: ${props => props.theme.style.highlight};
+  box-shadow: ${props => props.theme.style.panelTabBoxShadow};
   position: relative;
   top: 1.2rem;
-  color: ${(props) => props.theme.style.buttonFontColor};
+  color: ${props => props.theme.style.buttonFontColor};
 
   p {
-    color: ${(props) => props.theme.style.panelTabLinkColor};
+    color: ${props => props.theme.style.panelTabLinkColor};
     text-decoration: none;
     font-family: ${fonts.contentFont};
     font-size: 2rem;
@@ -78,10 +79,10 @@ const PanelTab = styled.div`
 
 const columns = [
   {
-    name: "Asset",
+    name: 'Asset',
   },
   {
-    name: "Underlying Balance",
+    name: 'Underlying Balance',
   },
 ];
 
@@ -89,7 +90,7 @@ const AssetTable = () => {
   const { state } = useContext(HarvestContext);
 
   return (
-    <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
+    <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
       {state.display ? (
         <PanelTabContainerLeft>
           <PanelTab>
@@ -112,10 +113,7 @@ const AssetTable = () => {
                 })}
               </MainTableHeader>
               {state.underlyings.map((underlying, i) => {
-                let sum = ethers.utils.formatUnits(
-                  underlying.balance,
-                  underlying.asset.decimals,
-                );
+                const sum = ethers.utils.formatUnits(underlying.balance, underlying.asset.decimals);
                 return (
                   <MainTableRow key={i}>
                     <div className="name">{underlying.asset.name}</div>
@@ -131,8 +129,8 @@ const AssetTable = () => {
               </div>
               <div className="content">
                 <div className="name">
-                  {" "}
-                  <p>Add assets to get started</p>{" "}
+                  {' '}
+                  <p>Add assets to get started</p>{' '}
                 </div>
               </div>
             </NoAssetTable>
@@ -152,7 +150,9 @@ const MainTableInner = styled.div`
   margin: 0 auto;
   overflow-x: scroll;
   text-align: center;
-  scrollbar-color: ${(props) => props.theme.style.scrollBarColor} ${(props) => props.theme.style.lightBackground};
+  scrollbar-color: ${({ theme }) => {
+    return `${theme.style.scrollBarColor} ${theme.style.lightBackground}`;
+  }};
   scrollbar-width: thin;
   ::-webkit-scrollbar {
     width: 100%;
@@ -162,15 +162,15 @@ const MainTableInner = styled.div`
   ::-webkit-scrollbar-track:no-button {
     width: 100%;
     border-radius: 0.5rem;
-    background-color: ${(props) => props.theme.style.lightBackground};
+    background-color: ${props => props.theme.style.lightBackground};
   }
   ::-webkit-scrollbar-button {
-    color: ${(props) => props.theme.style.primaryFontColor};
+    color: ${props => props.theme.style.primaryFontColor};
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: black;
-    background-color: ${(props) => props.theme.style.scrollBarColor};
+    background-color: ${props => props.theme.style.scrollBarColor};
   }
 `;
 const MainTableRow = styled.div`
