@@ -11,7 +11,8 @@
     "plugin:jsx-a11y/strict",
     "plugin:react/recommended",
     "plugin:prettier/recommended",
-    "prettier/react"
+    "prettier/react",
+    "plugin:react-hooks/recommended"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -63,6 +64,7 @@
     "react/no-array-index-key": "off",
     "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "jsx-a11y/no-noninteractive-element-interactions": "off",
-    "jsx-a11y/no-static-element-interactions": "off"
+    "jsx-a11y/no-static-element-interactions": "off",
+    "react/button-has-type": "off"
   }
 }

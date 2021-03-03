@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState, useCallback } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import ethers from 'ethers';
 import harvest from '../../lib/index';
@@ -236,11 +236,11 @@ const FarmingTable = ({ showAsCards }) => {
     setSortDirection(-sortDirection);
   };
 
-  const getTotalFarmEarned = () => {
+  const getTotalFarmEarned = useCallback(() => {
     let total = 0;
     if (state.summaries.length !== 0) {
       // eslint-disable-next-line
-      state.summaries.map(utils.prettyPosition).map((summary, index) => {
+      state.summaries.map(utils.prettyPosition).map((summary, _index) => {
         total += parseFloat(summary.historicalRewards);
         setState({
           ...state,
@@ -248,7 +248,7 @@ const FarmingTable = ({ showAsCards }) => {
         });
       });
     }
-  };
+  }, [setState, state]);
 
   useEffect(() => {
     if (state.totalFarmEarned === 0) {
@@ -256,7 +256,7 @@ const FarmingTable = ({ showAsCards }) => {
     }
     const array = state.summaries.map(utils.prettyPosition);
     setSortedSummary(array);
-  }, [state.summaries]);
+  }, [getTotalFarmEarned, state.summaries, state.totalFarmEarned]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
