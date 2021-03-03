@@ -33,6 +33,7 @@ export class RewardsPool extends ethers.Contract {
       });
       return pricePerShare;
     }
+    return '0';
   }
 
   static fromPool(pool, provider) {
@@ -156,7 +157,8 @@ export class RewardsPool extends ethers.Contract {
     this.getPricePerFullShare();
     const underlying = async address => {
       if (this.underlyingBalanceOf) {
-        return await this.underlyingBalanceOf(address);
+        const underlyingBalanceOfRes = await this.underlyingBalanceOf(address);
+        return underlyingBalanceOfRes;
       }
       return {};
     };
@@ -214,7 +216,7 @@ export class RewardsPool extends ethers.Contract {
     ]);
 
     if (!amnt || amnt.isZero()) amnt = balance;
-    if (balance.lt(amnt)) return;
+    if (balance.lt(amnt)) return null;
 
     let approveTx;
     if (approveForever || allowance.lt(balance)) {
@@ -226,7 +228,8 @@ export class RewardsPool extends ethers.Contract {
     const stakeTx = this.stake(amnt);
 
     await approveTx;
-    return await stakeTx;
+    const stakeRes = await stakeTx;
+    return stakeRes;
   }
 }
 
@@ -239,6 +242,7 @@ export class AutoCompoundingRewardsPool extends RewardsPool {
     return new AutoCompoundingRewardsPool(data.farmRewardsPool, provider);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async earnedRewards() {
     return ethers.BigNumber.from(0);
   }
@@ -250,20 +254,18 @@ export class AutoCompoundingRewardsPool extends RewardsPool {
     const stakedFilter = this.filters.Staked(address);
     const withdrawnFilter = this.filters.Withdrawn(address);
 
-    let [stakedEvents, withdrawnEvents, balance] = await Promise.all([
-      this.queryFilter(stakedFilter),
-      this.queryFilter(withdrawnFilter),
-      this.balanceOf(address),
-    ]);
+    let stakedEvents = await this.queryFilter(stakedFilter),
+      withdrawnEvents = await this.queryFilter(withdrawnFilter),
+      totalStaked = ethers.BigNumber.from(0),
+      totalWithdrawn = ethers.BigNumber.from(0);
+    const balance = await this.balanceOf(address);
 
     stakedEvents = stakedEvents.filter(e => e.topics[0] === STAKED_TOPIC0);
     withdrawnEvents = withdrawnEvents.filter(e => e.topics[0] === WITHDRAWN_TOPIC0);
 
-    let totalStaked = new ethers.BigNumber.from(0);
     for (const e of stakedEvents) {
       totalStaked = totalStaked.add(e.args[1]);
     }
-    let totalWithdrawn = new ethers.BigNumber.from(0);
     for (const e of withdrawnEvents) {
       totalWithdrawn = totalWithdrawn.add(e.args[1]);
     }
@@ -290,13 +292,12 @@ export class HarvestRewardsPool extends RewardsPool {
   async historicalRewards(address) {
     const REWARD_PAID_TOPIC0 = '0xe2403640ba68fed3a2f88b7557551d1993f84b99bb10ff833f0cf8db0c5e0486';
     const filter = this.filters.RewardPaid(address);
-    let [currentRewards, rewardPaidEvents] = await Promise.all([
-      this.earnedRewards(address),
-      this.queryFilter(filter),
-    ]);
+
+    const currentRewards = await this.earnedRewards(address);
+    let rewardPaidEvents = await this.queryFilter(filter),
+      pastRewards = ethers.BigNumber.from(0);
 
     rewardPaidEvents = rewardPaidEvents.filter(e => e.topics[0] === REWARD_PAID_TOPIC0);
-    let pastRewards = new ethers.BigNumber.from(0);
     for (const e of rewardPaidEvents) {
       pastRewards = pastRewards.add(e.args[1]);
     }
