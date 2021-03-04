@@ -21,14 +21,18 @@ export default function FarmCard({ summary_information }) {
 
   const formatBalance = (balance) => {
     const bal = parseFloat(balance);
-    if (bal === 0) return bal;
-    if (bal < 10) return bal.toFixed(6);
-    if (bal < 100) return bal.toFixed(5);
-    if (bal < 1000) return bal.toFixed(4);
-    if (bal < 10000) return bal.toFixed(3);
-    if (bal < 100000) return bal.toFixed(2);
-    if (bal < 1000000) return bal.toFixed(1);
-    return Math.round(bal);
+    if (bal === 0) return bal.toString();
+    if (bal < 10) return bal.toFixed(6).toString();
+    if (bal < 100) return bal.toFixed(5).toString();
+    if (bal < 1000) return bal.toFixed(4).toString();
+    if (bal < 10_000) return bal.toFixed(3).toString();
+    if (bal < 100_000) return (bal / 1000).toFixed(5).toString() + "k";
+    if (bal < 1_000_000) return (bal / 1000).toFixed(4).toString() + "k";
+    if (bal < 10_000_000) return (bal / 1000).toFixed(3).toString() + "k";
+    if (bal < 100_000_000) return (bal / 1_000_000).toFixed(5).toString() + "m";
+    if (bal < 1_000_000_000) return (bal / 1_000_000).toFixed(4).toString() + "m";
+    if (bal < 10_000_000_000) return (bal / 1_000_000).toFixed(3).toString() + "m";
+    return Math.round(bal).toString();
   };
 
   const stake = async () => {
