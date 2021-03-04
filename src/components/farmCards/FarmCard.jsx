@@ -22,7 +22,13 @@ export default function FarmCard({ summary_information }) {
   const formatBalance = (balance) => {
     const bal = parseFloat(balance);
     if (bal === 0) return bal;
-    return bal < 1 ? bal.toFixed(6) : bal.toFixed(1);
+    if (bal < 10) return bal.toFixed(6);
+    if (bal < 100) return bal.toFixed(5);
+    if (bal < 1000) return bal.toFixed(4);
+    if (bal < 10000) return bal.toFixed(3);
+    if (bal < 100000) return bal.toFixed(2);
+    if (bal < 1000000) return bal.toFixed(1);
+    return Math.round(bal);
   };
 
   const stake = async () => {
