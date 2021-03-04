@@ -17,8 +17,13 @@ export default function FarmCard({ summary_information }) {
         return pool.address === summary_information.address;
       });
     }
+  };
 
-  }
+  const formatBalance = (balance) => {
+    const bal = parseFloat(balance);
+    if (bal === 0) return bal;
+    return bal < 1 ? bal.toFixed(6) : bal.toFixed(1);
+  };
 
   const stake = async () => {
     const doStake = async (stakeAmount) => {
@@ -79,6 +84,7 @@ export default function FarmCard({ summary_information }) {
       await doStake(stakeAmount);
     }
   };
+
   const withDraw = async () => {
     const doWithdraw = async (withdrawAmount) => {
       await pool
@@ -125,6 +131,7 @@ export default function FarmCard({ summary_information }) {
     const withdrawAmount = ethers.utils.parseUnits(amount.toString(), 18);
     await doWithdraw(withdrawAmount);
   };
+
   return (
     <FarmCardContainer>
       <div className="farm_card_title">{summary_information.name}</div>
@@ -136,7 +143,7 @@ export default function FarmCard({ summary_information }) {
         </div>
         <div className="card_property_section farm_staked">
           <label className="card_property_title">Staked</label>
-          <p className="card_property_value">{parseFloat(summary_information.stakedBalance).toFixed(6)}</p>
+          <p className="card_property_value">{formatBalance(summary_information.stakedBalance)}</p>
         </div>
         <div className="card_property_section farm_claimable">
           <label className="card_property_title">Claimable</label>
@@ -144,7 +151,7 @@ export default function FarmCard({ summary_information }) {
         </div>
         <div className="card_property_section farm_unstaked">
           <label className="card_property_title">Unstaked</label>
-          <p className="card_property_value">{Math.floor(parseFloat(summary_information.unstakedBalance)).toFixed(6)}</p>
+          <p className="card_property_value">{formatBalance(summary_information.unstakedBalance)}</p>
         </div>
         <div className="card_property_section farm_pool_percentage">
           <label className="card_property_title">% of Pool</label>
@@ -167,7 +174,7 @@ export default function FarmCard({ summary_information }) {
               <img src={logo} alt="Farm tractor"/>
             </div>
             : <span>
-              {parseFloat(summary_information.underlyingBalance).toFixed(6)}
+              {formatBalance(summary_information.underlyingBalance)}
               <div className="underlying_profits">
                 (+{convertStandardNumber(parseFloat(summary_information.profits).toFixed(6) * currentExchangeRate)} 📈)
                             </div>
