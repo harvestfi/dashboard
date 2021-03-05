@@ -10,7 +10,7 @@ class GeckoApi {
    */
   constructor(url) {
     this.url = url;
-    this._memos = {};
+    this.memos = {};
   }
 
   /**
@@ -20,8 +20,8 @@ class GeckoApi {
    */
   checkMemo(address, time) {
     const key = address.toLowerCase();
-    if (this._memos[key] && this._memos[key].validUntil >= time) {
-      return this._memos[key].bnPrice;
+    if (this.memos[key] && this.memos[key].validUntil >= time) {
+      return this.memos[key].bnPrice;
     }
     return 0;
   }
@@ -36,7 +36,7 @@ class GeckoApi {
     if (!price) return BigNumber.from(0);
     const key = address.toLowerCase();
     const bnPrice = ethers.BigNumber.from(parseInt(price * 1000000, 10));
-    this._memos[key] = {
+    this.memos[key] = {
       validUntil,
       bnPrice,
     };
@@ -47,7 +47,7 @@ class GeckoApi {
    * NOTE: silently fails to return unknown or non-existing assets
    * @param {Array} addresses token addresses
    */
-  async _getPrices(addresses) {
+  async getPrices(addresses) {
     const result = {};
     const time = Date.now();
 
@@ -88,17 +88,9 @@ class GeckoApi {
    * @return {Promise} price in microdollars
    */
   getPrice(address) {
-    return this._getPrices([address]).then(res => {
+    return this.getPrices([address]).then(res => {
       return res[address.toLowerCase()];
     });
-  }
-
-  /**
-   * @param {Array} addresses token addresses
-   * @return {Promise} price in microdollars
-   */
-  getPrices(addresses) {
-    return this._getPrices(addresses);
   }
 }
 

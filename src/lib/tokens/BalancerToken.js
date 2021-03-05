@@ -19,15 +19,15 @@ export default class BalancerToken extends HasUnderlying {
    * @return {Array[Token]}
    */
   async currentTokens() {
-    if (this._getCurrentTokens) {
-      return this._getCurrentTokens;
+    if (this.currentTokensList) {
+      return this.currentTokensList;
     }
     const tokens = [];
     (await this.getCurrentTokens()).forEach(token => {
       tokens.push(getTokenFromAddress(token, this.provider));
     });
-    this._getCurrentTokens = tokens;
-    return this._getCurrentTokens;
+    this.currentTokensList = tokens;
+    return this.currentTokensList;
   }
 
   /**

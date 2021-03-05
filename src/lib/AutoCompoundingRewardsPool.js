@@ -6,7 +6,7 @@ import RewardsPool from './pool';
 export default class AutoCompoundingRewardsPool extends RewardsPool {
   constructor(pool, provider) {
     super(pool, AUTO_REWARDS_ABI, provider);
-    this._earnedRewards = ethers.BigNumber.from(0);
+    this.earnedRewardsAmount = ethers.BigNumber.from(0);
   }
 
   static farmRewards(provider) {
@@ -14,7 +14,7 @@ export default class AutoCompoundingRewardsPool extends RewardsPool {
   }
 
   async earnedRewards() {
-    return this._earnedRewards;
+    return this.earnedRewardsAmount;
   }
 
   async historicalRewards(address) {

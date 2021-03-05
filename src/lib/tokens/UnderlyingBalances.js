@@ -10,7 +10,7 @@ export default class UnderlyingBalances {
     this.balances = {};
   }
 
-  _ingest(name, balance) {
+  ingestEntry(name, balance) {
     if (balance.isZero()) return;
     if (!this.balances[name]) {
       this.balances[name] = balance;
@@ -32,13 +32,13 @@ export default class UnderlyingBalances {
   }
 
   ingest(entries) {
-    entries.forEach(entry => this._ingest(entry.asset.name, entry.balance));
+    entries.forEach(entry => this.ingestEntry(entry.asset.name, entry.balance));
     return this;
   }
 
   combine(other) {
     if (other)
-      Object.entries(other.balances).forEach(([name, balance]) => this._ingest(name, balance));
+      Object.entries(other.balances).forEach(([name, balance]) => this.ingestEntry(name, balance));
     return this;
   }
 

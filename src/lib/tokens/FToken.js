@@ -11,11 +11,11 @@ export default class FToken extends HasUnderlying {
   constructor(asset, provider) {
     super(asset, FTOKEN_ABI, provider);
     this.underlyingAsset = asset.underlyingAsset;
-    this._currentTokens = [getTokenFromAddress(this.underlyingAsset.address, this.provider)];
+    this.currentTokensList = [getTokenFromAddress(this.underlyingAsset.address, this.provider)];
   }
 
   async currentTokens() {
-    return this._currentTokens;
+    return this.currentTokensList;
   }
 
   async getReserves() {

@@ -20,13 +20,13 @@ export default class CurveToken extends HasUnderlying {
    * @return {Array[Token]}
    */
   async currentTokens() {
-    if (this._getCurrentTokens) {
-      return this._getCurrentTokens;
+    if (this.currentTokensList) {
+      return this.currentTokensList;
     }
-    this._getCurrentTokens = this.curveInfo.assets.map(asset => {
+    this.currentTokensList = this.curveInfo.assets.map(asset => {
       return getTokenFromAddress(asset.address, this.provider);
     });
-    return this._getCurrentTokens;
+    return this.currentTokensList;
   }
 
   /**

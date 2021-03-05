@@ -6,7 +6,7 @@ export default class RewardsPool extends ethers.Contract {
   constructor(pool, abi, provider) {
     super(pool.address, abi, provider);
     this.name = pool.name ? pool.name : pool.asset.name;
-    this._pool = pool;
+    this.pool = pool;
 
     this.lptoken = getTokenFromAsset(pool.asset, provider);
     this.reward = getTokenFromAsset(pool.rewardAsset, provider);
@@ -25,10 +25,10 @@ export default class RewardsPool extends ethers.Contract {
 
   getPricePerFullShare() {
     let pricePerShare = null;
-    if (this._pool.asset.type === 'ftoken') {
+    if (this.pool.asset.type === 'ftoken') {
       this.lptoken.getPricePerFullShare().then(res => {
         this.pricePerFullShare = res;
-        pricePerShare = ethers.utils.formatUnits(res, this._pool.asset.decimals);
+        pricePerShare = ethers.utils.formatUnits(res, this.pool.asset.decimals);
       });
       return pricePerShare;
     }
@@ -120,7 +120,7 @@ export default class RewardsPool extends ethers.Contract {
     const output = {
       address: this.address,
       user: address,
-      pool: this._pool,
+      pool: this.pool,
       isActive: this.isActive(),
       stakedBalance,
       unstakedBalance,

@@ -70,7 +70,7 @@ export class PoolManager {
    * @param {String} propName name of prop to put result in
    * @return {Array} results
    */
-  static _mapToPools(pools, functionPath, args, propName) {
+  static mapToPools(pools, functionPath, args, propName) {
     const f = async pool => {
       const prop = propName || functionPath[functionPath.length - 1];
 
@@ -101,7 +101,7 @@ export class PoolManager {
    * @return {Array} balances
    */
   staked(address) {
-    return PoolManager._mapToPools(this.pools, ['balanceOf'], [address], 'stakedBalance');
+    return PoolManager.mapToPools(this.pools, ['balanceOf'], [address], 'stakedBalance');
   }
 
   /**
@@ -109,7 +109,7 @@ export class PoolManager {
    * @return {Array} balances
    */
   unstaked(address) {
-    return PoolManager._mapToPools(this.pools, ['unstakedBalance'], [address], 'unstakedBalance');
+    return PoolManager.mapToPools(this.pools, ['unstakedBalance'], [address], 'unstakedBalance');
   }
 
   /**
@@ -117,7 +117,7 @@ export class PoolManager {
    * @return {Array} rewards
    */
   earned(address) {
-    return PoolManager._mapToPools(this.pools, ['earned'], [address], 'earnedRewards');
+    return PoolManager.mapToPools(this.pools, ['earned'], [address], 'earnedRewards');
   }
 
   /**
@@ -125,7 +125,7 @@ export class PoolManager {
    * @return {Array} rewards
    */
   usdValues(address) {
-    return PoolManager._mapToPools(this.pools, ['usdValueOf'], [address], 'usdValue');
+    return PoolManager.mapToPools(this.pools, ['usdValueOf'], [address], 'usdValue');
   }
 
   /**
@@ -133,7 +133,7 @@ export class PoolManager {
    * @return {Array} rewards
    */
   historicalRewards(address) {
-    return PoolManager._mapToPools(
+    return PoolManager.mapToPools(
       this.pools,
       ['historicalRewards'],
       [address],
@@ -161,7 +161,7 @@ export class PoolManager {
    * @return {Array} lp token balances
    */
   underlying(address, passthrough) {
-    return PoolManager._mapToPools(
+    return PoolManager.mapToPools(
       this.pools,
       ['underlyingBalanceOf'],
       [address, passthrough],
@@ -195,7 +195,7 @@ export class PoolManager {
    * @return {Array} summaries
    */
   summary(address) {
-    return PoolManager._mapToPools(this.pools, ['summary'], [address], 'summary');
+    return PoolManager.mapToPools(this.pools, ['summary'], [address], 'summary');
   }
 
   /**
@@ -229,7 +229,7 @@ export class PoolManager {
     return Promise.all(promises).then(vals => vals.filter(val => !!val));
   }
 
-  _exitPools(pools, overrides) {
+  exitPools(pools, overrides) {
     if (!ethers.Signer.isSigner(this.provider)) {
       throw new Error('No signer');
     }
@@ -252,7 +252,7 @@ export class PoolManager {
    * @return {Array} array of txns
    */
   exitAll(overrides) {
-    return this._exitPools(this.pools, overrides);
+    return this.exitPools(this.pools, overrides);
   }
 
   /**
@@ -261,7 +261,7 @@ export class PoolManager {
    * @return {Array} array of txns
    */
   exitInactive(overrides) {
-    return this._exitPools(
+    return this.exitPools(
       this.pools.filter(pool => !pool.isActive()),
       overrides,
     );

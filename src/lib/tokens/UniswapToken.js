@@ -28,24 +28,24 @@ export default class UniswapToken extends HasUnderlying {
    * Get token0
    */
   async getToken0() {
-    if (this._token0) {
-      return this._token0;
+    if (this.token0Asset) {
+      return this.token0Asset;
     }
     const address = await this.token0();
-    this._token0 = getTokenFromAddress(address, this.provider);
-    return this._token0;
+    this.token0Asset = getTokenFromAddress(address, this.provider);
+    return this.token0Asset;
   }
 
   /**
    * Get token1
    */
   async getToken1() {
-    if (this._token1) {
-      return this._token1;
+    if (this.token1Asset) {
+      return this.token1Asset;
     }
     const address = await this.token1();
-    this._token1 = getTokenFromAddress(address, this.provider);
-    return this._token1;
+    this.token1Asset = getTokenFromAddress(address, this.provider);
+    return this.token1Asset;
   }
 
   /**

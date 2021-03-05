@@ -3503,13 +3503,13 @@ function union(setA, setB) {
   const has = [];
   setA.forEach(val => has.push(val.address));
 
-  const _union = new Set(setA);
+  const unionSet = new Set(setA);
 
   setB.forEach(elem => {
-    if (!has.find(e => e === elem.address)) _union.add(elem);
+    if (!has.find(e => e === elem.address)) unionSet.add(elem);
   });
 
-  return _union;
+  return unionSet;
 }
 
 /**
@@ -3521,12 +3521,12 @@ function difference(setA, setB) {
   const has = [];
   setB.forEach(val => has.push(val.address));
 
-  const _difference = new Set(setA);
+  const differenceSet = new Set(setA);
 
   setA.forEach(element => {
-    if (has.find(e => e === element.address)) _difference.delete(element);
+    if (has.find(e => e === element.address)) differenceSet.delete(element);
   });
-  return _difference;
+  return differenceSet;
 }
 
 // SETUP
