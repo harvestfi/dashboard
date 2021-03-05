@@ -1,7 +1,5 @@
 import ethers from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
-// import AutoCompoundingRewardsPool from './AutoCompoundingRewardsPool';
-// import HarvestRewardsPool from './HarvestRewardsPool';
 
 /**
  * Prettifies money

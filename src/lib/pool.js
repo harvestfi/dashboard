@@ -35,22 +35,6 @@ export default class RewardsPool extends ethers.Contract {
     return '0';
   }
 
-  // static fromPool(pool, provider) {
-  //   switch (pool.type) {
-  //     case 'autocompounding':
-  //       // eslint-disable-next-line no-use-before-define
-  //       return new AutoCompoundingRewardsPool(pool, provider);
-  //     default:
-  //       // eslint-disable-next-line no-use-before-define
-  //       return new HarvestRewardsPool(pool, provider);
-  //   }
-  // }
-
-  /**
-   * @param {Object} provider web3 provider
-   * @return {Array} array of RewardsPools
-   */
-
   /**
    * Get the USD value of the staked and unstaked tokens
    * @param {String} address the address
