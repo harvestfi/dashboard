@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import ReactTooltip from 'react-tooltip';
 import HarvestContext from '../../Context/HarvestContext';
 import ethers from 'ethers';
 
@@ -144,6 +145,7 @@ export default function FarmCard({ summary_information }) {
 
   return (
     <FarmCardContainer>
+      <ReactTooltip />
       <div className="farm_card_title">{summary_information.name}</div>
       <div className="farm_card_content">
         <div className="card_property_section farm_earning">
@@ -151,7 +153,10 @@ export default function FarmCard({ summary_information }) {
           {/* TODO: Add icon here */}
           <p className="card_property_value">{summary_information.isActive ? <span role="img" aria-label="green checkmark">✅</span> : <span role="img" aria-label="red x">❌</span>}</p>
         </div>
-        <div className="card_property_section farm_staked">
+        <div
+          data-tip={summary_information.stakedBalance}
+          className="card_property_section farm_staked"
+        >
           <label className="card_property_title">Staked</label>
           <p className="card_property_value">{formatBalance(summary_information.stakedBalance)}</p>
         </div>
@@ -159,7 +164,10 @@ export default function FarmCard({ summary_information }) {
           <label className="card_property_title">Claimable</label>
           <p className="card_property_value">{(Math.floor(parseFloat(summary_information.earnedRewards) * 1000000) / 1000000).toFixed(6)}</p>
         </div>
-        <div className="card_property_section farm_unstaked">
+        <div
+          data-tip={summary_information.unstakedBalance}
+          className="card_property_section farm_unstaked"
+        >
           <label className="card_property_title">Unstaked</label>
           <p className="card_property_value">{formatBalance(summary_information.unstakedBalance)}</p>
         </div>
@@ -173,7 +181,7 @@ export default function FarmCard({ summary_information }) {
         </div>
 
       </div>
-      <UnderlyingBalanceContainer>
+      <UnderlyingBalanceContainer data-tip={isProfitShareCard ? summary_information.underlyingBalance : null}>
         <div className="underlying_balance_label">
           <h4>Underlying Balance:</h4>
         </div>
