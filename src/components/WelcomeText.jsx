@@ -71,7 +71,7 @@ const WelcomeTextPanel = styled.div`
 `;
 
 const WelcomeText = ({ disconnect, setAddress, setConnection, openModal }) => {
-  const { setIsConnecting, setCheckingBalance, web3Modal, isConnecting } = useContext(
+  const { setIsConnecting, setCheckingBalance, web3Modal, isConnecting, getPools } = useContext(
     HarvestContext,
   );
 
@@ -80,6 +80,8 @@ const WelcomeText = ({ disconnect, setAddress, setConnection, openModal }) => {
       const ethersProvider = new ethers.providers.Web3Provider(provider);
 
       const signer = ethersProvider.getSigner();
+
+      getPools();
 
       const manager = harvest.manager.PoolManager.allPastPools(signer || provider);
 
@@ -99,7 +101,7 @@ const WelcomeText = ({ disconnect, setAddress, setConnection, openModal }) => {
           openModal('Something has gone wrong, retrying...', 'error');
         });
     },
-    [disconnect, openModal, setAddress, setConnection],
+    [disconnect, openModal, setAddress, setConnection, getPools],
   );
 
   const connectMetamask = useCallback(() => {
@@ -136,7 +138,7 @@ const WelcomeText = ({ disconnect, setAddress, setConnection, openModal }) => {
       <h1>Harvest Finance Dashboard</h1>
       <h4>Connect a wallet to get started</h4>
       {!isConnecting && (
-        <button className="button" onClick={() => connectMetamask()}>
+        <button className="button" onClick={() => connectMetamask()} type="button">
           Connect Wallet
         </button>
       )}

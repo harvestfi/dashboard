@@ -1,16 +1,15 @@
 import ethers from 'ethers';
 import data from './data/deploys';
-import { AUTO_REWARDS_ABI, REWARDS_ABI } from './data/ABIs';
-import { Token } from './tokens';
+import { getTokenFromAsset } from './tokens';
 
-export class RewardsPool extends ethers.Contract {
+export default class RewardsPool extends ethers.Contract {
   constructor(pool, abi, provider) {
     super(pool.address, abi, provider);
     this.name = pool.name ? pool.name : pool.asset.name;
     this._pool = pool;
 
-    this.lptoken = Token.fromAsset(pool.asset, provider);
-    this.reward = Token.fromAsset(pool.rewardAsset, provider);
+    this.lptoken = getTokenFromAsset(pool.asset, provider);
+    this.reward = getTokenFromAsset(pool.rewardAsset, provider);
 
     // function aliases
     this.unstakedBalance = this.lptoken.balanceOf;
@@ -36,68 +35,21 @@ export class RewardsPool extends ethers.Contract {
     return '0';
   }
 
-  static fromPool(pool, provider) {
-    switch (pool.type) {
-      case 'autocompounding':
-        // eslint-disable-next-line no-use-before-define
-        return new AutoCompoundingRewardsPool(pool, provider);
-      default:
-        // eslint-disable-next-line no-use-before-define
-        return new HarvestRewardsPool(pool, provider);
-    }
-  }
+  // static fromPool(pool, provider) {
+  //   switch (pool.type) {
+  //     case 'autocompounding':
+  //       // eslint-disable-next-line no-use-before-define
+  //       return new AutoCompoundingRewardsPool(pool, provider);
+  //     default:
+  //       // eslint-disable-next-line no-use-before-define
+  //       return new HarvestRewardsPool(pool, provider);
+  //   }
+  // }
 
   /**
    * @param {Object} provider web3 provider
    * @return {Array} array of RewardsPools
    */
-  static knownPools(provider) {
-    return data.pools.map(pool => RewardsPool.fromPool(pool, provider));
-  }
-
-  /**
-   * @param {ethers.Provider} provider provider
-   * @return {PoolManager} manager
-   */
-  static weekOne(provider) {
-    return data.weekOnePools.map(pool => RewardsPool.fromPool(pool, provider));
-  }
-
-  static test(provider) {
-    return data.testPools.map(pool => RewardsPool.fromPool(pool, provider));
-  }
-
-  /**
-   * @param {ethers.Provider} provider provider
-   * @return {PoolManager} manager
-   */
-  static weekTwo(provider) {
-    return data.weekTwoPools.map(pool => RewardsPool.fromPool(pool, provider));
-  }
-
-  /**
-   * @param {ethers.Provider} provider provider
-   * @return {PoolManager} manager
-   */
-  static activePools(provider) {
-    return data.activePools.map(pool => RewardsPool.fromPool(pool, provider));
-  }
-
-  /**
-   * @param {ethers.Provider} provider provider
-   * @return {PoolManager} manager
-   */
-  static inactivePools(provider) {
-    return data.inactivePools.map(pool => RewardsPool.fromPool(pool, provider));
-  }
-
-  /**
-   * @param {ethers.Provider} provider provider
-   * @return {PoolManager} manager
-   */
-  static allPastPools(provider) {
-    return data.allPastPools.map(pool => RewardsPool.fromPool(pool, provider));
-  }
 
   /**
    * Get the USD value of the staked and unstaked tokens
@@ -155,9 +107,9 @@ export class RewardsPool extends ethers.Contract {
    */
   async summary(address) {
     this.getPricePerFullShare();
-    const underlying = async address => {
+    const underlying = async _address => {
       if (this.underlyingBalanceOf) {
-        const underlyingBalanceOfRes = await this.underlyingBalanceOf(address);
+        const underlyingBalanceOfRes = await this.underlyingBalanceOf(_address);
         return underlyingBalanceOfRes;
       }
       return {};
@@ -230,78 +182,5 @@ export class RewardsPool extends ethers.Contract {
     await approveTx;
     const stakeRes = await stakeTx;
     return stakeRes;
-  }
-}
-
-export class AutoCompoundingRewardsPool extends RewardsPool {
-  constructor(pool, provider) {
-    super(pool, AUTO_REWARDS_ABI, provider);
-  }
-
-  static farmRewards(provider) {
-    return new AutoCompoundingRewardsPool(data.farmRewardsPool, provider);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  async earnedRewards() {
-    return ethers.BigNumber.from(0);
-  }
-
-  async historicalRewards(address) {
-    const STAKED_TOPIC0 = '0x6381ea17a5324d29cc015352644672ead5185c1c61a0d3a521eda97e35cec97e';
-    const WITHDRAWN_TOPIC0 = '0x7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d5';
-
-    const stakedFilter = this.filters.Staked(address);
-    const withdrawnFilter = this.filters.Withdrawn(address);
-
-    let stakedEvents = await this.queryFilter(stakedFilter),
-      withdrawnEvents = await this.queryFilter(withdrawnFilter),
-      totalStaked = ethers.BigNumber.from(0),
-      totalWithdrawn = ethers.BigNumber.from(0);
-    const balance = await this.balanceOf(address);
-
-    stakedEvents = stakedEvents.filter(e => e.topics[0] === STAKED_TOPIC0);
-    withdrawnEvents = withdrawnEvents.filter(e => e.topics[0] === WITHDRAWN_TOPIC0);
-
-    for (const e of stakedEvents) {
-      totalStaked = totalStaked.add(e.args[1]);
-    }
-    for (const e of withdrawnEvents) {
-      totalWithdrawn = totalWithdrawn.add(e.args[1]);
-    }
-
-    const rewards = balance.add(totalWithdrawn).sub(totalStaked);
-    return rewards;
-  }
-}
-
-/**
- * Reward pool wrapper
- */
-export class HarvestRewardsPool extends RewardsPool {
-  /**
-   *
-   * @param {Object} pool object from data/deploy.js
-   * @param {Object} provider web3 provider
-   */
-  constructor(pool, provider) {
-    super(pool, REWARDS_ABI, provider);
-    this.earnedRewards = this.earned;
-  }
-
-  async historicalRewards(address) {
-    const REWARD_PAID_TOPIC0 = '0xe2403640ba68fed3a2f88b7557551d1993f84b99bb10ff833f0cf8db0c5e0486';
-    const filter = this.filters.RewardPaid(address);
-
-    const currentRewards = await this.earnedRewards(address);
-    let rewardPaidEvents = await this.queryFilter(filter),
-      pastRewards = ethers.BigNumber.from(0);
-
-    rewardPaidEvents = rewardPaidEvents.filter(e => e.topics[0] === REWARD_PAID_TOPIC0);
-    for (const e of rewardPaidEvents) {
-      pastRewards = pastRewards.add(e.args[1]);
-    }
-
-    return currentRewards.add(pastRewards);
   }
 }

@@ -3522,10 +3522,10 @@ function difference(setA, setB) {
   setB.forEach(val => has.push(val.address));
 
   const _difference = new Set(setA);
-  for (const elem of setA) {
-    // if A's elem in B, remove from difference
-    if (has.find(e => e === elem.address)) _difference.delete(elem);
-  }
+
+  setA.forEach(element => {
+    if (has.find(e => e === element.address)) _difference.delete(element);
+  });
   return _difference;
 }
 
@@ -3547,10 +3547,8 @@ const activePools = sets[sets.length - 1];
  * @return {bool} isActive
  */
 function isAddressActive(address) {
-  for (const value of activePools) {
-    if (value.address === address) {
-      return true;
-    }
+  if (activePools) {
+    return !Array.from(activePools).every(_pool => _pool.address !== address);
   }
   return false;
 }

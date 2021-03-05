@@ -1,7 +1,8 @@
 import ethers from 'ethers';
 import data from './data/deploys';
-import { RewardsPool } from './pool';
+import RewardsPool from './pool';
 import { UnderlyingBalances } from './tokens';
+import { weekOne, test, weekTwo, activePools, inactivePools, allPastPools } from './poolUtils';
 
 /**
  * Reward pool wrapper
@@ -23,11 +24,11 @@ export class PoolManager {
    * @return {PoolManager} manager
    */
   static weekOne(provider) {
-    return new PoolManager(RewardsPool.weekOne(provider), provider);
+    return new PoolManager(weekOne(provider), provider);
   }
 
   static test(provider) {
-    return new PoolManager(RewardsPool.test(provider), provider);
+    return new PoolManager(test(provider), provider);
   }
 
   /**
@@ -35,7 +36,7 @@ export class PoolManager {
    * @return {PoolManager} manager
    */
   static weekTwo(provider) {
-    return new PoolManager(RewardsPool.weekTwo(provider), provider);
+    return new PoolManager(weekTwo(provider), provider);
   }
 
   /**
@@ -43,7 +44,7 @@ export class PoolManager {
    * @return {PoolManager} manager
    */
   static activePools(provider) {
-    return new PoolManager(RewardsPool.activePools(provider), provider);
+    return new PoolManager(activePools(provider), provider);
   }
 
   /**
@@ -51,7 +52,7 @@ export class PoolManager {
    * @return {PoolManager} manager
    */
   static inactivePools(provider) {
-    return new PoolManager(RewardsPool.inactivePools(provider), provider);
+    return new PoolManager(inactivePools(provider), provider);
   }
 
   /**
@@ -59,7 +60,7 @@ export class PoolManager {
    * @return {PoolManager} manager
    */
   static allPastPools(provider) {
-    return new PoolManager(RewardsPool.allPastPools(provider), provider);
+    return new PoolManager(allPastPools(provider), provider);
   }
 
   /**

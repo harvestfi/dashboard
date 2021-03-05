@@ -24,6 +24,7 @@ const CheckBalance = props => {
     setCheckingBalance,
     addressToCheck,
     setAddressToCheck,
+    getPools,
   } = useContext(HarvestContext);
   const [validationMessage, setValidationMessage] = useState('');
 
@@ -34,6 +35,7 @@ const CheckBalance = props => {
       const ethersProvider = new ethers.providers.Web3Provider(provider);
       const signer = ethersProvider.getSigner();
       const manager = harvest.manager.PoolManager.allPastPools(signer || provider);
+      getPools();
       setConnection(provider, signer, manager);
       manager
         .aggregateUnderlyings(addressToCheck)

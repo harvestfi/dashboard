@@ -35,7 +35,7 @@ class GeckoApi {
   memoize(address, price, validUntil) {
     if (!price) return BigNumber.from(0);
     const key = address.toLowerCase();
-    const bnPrice = ethers.BigNumber.from(parseInt(price * 1000000));
+    const bnPrice = ethers.BigNumber.from(parseInt(price * 1000000, 10));
     this._memos[key] = {
       validUntil,
       bnPrice,

@@ -1,5 +1,7 @@
 import ethers from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
+// import AutoCompoundingRewardsPool from './AutoCompoundingRewardsPool';
+// import HarvestRewardsPool from './HarvestRewardsPool';
 
 /**
  * Prettifies money
@@ -42,9 +44,8 @@ export function prettyPosition(sum) {
   const formattedUnderlyingBalance = (function format() {
     if (underlyingBalanceOf) {
       if (underlyingBalanceOf.balances) {
-        for (const balance in underlyingBalanceOf.balances) {
-          return formatUnits(underlyingBalanceOf.balances[balance], decimals);
-        }
+        const underlyingKey = Object.keys(underlyingBalanceOf.balances)[0];
+        return formatUnits(underlyingBalanceOf.balances[underlyingKey], decimals);
       }
     }
     return 0;

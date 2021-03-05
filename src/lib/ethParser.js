@@ -32,7 +32,7 @@ class EthParserApi {
   memoize(address, price, validUntil) {
     if (!price) return BigNumber.from(0);
     const key = address.toLowerCase();
-    const bnPrice = ethers.BigNumber.from(parseInt(price * 1000000));
+    const bnPrice = ethers.BigNumber.from(parseInt(price * 1000000, 10));
     this._memos[key] = {
       validUntil,
       bnPrice,
@@ -64,7 +64,7 @@ class EthParserApi {
       const url = `${this.url}/price/token/${s}`;
       const response = await axios.get(url);
 
-      const usd = parseInt(response.data.data);
+      const usd = parseInt(response.data.data, 10);
 
       result[s.toLowerCase()] = this.memoize(s, usd, time + 5 * 60 * 1000);
 

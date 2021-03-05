@@ -192,7 +192,7 @@ const FarmingTable = ({ showAsCards }) => {
     currentExchangeRate,
   } = useContext(HarvestContext);
   const getThisReward = reward => {
-    setState({ ...state, minimumHarvestAmount: reward });
+    setState(prevState => ({ ...prevState, minimumHarvestAmount: reward }));
   };
   const [sortedSummary, setSortedSummary] = useState([]);
   const [sortDirection, setSortDirection] = useState(1);
@@ -242,10 +242,10 @@ const FarmingTable = ({ showAsCards }) => {
       // eslint-disable-next-line
       state.summaries.map(utils.prettyPosition).map((summary, _index) => {
         total += parseFloat(summary.historicalRewards);
-        setState({
-          ...state,
-          totalFarmEarned: (state.totalFarmEarned = total),
-        });
+        setState(prevState => ({
+          ...prevState,
+          totalFarmEarned: total,
+        }));
       });
     }
   }, [setState, state]);

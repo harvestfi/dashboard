@@ -1,9 +1,9 @@
-import React,{useContext} from "react";
+import React, { useContext } from 'react';
+import styled, { ThemeProvider } from 'styled-components';
 import HarvestContext from '../../../Context/HarvestContext';
-import styled, { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme, fonts } from "../../../styles/appStyles";
+import { darkTheme, lightTheme, fonts } from '../../../styles/appStyles';
 
-import APYSkeleton from "./APYSkeleton";
+import APYSkeleton from './APYSkeleton';
 
 const BluePanel = styled.div`
   display: flex;
@@ -12,14 +12,14 @@ const BluePanel = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  background-color: ${(props) => props.theme.style.blueBackground};
-  color: ${(props) => props.theme.style.primaryFontColor};
+  background-color: ${props => props.theme.style.blueBackground};
+  color: ${props => props.theme.style.primaryFontColor};
   font-family: ${fonts.headerFont};
   padding: 2.5rem 0.7rem 2rem 0.7rem;
-  border: ${(props) => props.theme.style.mainBorder};
+  border: ${props => props.theme.style.mainBorder};
   border-radius: 0.5rem;
   box-sizing: border-box;
-  box-shadow: ${(props) => props.theme.style.panelBoxShadow};
+  box-shadow: ${props => props.theme.style.panelBoxShadow};
   display: flex;
   flex-grow: 1;
   align-items: center;
@@ -50,9 +50,9 @@ const BluePanel = styled.div`
 `;
 
 const APY = () => {
-  const {state} =  useContext(HarvestContext)
+  const { state } = useContext(HarvestContext);
   return (
-    <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
+    <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
       {state.display ? (
         <BluePanel>
           <h1>{state.apy} %</h1>

@@ -29,7 +29,7 @@ const { ethers } = harvest;
 
 const web3Modal = new Web3Modal({
   network: 'mainnet', // optional
-  cacheProvider: true, // optional
+  cacheProvider: false, // optional
   providerOptions: {
     walletconnect: {
       package: WalletConnectProvider, // required
@@ -88,8 +88,7 @@ function App() {
       .get(`https://api-ui.harvest.finance/pools?key=${process.env.REACT_APP_HARVEST_KEY}`)
       .then(res => {
         const currentAPY = res.data[0].rewardAPY;
-
-        setState(state => ({ ...state, apy: currentAPY }));
+        setState(prevState => ({ ...prevState, apy: currentAPY }));
       })
       .catch(err => {
         console.log(err);
@@ -101,7 +100,7 @@ function App() {
       .then(res => {
         console.log(res.data.data);
         const farmPrice = res.data.data;
-        setState(state => ({ ...state, farmPrice }));
+        setState(prevState => ({ ...prevState, farmPrice }));
       });
   };
 
@@ -113,7 +112,7 @@ function App() {
         return underlying.toList().filter(u => !u.balance.isZero());
       })
       .then(underlyings => {
-        setState(state => ({ ...state, underlyings }));
+        setState(prevState => ({ ...prevState, underlyings }));
       })
       .catch(err => {
         console.log(err);
@@ -134,8 +133,8 @@ function App() {
         summaries.forEach(pos => {
           total = total.add(pos.summary.usdValueOf);
         });
-        setState(state => ({
-          ...state,
+        setState(prevState => ({
+          ...prevState,
           summaries,
           usdValue: total,
         }));
@@ -143,7 +142,7 @@ function App() {
 
         return summaries;
       })
-      .catch(_err => {
+      .catch(() => {
         refresh();
       });
   };
@@ -195,14 +194,14 @@ function App() {
   }, [state.address]);
   useEffect(() => {
     if (state.usdValue) {
-      setState(state => ({ ...state, display: true }));
+      setState(prevState => ({ ...prevState, display: true }));
     }
     // eslint-disable-next-line
   }, [state.usdValue]);
 
   const disconnect = () => {
-    setState(state => ({
-      ...state,
+    setState(prevState => ({
+      ...prevState,
       provider: undefined,
       signer: undefined,
       manager: undefined,
@@ -211,6 +210,8 @@ function App() {
       underlyings: [],
       usdValue: 0,
       apy: 0,
+      farmPrice: 0,
+      totalFarmEarned: 0,
       error: { message: null, type: null, display: false },
       theme: window.localStorage.getItem('HarvestFinance:Theme'),
     }));
@@ -219,15 +220,15 @@ function App() {
   };
 
   const closeErrorModal = () => {
-    setState(state => ({
-      ...state,
+    setState(prevState => ({
+      ...prevState,
       error: { message: null, type: null, display: false },
     }));
   };
 
   const openModal = (message, type) => {
-    setState(state => ({
-      ...state,
+    setState(prevState => ({
+      ...prevState,
       error: { message, type, display: true },
     }));
   };
@@ -240,8 +241,8 @@ function App() {
   };
 
   const setConnection = (provider, signer, manager) => {
-    setState(state => ({
-      ...state,
+    setState(prevState => ({
+      ...prevState,
       provider,
       signer,
       manager,
@@ -249,7 +250,7 @@ function App() {
   };
 
   const setAddress = address => {
-    setState(state => ({ ...state, address }));
+    setState(prevState => ({ ...prevState, address }));
   };
 
   // Radio Modal
@@ -307,6 +308,7 @@ function App() {
         web3Modal,
         addressToCheck,
         setAddressToCheck,
+        getPools,
       }}
     >
       <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
@@ -321,9 +323,21 @@ function App() {
                   <img src={logo} alt="harvest finance logo" />{' '}
                   {openDrawer ? '' : <span>harvest.dashboard</span>}
                 </Brand>
-                <i onClick={toggleUserSettings} className="fas fa-user-cog" />
+                <i
+                  onClick={toggleUserSettings}
+                  onKeyUp={toggleUserSettings}
+                  className="fas fa-user-cog"
+                  role="button"
+                  tabIndex="0"
+                />
                 {settingsOpen ? <SettingsModal /> : ''}
-                <i className="fas fa-bars" onClick={toggleSideDrawer} />
+                <i
+                  className="fas fa-bars"
+                  onClick={toggleSideDrawer}
+                  onKeyUp={toggleSideDrawer}
+                  role="button"
+                  tabIndex="0"
+                />
               </Topbar>
             </Col>
           </Row>

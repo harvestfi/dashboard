@@ -1,56 +1,54 @@
-import React, { useState, useContext } from "react";
-import HarvestContext from "../../Context/HarvestContext";
-import styled, { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme, fonts } from "../../styles/appStyles";
-import harvest from "../../lib/index.js";
+import React, { useState, useContext } from 'react';
+import styled, { ThemeProvider } from 'styled-components';
+import HarvestContext from '../../Context/HarvestContext';
+import { darkTheme, lightTheme, fonts } from '../../styles/appStyles';
+import harvest from '../../lib/index.js';
+
 const { ethers } = harvest;
 
 const Harvest = () => {
-  const {
-    state,
-    setState,
-    harvestAndStakeMessage,
-    setHarvestAndStakeMessage,
-  } = useContext(HarvestContext);
+  const { state, setState, harvestAndStakeMessage, setHarvestAndStakeMessage } = useContext(
+    HarvestContext,
+  );
 
   const [isHarvesting, setHarvesting] = useState(false);
 
   const harvest = async () => {
     setHarvesting(true);
-    setState({ ...state, minimumHarvestAmount: "0" });
+    setState(prevState => ({ ...prevState, minimumHarvestAmount: '0' }));
 
-    console.log("harvesting");
+    console.log('harvesting');
 
     setHarvestAndStakeMessage({
       ...harvestAndStakeMessage,
-      first: "Harvesting your rewards.",
-      second: "",
+      first: 'Harvesting your rewards.',
+      second: '',
     });
     await state.manager
       .getRewards(ethers.utils.parseUnits(state.minimumHarvestAmount, 18))
-      .then(async (vals) => {
+      .then(async vals => {
         let i = 0;
         while (i < vals.length) {
           await vals[i].getReward.wait();
           i++;
         }
       })
-      .catch((err) => {
+      .catch(err => {
         if (err.code === 4001) {
-          console.log("Transaction rejected.");
+          console.log('Transaction rejected.');
         }
       });
 
     setHarvestAndStakeMessage({
       ...harvestAndStakeMessage,
       first: ``,
-      second: "",
+      second: '',
     });
     setHarvesting(false);
   };
 
-  const pool = state.manager.pools.find((pool) => {
-    return pool.address === "0x25550Cccbd68533Fa04bFD3e3AC4D09f9e00Fc50";
+  const pool = state.manager.pools.find(pool => {
+    return pool.address === '0x25550Cccbd68533Fa04bFD3e3AC4D09f9e00Fc50';
   });
 
   const stake = async () => {
@@ -61,17 +59,14 @@ const Harvest = () => {
         ? ethers.utils.parseUnits(state.minimumHarvestAmount.toString(), 18)
         : await pool.unstakedBalance(state.address);
 
-    console.log(
-      state.minimumHarvestAmount,
-      parseFloat(amount / 10 ** 18).toString(),
-    );
+    console.log(state.minimumHarvestAmount, parseFloat(amount / 10 ** 18).toString());
     await pool
       .stake(amount)
-      .then(async (res) => {
+      .then(async res => {
         setHarvestAndStakeMessage({
           ...harvestAndStakeMessage,
-          first: "Staking your FARM",
-          second: "",
+          first: 'Staking your FARM',
+          second: '',
         });
         await res.wait().then(() => {
           setHarvesting(false);
@@ -84,64 +79,60 @@ const Harvest = () => {
             setHarvestAndStakeMessage({
               ...harvestAndStakeMessage,
               first: ``,
-              second: "",
+              second: '',
             });
           }, 2500);
           return () => clearTimeout(timer);
         });
       })
-      .catch((e) => {
+      .catch(e => {
         if (e.code !== 4001 || e.code !== -32603) {
           setHarvesting(false);
           setHarvestAndStakeMessage({
             ...harvestAndStakeMessage,
             first: ``,
-            second: "",
+            second: '',
           });
-          console.log(
-            `You do not have enough to stake ${ethers.utils.formatEther(
-              amount,
-            )} FARM`,
-          );
+          console.log(`You do not have enough to stake ${ethers.utils.formatEther(amount)} FARM`);
         }
       });
   };
 
   const harvestAllAndStake = async () => {
-    console.log("harvesting");
+    console.log('harvesting');
     setHarvesting(true);
     setHarvestAndStakeMessage({
       ...harvestAndStakeMessage,
-      first: "Harvesting your rewards and staking.",
-      second: "This could take a while",
+      first: 'Harvesting your rewards and staking.',
+      second: 'This could take a while',
     });
     await state.manager
       .getRewards(ethers.utils.parseUnits(state.minimumHarvestAmount, 18))
-      .then(async (vals) => {
+      .then(async vals => {
         let i = 0;
         while (i < vals.length) {
           await vals[i].getReward.wait();
           i++;
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
-    setState({ ...state, minimumHarvestAmount: "0" });
+    setState(prevState => ({ ...prevState, minimumHarvestAmount: '0' }));
 
     stake();
   };
 
   return (
-    <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
+    <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
       <Panel>
         <div className="panel-text">
           <p>
             Harvest my pools with at least
             <input
               type="number"
-              onChange={(event) =>
-                setState({ ...state, minimumHarvestAmount: event.target.value })
+              onChange={event =>
+                setState(prevState => ({ ...prevState, minimumHarvestAmount: event.target.value }))
               }
               placeholder="min"
               value={state.minimumHarvestAmount}
@@ -149,40 +140,38 @@ const Harvest = () => {
             />
             FARM
           </p>
-          {state.minimumHarvestAmount === "0" ? (
-            ""
+          {state.minimumHarvestAmount === '0' ? (
+            ''
           ) : (
-              <button
-                className="button clear"
-                onClick={(event) =>
-                  setState({ ...state, minimumHarvestAmount: "0" })
-                }
-              >
-                clear
-              </button>
-            )}
+            <button
+              className="button clear"
+              onClick={() => setState(prevState => ({ ...prevState, minimumHarvestAmount: '0' }))}
+              type="button"
+            >
+              clear
+            </button>
+          )}
         </div>
 
         <ButtonContainer>
           {isHarvesting ? (
             <HarvestingButton>harvest</HarvestingButton>
           ) : (
-              <button className="buttons" onClick={harvest}>
-                harvest
-              </button>
-            )}
+            <button className="buttons" onClick={harvest} type="button">
+              harvest
+            </button>
+          )}
           {isHarvesting ? (
-            <HarvestingButton>
-              harvest and stake
-            </HarvestingButton>
+            <HarvestingButton>harvest and stake</HarvestingButton>
           ) : (
-              <button
-                className="buttons harvest-and-stake"
-                onClick={harvestAllAndStake}
-              >
-                harvest and stake
-              </button>
-            )}
+            <button
+              className="buttons harvest-and-stake"
+              onClick={harvestAllAndStake}
+              type="button"
+            >
+              harvest and stake
+            </button>
+          )}
         </ButtonContainer>
       </Panel>
     </ThemeProvider>
@@ -195,35 +184,34 @@ const Panel = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: ${(props) => props.theme.style.lightBackground};
-  color: ${(props) => props.theme.style.primaryFontColor};
+  background-color: ${props => props.theme.style.lightBackground};
+  color: ${props => props.theme.style.primaryFontColor};
   padding: 1.5rem;
-  border: ${(props) => props.theme.style.mainBorder};
+  border: ${props => props.theme.style.mainBorder};
   border-radius: 0.5rem;
   box-sizing: border-box;
-  box-shadow: ${(props) => props.theme.style.panelBoxShadow};
-  
- 
-  input[type="number"] {
+  box-shadow: ${props => props.theme.style.panelBoxShadow};
+
+  input[type='number'] {
     -moz-appearance: textfield;
-    background-color: ${(props) => props.theme.style.lightBackground};
+    background-color: ${props => props.theme.style.lightBackground};
     border: 0.2rem solid #363636;
     font-size: 1.4rem;
     margin: 0 1rem;
-    color: ${(props) => props.theme.style.primaryFontColor};
+    color: ${props => props.theme.style.primaryFontColor};
     width: 12rem;
     text-align: center;
     border-radius: 0.5rem;
     padding: 0.3rem 0.7rem;
-    @media(max-width: 1400px) {
+    @media (max-width: 1400px) {
       width: 6rem;
     }
-    @media(max-width: 1280px) {
+    @media (max-width: 1280px) {
       width: 5rem;
     }
   }
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     appearance: none;
   }
@@ -240,11 +228,11 @@ const Panel = styled.div`
     .button {
       margin-left: 1rem;
       font-size: 1.5rem;
-      padding: .3rem 1rem;
+      padding: 0.3rem 1rem;
       font-family: ${fonts.headerFont};
     }
-    @media(max-width:1340px) {
-      font-size: 1.6rem
+    @media (max-width: 1340px) {
+      font-size: 1.6rem;
     }
   }
 `;
@@ -255,24 +243,22 @@ const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
- 
-    
+
   .buttons {
     margin-left: 6rem;
     width: max-content;
     font-size: 2rem;
     font-family: ${fonts.headerFont};
-    color: ${(props) => props.theme.style.buttonFontColor};
+    color: ${props => props.theme.style.buttonFontColor};
     position: relative;
     margin-top: 4px;
-    background: ${(props) => props.theme.style.highlight};
-    border: ${(props) => props.theme.style.smallBorder};
-    box-shadow: ${(props) => props.theme.style.buttonBoxShadow};
+    background: ${props => props.theme.style.highlight};
+    border: ${props => props.theme.style.smallBorder};
+    box-shadow: ${props => props.theme.style.buttonBoxShadow};
     border-radius: 0.8rem;
     padding: 0.5rem 1rem;
     cursor: pointer;
-    
-    
+
     &:hover {
       top: 1.5px;
     }
@@ -281,7 +267,7 @@ const ButtonContainer = styled.div`
     }
     .button.clear {
       margin-left: 1rem;
-    } 
+    }
   }
 `;
 
@@ -292,17 +278,17 @@ const HarvestingButton = styled.button`
   font-family: ${fonts.headerFont};
   position: relative;
   margin-top: 4px;
-  background-color: ${(props) => props.theme.style.blueBackground};
-  border: ${(props) => props.theme.style.smallBorder};
-  box-shadow: ${(props) => props.theme.style.buttonBoxShadow};
+  background-color: ${props => props.theme.style.blueBackground};
+  border: ${props => props.theme.style.smallBorder};
+  box-shadow: ${props => props.theme.style.buttonBoxShadow};
   border-radius: 0.8rem;
   padding: 0.5rem 1rem;
   cursor: none;
-  color: ${(props) => props.theme.style.buttonFontColor};
+  color: ${props => props.theme.style.buttonFontColor};
   overflow: hidden;
   z-index: 300;
   &::before {
-    content: "";
+    content: '';
     position: relative;
     left: -50px;
     top: 0;
@@ -311,7 +297,7 @@ const HarvestingButton = styled.button`
     background: linear-gradient(
       to right,
       transparent 10%,
-      ${(props) => props.theme.style.blueBackground} 50%,
+      ${props => props.theme.style.blueBackground} 50%,
       transparent 100%
     );
     animation: waiting 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
