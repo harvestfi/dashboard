@@ -98,7 +98,6 @@ function App() {
         `${process.env.REACT_APP_ETH_PARSER_URL}/price/token/0xa0246c9032bC3A600820415aE600c6388619A14D`,
       )
       .then(res => {
-        console.log(res.data.data);
         const farmPrice = res.data.data;
         setState(prevState => ({ ...prevState, farmPrice }));
       });

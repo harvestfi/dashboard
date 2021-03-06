@@ -12,7 +12,6 @@ import {
   PanelTabContainerLeft,
   PanelTabContainerRight,
 } from './FarmCardStyles';
-import {} from '../farmingTable/FarmingTableStyles';
 
 const { utils } = harvest;
 

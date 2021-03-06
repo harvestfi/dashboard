@@ -264,9 +264,7 @@ const FarmingTable = ({ showAsCards }) => {
     }, 60000);
     return () => clearTimeout(timer);
   });
-  useEffect(() => {
-    console.log(isRefreshing);
-  }, [isRefreshing]);
+
   return (
     <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
       {state.display ? (
