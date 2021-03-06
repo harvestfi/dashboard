@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import HarvestContext from '../../Context/HarvestContext';
 import { darkTheme, lightTheme, fonts } from '../../styles/appStyles';
-import harvest from '../../lib/index.js';
+import harvest from '../../lib';
 
 const { ethers } = harvest;
 
@@ -59,7 +59,6 @@ const Harvest = () => {
         ? ethers.utils.parseUnits(state.minimumHarvestAmount.toString(), 18)
         : await pool.unstakedBalance(state.address);
 
-    console.log(state.minimumHarvestAmount, parseFloat(amount / 10 ** 18).toString());
     await pool
       .stake(amount)
       .then(async res => {

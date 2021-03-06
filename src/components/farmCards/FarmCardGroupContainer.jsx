@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useCallback } from 'react';
 import { ThemeProvider } from 'styled-components';
 import harvest from '../../lib/index';
 import HarvestContext from '../../Context/HarvestContext';
@@ -19,11 +19,10 @@ const { utils } = harvest;
 function FarmCardGroupContainer({ showAsTables }) {
   const { state, setState, isRefreshing, isCheckingBalance, refresh } = useContext(HarvestContext);
 
-  function getTotalFarmEarned() {
+  const getTotalFarmEarned = useCallback(() => {
     let total = 0;
     if (state.summaries.length) {
-      // eslint-disable-next-line
-      state.summaries.map(utils.prettyPosition).map(summary => {
+      state.summaries.map(utils.prettyPosition).forEach(summary => {
         total += parseFloat(summary.historicalRewards);
         setState(prevState => ({
           ...prevState,
@@ -31,13 +30,11 @@ function FarmCardGroupContainer({ showAsTables }) {
         }));
       });
     }
-  }
+  }, [setState, state.summaries]);
 
   useEffect(() => {
     getTotalFarmEarned();
-
-    // eslint-disable-next-line
-  }, [state.summaries]);
+  }, [state.summaries, getTotalFarmEarned]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
