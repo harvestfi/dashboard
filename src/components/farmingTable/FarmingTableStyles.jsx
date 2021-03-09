@@ -7,11 +7,11 @@ export const TableContainer = styled.div`
   align-items: center;
   width: 100%;
   padding-bottom: 3rem;
-  border: ${(props) => props.theme.style.mainBorder};
-  box-shadow: ${(props) => props.theme.style.panelBoxShadow};
-  color: ${(props) => props.theme.style.primaryFontColor};
-  background-color: ${(props) => props.theme.style.lightBackground};
-  border-radius: .5rem;
+  border: ${props => props.theme.style.mainBorder};
+  box-shadow: ${props => props.theme.style.panelBoxShadow};
+  color: ${props => props.theme.style.primaryFontColor};
+  background-color: ${props => props.theme.style.lightBackground};
+  border-radius: 0.5rem;
   border-top-left-radius: 0rem;
   position: relative;
   z-index: 50;
@@ -21,7 +21,7 @@ export const MainTableInner = styled.div`
   width: 100%;
   margin: 0 auto;
   overflow-x: scroll;
-  scrollbar-color: ${(props) => props.theme.style.scrollBarColor};
+  scrollbar-color: ${props => props.theme.style.scrollBarColor};
   scrollbar-width: thin;
   ::-webkit-scrollbar {
     width: 100%;
@@ -31,20 +31,20 @@ export const MainTableInner = styled.div`
   ::-webkit-scrollbar-track:no-button {
     width: 100%;
     border-radius: 0.5rem;
-    background-color: ${(props) => props.theme.style.lightBackground};
+    background-color: ${props => props.theme.style.lightBackground};
   }
   ::-webkit-scrollbar-button {
-    color: ${(props) => props.theme.style.primaryFontColor};
+    color: ${props => props.theme.style.primaryFontColor};
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: black;
-    background-color: ${(props) => props.theme.style.scrollBarColor};
+    background-color: ${props => props.theme.style.scrollBarColor};
   }
 `;
 export const MainTableRow = styled.div`
   display: grid;
-  grid-template-columns: 0.75fr 0.3fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.25fr 0.25fr 0.25fr;
+  grid-template-columns: 0.75fr 0.3fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
   font-size: 1.7rem;
   align-items: center;
   font-family: ${fonts.contentFont};
@@ -57,7 +57,7 @@ export const MainTableRow = styled.div`
   @media (max-width: 1280px) {
     width: 110%;
   }
- 
+
   div {
     text-align: center;
     width: 100%;
@@ -95,7 +95,7 @@ export const MainTableRow = styled.div`
   .stake-but {
     margin-right: 10px;
   }
-  
+
   input {
     height: 30px;
     font-weight: bold;
@@ -114,7 +114,7 @@ export const MainTableRow = styled.div`
 `;
 export const MainTableHeader = styled.div`
   display: grid;
-  grid-template-columns: 0.75fr 0.3fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.8fr;
+  grid-template-columns: 0.75fr 0.3fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
   //grid-gap: 20px;
   font-size: 1.7rem;
   font-family: ${fonts.headerFont};
@@ -125,7 +125,7 @@ export const MainTableHeader = styled.div`
     width: 110%;
   }
 
-  p {
+  div {
     text-align: center;
     width: 100%;
   }
@@ -151,18 +151,18 @@ export const Tabs = styled.div`
 export const PanelTab = styled.div`
   margin-right: 0.75rem;
   border-radius: 1.2rem;
-  border-top: ${(props) => props.theme.style.mainBorder};
-  border-left: ${(props) => props.theme.style.mainBorder};
-  border-right: ${(props) => props.theme.style.mainBorder};
+  border-top: ${props => props.theme.style.mainBorder};
+  border-left: ${props => props.theme.style.mainBorder};
+  border-right: ${props => props.theme.style.mainBorder};
   padding: 0.75rem 2rem 2rem 2rem;
-  background-color: ${(props) => props.theme.style.highlight};
-  box-shadow: ${(props) => props.theme.style.panelTabBoxShadow};
+  background-color: ${props => props.theme.style.highlight};
+  box-shadow: ${props => props.theme.style.panelTabBoxShadow};
   position: relative;
   top: 1.2rem;
-  color: ${(props) => props.theme.style.buttonFontColor};
+  color: ${props => props.theme.style.buttonFontColor};
 
   p {
-    color: ${(props) => props.theme.style.panelTabLinkColor};
+    color: ${props => props.theme.style.panelTabLinkColor};
     text-decoration: none;
     font-family: ${fonts.contentFont};
     font-size: 2rem;
@@ -183,7 +183,7 @@ export const PanelTab = styled.div`
       top: 1.9rem;
     }
     &:active {
-      color: ${(props) => props.theme.style.blueBackground};
+      color: ${props => props.theme.style.blueBackground};
       transform: scale(1.1);
       transition: all 0.1s ease;
     }
@@ -195,11 +195,8 @@ export const PanelTab = styled.div`
     .fas {
       font-size: 1.7rem;
     }
-    
   }
 
-  
- 
   @media (max-width: 605px) {
     font-size: 1.9rem;
     padding: 0.75rem 1rem 2.2rem 1rem;
@@ -223,4 +220,3 @@ export const PanelTab = styled.div`
     margin-right: 0.3rem;
   }
 `;
-
