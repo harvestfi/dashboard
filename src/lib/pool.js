@@ -26,14 +26,17 @@ export default class RewardsPool extends ethers.Contract {
   getPricePerFullShare() {
     let pricePerShare = null;
     if (this.pool.asset.type === 'ftoken' && data.isAddressActive(this.pool.address)) {
-        this.lptoken.getPricePerFullShare().then(res => {
-        this.pricePerFullShare = res;
-        pricePerShare = ethers.utils.formatUnits(res, this.pool.asset.decimals);
-      }).catch(err => {
-        if (err.code !== -32603) {
-          console.log(err);
-        }
-      });
+      this.lptoken
+        .getPricePerFullShare()
+        .then(res => {
+          this.pricePerFullShare = res;
+          pricePerShare = ethers.utils.formatUnits(res, this.pool.asset.decimals);
+        })
+        .catch(err => {
+          if (err.code !== -32603) {
+            console.log(err);
+          }
+        });
       return pricePerShare;
     }
     return '0';
