@@ -73,7 +73,7 @@ function FarmCardGroupContainer({ showAsTables }) {
       {state.summaries.length ? (
         <FarmGroupContainerWrapper>
           {state.summaries.map(utils.prettyPosition).map(summary => {
-            return <FarmCard key={summary.address} summary_information={summary} />;
+            return <FarmCard key={summary.address} summaryInformation={summary} />;
           })}
         </FarmGroupContainerWrapper>
       ) : (
