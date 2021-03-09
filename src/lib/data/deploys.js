@@ -130,6 +130,11 @@ const assets = [
     address: '0xa0246c9032bC3A600820415aE600c6388619A14D',
   },
   {
+    name: 'iFARM',
+    decimals: 18,
+    address: '0x1571eD0bed4D987fe2b498DdBaE7DFA19519F651',
+  },
+  {
     name: 'GRAIN',
     decimals: 18,
     address: '0x6589fe1271A0F29346796C6bAf0cdF619e25e58e',
@@ -168,6 +173,16 @@ const assets = [
     name: 'MTSLA',
     decimals: 18,
     address: '0x21cA39943E91d704678F5D00b6616650F066fD63',
+  },
+  {
+    name: 'MTWTR',
+    decimals: 18,
+    address: '0xEdb0414627E6f1e3F082DE65cD4F9C693D78CCA9',
+  },
+  {
+    name: 'MNFLX',
+    decimals: 18,
+    address: '0xC8d674114bac90148d11D3C1d33C61835a0F9DCD',
   },
   {
     name: 'MIC',
@@ -593,6 +608,18 @@ const assets = [
     type: 'uniswap',
     decimals: 18,
     address: '0x795065dCc9f64b5614C407a6EFDC400DA6221FB0',
+  },
+  {
+    name: 'UNI_MNFLX-UST_LP',
+    type: 'uniswap',
+    decimals: 18,
+    address: '0xC99A74145682C4b4A6e9fa55d559eb49A6884F75', // contracts/vaults
+  },
+  {
+    name: 'UNI_MTWTR-UST_LP',
+    type: 'uniswap',
+    decimals: 18,
+    address: '0x34856be886A2dBa5F7c38c4df7FD86869aB08040',
   },
 ];
 
@@ -1136,6 +1163,20 @@ assets.push({
   underlyingAsset: assetByName('UNI_UST-MAAPL_LP'),
   decimals: 18,
   address: '0x11804D69AcaC6Ae9466798325fA7DE023f63Ab53',
+});
+assets.push({
+  name: 'fUNI-mNFLX:UST',
+  type: 'ftoken',
+  underlyingAsset: assetByName('UNI_MNFLX-UST_LP'),
+  decimals: 18,
+  address: '0x8334A61012A779169725FcC43ADcff1F581350B7',
+});
+assets.push({
+  name: 'fUNI-mTWTR:UST',
+  type: 'ftoken',
+  underlyingAsset: assetByName('UNI_MTWTR-UST_LP'),
+  decimals: 18,
+  address: '0x8334A61012A779169725FcC43ADcff1F581350B7',
 });
 assets.push({
   name: 'fCRV-GUSD',
@@ -3470,6 +3511,16 @@ const weekTwentyThreePools = [
     asset: assetByName('fSUSHI-SUSHI:ETH'),
     address: '0x16fBb193f99827C92A4CC22EFe8eD7390465BFa3',
     rewardAsset: assetByName('FARM'),
+  },
+  {
+    asset: assetByName('fUNI-mNFLX:UST'),
+    address: '0x937D4b84f139bec548b825FdCE33B172C5Bf755a', // should be in contract/pool like AMZN
+    rewardAsset: assetByName('iFARM'),
+  },
+  {
+    asset: assetByName('fUNI-mTWTR:UST'),
+    address: '0x677AD66025063bE55B070685E618a84FF3dd62be',
+    rewardAsset: assetByName('iFARM'),
   },
 ];
 
