@@ -3,15 +3,21 @@
 import {allVaultsExport, allPoolsExport, histAssetsExport} from './getAllAssets.js'
 import {activeVaults} from './utils.js'
 
+// Usage example
+
 // activeVaults.then(data => {
-//   console.log(data)
+//     //console.log(data)
+//     console.log(activeVaults)
 // })
 
-// // Usage example
 // allVaultsExport.then(data => {
-//   console.log(allVaultsExport)
+//     //console.log(data)
+//     console.log(allVaultsExport)
 // })
 
 // allPoolsExport.then(data => {
-//   console.log(allPoolsExport)
+//     //console.log(data)
+//     console.log(allPoolsExport)
 // })
+
+// console.log(histAssetsExport)

@@ -4,9 +4,9 @@ import axios from 'axios';
 import assets from './deploys.js';
 
 // All Vaults URL
-const urlVaults = "https://ethparser-staging.herokuapp.com/contracts/vaults";
+const urlVaults = `${process.env.ETH_PARSER_VAULTS_URL}`;
 // Active Pools URL
-const urlPools = "https://ethparser-staging.herokuapp.com/contracts/pools";
+const urlPools = `${process.env.ETH_PARSER_POOLS_URL}`;
 
 // Init Empty Assets Array
 const allVaultsExport = axios.get(urlVaults).then(result => result.data.data)
