@@ -10,7 +10,7 @@ import harvest from './lib';
 import { darkTheme, lightTheme } from './styles/appStyles';
 
 // images
-import logo from './assets/gif_tractor.gif';
+import logo from './assets/newLogo.png';
 // styles
 import { Topbar, GlobalStyle, Brand, Panel, Container } from './styles/AppJsStyles';
 

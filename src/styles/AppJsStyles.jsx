@@ -1,6 +1,6 @@
-import styled, { createGlobalStyle } from "styled-components";
-import { fonts } from "./appStyles";
-import { reset } from "styled-reset";
+import styled, { createGlobalStyle } from 'styled-components';
+import { reset } from 'styled-reset';
+import { fonts } from './appStyles';
 
 export const GlobalStyle = createGlobalStyle`
 ${reset}
@@ -16,7 +16,7 @@ html {
 
 body {
   height: 100%;
-  background-color: ${(props) => props.theme.style.bodyBackground};
+  background-color: ${props => props.theme.style.bodyBackground};
 }
 
 
@@ -30,19 +30,19 @@ code {
     z-index: 1200;
 
     .web3modal-modal-card {
-      background-color: ${(props) => props.theme.style.lightBackground};
+      background-color: ${props => props.theme.style.lightBackground};
       font-family: ${fonts.headerFont};
-      border: ${(props) => props.theme.style.mainBorder};
+      border: ${props => props.theme.style.mainBorder};
 
       .web3modal-provider-container {
-        background-color: ${(props) => props.theme.style.highlight};
+        background-color: ${props => props.theme.style.highlight};
 
         .web3modal-provider-description {
-          color: ${(props) => props.theme.style.primaryFontColor};
+          color: ${props => props.theme.style.primaryFontColor};
           font-family: ${fonts.contentFont};
         }
         &:hover {
-          border: ${(props) => props.theme.style.smallBorder};
+          border: ${props => props.theme.style.smallBorder};
         }
       }
 
@@ -53,10 +53,10 @@ code {
 
 input[type="number"] {
   -moz-appearance: textfield;
-  background-color: ${(props) => props.theme.style.lightBackground};
+  background-color: ${props => props.theme.style.lightBackground};
   border: 0.2rem solid #363636;
   font-size: 1.4rem;
-  color: ${(props) => props.theme.style.primaryFontColor};
+  color: ${props => props.theme.style.primaryFontColor};
   width: 6rem;
   text-align: center;
   border-radius: 0.5rem;
@@ -76,28 +76,28 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .button {
-  background: ${(props) => props.theme.style.highlight};
-  border: ${(props) => props.theme.style.smallBorder};
-  box-shadow: ${(props) => props.theme.style.buttonBoxShadow};
+  background: ${props => props.theme.style.highlight};
+  border: ${props => props.theme.style.smallBorder};
+  box-shadow: ${props => props.theme.style.buttonBoxShadow};
   box-sizing: border-box;
   border-radius: 0.8rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
   font-family: TechnaSans;
-  color: ${(props) => props.theme.style.buttonFontColor};
+  color: ${props => props.theme.style.buttonFontColor};
   font-size: 1.2rem;
 
   &.ghost {
     background: transparent;
     border: 0px;
     box-shadow: none;
-    color: ${(props) => props.theme.style.linkColor};
+    color: ${props => props.theme.style.linkColor};
     font-family: ${fonts.headerFont};
     padding: 0px;
   }
 
   &.alert {
-    background-color: ${(props) => props.theme.style.alertColor}
+    background-color: ${props => props.theme.style.alertColor}
   }
 }
 
@@ -115,7 +115,7 @@ export const Topbar = styled.div`
   justify-content: space-between;
   align-items: center;
   .fa-user-cog {
-    color: ${(props) => props.theme.style.brandTextColor};
+    color: ${props => props.theme.style.brandTextColor};
     font-size: 2.5rem;
     padding-top: 3rem;
     padding-right: 1rem;
@@ -130,7 +130,7 @@ export const Topbar = styled.div`
     }
   }
   .fa-bars {
-    color: ${(props) => props.theme.style.brandTextColor};
+    color: ${props => props.theme.style.brandTextColor};
     font-size: 2.5rem;
 
     padding-right: 1rem;
@@ -151,20 +151,19 @@ export const Topbar = styled.div`
 export const Brand = styled.div`
   padding-right: 1rem;
   padding-top: 2rem;
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 4rem;
-  height: 2.5rem;
+  display: flex !important;
+  align-items: center;
+  padding-bottom: 2rem;
 
   img {
-    width: 3rem;
-    height: 3rem;
+    width: 3.5rem;
+    height: 3.5rem;
     margin-right: 1rem;
     margin-left: 0.5rem;
   }
 
   span {
-    color: ${(props) => props.theme.style.brandTextColor};
+    color: ${props => props.theme.style.brandTextColor};
     font-family: ${fonts.contentFont};
     font-size: 2.5rem;
   }
@@ -177,19 +176,19 @@ export const Brand = styled.div`
 export const Panel = styled.div`
   position: relative;
   padding: 2.5rem 2.5rem;
-  border: ${(props) => props.theme.style.mainBorder};
+  border: ${props => props.theme.style.mainBorder};
   border-radius: 1rem;
   border-top-left-radius: 0rem;
   margin-top: -1.5rem;
-  background-color: ${(props) => props.theme.style.panelBackground};
+  background-color: ${props => props.theme.style.panelBackground};
   z-index: 50;
-  box-shadow: ${(props) => props.theme.style.panelBoxShadow};
+  box-shadow: ${props => props.theme.style.panelBoxShadow};
   
 
   &.four-corner {
     border-top-left-radius: 1rem;
     background-color: #1d1d1d;
-    color: ${(props) => props.theme.style.primaryFontColor};
+    color: ${props => props.theme.style.primaryFontColor};
     font-size: 1.6rem;
     font-family: TechnaSans;
   }
@@ -202,8 +201,8 @@ export const Panel = styled.div`
     height: 2rem;
     border: 1px solid black;
     border-radius .5rem;
-    background-color: ${(props) => props.theme.style.highlight};
-    box-shadow: ${(props) => props.theme.style.panelTabBoxShadow};
+    background-color: ${props => props.theme.style.highlight};
+    box-shadow: ${props => props.theme.style.panelTabBoxShadow};
     margin-bottom: 0;
   }
   
@@ -258,6 +257,5 @@ export const Container = styled.div`
   padding-bottom: 15rem;
   @media (max-width: 1140px) {
     width: 95%;
-    
   }
 `;

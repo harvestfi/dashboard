@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
-import HarvestContext from "../../../Context/HarvestContext";
-import { Brand, Drawer, DrawerLink, Radio } from "./SidedrawerStyles";
-import logo from "../../../assets/gif_tractor.gif";
+import React, { useContext } from 'react';
+import HarvestContext from '../../../Context/HarvestContext';
+import { Brand, Drawer, DrawerLink, Radio } from './SidedrawerStyles';
+import logo from '../../../assets/newLogo.png';
 
-//components
-import Currency from "../currency/Currency";
-import Backdrop from "./backdrop/Backdrop";
-import ThemeSwitch from "../../tabContainer/themeSwitch/ThemeSwitch";
+// components
+import Currency from '../currency/Currency';
+import Backdrop from './backdrop/Backdrop';
+import ThemeSwitch from '../../tabContainer/themeSwitch/ThemeSwitch';
 
 const Sidedrawer = () => {
   const { state, openDrawer, toggleRadio } = useContext(HarvestContext);
@@ -15,7 +15,7 @@ const Sidedrawer = () => {
     <>
       <Drawer>
         <Brand>
-          <img src={logo} alt="harvest finance logo" />{" "}
+          <img src={logo} alt="harvest finance logo" />{' '}
         </Brand>
         <DrawerLink
           href="https://farm.chainwiki.dev/en/home"
