@@ -183,7 +183,6 @@ export const Panel = styled.div`
   background-color: ${props => props.theme.style.panelBackground};
   z-index: 50;
   box-shadow: ${props => props.theme.style.panelBoxShadow};
-  
 
   &.four-corner {
     border-top-left-radius: 1rem;
@@ -200,54 +199,49 @@ export const Panel = styled.div`
     background-color: #ddd;
     height: 2rem;
     border: 1px solid black;
-    border-radius .5rem;
+    border-radius: 0.5rem;
     background-color: ${props => props.theme.style.highlight};
     box-shadow: ${props => props.theme.style.panelTabBoxShadow};
     margin-bottom: 0;
   }
-  
+
   .flexible-modal-mask {
     display: none;
-    
   }
   .flexible-modal-resizer {
     height: 2rem;
   }
-  
-  
-  .flexible-modal-drag-area{
+
+  .flexible-modal-drag-area {
     background-color: transparent;
-    position:absolute;
-    cursor:grab;
+    position: absolute;
+    cursor: grab;
     height: 2rem;
-    right:0;
-    top:0;
+    right: 0;
+    top: 0;
   }
-  .flexible-modal-drag-area-bottom{
+  .flexible-modal-drag-area-bottom {
     height: 3rem;
-    cursor:grab;
-    position:absolute;
+    cursor: grab;
+    position: absolute;
     bottom: 0;
   }
-  .flexible-modal-drag-area-right{
-    position:absolute;
+  .flexible-modal-drag-area-right {
+    position: absolute;
     height: 5rem;
     width: 2rem;
     top: 0;
     right: 0;
-    cursor:grab;
+    cursor: grab;
   }
-  .flexible-modal-drag-area-left{
-    position:absolute;
+  .flexible-modal-drag-area-left {
+    position: absolute;
     height: 5rem;
     width: 2rem;
     top: 0;
     left: 0;
-    cursor:grab;
+    cursor: grab;
   }
-
-
- 
 `;
 
 export const Container = styled.div`
