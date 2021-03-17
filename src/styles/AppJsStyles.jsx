@@ -119,11 +119,18 @@ export const Topbar = styled.div`
     font-size: 2.5rem;
     margin-right: 1rem;
     position: relative;
+    line-height: 35px;
 
     &:hover {
       cursor: pointer;
       top: 0.2rem;
     }
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
+
     @media (max-width: 1160px) {
       display: none;
     }
