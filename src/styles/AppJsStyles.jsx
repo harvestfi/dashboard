@@ -117,8 +117,7 @@ export const Topbar = styled.div`
   .fa-user-cog {
     color: ${props => props.theme.style.brandTextColor};
     font-size: 2.5rem;
-    padding-top: 3rem;
-    padding-right: 1rem;
+    margin-right: 1rem;
     position: relative;
 
     &:hover {
@@ -166,6 +165,7 @@ export const Brand = styled.div`
     color: ${props => props.theme.style.brandTextColor};
     font-family: ${fonts.contentFont};
     font-size: 2.5rem;
+    line-height: 35px;
   }
 
   @media (min-width: 1500px) {
