@@ -130,11 +130,6 @@ const assets = [
     address: '0xa0246c9032bC3A600820415aE600c6388619A14D',
   },
   {
-    name: 'iFARM',
-    decimals: 18,
-    address: '0x1571eD0bed4D987fe2b498DdBaE7DFA19519F651',
-  },
-  {
     name: 'GRAIN',
     decimals: 18,
     address: '0x6589fe1271A0F29346796C6bAf0cdF619e25e58e',
@@ -758,6 +753,13 @@ assets.push({
 //  },
 //  address: '0x845838DF265Dcd2c412A1Dc9e959c7d08537f8a2',
 // });
+assets.push({
+  name: 'iFARM',
+  type: 'ftoken',
+  decimals: 18,
+  underlyingAsset: assetByName('FARM'),
+  address: '0x1571eD0bed4D987fe2b498DdBaE7DFA19519F651',
+});
 assets.push({
   name: 'fWETH_USDT_LP_v0',
   type: 'ftoken',

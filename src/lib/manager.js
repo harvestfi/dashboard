@@ -1,7 +1,7 @@
 import ethers from 'ethers';
 import data from './data/deploys';
 import RewardsPool from './pool';
-import { UnderlyingBalances } from './tokens';
+import { UnderlyingBalances, getTokenFromAsset } from './tokens';
 import { weekOne, test, weekTwo, activePools, inactivePools, allPastPools } from './poolUtils';
 
 /**
@@ -73,7 +73,6 @@ export class PoolManager {
   static mapToPools(pools, functionPath, args, propName) {
     const f = async pool => {
       const prop = propName || functionPath[functionPath.length - 1];
-
       // traverse props iteratively
       let func = pool;
       /* eslint-disable-next-line guard-for-in */
@@ -227,6 +226,56 @@ export class PoolManager {
     });
 
     return Promise.all(promises).then(vals => vals.filter(val => !!val));
+  }
+
+  /**
+   * Return information about Ifarm assets for the current address
+   * @param {string} address user address
+   * @return {Object|null} iFarm token
+   */
+  async iFarmSummary(address) {
+    try {
+      const iFARM = data.assetByName('iFARM');
+      const token = getTokenFromAsset(iFARM, this.provider);
+      const underlayingAsset = getTokenFromAsset(iFARM.underlyingAsset, this.provider);
+      const stakedBalance = await token.balanceOf(address);
+      if (stakedBalance.isZero()) {
+        return null;
+      }
+      const underlyingBalance = await token.underlyingBalanceWithInvestmentForHolder(address);
+      const pricePerFullShare = await token.getPricePerFullShare();
+      const usdValueOf = await underlayingAsset.usdValueOf(underlyingBalance);
+      return {
+        name: 'iFARM Profit Sharing',
+        address: token.address,
+        summary: {
+          address: token.address,
+          user: address,
+          pool: {
+            name: 'iFARM Pool',
+            asset: data.assetByName('iFARM'),
+            address: '0x25550Cccbd68533Fa04bFD3e3AC4D09f9e00Fc50',
+            rewardAsset: data.assetByName('FARM'),
+          },
+          isActive: true,
+          stakedBalance,
+          underlyingBalanceOf: {
+            name: 'FARM',
+            balances: { FARM: underlyingBalance },
+          },
+          unstakedBalance: ethers.BigNumber.from(0),
+          earnedRewards: ethers.BigNumber.from(0),
+          percentageOwnership: 'N/A',
+          usdValueOf,
+          historicalRewards: ethers.BigNumber.from(0),
+          pricePerFullShare,
+        },
+      };
+    } catch (err) {
+      console.log('iFARM parse error');
+      console.log(err);
+      return null;
+    }
   }
 
   exitPools(pools, overrides) {

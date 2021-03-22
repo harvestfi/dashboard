@@ -132,14 +132,19 @@ function App() {
         summaries.forEach(pos => {
           total = total.add(pos.summary.usdValueOf);
         });
+        return Promise.all([state.manager.iFarmSummary(state.address), total, summaries]);
+      })
+      .then(([iFarmSummary, total, summaries]) => {
+        if (iFarmSummary) {
+          total = total.add(iFarmSummary.summary.usdValueOf);
+          summaries.unshift(iFarmSummary);
+        }
         setState(prevState => ({
           ...prevState,
           summaries,
           usdValue: total,
         }));
         setRefreshing(false);
-
-        return summaries;
       })
       .catch(() => {
         refresh();
