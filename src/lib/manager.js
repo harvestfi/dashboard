@@ -265,14 +265,13 @@ export class PoolManager {
           },
           unstakedBalance: ethers.BigNumber.from(0),
           earnedRewards: ethers.BigNumber.from(0),
-          percentageOwnership: 'N/A',
+          percentageOwnership: '0.000%',
           usdValueOf,
           historicalRewards: ethers.BigNumber.from(0),
           pricePerFullShare,
         },
       };
     } catch (err) {
-      console.log('iFARM parse error');
       console.log(err);
       return null;
     }
