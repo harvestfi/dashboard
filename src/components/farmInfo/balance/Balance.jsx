@@ -1,21 +1,22 @@
-import React, { useEffect, useState, useContext } from "react";
-import HarvestContext from "../../../Context/HarvestContext";
-import styled, { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme, fonts } from "../../../styles/appStyles";
-import harvest from "../../../lib/index.js";
-import BalanceSkeleton from "./BalanceSkeleton";
+import React, { useEffect, useState, useContext } from 'react';
+import styled, { ThemeProvider } from 'styled-components';
+import HarvestContext from '../../../Context/HarvestContext';
+import { darkTheme, lightTheme, fonts } from '../../../styles/appStyles';
+import harvest from '../../../lib/index.js';
+import BalanceSkeleton from './BalanceSkeleton';
+
 const { ethers } = harvest;
 
 const BluePanel = styled.div`
   position: relative;
-  background-color: ${(props) => props.theme.style.blueBackground};
-  color: ${(props) => props.theme.style.primaryFontColor};
+  background-color: ${props => props.theme.style.blueBackground};
+  color: ${props => props.theme.style.primaryFontColor};
   font-family: ${fonts.headerFont};
   padding: 2.5rem 0.7rem 2rem 0.7rem;
-  border: ${(props) => props.theme.style.mainBorder};
+  border: ${props => props.theme.style.mainBorder};
   border-radius: 0.5rem;
   box-sizing: border-box;
-  box-shadow: ${(props) => props.theme.style.panelBoxShadow};
+  box-shadow: ${props => props.theme.style.panelBoxShadow};
   display: flex;
   flex-grow 1;
   align-items: center;
@@ -43,11 +44,7 @@ const BluePanel = styled.div`
 `;
 
 const Balance = () => {
-  const {
-    state,
-    currentExchangeRate,
-    prettyBalance,
-  } = useContext(HarvestContext);
+  const { state, currentExchangeRate, prettyBalance } = useContext(HarvestContext);
   const [userBalance, setUserBalance] = useState(ethers.BigNumber.from(0));
 
   useEffect(() => {
@@ -65,10 +62,8 @@ const Balance = () => {
     }
   };
 
-  
-
   return (
-    <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
+    <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
       {state.display ? (
         <BluePanel>
           <h1>{prettyBalance(userBalance * currentExchangeRate)}</h1>

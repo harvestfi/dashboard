@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import styled, { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme, fonts } from "../../styles/appStyles";
-import harvest from "../../lib/index.js";
+import React, { useState, useEffect } from 'react';
+import styled, { ThemeProvider } from 'styled-components';
+import { darkTheme, lightTheme, fonts } from '../../styles/appStyles';
+import harvest from '../../lib/index.js';
 
-//components
-import NoFarmModal from "./NoFarmModal";
+// components
+import NoFarmModal from './NoFarmModal';
 
 const { ethers } = harvest;
 
@@ -13,20 +13,20 @@ const Panel = styled.div`
   flex-direction: column;
   justify-content: center;
   position: relative;
-  background-color: ${(props) => props.theme.style.lightBackground};
-  color: ${(props) => props.theme.style.primaryFontColor};
+  background-color: ${props => props.theme.style.lightBackground};
+  color: ${props => props.theme.style.primaryFontColor};
   font-family: ${fonts.contentFont};
   padding: 1.5rem;
-  border: ${(props) => props.theme.style.mainBorder};
+  border: ${props => props.theme.style.mainBorder};
   border-radius: 0.5rem;
   box-sizing: border-box;
-  box-shadow: ${(props) => props.theme.style.panelBoxShadow};
+  box-shadow: ${props => props.theme.style.panelBoxShadow};
 
   @media (max-width: 1002px) {
     margin-bottom: 1.5rem;
   }
 
-  input[type="number"] {
+  input[type='number'] {
     margin: 0 0.7rem 0 0.4rem;
   }
 
@@ -84,18 +84,16 @@ const ButtonContainer = styled.div`
 const StakePanel = ({ state, openModal, manager }) => {
   const [modal, setModal] = useState({
     open: false,
-    message: "",
+    message: '',
     noFarm: true,
   });
   const [stakeAmount, setStakeAmount] = useState(0);
-  const pool = state.manager.pools.find((pool) => {
-    return pool.address === "0x25550Cccbd68533Fa04bFD3e3AC4D09f9e00Fc50";
+  const pool = state.manager.pools.find(pool => {
+    return pool.address === '0x25550Cccbd68533Fa04bFD3e3AC4D09f9e00Fc50';
   });
-  const inactivePools = state.summaries.filter(
-    (sum) => sum.stakedBalance && !sum.isActive,
-  );
+  const inactivePools = state.summaries.filter(sum => sum.stakedBalance && !sum.isActive);
 
-  const checkForFarm = (amount) => {
+  const checkForFarm = amount => {
     if (amount <= 0) {
       setModal({
         ...modal,
@@ -116,14 +114,11 @@ const StakePanel = ({ state, openModal, manager }) => {
       setModal({
         ...modal,
         open: true,
-        message: "Please enter an amount to stake!",
+        message: 'Please enter an amount to stake!',
         noFarm: false,
       });
     } else {
-      const allowance = await pool.lptoken.allowance(
-        state.address,
-        pool.address,
-      );
+      const allowance = await pool.lptoken.allowance(state.address, pool.address);
       const amount =
         stakeAmount > 0
           ? ethers.utils.parseUnits(stakeAmount.toString(), 18)
@@ -133,19 +128,17 @@ const StakePanel = ({ state, openModal, manager }) => {
         await pool.lptoken.approve(pool.address, ethers.constants.MaxUint256);
         await pool.stake(amount);
       } else {
-        await pool.stake(amount).catch((e) => {
+        await pool.stake(amount).catch(e => {
           if (e.code !== 4001 || e.code !== -32603) {
             openModal(
-              `You do not have enough to stake ${ethers.utils.formatEther(
-                amount,
-              )} FARM`,
-              "error",
+              `You do not have enough to stake ${ethers.utils.formatEther(amount)} FARM`,
+              'error',
             );
           }
         });
       }
     }
-    setStakeAmount((stakeAmount) => 0);
+    setStakeAmount(stakeAmount => 0);
   };
 
   const setMax = async () => {
@@ -157,8 +150,8 @@ const StakePanel = ({ state, openModal, manager }) => {
     checkForFarm(amount);
   };
   const unstake = async () => {
-    await pool.exit().catch((e) => {
-      console.log("insufficientBalance", e);
+    await pool.exit().catch(e => {
+      console.log('insufficientBalance', e);
     });
   };
 
@@ -167,17 +160,15 @@ const StakePanel = ({ state, openModal, manager }) => {
   };
 
   const clearStakeAmount = () => {
-    setStakeAmount((stakeAmount) => 0);
+    setStakeAmount(stakeAmount => 0);
   };
 
-  const stakeChangeHandler = (e) => {
+  const stakeChangeHandler = e => {
     setStakeAmount(e.target.value);
   };
 
-  useEffect(() => {}, []);
-
   return (
-    <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
+    <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
       <Panel>
         <div className="panel-text">
           <p>
@@ -192,19 +183,11 @@ const StakePanel = ({ state, openModal, manager }) => {
             FARM
           </p>
           {stakeAmount > 0 ? (
-            <button
-              className="button"
-              disabled={!state.provider}
-              onClick={clearStakeAmount}
-            >
+            <button className="button" disabled={!state.provider} onClick={clearStakeAmount}>
               clear
             </button>
           ) : (
-            <button
-              className="button"
-              disabled={!state.provider}
-              onClick={setMax}
-            >
+            <button className="button" disabled={!state.provider} onClick={setMax}>
               max
             </button>
           )}
@@ -223,21 +206,13 @@ const StakePanel = ({ state, openModal, manager }) => {
           </button> */}
 
           {inactivePools.length > 0 && (
-            <button
-              className="button alert"
-              disabled={!state.provider}
-              onClick={exitInactivePools}
-            >
+            <button className="button alert" disabled={!state.provider} onClick={exitInactivePools}>
               exit inactive
             </button>
           )}
         </ButtonContainer>
       </Panel>
-      <NoFarmModal
-        state={state}
-        modal={modal}
-        onClose={() => closeErrorModal()}
-      />
+      <NoFarmModal state={state} modal={modal} onClose={() => closeErrorModal()} />
     </ThemeProvider>
   );
 };

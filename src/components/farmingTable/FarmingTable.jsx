@@ -109,7 +109,7 @@ const FarmingTable = ({ showAsCards }) => {
         }));
       });
     }
-  }, [setState, state]);
+  }, [setState, state.summaries]);
 
   useEffect(() => {
     if (state.totalFarmEarned === 0) {
