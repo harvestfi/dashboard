@@ -12,6 +12,7 @@
     "browserify": "^16.5.2",
     "ethers": "^5.0.11",
     "framer-motion": "^3.0.0",
+    "js-abbreviation-number": "^1.1.2",
     "react": "^16.13.1",
     "react-audio-spectrum": "^0.1.0",
     "react-dom": "^16.13.1",

@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import ReactTooltip from 'react-tooltip';
 import HarvestContext from '../../Context/HarvestContext';
 import ethers from 'ethers';
+import { abbreviateNumber } from 'js-abbreviation-number';
 
 import { FarmCardContainer, UnderlyingBalanceContainer, CardInputContainer } from "./FarmCardStyles";
 import logo from '../../assets/logo.png'
@@ -23,17 +24,18 @@ export default function FarmCard({ summary_information }) {
   const formatBalance = (balance) => {
     const bal = parseFloat(balance);
     if (bal === 0) return bal.toString();
-    if (bal < 10) return bal.toFixed(6).toString();
-    if (bal < 100) return bal.toFixed(5).toString();
-    if (bal < 1000) return bal.toFixed(4).toString();
-    if (bal < 10_000) return bal.toFixed(3).toString();
-    if (bal < 100_000) return (bal / 1000).toFixed(5).toString() + "k";
-    if (bal < 1_000_000) return (bal / 1000).toFixed(4).toString() + "k";
-    if (bal < 10_000_000) return (bal / 1000).toFixed(3).toString() + "k";
-    if (bal < 100_000_000) return (bal / 1_000_000).toFixed(5).toString() + "m";
-    if (bal < 1_000_000_000) return (bal / 1_000_000).toFixed(4).toString() + "m";
-    if (bal < 10_000_000_000) return (bal / 1_000_000).toFixed(3).toString() + "m";
-    return Math.round(bal).toString();
+    if (bal < 1) return bal.toFixed(6);
+    if (bal < 10) return abbreviateNumber(bal, 5);
+    if (bal < 100) return abbreviateNumber(bal, 4);
+    if (bal < 1000) return abbreviateNumber(bal, 3);
+    if (bal < 10_000) return abbreviateNumber(bal, 5);
+    if (bal < 100_000) return abbreviateNumber(bal, 4);
+    if (bal < 1_000_000) return abbreviateNumber(bal, 3);
+    if (bal < 10_000_000) return abbreviateNumber(bal, 5);
+    if (bal < 100_000_000) return abbreviateNumber(bal, 4);
+    if (bal < 1_000_000_000) return abbreviateNumber(bal, 3);
+    if (bal < 10_000_000_000) return abbreviateNumber(bal, 5);
+    return abbreviateNumber(bal, 2);
   };
 
   const stake = async () => {
@@ -181,7 +183,7 @@ export default function FarmCard({ summary_information }) {
         </div>
 
       </div>
-      <UnderlyingBalanceContainer data-tip={isProfitShareCard ? summary_information.underlyingBalance : null}>
+      <UnderlyingBalanceContainer data-tip={isProfitShareCard ? null : summary_information.underlyingBalance}>
         <div className="underlying_balance_label">
           <h4>Underlying Balance:</h4>
         </div>
