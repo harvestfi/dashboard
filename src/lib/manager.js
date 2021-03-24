@@ -243,6 +243,12 @@ export class PoolManager {
         return null;
       }
       const underlyingBalance = await token.underlyingBalanceWithInvestmentForHolder(address);
+      const totalSupply = await token.totalSupply();
+      const percentageOwned = (
+        (ethers.utils.formatUnits(stakedBalance, iFARM.decimals) /
+          ethers.utils.formatUnits(totalSupply, iFARM.decimals)) *
+        100
+      ).toFixed(3);
       const pricePerFullShare = await token.getPricePerFullShare();
       const usdValueOf = await underlayingAsset.usdValueOf(underlyingBalance);
       return {
@@ -265,7 +271,7 @@ export class PoolManager {
           },
           unstakedBalance: ethers.BigNumber.from(0),
           earnedRewards: ethers.BigNumber.from(0),
-          percentageOwnership: '0.000%',
+          percentageOwnership: `${percentageOwned}%`,
           usdValueOf,
           historicalRewards: ethers.BigNumber.from(0),
           pricePerFullShare,
