@@ -159,8 +159,8 @@ function App() {
         }));
         setRefreshing(false);
       })
-      .catch(() => {
-        refresh();
+      .catch(err => {
+        console.log(err);
       });
   }, [isCheckingBalance, isConnecting, state.address, state.addressToCheck, state.manager]);
 
@@ -180,7 +180,7 @@ function App() {
       if (state.manager) {
         refresh();
       }
-    }, 60000);
+    }, 20000);
     return () => clearTimeout(timer);
   });
 
@@ -193,7 +193,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       getPools();
-    }, 60000);
+    }, 20000);
     return () => clearTimeout(timer);
   });
 
