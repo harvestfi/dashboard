@@ -186,7 +186,6 @@ export const Panel = styled.div`
   border: ${props => props.theme.style.mainBorder};
   border-radius: 1rem;
   border-top-left-radius: 0rem;
-  margin-top: -1.5rem;
   background-color: ${props => props.theme.style.panelBackground};
   z-index: 50;
   box-shadow: ${props => props.theme.style.panelBoxShadow};

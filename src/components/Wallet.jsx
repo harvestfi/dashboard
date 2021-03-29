@@ -71,6 +71,7 @@ const WalletConnection = styled.div`
 
     a {
       margin-right: 10px;
+      font-size: 20px !important;
     }
 
     .button-div {

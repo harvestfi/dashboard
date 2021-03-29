@@ -5,6 +5,7 @@ import Loadable from 'react-loadable';
 import axios from 'axios';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
+import { TopTabs } from 'components';
 import ModeSelectBoard from './components/ModeSelectBoard';
 import HarvestContext from './Context/HarvestContext';
 import harvest from './lib';
@@ -16,7 +17,6 @@ import logo from './assets/newLogo.png';
 import { Topbar, GlobalStyle, Brand, Panel, Container } from './styles/AppJsStyles';
 
 // components
-import TabContainer from './components/tabContainer/TabContainer';
 import SettingsModal from './components/userSettings/SettingsModal';
 import Radio from './components/radio/Radio';
 import WelcomeText from './components/WelcomeText';
@@ -393,7 +393,7 @@ function App() {
                   ''
                 ) : (
                   <>
-                    <TabContainer />
+                    <TopTabs />
                     <Panel>
                       <Radio />
 
@@ -425,7 +425,7 @@ function App() {
           {state.provider && !isConnecting && (
             <Row>
               <Col style={{ marginTop: '3rem', marginBottom: '3rem' }}>
-                {isCheckingBalance ? <TabContainer /> : ''}
+                {isCheckingBalance ? <TopTabs /> : ''}
                 <Panel>
                   <CheckBalance state={state} />
                 </Panel>

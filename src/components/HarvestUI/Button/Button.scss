@@ -1,0 +1,18 @@
+.harvest-button.MuiButton-root {
+  border: 0.1rem solid rgb(0, 0, 0);
+  box-shadow: rgb(0, 0, 0) 3.5px 3.5px 0px;
+  border-radius: 8px;
+  padding: 5px 10px;
+  color: rgb(0, 0, 0);
+  font-size: 22px;
+  font-family: Open Sans;
+  font-weight: 400;
+  text-transform: none;
+  line-height: normal;
+  letter-spacing: normal;
+  background: #ffcd8d;
+
+  &:hover {
+    background: #ffcd8d;
+  }
+}
