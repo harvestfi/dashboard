@@ -1,11 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Row, Col } from 'styled-bootstrap-grid';
 import styled from 'styled-components';
 import { fonts } from '../styles/appStyles';
 import Harvest from './harvest/Harvest';
 import AddTokens from './addTokens/AddTokens';
 import Wallet from './Wallet';
-import FarmCardContainer from './farmCards/FarmCardGroupContainer';
 import FarmingTable from './farmingTable/FarmingTable';
 import FarmInfo from './farmInfo/FarmInfo';
 import AssetTable from './assetTable/AssetTable';
@@ -13,25 +12,6 @@ import HarvestContext from '../Context/HarvestContext';
 
 const MainContent = ({ setState, openModal }) => {
   const { isCheckingBalance, state } = useContext(HarvestContext);
-
-  const [showTables, setShowTables] = useState(false);
-  const showAsTables = () => {
-    setShowTables(true);
-    window.localStorage.setItem('HarvestFinance:Layout', 'tables');
-  };
-  const showAsCards = () => {
-    setShowTables(false);
-    window.localStorage.setItem('HarvestFinance:Layout', 'cards');
-  };
-
-  useEffect(() => {
-    if (window.localStorage.getItem('HarvestFinance:Layout') === 'cards') {
-      setShowTables(false);
-    }
-    if (window.localStorage.getItem('HarvestFinance:Layout') === 'tables') {
-      setShowTables(true);
-    }
-  }, []);
 
   return (
     <Main>
@@ -61,15 +41,9 @@ const MainContent = ({ setState, openModal }) => {
         </Row>
       )}
       <Row>
-        {showTables ? (
-          <Col>
-            <FarmingTable state={state} setState={setState} showAsCards={showAsCards} />
-          </Col>
-        ) : (
-          <Col>
-            <FarmCardContainer state={state} setState={setState} showAsTables={showAsTables} />
-          </Col>
-        )}
+        <Col>
+          <FarmingTable />
+        </Col>
       </Row>
 
       {isCheckingBalance ? (
@@ -83,7 +57,7 @@ const MainContent = ({ setState, openModal }) => {
         </Row>
       )}
 
-      {showTables ? <AssetTable state={state} /> : ''}
+      <AssetTable state={state} />
     </Main>
   );
 };

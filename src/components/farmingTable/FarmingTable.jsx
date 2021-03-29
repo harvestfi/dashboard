@@ -8,7 +8,6 @@ import {
   MainTableRow,
   MainTableHeader,
   PanelTabContainerLeft,
-  PanelTabContainerRight,
   PanelTab,
   Tabs,
 } from './FarmingTableStyles';
@@ -42,16 +41,8 @@ const columns = [
   },
 ];
 
-const FarmingTable = ({ showAsCards }) => {
-  const {
-    state,
-    setState,
-    refresh,
-    isRefreshing,
-    isCheckingBalance,
-    prettyBalance,
-    currentExchangeRate,
-  } = useContext(HarvestContext);
+const FarmingTable = () => {
+  const { state, setState, prettyBalance, currentExchangeRate } = useContext(HarvestContext);
   const getThisReward = reward => {
     setState(prevState => ({ ...prevState, minimumHarvestAmount: reward }));
   };
@@ -135,25 +126,6 @@ const FarmingTable = ({ showAsCards }) => {
               <p>your staked assets</p>
             </PanelTab>
           </PanelTabContainerLeft>
-
-          <PanelTabContainerRight>
-            <PanelTab
-              className={isRefreshing ? 'refresh-disabled' : 'refresh-button'}
-              onClick={showAsCards}
-            >
-              <i className="fas fa-table" />
-            </PanelTab>
-            {isCheckingBalance ? (
-              ''
-            ) : (
-              <PanelTab
-                className={isRefreshing ? 'refresh-disabled' : 'refresh-button'}
-                onClick={refresh}
-              >
-                <i className="fas fa-sync-alt" />
-              </PanelTab>
-            )}
-          </PanelTabContainerRight>
         </Tabs>
       ) : null}
       {state.display ? (
