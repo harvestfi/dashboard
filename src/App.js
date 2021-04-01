@@ -88,7 +88,10 @@ function App() {
     await axios
       .get(`https://api-ui.harvest.finance/pools?key=${process.env.REACT_APP_HARVEST_KEY}`)
       .then(res => {
-        const currentAPY = res.data.eth[0].rewardAPY;
+        let currentAPY = 0;
+        if (res && res.data && res.data.eth && res.data.eth[0] && res.data.eth[0].rewardAPY) {
+          currentAPY = res.data.eth[0].rewardAPY;
+        }
         setState(prevState => ({ ...prevState, apy: currentAPY }));
       })
       .catch(err => {
