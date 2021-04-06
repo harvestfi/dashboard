@@ -1,4 +1,4 @@
-import ethers from 'ethers';
+import { ethers } from 'ethers';
 import deploys from './data/deploys';
 import manager from './manager';
 import * as pool from './pool';

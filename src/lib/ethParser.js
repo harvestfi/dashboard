@@ -1,5 +1,5 @@
 import axios from 'axios';
-import ethers, { BigNumber } from 'ethers';
+import { ethers } from 'ethers';
 
 class EthParserApi {
   /**
@@ -27,10 +27,10 @@ class EthParserApi {
    * @param {String} address token address
    * @param {Number} price price in USD
    * @param {Number} validUntil validity of memoization
-   * @return {BigNumber} price in microdollars
+   * @return {ethers.BigNumber} price in microdollars
    */
   memoize(address, price, validUntil) {
-    if (!price) return BigNumber.from(0);
+    if (!price) return ethers.BigNumber.from(0);
     const key = address.toLowerCase();
     const bnPrice = ethers.BigNumber.from(parseInt(price * 1000000, 10));
     this.memos[key] = {

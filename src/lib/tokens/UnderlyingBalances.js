@@ -1,4 +1,4 @@
-import ethers from 'ethers';
+import { ethers } from 'ethers';
 import data from '../data/deploys';
 import { getTokenFromName } from './tokenUtils';
 

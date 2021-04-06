@@ -1,4 +1,4 @@
-import ethers from 'ethers';
+import { ethers } from 'ethers';
 import Token from './Token';
 import UnderlyingBalances from './UnderlyingBalances';
 import { getTokenFromAsset } from './tokenUtils';

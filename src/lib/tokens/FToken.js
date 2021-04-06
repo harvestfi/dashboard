@@ -1,4 +1,4 @@
-import ethers from 'ethers';
+import { ethers } from 'ethers';
 import { FTOKEN_ABI } from '../data/ABIs';
 import HasUnderlying from './HasUnderlying';
 import UnderlyingBalances from './UnderlyingBalances';

@@ -1,4 +1,3 @@
-import ethers from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 
 /**
@@ -41,7 +40,11 @@ export function prettyPosition(sum) {
 
   const formattedUnderlyingBalance = (function format() {
     if (underlyingBalanceOf) {
-      if (underlyingBalanceOf.balances) {
+      if (
+        underlyingBalanceOf.balances &&
+        Object.keys(underlyingBalanceOf.balances) &&
+        Object.keys(underlyingBalanceOf.balances)[0]
+      ) {
         const underlyingKey = Object.keys(underlyingBalanceOf.balances)[0];
         return formatUnits(underlyingBalanceOf.balances[underlyingKey], decimals);
       }
@@ -68,12 +71,12 @@ export function prettyPosition(sum) {
     name,
     isActive,
     address,
-    stakedBalance: ethers.utils.formatUnits(stakedBalance, decimals),
-    unstakedBalance: ethers.utils.formatUnits(unstakedBalance, decimals),
-    earnedRewards: ethers.utils.formatUnits(truncatedClaimable, 8),
+    stakedBalance: formatUnits(stakedBalance, decimals),
+    unstakedBalance: formatUnits(unstakedBalance, decimals),
+    earnedRewards: formatUnits(truncatedClaimable, 8),
     percentOfPool: percentageOwnership,
     usdValueOf,
-    historicalRewards: ethers.utils.formatUnits(truncatedRewards, 8),
+    historicalRewards: formatUnits(truncatedRewards, 8),
     underlyingBalance: formattedUnderlyingBalance,
     pool,
     profits: formatProfits(),
@@ -100,7 +103,7 @@ export function prettyUnderlying(u) {
     const { name, decimals } = underlying.asset;
     return {
       name,
-      balance: ethers.utils.formatUnits(underlying.balance, decimals),
+      balance: formatUnits(underlying.balance, decimals),
     };
   }
 

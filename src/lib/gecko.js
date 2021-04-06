@@ -1,5 +1,5 @@
 import axios from 'axios';
-import ethers, { BigNumber } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 
 /**
  * Memoizing coin gecko api

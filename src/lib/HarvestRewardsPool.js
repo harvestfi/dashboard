@@ -1,4 +1,4 @@
-import ethers from 'ethers';
+import { ethers } from 'ethers';
 import { REWARDS_ABI } from './data/ABIs';
 import RewardsPool from './pool';
 /**

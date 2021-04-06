@@ -1,4 +1,4 @@
-import ethers from 'ethers';
+import { ethers } from 'ethers';
 import EthParser from '../ethParser';
 import ERC20Extended from './ERC20Extended';
 /**
