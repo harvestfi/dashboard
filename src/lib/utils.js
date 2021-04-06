@@ -40,7 +40,11 @@ export function prettyPosition(sum) {
 
   const formattedUnderlyingBalance = (function format() {
     if (underlyingBalanceOf) {
-      if (underlyingBalanceOf.balances) {
+      if (
+        underlyingBalanceOf.balances &&
+        Object.keys(underlyingBalanceOf.balances) &&
+        Object.keys(underlyingBalanceOf.balances)[0]
+      ) {
         const underlyingKey = Object.keys(underlyingBalanceOf.balances)[0];
         return formatUnits(underlyingBalanceOf.balances[underlyingKey], decimals);
       }

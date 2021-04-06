@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { fonts } from '../styles/appStyles';
 import Harvest from './harvest/Harvest';
 import AddTokens from './addTokens/AddTokens';
-import Wallet from './Wallet';
 import FarmingTable from './farmingTable/FarmingTable';
 import FarmInfo from './farmInfo/FarmInfo';
 import AssetTable from './assetTable/AssetTable';
@@ -19,16 +18,6 @@ const MainContent = ({ setState, openModal }) => {
 
   return (
     <Main>
-      {isCheckingBalance ? (
-        ''
-      ) : (
-        <Row>
-          <Col>
-            <Wallet theme={state.theme} address={state.address} provider={state.provider} />
-          </Col>
-        </Row>
-      )}
-
       <Row>
         <Col>
           <FarmInfo savedGas={savedGas} />
