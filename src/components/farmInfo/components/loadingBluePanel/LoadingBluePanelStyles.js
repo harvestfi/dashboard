@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const LoadingBluePanel = styled.div`
   display: flex;
@@ -7,13 +7,13 @@ const LoadingBluePanel = styled.div`
   width: 100%;
   height: 10rem;
   background: none;
-  border: ${(props) => props.theme.style.mainBorder};
-  box-shadow: ${(props) => props.theme.style.panelBoxShadow};
+  border: ${props => props.theme.style.mainBorder};
+  box-shadow: ${props => props.theme.style.panelBoxShadow};
   border-radius: 0.5rem;
   overflow: hidden;
 
   &::before {
-    content: "";
+    content: '';
     position: relative;
     left: -150px;
     top: 0;
@@ -22,7 +22,7 @@ const LoadingBluePanel = styled.div`
     background: linear-gradient(
       to right,
       transparent 10%,
-      ${(props) => props.theme.style.blueBackground} 50%,
+      ${props => props.theme.style.blueBackground} 50%,
       transparent 100%
     );
     animation: load 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
@@ -39,7 +39,6 @@ const LoadingBluePanel = styled.div`
 
   @media (max-width: 1107px) {
     height: 10rem;
-    
   }
 `;
 

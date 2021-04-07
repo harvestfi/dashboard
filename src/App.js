@@ -182,17 +182,19 @@ function App() {
   };
 
   const getPersonalGasSaved = async (address, setGasInfo) => {
-    address &&
-      (await axios
-        .get(
-          `${process.env.REACT_APP_ETH_PARSER_URL}/total_saved_gas_fee_by_address?address=${address}`,
-        )
-        .then(res => {
-          setGasInfo(Math.round(res.data.data));
-        })
-        .catch(err => {
-          console.log(err);
-        }));
+    if (!address) {
+      return;
+    }
+    await axios
+      .get(
+        `${process.env.REACT_APP_ETH_PARSER_URL}/total_saved_gas_fee_by_address?address=${address}`,
+      )
+      .then(res => {
+        setGasInfo(Math.round(res.data.data));
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
   // using state.address
   useEffect(() => {
