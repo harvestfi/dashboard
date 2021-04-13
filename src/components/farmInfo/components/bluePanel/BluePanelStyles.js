@@ -42,9 +42,5 @@ export const Wrapper = styled.div`
     ${Title} {
       font-size: 2.2rem;
     }
-
-    ${Text} {
-      font-size: 1.1rem;
-    }
   }
 `;

@@ -8,20 +8,12 @@ const { ethers } = harvest;
 
 const Balance = () => {
   const { state, currentExchangeRate, prettyBalance } = useContext(HarvestContext);
-  const [userBalance, setUserBalance] = useState(ethers.BigNumber.from(0));
 
-  useEffect(() => {
-    const balance = () => {
-      let ub = ethers.BigNumber.from(0);
+  let userBalance = ethers.BigNumber.from(0);
 
-      for (let i = 0; i < state.summaries.length; i++) {
-        ub = ub.add(state.summaries[i].summary.usdValueOf);
-
-        setUserBalance(ub);
-      }
-    };
-    balance();
-  }, [state.summaries]);
+  for (let i = 0; i < state.summaries.length; i++) {
+    userBalance = userBalance.add(state.summaries[i].summary.usdValueOf);
+  }
 
   return state.display ? (
     <BluePanel value={prettyBalance(userBalance * currentExchangeRate)} text="Staked Balance" />

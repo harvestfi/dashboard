@@ -10,10 +10,12 @@ const FarmInfo = ({ savedGas }) => {
     const { state, convertStandardNumber, currentExchangeRate } = useContext(HarvestContext);
     const farmPriceValue = convertStandardNumber(state.farmPrice * currentExchangeRate);
 
+    const pretySavedGas = new Intl.NumberFormat('en').format(savedGas);
+
     const cellsData = [
         { value: state.apy, text: 'Profit Share APY' },
         { value: farmPriceValue, text: 'FARM price' },
-        { value: savedGas, text: 'Personal Saved Gas' },
+        { value: pretySavedGas, text: 'Personal Saved Gas' },
         { value: state.totalFarmEarned?.toFixed(6), text: 'Farm Earned' },
     ];
 
