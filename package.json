@@ -16,9 +16,6 @@
     "react-loadable": "5.5.0",
     "react-modal-resizable-draggable": "0.1.4",
     "@material-ui/core": "^4.11.3",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
     "dotenv": "^8.2.0",
     "react-scripts": "3.4.3",
     "styled-bootstrap-grid": "3.1.0",
@@ -78,7 +75,7 @@
     "prettier": "2.1.2"
   },
   "engines": {
-    "node": "^14.16.1",
+    "node": "12.20.1",
     "npm": "6.14.10"
   }
 }
