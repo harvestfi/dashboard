@@ -7,13 +7,15 @@ import { darkTheme, lightTheme, fonts } from '../../../styles/appStyles';
 import FarmEarnedSkeleton from './FarmEarnedSkeleton';
 
 const TotalFarmEarned = () => {
-  const { state } = useContext(HarvestContext);
+  const { state, displayFarmInfo } = useContext(HarvestContext);
 
   return (
     <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
-      {state.display ? (
+      {displayFarmInfo ? (
         <BluePanel>
-          <h1>{state.totalFarmEarned?.toFixed(6)}</h1>
+          {/* <h1>{state.totalFarmEarned?.toFixed(6)}</h1> */}
+          {/* TODO: implement the correct display of the indicator of Farm Earned*/}
+          <h1>{0}</h1>
           <span>Farm Earned</span>
         </BluePanel>
       ) : (

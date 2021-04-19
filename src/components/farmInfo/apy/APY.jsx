@@ -50,19 +50,19 @@ const BluePanel = styled.div`
 `;
 
 const APY = () => {
-  const { state } = useContext(HarvestContext);
-  return (
-    <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
-      {state.display ? (
-        <BluePanel>
-          <h1>{state.apy} %</h1>
-          <span>Profit Share APY</span>
-        </BluePanel>
-      ) : (
-        <APYSkeleton theme={state.theme} />
-      )}
-    </ThemeProvider>
-  );
+	const { state, displayFarmInfo } = useContext(HarvestContext);
+	return (
+		<ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
+			{displayFarmInfo ? (
+				<BluePanel>
+					<h1>{state.apy} %</h1>
+					<span>Profit Share APY</span>
+				</BluePanel>
+			) : (
+				<APYSkeleton theme={state.theme} />
+			)}
+		</ThemeProvider>
+	);
 };
 
 export default APY;
