@@ -47,14 +47,14 @@ const MainContent = ({ setState }) => {
 				</Col>
 			</Row>
 
-			{!isCheckingBalance && (
+			{/* {!isCheckingBalance && ( // // TODO: return this buttons and fixed their
 				<Row style={{ marginTop: '15px' }}>
 					{/* Git hub pages would not recognize the margin from the bootstrap grid */}
-					<Col lg="12">
+					{/*<Col lg="12"> 
 						<Harvest state={state} setState={setState} />
 					</Col>
 				</Row>
-			)}
+			)} */}
 			{isCheckingBalance ? (
 				<Row>
 					<Col>
