@@ -1,6 +1,12 @@
 import { Contract, ethers } from 'ethers';
 import { API } from '../api';
-import { farmDecimals, vaultsWithoutReward, farmAddress } from '../constants/constants';
+import {
+	farmDecimals,
+	vaultsWithoutReward,
+	farmAddress,
+	outdatedVaults,
+	outdatedPools,
+} from '../constants/constants';
 import {
 	FTOKEN_ABI,
 	REWARDS_ABI,
@@ -37,6 +43,14 @@ export const getAssets = async (
 	// get all pools and vaults
 	const [pools, vaults] = await Promise.all<IPool[], IVault[]>([API.getPools(), API.getVaults()]);
 
+	const actualVaults = vaults.filter(v => {
+		return !outdatedVaults.has(v.contract.address);
+	});
+
+	const actualPools = pools.filter(p => {
+		return !outdatedPools.has(p.contract.address);
+	});
+
 	const getAssetsFromPool = async (pool: IPool, relatedVault?: IVault): Promise<IAssetsInfo> => {
 		const lpTokenContract = new Contract(pool.lpToken.address, FTOKEN_ABI, ethersProvider);
 
@@ -58,7 +72,6 @@ export const getAssets = async (
 		 * reward - reward of a wallet in the pool
 		 * poolTotalSupply - the total number of tokens in the pool of all participants
 		 * rewardPrice = iFARMPrice / (farmPrice * 10 ** rewardDecimals)
-		 * pricePerFullShareLpToken - 
 		 */
 		const [
 			lpTokenBalance,
@@ -126,14 +139,14 @@ export const getAssets = async (
 	};
 
 	const getAssetsFromVaults = () => {
-		return vaults.map(async vault => {
+		return actualVaults.map(async vault => {
 			// is this Vault iFarm?
 			const isIFarm =
 				vault.contract.address.toLowerCase() ===
 				'0x1571eD0bed4D987fe2b498DdBaE7DFA19519F651'.toLowerCase();
 
 			// a pool that has the same token as a vault
-			const vaultRelatedPool = pools.find(pool => {
+			const vaultRelatedPool = actualPools.find(pool => {
 				return vault.contract.address.toLowerCase() === pool.lpToken.address.toLowerCase();
 			});
 
@@ -234,7 +247,7 @@ export const getAssets = async (
 
 	const assetsFromVaultsPromises = getAssetsFromVaults();
 
-	const poolsWithoutVaults = pools.filter(pool => {
+	const poolsWithoutVaults = actualPools.filter(pool => {
 		return !vaults.find(vault => vault.contract.address === pool.lpToken.address);
 	});
 
