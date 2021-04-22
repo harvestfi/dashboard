@@ -131,8 +131,6 @@ function App() {
 		setState(prevState => ({
 			...prevState,
 			provider: undefined,
-			apy: 0,
-			farmPrice: 0,
 			totalFarmEarned: 0,
 			error: { message: null, type: null, display: false },
 			theme: window.localStorage.getItem('HarvestFinance:Theme'),
