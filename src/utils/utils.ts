@@ -185,7 +185,7 @@ export const getAssets = async (
 
 				const percentOfPool = ((vaultBalance / totalSupply) * 100).toFixed(6);
 
-				const underlyingBalance = prettyFarmBalance * prettyPricePerFullShare;
+				const underlyingBalance = prettyVaultBalance * prettyPricePerFullShare;
 
 				return {
 					name: vault.contract.name,
