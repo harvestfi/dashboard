@@ -24,7 +24,7 @@ const FarmInfo: React.FC<IProps> = ({ assets }) => {
 
 	const cellsData = [
 		{ value: prettyBalance(stakedBalance, baseCurrency), text: 'Staked Balance' },
-		{ value: state.apy, text: 'Profit Share APY' },
+		{ value: `${state.apy}%`, text: 'Profit Share APY' },
 		{ value: farmPriceValue, text: 'FARM price' },
 		{ value: '-', text: 'Personal Saved Gas' },
 		{ value: state.totalFarmEarned?.toFixed(6), text: 'Farm Earned' },
