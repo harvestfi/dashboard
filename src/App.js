@@ -1,22 +1,21 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { Row, Col } from 'styled-bootstrap-grid';
 import Loadable from 'react-loadable';
 import axios from 'axios';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import { TopTabs } from 'components';
 import ModeSelectBoard from './components/ModeSelectBoard';
 import HarvestContext from './Context/HarvestContext';
-import harvest from './lib';
 import { darkTheme, lightTheme } from './styles/appStyles';
-
+import { API } from './api';
 // images
 import logo from './assets/newLogo.png';
 // styles
 import { Topbar, GlobalStyle, Brand, Panel, Container } from './styles/AppJsStyles';
 
 // components
+import TabContainer from './components/tabContainer/TabContainer';
 import SettingsModal from './components/userSettings/SettingsModal';
 import Radio from './components/radio/Radio';
 import WelcomeText from './components/WelcomeText';
@@ -25,421 +24,287 @@ import TokenMessage from './components/statusMessages/TokenMessage';
 import HarvestAndStakeMessage from './components/statusMessages/HarvestAndStakeMessage';
 import Sidedrawer from './components/userSettings/sidedrawer/Sidedrawer';
 
-const { ethers } = harvest;
+import { getAssets } from './utils/utils';
 
 const web3Modal = new Web3Modal({
-  network: 'mainnet', // optional
-  cacheProvider: false, // optional
-  providerOptions: {
-    walletconnect: {
-      package: WalletConnectProvider, // required
-      options: {
-        infuraId: `${process.env.REACT_APP_INFURA_KEY}`, // required
-      },
-    },
-  },
+	network: 'mainnet', // optional
+	cacheProvider: false, // optional
+	providerOptions: {
+		walletconnect: {
+			package: WalletConnectProvider, // required
+			options: {
+				infuraId: `${process.env.REACT_APP_INFURA_KEY}`, // required
+			},
+		},
+	},
 });
 
 const ErrorModal = Loadable({
-  loader: () => import('./components/ErrorModal'),
-  loading() {
-    return null;
-  },
+	loader: () => import('./components/ErrorModal'),
+	loading() {
+		return null;
+	},
 });
 
 function App() {
-  // for currency conversion
-  const [baseCurrency, setBaseCurrency] = useState(
-    window.localStorage.getItem('HarvestFinance:currency') || 'USD',
-  );
-  const [exchangeRates, setExchangeRates] = useState({});
-  const [currentExchangeRate, setCurrentExchangeRate] = useState(1);
-  // for currency conversion
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const [settingsOpen, setSettingsOpen] = useState(false);
-  const [isConnecting, setIsConnecting] = useState(false);
-  const [isRefreshing, setRefreshing] = useState(false);
-  const [isCheckingBalance, setCheckingBalance] = useState(false);
-  const [tokenAddedMessage, setTokenAddedMessage] = useState('');
-  const [harvestAndStakeMessage, setHarvestAndStakeMessage] = useState({
-    first: '',
-    second: '',
-  });
-  const [addressToCheck, setAddressToCheck] = useState('');
-  const [state, setState] = useState({
-    provider: undefined,
-    signer: undefined,
-    manager: undefined,
-    address: '',
-    addressToCheck: '',
-    summaries: [],
-    underlyings: [],
-    usdValue: 0,
-    error: { message: null, type: null, display: false },
-    theme: window.localStorage.getItem('HarvestFinance:Theme'),
-    display: false,
-    minimumHarvestAmount: '0',
-    apy: 0,
-    farmPrice: 0,
-    totalFarmEarned: 0,
-  });
+	// states for user page
+	const [userAssets, setUserAssets] = useState([]);
+	const [userWalletAddress, setUserWalletAddress] = useState('');
+	const [showUserAssets, setShowUserAssets] = useState(false);
 
-  const getPools = async () => {
-    await axios
-      .get(`https://api-ui.harvest.finance/pools?key=${process.env.REACT_APP_HARVEST_KEY}`)
-      .then(res => {
-        let currentAPY = 0;
-        if (res && res.data && res.data.eth && res.data.eth[0] && res.data.eth[0].rewardAPY) {
-          currentAPY = res.data.eth[0].rewardAPY;
-        }
-        setState(prevState => ({ ...prevState, apy: currentAPY }));
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    axios
-      .get(
-        `${process.env.REACT_APP_ETH_PARSER_URL}/price/token/0xa0246c9032bC3A600820415aE600c6388619A14D`,
-      )
-      .then(res => {
-        const farmPrice = res.data.data;
-        setState(prevState => ({ ...prevState, farmPrice }));
-      });
-  };
+	// states for page of checking balance
+	const [assetsToCheck, setAssetsToCheck] = useState([]);
+	const [walletAddressToCheck, setWalletAddressToCheck] = useState('');
+	const [showAssetsToCheck, setShowAssetsToCheck] = useState(false);
+	const [displayFarmInfo, setDisplayFarmInfo] = useState(false);
 
-  const refresh = useCallback(() => {
-    setRefreshing(true);
+	// for currency conversion
+	const [baseCurrency, setBaseCurrency] = useState(
+		window.localStorage.getItem('HarvestFinance:currency') || 'USD',
+	);
+	const [exchangeRates, setExchangeRates] = useState({});
+	const [currentExchangeRate, setCurrentExchangeRate] = useState(1);
+	// for currency conversion
+	const [openDrawer, setOpenDrawer] = useState(false);
+	const [settingsOpen, setSettingsOpen] = useState(false);
+	const [isConnecting, setIsConnecting] = useState(false);
+	const [isCheckingBalance, setCheckingBalance] = useState(false);
+	const [tokenAddedMessage, setTokenAddedMessage] = useState('');
+	const [harvestAndStakeMessage, setHarvestAndStakeMessage] = useState({
+		first: '',
+		second: '',
+	});
 
-    let address = '';
+	const [state, setState] = useState({
+		provider: undefined,
+		error: { message: null, type: null, display: false },
+		theme: window.localStorage.getItem('HarvestFinance:Theme'),
+		minimumHarvestAmount: '0',
+		apy: 0,
+		farmPrice: 0,
+		totalFarmEarned: 0,
+	});
 
-    if (isCheckingBalance) {
-      address = state.addressToCheck;
-    } else if (isConnecting) {
-      address = state.address;
-    } else {
-      setRefreshing(false);
-      return;
-    }
+	const memoizeExchangeRates = () => {
+		axios
+			.get('https://api.ratesapi.io/api/latest?base=USD')
+			.then(res => {
+				setExchangeRates(res.data.rates);
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
 
-    state.manager
-      .aggregateUnderlyings(address)
-      .then(underlying => {
-        return underlying.toList().filter(u => !u.balance.isZero());
-      })
-      .then(underlyings => {
-        setState(prevState => ({ ...prevState, underlyings }));
-      })
-      .catch(err => {
-        console.log(err);
-      });
+	useEffect(() => {
+		const setAssets = async () => {
+			if (state.provider && userWalletAddress) {
+				const userAssetArray = await getAssets(userWalletAddress, state.provider);
+				setUserAssets(userAssetArray);
+				setShowUserAssets(true);
+			}
+		};
+		setAssets();
+	}, [state.provider, userWalletAddress]);
 
-    state.manager
-      .summary(address)
-      .then(summaries =>
-        summaries.filter(
-          p =>
-            !p.summary.earnedRewards.isZero() ||
-            !p.summary.stakedBalance.isZero() ||
-            (p.summary.isActive && !p.summary.unstakedBalance.isZero()),
-        ),
-      )
-      .then(summaries => {
-        let total = ethers.BigNumber.from(0);
-        summaries.forEach(pos => {
-          total = total.add(pos.summary.usdValueOf);
-        });
-        return Promise.all([state.manager.iFarmSummary(address), total, summaries]);
-      })
-      .then(([iFarmSummary, total, summaries]) => {
-        if (iFarmSummary) {
-          total = total.add(iFarmSummary.summary.usdValueOf);
-          summaries.unshift(iFarmSummary);
-        }
-        setState(prevState => ({
-          ...prevState,
-          summaries,
-          usdValue: total,
-        }));
-        setRefreshing(false);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, [isCheckingBalance, isConnecting, state.address, state.addressToCheck, state.manager]);
+	useEffect(() => {
+		const getPools = async () => {
+			const [APY, farmPrice] = await Promise.all([API.getAPY(), API.getFarmPrice()]);
+			setState(prevState => ({ ...prevState, apy: APY, farmPrice }));
+			setDisplayFarmInfo(true);
+		};
+		getPools();
+	}, []);
 
-  const memoizeExchangeRates = () => {
-    axios
-      .get('https://api.ratesapi.io/api/latest?base=USD')
-      .then(res => {
-        setExchangeRates(res.data.rates);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
+	useEffect(() => {
+		memoizeExchangeRates();
+		// eslint-disable-next-line
+	}, []);
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			memoizeExchangeRates();
+		}, 600000);
+		return () => clearTimeout(timer);
+	});
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (state.manager) {
-        refresh();
-      }
-    }, 20000);
-    return () => clearTimeout(timer);
-  });
+	const disconnect = () => {
+		setState(prevState => ({
+			...prevState,
+			provider: undefined,
+			totalFarmEarned: 0,
+			error: { message: null, type: null, display: false },
+			theme: window.localStorage.getItem('HarvestFinance:Theme'),
+		}));
+		setUserWalletAddress('');
+		setIsConnecting(false);
+		setUserAssets([]);
+		setShowUserAssets(false);
+		web3Modal.clearCachedProvider();
+	};
 
-  useEffect(() => {
-    if (isConnecting) {
-      refresh();
-    }
-  }, [isConnecting, refresh]);
+	const closeErrorModal = () => {
+		setState(prevState => ({
+			...prevState,
+			error: { message: null, type: null, display: false },
+		}));
+	};
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      getPools();
-    }, 20000);
-    return () => clearTimeout(timer);
-  });
+	const openModal = (message, type) => {
+		setState(prevState => ({
+			...prevState,
+			error: { message, type, display: true },
+		}));
+	};
 
-  useEffect(() => {
-    getPools();
-    memoizeExchangeRates();
-    // eslint-disable-next-line
-  }, []);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      memoizeExchangeRates();
-    }, 600000);
-    return () => clearTimeout(timer);
-  });
+	const toggleUserSettings = () => {
+		setSettingsOpen(!settingsOpen);
+	};
+	const toggleSideDrawer = () => {
+		setOpenDrawer(!openDrawer);
+	};
 
-  useEffect(() => {
-    if (state.address !== '') {
-      refresh();
-    }
-    // eslint-disable-next-line
-  }, [state.address]);
+	const setConnection = provider => {
+		setState(prevState => ({
+			...prevState,
+			provider,
+		}));
+	};
 
-  useEffect(() => {
-    if (state.addressToCheck !== '') {
-      refresh();
-    }
-    // eslint-disable-next-line
-  }, [state.addressToCheck]);
+	// Radio Modal
+	const [radio, setRadio] = useState(false);
 
-  useEffect(() => {
-    if (state.usdValue) {
-      setState(prevState => ({ ...prevState, display: true }));
-    }
-    // eslint-disable-next-line
-  }, [state.usdValue]);
+	const toggleRadio = () => {
+		setRadio(!radio);
+	};
 
-  const disconnect = () => {
-    setState(prevState => ({
-      ...prevState,
-      provider: undefined,
-      signer: undefined,
-      manager: undefined,
-      address: '',
-      summaries: [],
-      underlyings: [],
-      usdValue: 0,
-      apy: 0,
-      farmPrice: 0,
-      totalFarmEarned: 0,
-      error: { message: null, type: null, display: false },
-      theme: window.localStorage.getItem('HarvestFinance:Theme'),
-    }));
-    setIsConnecting(false);
-    web3Modal.clearCachedProvider();
-  };
+	const setCheckingBalanceStatus = checking => {
+		setState(prevState => ({
+			...prevState,
+			totalFarmEarned: 0,
+		}));
+		setCheckingBalance(checking);
+	};
 
-  const closeErrorModal = () => {
-    setState(prevState => ({
-      ...prevState,
-      error: { message: null, type: null, display: false },
-    }));
-  };
+	return (
+		<HarvestContext.Provider
+			value={{
+				setShowAssetsToCheck,
+				showAssetsToCheck,
+				showUserAssets,
+				walletAddressToCheck,
+				setWalletAddressToCheck,
+				userWalletAddress,
+				setUserWalletAddress,
+				setAssetsToCheck,
+				assetsToCheck,
+				displayFarmInfo,
+				userAssets,
+				state,
+				setState,
+				radio,
+				setRadio,
+				toggleRadio,
+				tokenAddedMessage,
+				setTokenAddedMessage,
+				isConnecting,
+				setIsConnecting,
+				isCheckingBalance,
+				setCheckingBalance: setCheckingBalanceStatus,
+				setConnection,
+				disconnect,
+				harvestAndStakeMessage,
+				setHarvestAndStakeMessage,
+				exchangeRates,
+				baseCurrency,
+				setBaseCurrency,
+				currentExchangeRate,
+				setCurrentExchangeRate,
+				settingsOpen,
+				toggleUserSettings,
+				openDrawer,
+				toggleSideDrawer,
+				web3Modal,
+			}}
+		>
+			<ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
+				<GlobalStyle />
+				{openDrawer ? <Sidedrawer /> : null}
 
-  const openModal = (message, type) => {
-    setState(prevState => ({
-      ...prevState,
-      error: { message, type, display: true },
-    }));
-  };
+				<Container>
+					<Row>
+						<Col col>
+							<Topbar>
+								<Brand>
+									<img src={logo} alt="harvest finance logo" />{' '}
+									{openDrawer ? '' : <span>harvest.dashboard</span>}
+								</Brand>
+								<i
+									onClick={toggleUserSettings}
+									onKeyUp={toggleUserSettings}
+									className="fas fa-user-cog"
+									role="button"
+									tabIndex="0"
+								/>
+								{settingsOpen ? <SettingsModal /> : ''}
+								<i
+									className="fas fa-bars"
+									onClick={toggleSideDrawer}
+									onKeyUp={toggleSideDrawer}
+									role="button"
+									tabIndex="0"
+								/>
+							</Topbar>
+						</Col>
+					</Row>
 
-  const toggleUserSettings = () => {
-    setSettingsOpen(!settingsOpen);
-  };
-  const toggleSideDrawer = () => {
-    setOpenDrawer(!openDrawer);
-  };
+					<Row>
+						<Col>
+							<>
+								{!isCheckingBalance && (
+									<>
+										<TabContainer />
+										<Panel>
+											<Radio />
 
-  const setConnection = (provider, signer, manager) => {
-    setState(prevState => ({
-      ...prevState,
-      provider,
-      signer,
-      manager,
-    }));
-  };
+											<TokenMessage />
+											<HarvestAndStakeMessage />
 
-  const setAddress = address => {
-    setState(prevState => ({ ...prevState, address }));
-  };
-
-  // Radio Modal
-  const [radio, setRadio] = useState(false);
-
-  const toggleRadio = () => {
-    setRadio(!radio);
-  };
-
-  // currency conversion helpers
-  const currencyFormatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: baseCurrency,
-  });
-
-  const prettyBalance = balance => {
-    return currencyFormatter.format(balance / 1000000);
-  };
-  const convertStandardNumber = num => {
-    return num ? currencyFormatter.format(num) : '$0.00';
-  };
-
-  const setCheckingBalanceStatus = checking => {
-    setState(prevState => ({
-      ...prevState,
-      summaries: [],
-      underlyings: [],
-      usdValue: 0,
-      apy: 0,
-      farmPrice: 0,
-      totalFarmEarned: 0,
-    }));
-    setCheckingBalance(checking);
-  };
-
-  return (
-    <HarvestContext.Provider
-      value={{
-        state,
-        setState,
-        radio,
-        setRadio,
-        toggleRadio,
-        tokenAddedMessage,
-        setTokenAddedMessage,
-        isRefreshing,
-        isConnecting,
-        setIsConnecting,
-        isCheckingBalance,
-        setCheckingBalance: setCheckingBalanceStatus,
-        setConnection,
-        disconnect,
-        refresh,
-        harvestAndStakeMessage,
-        setHarvestAndStakeMessage,
-        exchangeRates,
-        baseCurrency,
-        setBaseCurrency,
-        currentExchangeRate,
-        setCurrentExchangeRate,
-        currencyFormatter,
-        prettyBalance,
-        convertStandardNumber,
-        settingsOpen,
-        toggleUserSettings,
-        openDrawer,
-        toggleSideDrawer,
-        web3Modal,
-        addressToCheck,
-        setAddressToCheck,
-        getPools,
-      }}
-    >
-      <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
-        <GlobalStyle />
-        {openDrawer ? <Sidedrawer /> : null}
-
-        <Container>
-          <Row>
-            <Col col>
-              <Topbar>
-                <Brand>
-                  <img src={logo} alt="harvest finance logo" />{' '}
-                  {openDrawer ? '' : <span>harvest.dashboard</span>}
-                </Brand>
-                <i
-                  onClick={toggleUserSettings}
-                  onKeyUp={toggleUserSettings}
-                  className="fas fa-user-cog"
-                  role="button"
-                  tabIndex="0"
-                />
-                {settingsOpen ? <SettingsModal /> : ''}
-                <i
-                  className="fas fa-bars"
-                  onClick={toggleSideDrawer}
-                  onKeyUp={toggleSideDrawer}
-                  role="button"
-                  tabIndex="0"
-                />
-              </Topbar>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col>
-              <>
-                {isCheckingBalance ? (
-                  ''
-                ) : (
-                  <>
-                    <TopTabs />
-                    <Panel>
-                      <Radio />
-
-                      <TokenMessage />
-                      <HarvestAndStakeMessage />
-
-                      {state.provider ? (
-                        <ModeSelectBoard state={state} setState={setState} openModal={openModal} />
-                      ) : (
-                        <Row>
-                          <Col>
-                            <WelcomeText
-                              state={state}
-                              openModal={openModal}
-                              disconnect={disconnect}
-                              setConnection={setConnection}
-                              setAddress={setAddress}
-                              refresh={refresh}
-                            />
-                          </Col>
-                        </Row>
-                      )}
-                    </Panel>
-                  </>
-                )}
-              </>
-            </Col>
-          </Row>
-          {state.provider && !isConnecting && (
-            <Row>
-              <Col style={{ marginTop: '3rem', marginBottom: '3rem' }}>
-                {isCheckingBalance ? <TopTabs /> : ''}
-                <Panel>
-                  <CheckBalance state={state} />
-                </Panel>
-              </Col>
-            </Row>
-          )}
-        </Container>
-        <ErrorModal state={state} onClose={() => closeErrorModal()} />
-      </ThemeProvider>
-    </HarvestContext.Provider>
-  );
+											{state.provider ? (
+												<ModeSelectBoard state={state} setState={setState} />
+											) : (
+												<Row>
+													<Col>
+														<WelcomeText
+															state={state}
+															openModal={openModal}
+															disconnect={disconnect}
+															setConnection={setConnection}
+															setAddress={setUserWalletAddress}
+														/>
+													</Col>
+												</Row>
+											)}
+										</Panel>
+									</>
+								)}
+							</>
+						</Col>
+					</Row>
+					{state.provider && !isConnecting && (
+						<Row>
+							<Col style={{ marginTop: '3rem', marginBottom: '3rem' }}>
+								{isCheckingBalance ? <TabContainer /> : ''}
+								<Panel>
+									<CheckBalance state={state} />
+								</Panel>
+							</Col>
+						</Row>
+					)}
+				</Container>
+				<ErrorModal state={state} onClose={() => closeErrorModal()} />
+			</ThemeProvider>
+		</HarvestContext.Provider>
+	);
 }
 
 export default App;

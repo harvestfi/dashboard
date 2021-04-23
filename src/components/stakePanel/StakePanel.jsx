@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import styled, { ThemeProvider } from 'styled-components';
-import { darkTheme, lightTheme, fonts } from '../../styles/appStyles';
-import harvest from '../../lib/index.js';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { ethers } from 'ethers';
+
+import { fonts } from '../../styles/appStyles';
 
 // components
 import NoFarmModal from './NoFarmModal';
 
-const { ethers } = harvest;
 
 const Panel = styled.div`
   display: flex;
@@ -81,7 +81,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const StakePanel = ({ state, openModal, manager }) => {
+const StakePanel = ({ state, openModal }) => {
   const [modal, setModal] = useState({
     open: false,
     message: '',
@@ -149,11 +149,6 @@ const StakePanel = ({ state, openModal, manager }) => {
 
     checkForFarm(amount);
   };
-  const unstake = async () => {
-    await pool.exit().catch(e => {
-      console.log('insufficientBalance', e);
-    });
-  };
 
   const exitInactivePools = () => {
     state.manager.exitInactive();
@@ -168,7 +163,7 @@ const StakePanel = ({ state, openModal, manager }) => {
   };
 
   return (
-    <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
+    <>
       <Panel>
         <div className="panel-text">
           <p>
@@ -213,7 +208,7 @@ const StakePanel = ({ state, openModal, manager }) => {
         </ButtonContainer>
       </Panel>
       <NoFarmModal state={state} modal={modal} onClose={() => closeErrorModal()} />
-    </ThemeProvider>
+    </>
   );
 };
 

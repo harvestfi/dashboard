@@ -4,22 +4,21 @@ import MainContent from '../MainContent';
 import Button from '../Button';
 import HarvestContext from '../../Context/HarvestContext';
 
-export default function ModeSelectBoard({ state, setState, openModal }) {
-  const { isConnecting, setIsConnecting, getPools } = useContext(HarvestContext);
+export default function ModeSelectBoard({ state, setState }) {
+	const { isConnecting, setIsConnecting } = useContext(HarvestContext);
 
-  const onGoDashboard = () => {
-    setIsConnecting(true);
-    getPools();
-  };
+	const onGoDashboard = () => {
+		setIsConnecting(true);
+	};
 
-  return isConnecting ? (
-    <MainContent state={state} setState={setState} openModal={openModal} />
-  ) : (
-    <div className="mode-select-container">
-      <Panel className="mode-select-user">
-        <h1>Check your farming status</h1>
-        <Button onClick={onGoDashboard}>Go to user dashboard</Button>
-      </Panel>
-    </div>
-  );
+	return isConnecting ? (
+		<MainContent state={state} setState={setState} />
+	) : (
+		<div className="mode-select-container">
+			<Panel className="mode-select-user">
+				<h1>Check your farming status</h1>
+				<Button onClick={onGoDashboard}>Go to user dashboard</Button>
+			</Panel>
+		</div>
+	);
 }
