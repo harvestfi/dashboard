@@ -158,7 +158,7 @@ const FarmingTable: React.FC<IProps> = ({ display, assets, currentExchangeRate }
 										<div className="active">{asset.earnFarm.toString()}</div>
 										<div
 											className="earned-rewards"
-											//TODO: implements it
+											// TODO: implements it
 											// onKeyUp={() => getThisReward(summary.earnedRewards)}
 											// onClick={() => getThisReward(summary.earnedRewards)}
 											role="button"
