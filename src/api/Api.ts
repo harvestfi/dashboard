@@ -42,7 +42,7 @@ export class API {
 	}
 
 	// TODO: remove, move to getAssets-method who gets farm-price
-	static async getFarmPrice(): Promise<any> {
+	static async getFarmPrice(): Promise<number> {
 		const response = await axios
 			.get(
 				`${process.env.REACT_APP_ETH_PARSER_URL}/price/token/0xa0246c9032bC3A600820415aE600c6388619A14D`,
