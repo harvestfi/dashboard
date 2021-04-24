@@ -167,7 +167,7 @@ const FarmingTable: React.FC<IProps> = ({ display, assets, currentExchangeRate }
 											{asset.farmToClaim.toFixed(6)}
 										</div>
 										<div className="staked">{asset.stakedBalance.toFixed(6)}</div>
-										<div className="pool">{asset.percentOfPool}</div>
+										<div className="pool">{`${asset.percentOfPool.toFixed(6)}%`}</div>
 										<div className="underlying">{asset.underlyingBalance.toFixed(6)}</div>
 										<div className="value">{(asset.value * currentExchangeRate).toFixed(2)}</div>
 										<div className="unstaked">{asset.unstakedBalance.toFixed(6)}</div>
