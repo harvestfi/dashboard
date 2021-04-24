@@ -42,7 +42,7 @@ export interface IAssetsInfo {
 	earnFarm: boolean;
 	farmToClaim: number;
 	stakedBalance: number;
-	percentOfPool: string;
+	percentOfPool: number;
 	value: number;
 	unstakedBalance: number;
 	address: string;

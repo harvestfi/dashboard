@@ -112,7 +112,7 @@ export const getAssets = async (
 			? intRewardTokenBalance
 			: intRewardTokenBalance * prettyRewardPricePerFullShare;
 
-		const percentOfPool = `${((poolBalance * 100) / poolTotalSupply).toFixed(6)}%`;
+		const percentOfPool = (poolBalance * 100) / poolTotalSupply;
 
 		/** All account assets that contains in the pool are in USD */
 		const calcValue = () => {
@@ -138,7 +138,7 @@ export const getAssets = async (
 		};
 	};
 
-	const getAssetsFromVaults = () => {
+	const getAssetsFromVaults = (): Promise<IAssetsInfo>[] => {
 		return actualVaults.map(async vault => {
 			// is this Vault iFarm?
 			const isIFarm =
@@ -183,7 +183,7 @@ export const getAssets = async (
 				const value =
 					(prettyUnderlyingBalanceWithInvestmentForHolder * farmPrice) / 10 ** vault.decimals;
 
-				const percentOfPool = ((vaultBalance / totalSupply) * 100).toFixed(6);
+				const percentOfPool = (vaultBalance / totalSupply) * 100;
 
 				const underlyingBalance = prettyVaultBalance * prettyPricePerFullShare;
 
@@ -192,7 +192,7 @@ export const getAssets = async (
 					earnFarm: true,
 					farmToClaim: 0,
 					stakedBalance: prettyVaultBalance,
-					percentOfPool: `${percentOfPool}%`,
+					percentOfPool,
 					value,
 					unstakedBalance: prettyFarmBalance,
 					address: vault.contract.address,
@@ -211,12 +211,14 @@ export const getAssets = async (
 				const prettyVaultBalance = parseInt(vaultBalance._hex, 16) / 10 ** vault.decimals;
 				const prettyFarmBalance = parseInt(farmBalance._hex, 16) / 10 ** farmDecimals;
 
+				const percentOfPool = 0;
+
 				return {
 					name: vault.contract.name,
 					earnFarm: !vaultsWithoutReward.has(vault.contract.name),
 					farmToClaim: 0,
 					stakedBalance: prettyVaultBalance,
-					percentOfPool: `${0}%`,
+					percentOfPool,
 					value: 0,
 					unstakedBalance: prettyFarmBalance,
 					address: vault.contract.address,
@@ -229,14 +231,14 @@ export const getAssets = async (
 				vaultContract.totalSupply(),
 			]);
 			const vaultBalanceIntNumber = parseInt(vaultBalance._hex, 16) / 10 ** vault.decimals;
-			const percentOfPool = totalSupply ? ((vaultBalance / totalSupply) * 100).toFixed(6) : 0;
+			const percentOfPool = totalSupply ? (vaultBalance / totalSupply) * 100 : 0;
 
 			return {
 				name: vault.contract.name,
 				earnFarm: !vaultsWithoutReward.has(vault.contract.name),
 				farmToClaim: 0,
 				stakedBalance: 0,
-				percentOfPool: `${percentOfPool}%`,
+				percentOfPool,
 				value: 0,
 				unstakedBalance: vaultBalanceIntNumber,
 				address: vault.contract.address,
