@@ -27,7 +27,9 @@ const FarmInfo: React.FC<IProps> = ({ assets }) => {
 		{ value: `${state.apy}%`, text: 'Profit Share APY' },
 		{ value: farmPriceValue, text: 'FARM price' },
 		{ value: '-', text: 'Personal Saved Gas' },
-		{ value: state.totalFarmEarned?.toFixed(6), text: 'Farm Earned' },
+		// TODO: fix 'farm earned'
+		// { value: state.totalFarmEarned?.toFixed(6), text: 'Farm Earned' },
+		{ value: '-', text: 'Farm Earned' },
 	];
 
 	const Cells = cellsData.map(item => {
