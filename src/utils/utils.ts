@@ -71,7 +71,8 @@ export const getAssets = async (
 		 * rewardTokenPrice - the price are in USD (for FARM or iFARM)
 		 * reward - reward of a wallet in the pool
 		 * poolTotalSupply - the total number of tokens in the pool of all participants
-		 * rewardPrice = iFARMPrice / (farmPrice * 10 ** rewardDecimals)
+		 * rewardPricePerFullShare = (iFARMPrice / farmPrice) * 10 ** rewardDecimals
+		 * pricePerFullShareLpToken = (nativeToken / fToken ) * 10 ** lpTokenDecimals
 		 */
 		const [
 			lpTokenBalance,
@@ -92,14 +93,14 @@ export const getAssets = async (
 			poolContract.totalSupply(),
 			rewardIsFarm ? null : iFarmRewardPool.getPricePerFullShare(),
 			relatedVault ? lpTokenContract.getPricePerFullShare() : null,
-			relatedVault ? Promise.resolve(relatedVault.decimals) : lpTokenContract.decimals(),
+			relatedVault ? relatedVault.decimals : lpTokenContract.decimals(),
 		]);
 
 		const lpTokenBalanceIntNumber = parseInt(lpTokenBalance._hex, 16) / 10 ** lpTokenDecimals;
 		const poolBalanceIntNumber = parseInt(poolBalance._hex, 16) / 10 ** lpTokenDecimals;
 
 		const prettyPricePerFullShareLpToken = relatedVault
-			? parseInt(pricePerFullShareLpToken._hex, 16) / 10 ** farmDecimals
+			? parseInt(pricePerFullShareLpToken._hex, 16) / 10 ** lpTokenDecimals
 			: 1;
 
 		const prettyRewardPricePerFullShare = rewardIsFarm
