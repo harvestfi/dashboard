@@ -27,3 +27,5 @@ scripts/*.json
 node_modules
 dist
 .env
+.history
+storybook-static

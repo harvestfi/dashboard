@@ -5,3 +5,4 @@ src/assets/*
 src/styles/*
 src/serviceWorker.js
 src/setupTests.js
+.history
