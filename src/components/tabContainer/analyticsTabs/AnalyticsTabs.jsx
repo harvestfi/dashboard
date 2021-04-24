@@ -1,17 +1,17 @@
-import React, { useContext } from "react";
-import HarvestContext from "../../../Context/HarvestContext";
-import { AnalyticsContainer } from "./AnalyticsTabsStyles";
+import React, { useContext } from 'react'
+import HarvestContext from '../../../Context/HarvestContext'
+import { AnalyticsContainer } from './AnalyticsTabsStyles'
 
-import { PanelTab } from "../TabContainerStyles";
+import { PanelTab } from '../TabContainerStyles'
 const AnalyticsTabs = ({ showAnalytics, setShowAnalytics }) => {
-  const { state } = useContext(HarvestContext);
+  const { state } = useContext(HarvestContext)
   return (
     <AnalyticsContainer onMouseLeave={() => setShowAnalytics(false)}>
       <PanelTab
         className={
           showAnalytics
-            ? "analytics-tab unfolded unfolded-first"
-            : "analytics-tab folded first"
+            ? 'analytics-tab unfolded unfolded-first'
+            : 'analytics-tab folded first'
         }
       >
         <a
@@ -26,8 +26,8 @@ const AnalyticsTabs = ({ showAnalytics, setShowAnalytics }) => {
       <PanelTab
         className={
           showAnalytics
-            ? "analytics-tab unfolded unfolded-second"
-            : "analytics-tab folded second"
+            ? 'analytics-tab unfolded unfolded-second'
+            : 'analytics-tab folded second'
         }
       >
         <a
@@ -42,8 +42,8 @@ const AnalyticsTabs = ({ showAnalytics, setShowAnalytics }) => {
       <PanelTab
         className={
           showAnalytics
-            ? "analytics-tab unfolded unfolded-third"
-            : "analytics-tab folded third"
+            ? 'analytics-tab unfolded unfolded-third'
+            : 'analytics-tab folded third'
         }
       >
         <a
@@ -55,24 +55,26 @@ const AnalyticsTabs = ({ showAnalytics, setShowAnalytics }) => {
           Profit calculator
         </a>
       </PanelTab>
-      {state.address ? <PanelTab
-        className={
-          showAnalytics
-            ? "analytics-tab unfolded unfolded-fourth"
-            : "analytics-tab folded fourth"
-        }
-      >
-        <a
-          className="analyti-link"
-          href={`https://farmdashboard.xyz/history/${state.address}`}
-          target="_blank"
-          rel="noopener noreferrer"
+      {state.address ? (
+        <PanelTab
+          className={
+            showAnalytics
+              ? 'analytics-tab unfolded unfolded-fourth'
+              : 'analytics-tab folded fourth'
+          }
         >
-          Address history
-        </a>
-      </PanelTab> : null}
+          <a
+            className="analyti-link"
+            href={`https://farmdashboard.xyz/history/${state.address}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Address history
+          </a>
+        </PanelTab>
+      ) : null}
     </AnalyticsContainer>
-  );
-};
+  )
+}
 
-export default AnalyticsTabs;
+export default AnalyticsTabs

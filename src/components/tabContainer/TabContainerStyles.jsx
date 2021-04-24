@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { fonts } from "../../styles/appStyles";
+import styled from 'styled-components'
+import { fonts } from '../../styles/appStyles'
 
 export const PanelTab = styled.div`
   margin-right: 0.75rem;
@@ -48,8 +48,6 @@ export const PanelTab = styled.div`
     }
   }
 
-  
-
   &.radio-tab {
     position: relative;
     font-size: 1.9rem;
@@ -87,19 +85,19 @@ export const PanelTab = styled.div`
       display: none;
     }
   }
-`;
+`
 
 export const PanelTabContainer = styled.div`
   display: flex;
   justify-content: space-between;
-`;
+`
 
 export const PanelTabContainerLeft = styled.div`
   display: flex;
   justify-content: flex-start;
-`;
+`
 
 export const PanelTabContainerRight = styled.div`
   display: flex;
   justify-content: flex-end;
-`;
+`

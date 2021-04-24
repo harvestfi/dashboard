@@ -1,6 +1,6 @@
-import React from "react";
-import styled, { css, ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme, fonts } from "../styles/appStyles";
+import React from 'react'
+import styled, { css, ThemeProvider } from 'styled-components'
+import { darkTheme, lightTheme, fonts } from '../styles/appStyles'
 
 const Container = styled.div`
   ${({ isOpen }) => {
@@ -18,14 +18,14 @@ const Container = styled.div`
         align-items: center;
         justify-content: center;
         overflow: hidden;
-      `;
+      `
     } else {
       return css`
         display: none;
-      `;
+      `
     }
   }}
-`;
+`
 
 const Inner = styled.div`
   background-color: ${(props) => props.theme.style.wikiTabBackground};
@@ -51,7 +51,7 @@ const Inner = styled.div`
     font-family: ${fonts.contentFont};
     margin-bottom: 0;
   }
-`;
+`
 
 const CloseIcon = styled.span`
   position: absolute;
@@ -67,10 +67,10 @@ const CloseIcon = styled.span`
       top: 1.5px;
     }
   }
-`;
+`
 
 const ErrorModal = ({ state, onClose }) => (
-  <ThemeProvider theme={state.theme === "dark" ? darkTheme : lightTheme}>
+  <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
     <Container isOpen={state.error.display}>
       <Inner>
         <h4 className="error-title">Whoa, partner!</h4>
@@ -81,6 +81,6 @@ const ErrorModal = ({ state, onClose }) => (
       </Inner>
     </Container>
   </ThemeProvider>
-);
+)
 
-export default ErrorModal;
+export default ErrorModal

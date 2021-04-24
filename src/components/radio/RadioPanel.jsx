@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { fonts } from "../../styles/appStyles";
-import AudioSpectrum from "react-audio-spectrum";
-import sample from "../../assets/audio/HarvestRadio.mp3";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { fonts } from '../../styles/appStyles'
+import AudioSpectrum from 'react-audio-spectrum'
+import sample from '../../assets/audio/HarvestRadio.mp3'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const RadioPlayer = styled.div`
   display: flex;
@@ -56,21 +56,21 @@ const RadioPlayer = styled.div`
     width: 10rem;
     height: ;
   }
-`;
+`
 
 const RadioPanel = () => {
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(true)
 
   const togglePlaying = () => {
-    let audioElement = document.getElementById("audio-element");
+    let audioElement = document.getElementById('audio-element')
     if (playing) {
-      audioElement.pause();
-      setPlaying(false);
+      audioElement.pause()
+      setPlaying(false)
     } else {
-      audioElement.play();
-      setPlaying(true);
+      audioElement.play()
+      setPlaying(true)
     }
-  };
+  }
 
   return (
     <AnimatePresence exitBeforeEnter>
@@ -87,15 +87,15 @@ const RadioPanel = () => {
               id="audio-canvas"
               height={50}
               width={250}
-              audioId={"audio-element"}
-              capColor={"red"}
+              audioId={'audio-element'}
+              capColor={'red'}
               capHeight={2}
               meterWidth={15}
               meterCount={12}
               meterColor={[
-                { stop: 0, color: "#f00" },
-                { stop: 0.5, color: "#0CD7FD" },
-                { stop: 1, color: "red" },
+                { stop: 0, color: '#f00' },
+                { stop: 0.5, color: '#0CD7FD' },
+                { stop: 1, color: 'red' },
               ]}
               gap={6}
             />
@@ -114,7 +114,7 @@ const RadioPanel = () => {
         </RadioPlayer>
       </motion.div>
     </AnimatePresence>
-  );
-};
+  )
+}
 
-export default RadioPanel;
+export default RadioPanel

@@ -1,4 +1,4 @@
-import './ModeSelectBoard.scss';
-import ModeSelectBoard from './ModeSelectBoard';
+import './ModeSelectBoard.scss'
+import ModeSelectBoard from './ModeSelectBoard'
 
-export default ModeSelectBoard;
+export default ModeSelectBoard

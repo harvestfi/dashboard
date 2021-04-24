@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { fonts } from "../../styles/appStyles";
+import styled from 'styled-components'
+import { fonts } from '../../styles/appStyles'
 
 export const UserSettings = styled.div`
   z-index: 200;
@@ -14,11 +14,11 @@ export const UserSettings = styled.div`
   .title {
     font-size: 2rem;
   }
-  
-  @media(max-width: 1160px) {
+
+  @media (max-width: 1160px) {
     display: none;
   }
-`;
+`
 
 export const CloseIcon = styled.span`
   position: absolute;
@@ -34,4 +34,4 @@ export const CloseIcon = styled.span`
       top: 1.5px;
     }
   }
-`;
+`
