@@ -5,7 +5,7 @@ DEPLOY_CURRENT_COMMIT=$(git rev-parse HEAD)
 
 git checkout main && \
 git fetch origin && \
-yarn build && \
+npm run build && \
 
 git checkout -b tmp-gh-pages && \
 git add -f ./build && \

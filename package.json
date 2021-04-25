@@ -5,7 +5,7 @@
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
     "start": "webpack-dev-server --mode development --open --hot",
-    "predeploy": "yarn run build",
+    "predeploy": "npm run build",
     "deploy": "./deploy.sh",
     "prettier": "prettier --write .",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix --max-warnings 0",
