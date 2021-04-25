@@ -22,6 +22,7 @@ const MainContent = ({ setState }) => {
 		showAssetsToCheck,
 		disconnect,
 		currentExchangeRate,
+		baseCurrency,
 	} = useContext(HarvestContext);
 
 	const assets = isCheckingBalance ? assetsToCheck : userAssets;
@@ -62,6 +63,7 @@ const MainContent = ({ setState }) => {
 							currentExchangeRate={currentExchangeRate}
 							display={showAssetsToCheck}
 							assets={assets}
+							baseCurrency={baseCurrency}
 						/>
 					</Col>
 				</Row>
@@ -71,6 +73,7 @@ const MainContent = ({ setState }) => {
 						currentExchangeRate={currentExchangeRate}
 						display={showUserAssets}
 						assets={assets}
+						baseCurrency={baseCurrency}
 					/>
 				</Col>
 			)}
