@@ -327,7 +327,7 @@ export const getAssets = async (
   return nonZeroAssets
 }
 
-export const prettyEthAddress = (address) => {
+export const prettyEthAddress = (address: string) => {
   if (address && address.length === 42) {
     address = `${address.substring(0, 6)}...${address.substring(42, 38)}`
   }
