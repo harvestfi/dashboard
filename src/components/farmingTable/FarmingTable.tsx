@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { fonts } from '../../styles/appStyles'
 import { IAssetsInfo } from '../../types'
+import { prettyBalance } from '../../utils/utils'
 import {
   TableContainer,
   MainTableInner,
@@ -18,6 +19,7 @@ interface IProps {
   display: boolean
   assets: IAssetsInfo[]
   currentExchangeRate: number
+  baseCurrency: string
 }
 
 // const { utils } = harvest;
@@ -53,6 +55,7 @@ export const FarmingTable: React.FC<IProps> = ({
   display,
   assets,
   currentExchangeRate,
+  baseCurrency,
 }) => {
   // TODO: implement sorting on the table and remove the commented out code
 
@@ -112,6 +115,35 @@ export const FarmingTable: React.FC<IProps> = ({
   //   }
   // }, [setState, state.summaries]);
 
+  const assetRows = assets.map((asset) => {
+    const prettyValue = prettyBalance(
+      Number((asset.value * currentExchangeRate).toFixed(2)),
+      baseCurrency,
+    )
+
+    return (
+      <MainTableRow key={asset.address}>
+        <div className="name">{asset.name}</div>
+        <div className="active">{asset.earnFarm.toString()}</div>
+        <div
+          className="earned-rewards"
+          // TODO: implements it
+          // onKeyUp={() => getThisReward(summary.earnedRewards)}
+          // onClick={() => getThisReward(summary.earnedRewards)}
+          role="button"
+          tabIndex={0}
+        >
+          {asset.farmToClaim.toFixed(6)}
+        </div>
+        <div className="staked">{asset.stakedBalance.toFixed(6)}</div>
+        <div className="pool">{`${asset.percentOfPool.toFixed(6)}%`}</div>
+        <div className="underlying">{asset.underlyingBalance.toFixed(6)}</div>
+        <div className="value">{prettyValue}</div>
+        <div className="unstaked">{asset.unstakedBalance.toFixed(6)}</div>
+      </MainTableRow>
+    )
+  })
+
   return (
     <>
       {display && (
@@ -145,6 +177,7 @@ export const FarmingTable: React.FC<IProps> = ({
                     <div
                       className={`${col.name} table-header`}
                       key={col.name}
+                      // TODO: implement sorting
                       // onKeyUp={() => sortSummary(col, i)}
                       // onClick={() => sortSummary(col, i)}
                       role="button"
@@ -155,39 +188,7 @@ export const FarmingTable: React.FC<IProps> = ({
                   )
                 })}
               </MainTableHeader>
-              {assets.map((asset) => {
-                return (
-                  <MainTableRow key={asset.address}>
-                    <div className="name">{asset.name}</div>
-                    <div className="active">{asset.earnFarm.toString()}</div>
-                    <div
-                      className="earned-rewards"
-                      // TODO: implements it
-                      // onKeyUp={() => getThisReward(summary.earnedRewards)}
-                      // onClick={() => getThisReward(summary.earnedRewards)}
-                      role="button"
-                      tabIndex={0}
-                    >
-                      {asset.farmToClaim.toFixed(6)}
-                    </div>
-                    <div className="staked">
-                      {asset.stakedBalance.toFixed(6)}
-                    </div>
-                    <div className="pool">{`${asset.percentOfPool.toFixed(
-                      6,
-                    )}%`}</div>
-                    <div className="underlying">
-                      {asset.underlyingBalance.toFixed(6)}
-                    </div>
-                    <div className="value">
-                      {(asset.value * currentExchangeRate).toFixed(2)}
-                    </div>
-                    <div className="unstaked">
-                      {asset.unstakedBalance.toFixed(6)}
-                    </div>
-                  </MainTableRow>
-                )
-              })}
+              {assetRows}
             </MainTableInner>
           )}
         </TableContainer>

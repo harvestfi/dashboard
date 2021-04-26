@@ -10,7 +10,7 @@ import { FarmInfo } from './farmInfo/FarmInfo'
 import { HarvestContext } from '../Context/HarvestContext'
 
 // TODO split into two pages: user page and check balance page
-const MainContent = ({ setState }) => {
+export const MainContent = ({ setState }) => {
   const {
     isCheckingBalance,
     state,
@@ -22,6 +22,7 @@ const MainContent = ({ setState }) => {
     showAssetsToCheck,
     disconnect,
     currentExchangeRate,
+    baseCurrency,
   } = useContext(HarvestContext)
 
   const assets = isCheckingBalance ? assetsToCheck : userAssets
@@ -50,7 +51,7 @@ const MainContent = ({ setState }) => {
       {/* {!isCheckingBalance && ( // // TODO: return this buttons and fixed their
 				<Row style={{ marginTop: '15px' }}>
 					{/* Git hub pages would not recognize the margin from the bootstrap grid */}
-      {/*<Col lg="12"> 
+      {/* <Col lg="12"> 
 						<Harvest state={state} setState={setState} />
 					</Col>
 				</Row>
@@ -62,6 +63,7 @@ const MainContent = ({ setState }) => {
               currentExchangeRate={currentExchangeRate}
               display={showAssetsToCheck}
               assets={assets}
+              baseCurrency={baseCurrency}
             />
           </Col>
         </Row>
@@ -71,6 +73,7 @@ const MainContent = ({ setState }) => {
             currentExchangeRate={currentExchangeRate}
             display={showUserAssets}
             assets={assets}
+            baseCurrency={baseCurrency}
           />
         </Col>
       )}
@@ -86,8 +89,6 @@ const MainContent = ({ setState }) => {
     </Main>
   )
 }
-
-export default MainContent
 
 const Main = styled.div`
   .farm-info {
