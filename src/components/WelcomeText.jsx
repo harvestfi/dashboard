@@ -68,7 +68,12 @@ const WelcomeTextPanel = styled.div`
   }
 `
 
-const WelcomeText = ({ disconnect, setAddress, setConnection, openModal }) => {
+export const WelcomeText = ({
+  disconnect,
+  setAddress,
+  setConnection,
+  openModal,
+}) => {
   const {
     setIsConnecting,
     setCheckingBalance,
@@ -152,5 +157,3 @@ const WelcomeText = ({ disconnect, setAddress, setConnection, openModal }) => {
     </WelcomeTextPanel>
   )
 }
-
-export default WelcomeText

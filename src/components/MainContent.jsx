@@ -11,7 +11,7 @@ import { HarvestContext } from '../Context/HarvestContext'
 import { API } from '@/api'
 
 // TODO split into two pages: user page and check balance page
-const MainContent = ({ setState }) => {
+export const MainContent = ({ setState }) => {
   const {
     isCheckingBalance,
     state,
@@ -24,6 +24,7 @@ const MainContent = ({ setState }) => {
     disconnect,
     currentExchangeRate,
     walletAddressToCheck,
+    baseCurrency,
   } = useContext(HarvestContext)
 
   const [personalGasSavedInfo, setPersonalGasSavedInfo] = useState(0)
@@ -79,6 +80,7 @@ const MainContent = ({ setState }) => {
               currentExchangeRate={currentExchangeRate}
               display={showAssetsToCheck}
               assets={assets}
+              baseCurrency={baseCurrency}
             />
           </Col>
         </Row>
@@ -88,6 +90,7 @@ const MainContent = ({ setState }) => {
             currentExchangeRate={currentExchangeRate}
             display={showUserAssets}
             assets={assets}
+            baseCurrency={baseCurrency}
           />
         </Col>
       )}
@@ -103,8 +106,6 @@ const MainContent = ({ setState }) => {
     </Main>
   )
 }
-
-export default MainContent
 
 const Main = styled.div`
   .farm-info {

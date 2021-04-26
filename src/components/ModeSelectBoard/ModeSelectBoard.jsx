@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import { Panel } from '../../styles/AppJsStyles'
-import MainContent from '../MainContent'
+import { MainContent } from '../MainContent'
 import Button from '../Button'
 import { HarvestContext } from '../../Context/HarvestContext'
 
-export default function ModeSelectBoard({ state, setState }) {
+export function ModeSelectBoard({ state, setState }) {
   const { isConnecting, setIsConnecting } = useContext(HarvestContext)
 
   const onGoDashboard = () => {
