@@ -25,3 +25,6 @@ export const outdatedPools = new Set<string>([
   '0x59258f4e15a5fc74a7284055a8094f58108dbd4f',
   '0x8f5adc58b32d4e5ca02eac0e293d35855999436c',
 ])
+
+export const contractForGettingPrices =
+  '0x48dc32eca58106f06b41de514f29780ffa59c279'

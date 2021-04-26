@@ -109,6 +109,7 @@ export function App() {
         const userAssetArray = await getAssets(
           userWalletAddress,
           state.provider,
+          state.farmPrice,
         )
         setUserAssets(userAssetArray)
         setShowUserAssets(true)
@@ -118,15 +119,12 @@ export function App() {
   }, [state.provider, userWalletAddress])
 
   useEffect(() => {
-    const getPools = async () => {
-      const [APY, farmPrice] = await Promise.all([
-        API.getAPY(),
-        API.getFarmPrice(),
-      ])
-      setState((prevState) => ({ ...prevState, apy: APY, farmPrice }))
+    const getAPY = async () => {
+      const [APY] = await Promise.all([API.getAPY()])
+      setState((prevState) => ({ ...prevState, apy: APY }))
       setDisplayFarmInfo(true)
     }
-    getPools()
+    getAPY()
   }, [])
 
   useEffect(() => {
