@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { fonts } from '../../styles/appStyles'
-import HarvestContext from '../../Context/HarvestContext'
+import { HarvestContext } from '../../Context/HarvestContext'
 
 import { motion } from 'framer-motion'
 

@@ -5,9 +5,9 @@ import { fonts } from '../styles/appStyles'
 import Harvest from './harvest/Harvest'
 import AddTokens from './addTokens/AddTokens'
 import Wallet from './Wallet'
-import FarmingTable from './farmingTable/FarmingTable'
-import FarmInfo from './farmInfo/FarmInfo'
-import HarvestContext from '../Context/HarvestContext'
+import { FarmingTable } from './farmingTable/FarmingTable'
+import { FarmInfo } from './farmInfo/FarmInfo'
+import { HarvestContext } from '../Context/HarvestContext'
 
 // TODO split into two pages: user page and check balance page
 const MainContent = ({ setState }) => {

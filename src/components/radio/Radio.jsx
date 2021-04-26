@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import HarvestContext from '../../Context/HarvestContext'
+import { HarvestContext } from '../../Context/HarvestContext'
 import styled from 'styled-components'
 import ReactModal from 'react-modal-resizable-draggable'
 import { fonts } from '../../styles/appStyles'

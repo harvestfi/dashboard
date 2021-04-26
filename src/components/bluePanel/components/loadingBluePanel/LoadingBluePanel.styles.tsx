@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const LoadingBluePanel = styled.div`
+export const LoadingBluePanel = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,5 +38,3 @@ const LoadingBluePanel = styled.div`
     height: 10rem;
   }
 `
-
-export default LoadingBluePanel

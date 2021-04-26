@@ -12,7 +12,7 @@ import Radio from '../radio/Radio'
 import Wallet from '../Wallet'
 
 // CONTEXT
-import HarvestContext from '../../Context/HarvestContext'
+import { HarvestContext } from '../../Context/HarvestContext'
 
 import { getAssets } from '../../utils/utils'
 

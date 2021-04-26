@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 
 import HarvestContext from '../../Context/HarvestContext'
 import Container from './FarmInfoStyles'
-import BluePanel from '../bluePanel/BluePanel'
-import LoadingBluePanel from '../bluePanel/components/loadingBluePanel/LoadingBluePanel.styles'
+import { BluePanel } from '../bluePanel/BluePanel'
+import { LoadingBluePanel } from '../bluePanel/components/loadingBluePanel/LoadingBluePanel.styles'
 import { IAssetsInfo } from '../../types'
 import { prettyBalance, convertStandardNumber } from '../../utils/utils'
 
@@ -11,7 +11,7 @@ interface IProps {
   assets: IAssetsInfo[]
 }
 
-const FarmInfo: React.FC<IProps> = ({ assets }) => {
+export const FarmInfo: React.FC<IProps> = ({ assets }) => {
   const {
     state,
     currentExchangeRate,
@@ -53,5 +53,3 @@ const FarmInfo: React.FC<IProps> = ({ assets }) => {
 
   return <Container>{Cells}</Container>
 }
-
-export default FarmInfo

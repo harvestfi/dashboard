@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Wrapper as BluePanelWrapper } from '../../components/bluePanel/BluePanel.styles'
-import LoadingBluePanel from '../../components/bluePanel/components/loadingBluePanel/LoadingBluePanel.styles'
+import { LoadingBluePanel } from '../../components/bluePanel/components/loadingBluePanel/LoadingBluePanel.styles'
 
 const Container = styled.div`
   width: 100%;

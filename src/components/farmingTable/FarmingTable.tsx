@@ -49,7 +49,7 @@ const columns = [
   },
 ]
 
-const FarmingTable: React.FC<IProps> = ({
+export const FarmingTable: React.FC<IProps> = ({
   display,
   assets,
   currentExchangeRate,
@@ -197,8 +197,6 @@ const FarmingTable: React.FC<IProps> = ({
     </>
   )
 }
-
-export default FarmingTable
 
 const NoAssetTable = styled.div`
   display: flex;

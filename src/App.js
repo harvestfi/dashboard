@@ -6,7 +6,7 @@ import axios from 'axios'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import ModeSelectBoard from './components/ModeSelectBoard'
-import HarvestContext from './Context/HarvestContext'
+import { HarvestContext } from './Context/HarvestContext'
 import { darkTheme, lightTheme } from './styles/appStyles'
 import { API } from './api'
 // images
@@ -52,7 +52,7 @@ const ErrorModal = Loadable({
   },
 })
 
-function App() {
+export function App() {
   // states for user page
   const [userAssets, setUserAssets] = useState([])
   const [userWalletAddress, setUserWalletAddress] = useState('')
@@ -98,6 +98,7 @@ function App() {
         setExchangeRates(res.data.rates)
       })
       .catch((err) => {
+        // eslint-disable-next-line no-console
         console.log(err)
       })
   }
@@ -318,5 +319,3 @@ function App() {
     </HarvestContext.Provider>
   )
 }
-
-export default App

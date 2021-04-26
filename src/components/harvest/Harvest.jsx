@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 // import { ethers } from 'ethers';
-import HarvestContext from '../../Context/HarvestContext'
+import { HarvestContext } from '../../Context/HarvestContext'
 import { fonts } from '../../styles/appStyles'
 
 const Harvest = () => {

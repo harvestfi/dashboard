@@ -8,7 +8,7 @@
     "predeploy": "npm run build",
     "deploy": "./deploy.sh",
     "prettier": "prettier --write .",
-    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix --max-warnings 0",
+    "lint": "eslint src/**/*.{js,ts,tsx} --quiet --fix --max-warnings 0",
     "test": "jest",
     "test:watch": "npm test -- --watch",
     "test:loki": "npm run build-storybook && loki --requireReference --reactUri file:./storybook-static",

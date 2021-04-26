@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import { Contract, providers } from 'ethers'
-import HarvestContext from '../../Context/HarvestContext'
+import { HarvestContext } from '../../Context/HarvestContext'
 import { darkTheme, lightTheme, fonts } from '../../styles/appStyles'
 import { tokens, tokens2 } from './AvailableTokens'
 

@@ -40,6 +40,7 @@ export class API {
         `https://api-ui.harvest.finance/pools?key=${process.env.REACT_APP_HARVEST_KEY}`,
       )
       .catch((err) => {
+        // eslint-disable-next-line no-console
         console.log(err)
       })
 
@@ -54,6 +55,7 @@ export class API {
         `${process.env.REACT_APP_ETH_PARSER_URL}/price/token/0xa0246c9032bC3A600820415aE600c6388619A14D`,
       )
       .catch((err) => {
+        // eslint-disable-next-line no-console
         console.log(err)
       })
 

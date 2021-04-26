@@ -1,5 +1,3 @@
 import { createContext } from 'react'
 
-const HarvestContext = createContext()
-
-export default HarvestContext
+export const HarvestContext = createContext()

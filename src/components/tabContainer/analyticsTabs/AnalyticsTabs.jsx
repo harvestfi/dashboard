@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import HarvestContext from '../../../Context/HarvestContext'
+import { HarvestContext } from '../../../Context/HarvestContext'
 import { AnalyticsContainer } from './AnalyticsTabsStyles'
 
 import { PanelTab } from '../TabContainerStyles'

@@ -1,7 +1,12 @@
 import React from 'react'
 import { Text, Wrapper, Col, Title } from './BluePanel.styles'
 
-const BluePanel = ({ value, text }) => (
+interface IProps {
+  value: string
+  text: string
+}
+
+export const BluePanel: React.FC<IProps> = ({ value, text }) => (
   <Wrapper>
     <Col>
       <Title>{value}</Title>
@@ -9,5 +14,3 @@ const BluePanel = ({ value, text }) => (
     </Col>
   </Wrapper>
 )
-
-export default BluePanel
