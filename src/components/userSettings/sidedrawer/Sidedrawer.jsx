@@ -4,7 +4,7 @@ import { Brand, Drawer, DrawerLink, Radio } from './SidedrawerStyles'
 import logo from '../../../assets/newLogo.png'
 
 // components
-import Currency from '../currency/Currency'
+import { Currency } from '../currency/Currency'
 import Backdrop from './backdrop/Backdrop'
 import ThemeSwitch from '../../tabContainer/themeSwitch/ThemeSwitch'
 

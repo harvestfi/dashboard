@@ -4,7 +4,7 @@ import { UserSettings, CloseIcon } from './SettingsModalStyles'
 
 //components
 import ThemeSwitch from '../tabContainer/themeSwitch/ThemeSwitch'
-import Currency from './currency/Currency'
+import { Currency } from './currency/Currency'
 
 const SettingsModal = () => {
   const { toggleUserSettings } = useContext(HarvestContext)
