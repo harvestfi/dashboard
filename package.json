@@ -4,7 +4,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
-    "start": "webpack-dev-server --mode development --open --hot",
+    "start": "webpack-dev-server --port 3000 --mode development --open --hot",
     "predeploy": "npm run build",
     "deploy": "./deploy.sh",
     "prettier": "prettier --write .",
