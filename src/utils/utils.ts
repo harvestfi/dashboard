@@ -39,15 +39,15 @@ export const getAssets = async (
   provider:
     | ethers.providers.ExternalProvider
     | ethers.providers.JsonRpcFetchFunc,
+  farmPrice: number,
 ): Promise<IAssetsInfo[]> => {
   const ethersProvider = new ethers.providers.Web3Provider(provider)
 
   // get all pools and vaults
-  const [pools, vaults, farmPrice] = await Promise.all<
-    IPool[],
-    IVault[],
-    number
-  >([API.getPools(), API.getVaults(), API.getFarmPrice()])
+  const [pools, vaults] = await Promise.all<IPool[], IVault[]>([
+    API.getPools(),
+    API.getVaults(),
+  ])
 
   const actualVaults = vaults.filter((v) => {
     return !outdatedVaults.has(v.contract.address)

@@ -1,6 +1,9 @@
 import axios from 'axios'
 
 import { IPool, IVault } from '../types/Entities'
+import { contractForGettingPrices } from '@/constants/constants'
+import { Contract, ethers } from 'ethers'
+import { FOR_GETTING_PRICES_ABI } from '@/lib/data/ABIs'
 
 interface ITokenPriceResponce {
   data: number
@@ -48,21 +51,6 @@ export class API {
     return APY
   }
 
-  // TODO: remove, move to getAssets-method who gets farm-price
-  static async getFarmPrice(): Promise<any> {
-    const response = await axios
-      .get(
-        `${process.env.REACT_APP_ETH_PARSER_URL}/price/token/0xa0246c9032bC3A600820415aE600c6388619A14D`,
-      )
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log(err)
-      })
-
-    const farmPrice = response ? response.data.data : 0
-    return farmPrice
-  }
-
   static async getPersonalGasSaved(address: string) {
     const response = await axios
       .get(
@@ -75,5 +63,26 @@ export class API {
 
     const savedGas = response ? response.data.data : 0
     return savedGas
+  }
+
+  static async getPrice(
+    tokenAddress: string,
+    decimals: number,
+    provider:
+      | ethers.providers.ExternalProvider
+      | ethers.providers.JsonRpcFetchFunc,
+  ): Promise<number> {
+    const ethersProvider = new ethers.providers.Web3Provider(provider)
+
+    const gettingPricesContract = new Contract(
+      contractForGettingPrices,
+      FOR_GETTING_PRICES_ABI,
+      ethersProvider,
+    )
+
+    const price = await gettingPricesContract.getPrice(tokenAddress)
+
+    const prettyPrice = price ? parseInt(price._hex, 16) / 10 ** decimals : 0
+    return prettyPrice
   }
 }

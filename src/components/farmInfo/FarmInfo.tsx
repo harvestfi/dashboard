@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 import { HarvestContext } from '../../Context/HarvestContext'
 import Container from './FarmInfoStyles'
@@ -6,6 +6,8 @@ import { BluePanel } from '../bluePanel/BluePanel'
 import { LoadingBluePanel } from '../bluePanel/components/loadingBluePanel/LoadingBluePanel.styles'
 import { IAssetsInfo } from '../../types'
 import { prettyBalance, convertStandardNumber } from '../../utils/utils'
+import { API } from '@/api'
+import { farmAddress, farmDecimals } from '@/constants/constants'
 
 interface IProps {
   assets: IAssetsInfo[]
@@ -18,7 +20,23 @@ export const FarmInfo: React.FC<IProps> = ({ assets, savedGas }) => {
     currentExchangeRate,
     displayFarmInfo,
     baseCurrency,
+    setState,
   } = useContext(HarvestContext)
+
+  useEffect(() => {
+    const getFarmPrice = async () => {
+      const farmPrice = await API.getPrice(
+        farmAddress,
+        farmDecimals,
+        state.provider,
+      )
+      setState((prevState) => ({ ...prevState, farmPrice }))
+    }
+
+    if (state.provider) {
+      getFarmPrice()
+    }
+  }, [state.provider])
 
   const farmPriceValue = convertStandardNumber(
     state.farmPrice * currentExchangeRate,
