@@ -1,26 +1,25 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { ethers } from 'ethers';
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { ethers } from 'ethers'
 
-import { fonts } from '../../styles/appStyles';
+import { fonts } from '../../styles/appStyles'
 
 // components
-import NoFarmModal from './NoFarmModal';
-
+import NoFarmModal from './NoFarmModal'
 
 const Panel = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
-  background-color: ${props => props.theme.style.lightBackground};
-  color: ${props => props.theme.style.primaryFontColor};
+  background-color: ${(props) => props.theme.style.lightBackground};
+  color: ${(props) => props.theme.style.primaryFontColor};
   font-family: ${fonts.contentFont};
   padding: 1.5rem;
-  border: ${props => props.theme.style.mainBorder};
+  border: ${(props) => props.theme.style.mainBorder};
   border-radius: 0.5rem;
   box-sizing: border-box;
-  box-shadow: ${props => props.theme.style.panelBoxShadow};
+  box-shadow: ${(props) => props.theme.style.panelBoxShadow};
 
   @media (max-width: 1002px) {
     margin-bottom: 1.5rem;
@@ -51,7 +50,7 @@ const Panel = styled.div`
       font-size: 1.6rem;
     }
   }
-`;
+`
 
 const ButtonContainer = styled.div`
   width: 100%;
@@ -79,35 +78,37 @@ const ButtonContainer = styled.div`
       font-size: 1.3rem;
     }
   }
-`;
+`
 
 const StakePanel = ({ state, openModal }) => {
   const [modal, setModal] = useState({
     open: false,
     message: '',
     noFarm: true,
-  });
-  const [stakeAmount, setStakeAmount] = useState(0);
-  const pool = state.manager.pools.find(pool => {
-    return pool.address === '0x25550Cccbd68533Fa04bFD3e3AC4D09f9e00Fc50';
-  });
-  const inactivePools = state.summaries.filter(sum => sum.stakedBalance && !sum.isActive);
+  })
+  const [stakeAmount, setStakeAmount] = useState(0)
+  const pool = state.manager.pools.find((pool) => {
+    return pool.address === '0x25550Cccbd68533Fa04bFD3e3AC4D09f9e00Fc50'
+  })
+  const inactivePools = state.summaries.filter(
+    (sum) => sum.stakedBalance && !sum.isActive,
+  )
 
-  const checkForFarm = amount => {
+  const checkForFarm = (amount) => {
     if (amount <= 0) {
       setModal({
         ...modal,
         open: true,
         message: "You don't have any farm to stake!",
-      });
+      })
     } else {
-      setStakeAmount(ethers.utils.formatEther(amount));
+      setStakeAmount(ethers.utils.formatEther(amount))
     }
-  };
+  }
 
   const closeErrorModal = () => {
-    setModal(false);
-  };
+    setModal(false)
+  }
 
   const stake = async () => {
     if (stakeAmount === 0) {
@@ -116,51 +117,56 @@ const StakePanel = ({ state, openModal }) => {
         open: true,
         message: 'Please enter an amount to stake!',
         noFarm: false,
-      });
+      })
     } else {
-      const allowance = await pool.lptoken.allowance(state.address, pool.address);
+      const allowance = await pool.lptoken.allowance(
+        state.address,
+        pool.address,
+      )
       const amount =
         stakeAmount > 0
           ? ethers.utils.parseUnits(stakeAmount.toString(), 18)
-          : await pool.unstakedBalance(state.address);
+          : await pool.unstakedBalance(state.address)
 
       if (allowance.lt(amount)) {
-        await pool.lptoken.approve(pool.address, ethers.constants.MaxUint256);
-        await pool.stake(amount);
+        await pool.lptoken.approve(pool.address, ethers.constants.MaxUint256)
+        await pool.stake(amount)
       } else {
-        await pool.stake(amount).catch(e => {
+        await pool.stake(amount).catch((e) => {
           if (e.code !== 4001 || e.code !== -32603) {
             openModal(
-              `You do not have enough to stake ${ethers.utils.formatEther(amount)} FARM`,
+              `You do not have enough to stake ${ethers.utils.formatEther(
+                amount,
+              )} FARM`,
               'error',
-            );
+            )
           }
-        });
+        })
       }
     }
-    setStakeAmount(stakeAmount => 0);
-  };
+    setStakeAmount((stakeAmount) => 0)
+  }
 
   const setMax = async () => {
     const amount =
       stakeAmount > 0
         ? ethers.utils.parseUnits(stakeAmount.toString(), 18)
-        : await pool.unstakedBalance(state.address);
+        : await pool.unstakedBalance(state.address)
 
-    checkForFarm(amount);
-  };
+    checkForFarm(amount)
+  }
 
   const exitInactivePools = () => {
-    state.manager.exitInactive();
-  };
+    state.manager.exitInactive()
+  }
 
   const clearStakeAmount = () => {
-    setStakeAmount(stakeAmount => 0);
-  };
+    setStakeAmount((stakeAmount) => 0)
+  }
 
-  const stakeChangeHandler = e => {
-    setStakeAmount(e.target.value);
-  };
+  const stakeChangeHandler = (e) => {
+    setStakeAmount(e.target.value)
+  }
 
   return (
     <>
@@ -178,11 +184,19 @@ const StakePanel = ({ state, openModal }) => {
             FARM
           </p>
           {stakeAmount > 0 ? (
-            <button className="button" disabled={!state.provider} onClick={clearStakeAmount}>
+            <button
+              className="button"
+              disabled={!state.provider}
+              onClick={clearStakeAmount}
+            >
               clear
             </button>
           ) : (
-            <button className="button" disabled={!state.provider} onClick={setMax}>
+            <button
+              className="button"
+              disabled={!state.provider}
+              onClick={setMax}
+            >
               max
             </button>
           )}
@@ -201,15 +215,23 @@ const StakePanel = ({ state, openModal }) => {
           </button> */}
 
           {inactivePools.length > 0 && (
-            <button className="button alert" disabled={!state.provider} onClick={exitInactivePools}>
+            <button
+              className="button alert"
+              disabled={!state.provider}
+              onClick={exitInactivePools}
+            >
               exit inactive
             </button>
           )}
         </ButtonContainer>
       </Panel>
-      <NoFarmModal state={state} modal={modal} onClose={() => closeErrorModal()} />
+      <NoFarmModal
+        state={state}
+        modal={modal}
+        onClose={() => closeErrorModal()}
+      />
     </>
-  );
-};
+  )
+}
 
-export default StakePanel;
+export default StakePanel

@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
-import HarvestContext from "../../Context/HarvestContext";
-import styled from "styled-components";
-import { fonts } from "../../styles/appStyles";
-import { motion } from "framer-motion";
+import React, { useContext } from 'react'
+import { HarvestContext } from '../../Context/HarvestContext'
+import styled from 'styled-components'
+import { fonts } from '../../styles/appStyles'
+import { motion } from 'framer-motion'
 
 const TokenMessage = () => {
-  const { tokenAddedMessage } = useContext(HarvestContext);
+  const { tokenAddedMessage } = useContext(HarvestContext)
   return (
     <>
       {tokenAddedMessage ? (
@@ -21,10 +21,10 @@ const TokenMessage = () => {
         </motion.div>
       ) : null}
     </>
-  );
-};
+  )
+}
 
-export default TokenMessage;
+export default TokenMessage
 
 const AddTokenMessage = styled.div`
   display: flex;
@@ -51,4 +51,4 @@ const AddTokenMessage = styled.div`
   p {
     text-align: center;
   }
-`;
+`

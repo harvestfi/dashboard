@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const PanelTabContainerRight = styled.div`
   h3 {
@@ -40,8 +40,6 @@ export const PanelTabContainerRight = styled.div`
     width: 6rem;
     height: 2.6rem;
     pointer-events: none;
-
-    
   }
   /* Hide default HTML checkbox */
   .switch input {
@@ -65,19 +63,17 @@ export const PanelTabContainerRight = styled.div`
   }
   .slider:before {
     position: absolute;
-    content: "";
+    content: '';
     height: 2rem;
     width: 2rem;
-    left: .2rem;
-    right: .5rem;
+    left: 0.2rem;
+    right: 0.5rem;
     top: 0.1rem;
     bottom: 0;
-    
+
     background-color: white;
     -webkit-transition: 0.4s;
     transition: 0.4s;
-   
-    
   }
   input:checked + .slider {
     background-color: ${(props) => props.theme.style.blueBackground};
@@ -97,14 +93,13 @@ export const PanelTabContainerRight = styled.div`
   .slider.round:before {
     border-radius: 0.5rem;
   }
-  input[type="button"]:focus,
+  input[type='button']:focus,
   button:focus {
     outline: none;
   }
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     appearance: none;
   }
- 
-`;
+`

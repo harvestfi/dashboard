@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { fonts } from "../../../styles/appStyles";
+import styled from 'styled-components'
+import { fonts } from '../../../styles/appStyles'
 
 export const Drawer = styled.div`
   display: flex;
@@ -38,7 +38,7 @@ export const Drawer = styled.div`
   @media (min-width: 1160px) {
     display: none;
   }
-`;
+`
 
 export const DrawerLink = styled.a`
   font-size: 1.9rem;
@@ -70,7 +70,7 @@ export const DrawerLink = styled.a`
     font-size: 1.6rem;
     margin: 0.5rem 0;
   }
-`;
+`
 
 export const Radio = styled.p`
   font-size: 1.9rem;
@@ -91,7 +91,7 @@ export const Radio = styled.p`
   @media (max-width: 768px) {
     top: 2rem;
   }
-`;
+`
 
 export const Brand = styled.div`
   padding-right: 1rem;
@@ -119,4 +119,4 @@ export const Brand = styled.div`
   @media (min-width: 1500px) {
     margin: 3rem 0;
   }
-`;
+`
