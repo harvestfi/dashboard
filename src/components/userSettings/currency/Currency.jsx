@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { HarvestContext } from '../../../Context/HarvestContext'
 import { CurrencyContainer } from './CurrencyStyles'
 
-const Currency = () => {
+export const Currency = () => {
   const {
     exchangeRates,
     baseCurrency,
@@ -24,10 +24,10 @@ const Currency = () => {
         name="currency"
         id="currencies"
       >
-        <option value="1">{baseCurrency}</option>
+        <option value="USD">{baseCurrency}</option>
 
         {exchangeRates
-          ? Object.entries(exchangeRates).map(([key, value]) => {
+          ? Object.entries(exchangeRates).map(([key]) => {
               return (
                 <option key={key} value={key}>
                   {key}
@@ -39,5 +39,3 @@ const Currency = () => {
     </CurrencyContainer>
   )
 }
-
-export default Currency
