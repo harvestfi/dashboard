@@ -24,7 +24,7 @@ import {
 import TabContainer from './components/tabContainer/TabContainer'
 import SettingsModal from './components/userSettings/SettingsModal'
 import Radio from './components/radio/Radio'
-import WelcomeText from './components/WelcomeText'
+import { WelcomeText } from './components/WelcomeText'
 import CheckBalance from './components/checkBalance/CheckBalance'
 import TokenMessage from './components/statusMessages/TokenMessage'
 import HarvestAndStakeMessage from './components/statusMessages/HarvestAndStakeMessage'
