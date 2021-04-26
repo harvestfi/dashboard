@@ -43,10 +43,11 @@ export const getAssets = async (
   const ethersProvider = new ethers.providers.Web3Provider(provider)
 
   // get all pools and vaults
-  const [pools, vaults] = await Promise.all<IPool[], IVault[]>([
-    API.getPools(),
-    API.getVaults(),
-  ])
+  const [pools, vaults, farmPrice] = await Promise.all<
+    IPool[],
+    IVault[],
+    number
+  >([API.getPools(), API.getVaults(), API.getFarmPrice()])
 
   const actualVaults = vaults.filter((v) => {
     return !outdatedVaults.has(v.contract.address)
@@ -90,7 +91,6 @@ export const getAssets = async (
       lpTokenBalance,
       poolBalance,
       underlyingPrice,
-      rewardTokenPrice,
       reward,
       poolTotalSupply,
       rewardPricePerFullShare,
@@ -102,7 +102,6 @@ export const getAssets = async (
       API.getTokenPrice(
         relatedVault ? relatedVault.underlying.address : pool.lpToken.address,
       ),
-      API.getTokenPrice(pool.rewardToken.address),
       poolContract.earned(walletAddress),
       poolContract.totalSupply(),
       rewardIsFarm ? null : iFarmRewardPool.getPricePerFullShare(),
@@ -137,7 +136,7 @@ export const getAssets = async (
         underlyingPrice *
           poolBalanceIntNumber *
           prettyPricePerFullShareLpToken +
-        rewardTokenPrice * rewardTokenAreInFARM
+        farmPrice * rewardTokenAreInFARM
       )
     }
 
@@ -194,14 +193,12 @@ export const getAssets = async (
         const [
           vaultBalance,
           farmBalance,
-          farmPrice,
           totalSupply,
           underlyingBalanceWithInvestmentForHolder,
           pricePerFullShare,
         ] = await Promise.all([
           vaultContract.balanceOf(walletAddress),
           farmContract.balanceOf(walletAddress),
-          API.getTokenPrice(vault.underlying.address),
           vaultContract.totalSupply(),
           vaultContract.underlyingBalanceWithInvestmentForHolder(walletAddress),
           vaultContract.getPricePerFullShare(),
@@ -263,13 +260,15 @@ export const getAssets = async (
 
         const percentOfPool = 0
 
+        const value = prettyVaultBalance * farmPrice
+
         return {
           name: vault.contract.name,
           earnFarm: !vaultsWithoutReward.has(vault.contract.name),
           farmToClaim: 0,
           stakedBalance: prettyVaultBalance,
           percentOfPool,
-          value: 0,
+          value,
           unstakedBalance: prettyFarmBalance,
           address: vault.contract.address,
           underlyingBalance: prettyVaultBalance,
