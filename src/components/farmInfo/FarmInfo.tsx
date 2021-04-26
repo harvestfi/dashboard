@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import HarvestContext from '../../Context/HarvestContext'
+import { HarvestContext } from '../../Context/HarvestContext'
 import Container from './FarmInfoStyles'
 import { BluePanel } from '../bluePanel/BluePanel'
 import { LoadingBluePanel } from '../bluePanel/components/loadingBluePanel/LoadingBluePanel.styles'
