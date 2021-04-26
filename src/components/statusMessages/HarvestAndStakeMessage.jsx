@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
-import styled from "styled-components";
-import { fonts } from "../../styles/appStyles";
-import HarvestContext from "../../Context/HarvestContext";
+import React, { useContext } from 'react'
+import styled from 'styled-components'
+import { fonts } from '../../styles/appStyles'
+import { HarvestContext } from '../../Context/HarvestContext'
 
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion'
 
 const HarvestAndStakeMessage = () => {
-  const { harvestAndStakeMessage } = useContext(HarvestContext);
+  const { harvestAndStakeMessage } = useContext(HarvestContext)
   return (
     <>
       {harvestAndStakeMessage.first ? (
@@ -21,16 +21,16 @@ const HarvestAndStakeMessage = () => {
             {harvestAndStakeMessage.second ? (
               <p>{harvestAndStakeMessage.second}</p>
             ) : (
-              ""
+              ''
             )}
           </HarvestStakeMessage>
         </motion.div>
       ) : null}
     </>
-  );
-};
+  )
+}
 
-export default HarvestAndStakeMessage;
+export default HarvestAndStakeMessage
 
 const HarvestStakeMessage = styled.div`
   display: flex;
@@ -60,4 +60,4 @@ const HarvestStakeMessage = styled.div`
     text-align: center;
     margin: 1rem 0;
   }
-`;
+`

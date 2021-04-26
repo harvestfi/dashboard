@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
-import HarvestContext from "../../../Context/HarvestContext";
-import { Modal, CloseIcon } from "./AnalyticsModalStyles";
+import React, { useContext } from 'react'
+import { HarvestContext } from '../../../Context/HarvestContext'
+import { Modal, CloseIcon } from './AnalyticsModalStyles'
 
 const AnalyticsModal = ({ showAnalytics, setShowAnalytics }) => {
-  const { state } = useContext(HarvestContext);
+  const { state } = useContext(HarvestContext)
   return (
-    <Modal className={showAnalytics ? "show" : "hidden"}>
+    <Modal className={showAnalytics ? 'show' : 'hidden'}>
       <CloseIcon onClick={() => setShowAnalytics(false)}>
         <i className="fas fa-times-circle fa-2x"></i>
       </CloseIcon>
@@ -36,16 +36,18 @@ const AnalyticsModal = ({ showAnalytics, setShowAnalytics }) => {
         Profit calculator
       </a>
 
-      {state.address ? <a
-        className="analyti-link"
-        href={`https://farmdashboard.xyz/history/${state.address}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Address history
-      </a> : null}
+      {state.address ? (
+        <a
+          className="analyti-link"
+          href={`https://farmdashboard.xyz/history/${state.address}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Address history
+        </a>
+      ) : null}
     </Modal>
-  );
-};
+  )
+}
 
-export default AnalyticsModal;
+export default AnalyticsModal

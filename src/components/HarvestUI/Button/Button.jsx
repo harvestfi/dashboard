@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button } from '@material-ui/core';
+import React from 'react'
+import { Button } from '@material-ui/core'
 
 const HarvestButton = ({ size, children, onClick, ...otherProps }) => {
   return (
@@ -13,7 +13,7 @@ const HarvestButton = ({ size, children, onClick, ...otherProps }) => {
     >
       {children}
     </Button>
-  );
-};
+  )
+}
 
-export default HarvestButton;
+export default HarvestButton

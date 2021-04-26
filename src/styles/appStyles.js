@@ -1,35 +1,35 @@
 //style variables for the whole dash
 
 export const screen = {
-  xs: "320",
-  sm: "500",
-  md: "768",
-  lg: "1200",
-  xl: "1400",
-  xxl: "1500",
-};
+  xs: '320',
+  sm: '500',
+  md: '768',
+  lg: '1200',
+  xl: '1400',
+  xxl: '1500',
+}
 
 export const fonts = {
   headerFont: 'Open Sans',
-  contentFont: "Roboto",
-};
+  contentFont: 'Roboto',
+}
 
 export const darkThemeColors = {
-  lightGrey: "#363636",
-  grey: "#252525",
-  darkGrey: "#212121",
-  darkerGrey: "#1d1d1d",
-  blue: "#42857D",
-  orange: "#FFCDB2",
-  black: "#000000",
-  purple: "#6D6875",
+  lightGrey: '#363636',
+  grey: '#252525',
+  darkGrey: '#212121',
+  darkerGrey: '#1d1d1d',
+  blue: '#42857D',
+  orange: '#FFCDB2',
+  black: '#000000',
+  purple: '#6D6875',
   lighterPurple: '#B5838D',
   pinkish: '#E5989B',
   peach: '#FFB4A2',
   darkModePanel: '#f29d8a',
-  lightOrange: "#ffb9a7",
-  darkOrange: "#ce988a",
-};
+  lightOrange: '#ffb9a7',
+  darkOrange: '#ce988a',
+}
 
 export const darkTheme = {
   style: {
@@ -50,33 +50,33 @@ export const darkTheme = {
     blueBackground: `${darkThemeColors.darkModePanel}`,
     highlight: `${darkThemeColors.orange}`,
     bodyBackground: `${darkThemeColors.purple}`,
-    primaryFontColor: "#333",
+    primaryFontColor: '#333',
     secondaryFontColor: `${darkThemeColors.black}`,
     linkColor: `${darkThemeColors.blue}`,
     headerColor: `${darkThemeColors.darkBlue}`,
     alertColor: `${darkThemeColors.blue}`,
     themeSwitchBackground: `${darkThemeColors.blueBackground}`,
-    brandTextColor:  `${darkThemeColors.peach}`,
-    scrollBarColor: `${darkThemeColors.lighterPurple}`
+    brandTextColor: `${darkThemeColors.peach}`,
+    scrollBarColor: `${darkThemeColors.lighterPurple}`,
   },
 
   table: {
-    tableBackground: "#000",
+    tableBackground: '#000',
     tableHeadBackground: `${darkThemeColors.grey}`,
     tableItemBoxShadow: `0.35rem 0.35rem 0px ${darkThemeColors.lightGrey}`,
     tableRowBackground: `${darkThemeColors.darkerGrey}`,
   },
-};
+}
 
 export const lightThemeColors = {
-  offwhite: "#F5F1DE",
-  blue: "#ABE4E2",
-  darkBlue: "#A2E7DB",
-  orange: "#FFCD8D",
-  lightOrange: "#dcd4bc",
-  darkOrange: "#a29583",
-  black: "#000",
-};
+  offwhite: '#F5F1DE',
+  blue: '#ABE4E2',
+  darkBlue: '#A2E7DB',
+  orange: '#FFCD8D',
+  lightOrange: '#dcd4bc',
+  darkOrange: '#a29583',
+  black: '#000',
+}
 
 export const lightTheme = {
   style: {
@@ -103,8 +103,8 @@ export const lightTheme = {
     headerColor: `${lightThemeColors.black}`,
     alertColor: `${darkThemeColors.blue}`,
     themeSwitchBackground: `${lightThemeColors.orange}`,
-    brandTextColor:  `${lightThemeColors.black}`,
-    scrollBarColor: `${lightThemeColors.blue}`
+    brandTextColor: `${lightThemeColors.black}`,
+    scrollBarColor: `${lightThemeColors.blue}`,
   },
 
   table: {
@@ -113,4 +113,4 @@ export const lightTheme = {
     tableItemBoxShadow: `0.3rem 0.3rem 0px ${lightThemeColors.black}`,
     tableRowBackground: `${lightThemeColors.offwhite}`,
   },
-};
+}

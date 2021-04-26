@@ -1,13 +1,16 @@
-import React from 'react';
-import { Text, Wrapper, Col, Title } from './BluePanel.styles';
+import React from 'react'
+import { Text, Wrapper, Col, Title } from './BluePanel.styles'
 
-const BluePanel = ({ value, text }) => (
-	<Wrapper>
-		<Col>
-			<Title>{value}</Title>
-			<Text>{text}</Text>
-		</Col>
-	</Wrapper>
-);
+interface IProps {
+  value: string
+  text: string
+}
 
-export default BluePanel;
+export const BluePanel: React.FC<IProps> = ({ value, text }) => (
+  <Wrapper>
+    <Col>
+      <Title>{value}</Title>
+      <Text>{text}</Text>
+    </Col>
+  </Wrapper>
+)

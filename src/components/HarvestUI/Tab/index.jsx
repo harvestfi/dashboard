@@ -1,4 +1,4 @@
-import Tab from './Tab';
-import './Tab.scss';
+import Tab from './Tab'
+import './Tab.scss'
 
-export default Tab;
+export default Tab

@@ -1,6 +1,6 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import { fonts } from "../../styles/appStyles";
+import React from 'react'
+import styled, { css } from 'styled-components'
+import { fonts } from '../../styles/appStyles'
 
 const Container = styled.div`
   ${({ isOpen }) => {
@@ -24,14 +24,14 @@ const Container = styled.div`
         @media (max-width: 600px) {
           transform: translateX(-12%);
         }
-      `;
+      `
     } else {
       return css`
         display: none;
-      `;
+      `
     }
   }}
-`;
+`
 
 const Inner = styled.div`
   background-color: ${(props) => props.theme.style.wikiTabBackground};
@@ -79,7 +79,7 @@ const Inner = styled.div`
     width: 80%;
     margin: 0 auto;
   }
-`;
+`
 
 const CloseIcon = styled.span`
   position: absolute;
@@ -96,7 +96,7 @@ const CloseIcon = styled.span`
       top: 1.5px;
     }
   }
-`;
+`
 
 const NoFarmModal = ({ modal, onClose }) => (
   <Container isOpen={modal.open}>
@@ -111,10 +111,10 @@ const NoFarmModal = ({ modal, onClose }) => (
             href="https://app.uniswap.org/#/swap?inputCurrency=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&outputCurrency=0xa0246c9032bC3A600820415aE600c6388619A14D"
           >
             Buy Farm!
-            </a>
+          </a>
         </button>
       ) : (
-        ""
+        ''
       )}
 
       <CloseIcon onClick={onClose}>
@@ -122,6 +122,6 @@ const NoFarmModal = ({ modal, onClose }) => (
       </CloseIcon>
     </Inner>
   </Container>
-);
+)
 
-export default NoFarmModal;
+export default NoFarmModal

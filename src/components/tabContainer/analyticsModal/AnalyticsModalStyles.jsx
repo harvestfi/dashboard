@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Modal = styled.div`
   &.show {
@@ -27,7 +27,7 @@ export const Modal = styled.div`
       width: max-content;
 
       &:hover {
-        top: .5rem;
+        top: 0.5rem;
       }
       @media (max-width: 768px) {
         top: 2rem;
@@ -45,7 +45,7 @@ export const Modal = styled.div`
     display: none;
     transition: all 0.3s ease-out;
   }
-`;
+`
 
 export const CloseIcon = styled.span`
   position: absolute;
@@ -64,4 +64,4 @@ export const CloseIcon = styled.span`
   @media (min-width: 768px) {
     display: none;
   }
-`;
+`

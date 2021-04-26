@@ -26,4 +26,7 @@ scripts/*.json
 *.csv
 node_modules
 dist
+build
 .env
+.history
+storybook-static

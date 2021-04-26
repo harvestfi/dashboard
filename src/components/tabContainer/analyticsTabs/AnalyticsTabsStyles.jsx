@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const AnalyticsContainer = styled.div`
   display: flex;
@@ -12,17 +12,16 @@ export const AnalyticsContainer = styled.div`
     width: max-content;
     transition: margin-left 0.2s ease-in, width 0.25s ease-in;
     a {
-        color: ${(props) => props.theme.style.primaryFontColor};
-        font-size: 1.9rem;
-        position: relative;
-        top: .1rem;
-        transition: all .2s ease-in;
-        &:hover {
-            border-bottom: 1px solid black;
-        }
+      color: ${(props) => props.theme.style.primaryFontColor};
+      font-size: 1.9rem;
+      position: relative;
+      top: 0.1rem;
+      transition: all 0.2s ease-in;
+      &:hover {
+        border-bottom: 1px solid black;
       }
+    }
 
-   
     &:hover {
       cursor: pointer;
       top: -0.1rem;
@@ -32,19 +31,15 @@ export const AnalyticsContainer = styled.div`
   .unfolded {
     position: relative;
     &:hover {
-        margin-right: 0;
-        margin-left: 0.1rem;
-        top: 0.2rem;
-      }
- 
-
-   
+      margin-right: 0;
+      margin-left: 0.1rem;
+      top: 0.2rem;
+    }
   }
   .folded {
-      opacity: 0;
-     
+    opacity: 0;
   }
-  
+
   .second {
     margin-left: -5rem;
     z-index: -12;
@@ -64,19 +59,16 @@ export const AnalyticsContainer = styled.div`
   .unfolded-second {
     margin-right: 1.5rem;
     z-index: 9;
-    
   }
   .unfolded-third {
     margin-right: 1.5rem;
     z-index: 8;
-    
   }
   .unfolded-fourth {
     margin-right: 1.5rem;
     z-index: 7;
-    
   }
-  @media(max-width: 1160px) {
+  @media (max-width: 1160px) {
     display: none;
   }
-`;
+`

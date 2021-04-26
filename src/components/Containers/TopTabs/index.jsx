@@ -1,4 +1,4 @@
-import TopTabs from './TopTabs';
-import './TopTabs.scss';
+import TopTabs from './TopTabs'
+import './TopTabs.scss'
 
-export default TopTabs;
+export default TopTabs
