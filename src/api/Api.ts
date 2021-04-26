@@ -62,4 +62,18 @@ export class API {
     const farmPrice = response ? response.data.data : 0
     return farmPrice
   }
+
+  static async getPersonalGasSaved(address: string) {
+    const response = await axios
+      .get(
+        `${process.env.REACT_APP_ETH_PARSER_URL}/total_saved_gas_fee_by_address?address=${address}`,
+      )
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log(err)
+      })
+
+    const savedGas = response ? response.data.data : 0
+    return savedGas
+  }
 }

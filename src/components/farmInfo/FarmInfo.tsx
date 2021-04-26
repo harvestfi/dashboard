@@ -9,9 +9,10 @@ import { prettyBalance, convertStandardNumber } from '../../utils/utils'
 
 interface IProps {
   assets: IAssetsInfo[]
+  savedGas: number
 }
 
-export const FarmInfo: React.FC<IProps> = ({ assets }) => {
+export const FarmInfo: React.FC<IProps> = ({ assets, savedGas }) => {
   const {
     state,
     currentExchangeRate,
@@ -24,7 +25,7 @@ export const FarmInfo: React.FC<IProps> = ({ assets }) => {
     baseCurrency,
   )
 
-  // const pretySavedGas = new Intl.NumberFormat('en').format(savedGas);
+  const pretySavedGas = new Intl.NumberFormat('en').format(Math.round(savedGas))
 
   const stakedBalance = assets.reduce((acc, currentAsset) => {
     return acc + currentAsset.value
@@ -37,7 +38,7 @@ export const FarmInfo: React.FC<IProps> = ({ assets }) => {
     },
     { value: `${state.apy}%`, text: 'Profit Share APY' },
     { value: farmPriceValue, text: 'FARM price' },
-    { value: '-', text: 'Personal Saved Gas' },
+    { value: pretySavedGas, text: 'Personal Saved Gas' },
     // TODO: fix 'farm earned'
     // { value: state.totalFarmEarned?.toFixed(6), text: 'Farm Earned' },
     { value: '-', text: 'Farm Earned' },
