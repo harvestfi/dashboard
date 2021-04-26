@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 import { fonts } from '../../styles/appStyles'
 
 // COMPONENTS
-import MainContent from '../MainContent'
+import { MainContent } from '../MainContent'
 import Radio from '../radio/Radio'
 import Wallet from '../Wallet'
 
