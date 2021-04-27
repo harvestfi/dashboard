@@ -123,11 +123,12 @@ export const getAssets = async (
       ? 1
       : parseInt(rewardPricePerFullShare._hex, 16) / 10 ** farmDecimals
 
-    const intRewardTokenBalance = parseInt(reward._hex, 16) / 10 ** farmDecimals
+    const prettyRewardTokenBalance =
+      parseInt(reward._hex, 16) / 10 ** farmDecimals
 
     const rewardTokenAreInFARM = rewardIsFarm
-      ? intRewardTokenBalance
-      : intRewardTokenBalance * prettyRewardPricePerFullShare
+      ? prettyRewardTokenBalance
+      : prettyRewardTokenBalance * prettyRewardPricePerFullShare
 
     const percentOfPool = (poolBalance * 100) / poolTotalSupply
 
