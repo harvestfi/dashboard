@@ -52,7 +52,6 @@ const CheckBalance = () => {
       const assetsToCheck = await getAssets(
         addressFromChangeEvent,
         state.provider,
-        state.farmPrice,
       )
       setAssetsToCheck(assetsToCheck)
       setShowAssetsToCheck(true)

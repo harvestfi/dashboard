@@ -109,7 +109,6 @@ export function App() {
         const userAssetArray = await getAssets(
           userWalletAddress,
           state.provider,
-          state.farmPrice,
         )
         setUserAssets(userAssetArray)
         setShowUserAssets(true)

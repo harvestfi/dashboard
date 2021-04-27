@@ -25,11 +25,7 @@ export const FarmInfo: React.FC<IProps> = ({ assets, savedGas }) => {
 
   useEffect(() => {
     const getFarmPrice = async () => {
-      const farmPrice = await API.getPrice(
-        farmAddress,
-        farmDecimals,
-        state.provider,
-      )
+      const farmPrice = await API.getPrice(farmAddress, state.provider)
       setState((prevState) => ({ ...prevState, farmPrice }))
     }
 

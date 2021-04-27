@@ -39,15 +39,15 @@ export const getAssets = async (
   provider:
     | ethers.providers.ExternalProvider
     | ethers.providers.JsonRpcFetchFunc,
-  farmPrice: number,
 ): Promise<IAssetsInfo[]> => {
   const ethersProvider = new ethers.providers.Web3Provider(provider)
 
   // get all pools and vaults
-  const [pools, vaults] = await Promise.all<IPool[], IVault[]>([
-    API.getPools(),
-    API.getVaults(),
-  ])
+  const [pools, vaults, farmPrice] = await Promise.all<
+    IPool[],
+    IVault[],
+    number
+  >([API.getPools(), API.getVaults(), API.getPrice(farmAddress, provider)])
 
   const actualVaults = vaults.filter((v) => {
     return !outdatedVaults.has(v.contract.address)
@@ -77,6 +77,9 @@ export const getAssets = async (
     )
     const rewardIsFarm = pool.rewardToken.address.toLowerCase() === farmAddress
 
+    const priceAddress = relatedVault
+      ? relatedVault.underlying.address
+      : pool.lpToken.address
     /**
      * lpTokenBalance - balance of a wallet in the liquidity-pool
      * poolBalance - balance of a wallet in the pool (are in fToken)
@@ -99,9 +102,7 @@ export const getAssets = async (
     ] = await Promise.all([
       lpTokenContract.balanceOf(walletAddress),
       poolContract.balanceOf(walletAddress),
-      API.getTokenPrice(
-        relatedVault ? relatedVault.underlying.address : pool.lpToken.address,
-      ),
+      API.getPrice(priceAddress, provider),
       poolContract.earned(walletAddress),
       poolContract.totalSupply(),
       rewardIsFarm ? null : iFarmRewardPool.getPricePerFullShare(),
@@ -111,7 +112,7 @@ export const getAssets = async (
 
     const lpTokenBalanceIntNumber =
       parseInt(lpTokenBalance._hex, 16) / 10 ** lpTokenDecimals
-    const poolBalanceIntNumber =
+    const prettyPoolBalance =
       parseInt(poolBalance._hex, 16) / 10 ** lpTokenDecimals
 
     const prettyPricePerFullShareLpToken = relatedVault
@@ -133,22 +134,19 @@ export const getAssets = async (
     /** All account assets that contains in the pool are in USD */
     const calcValue = () => {
       return (
-        underlyingPrice *
-          poolBalanceIntNumber *
-          prettyPricePerFullShareLpToken +
+        underlyingPrice * prettyPoolBalance * prettyPricePerFullShareLpToken +
         farmPrice * rewardTokenAreInFARM
       )
     }
 
     // fTokens balance in underlying Tokens;
-    const underlyingBalance =
-      poolBalanceIntNumber * prettyPricePerFullShareLpToken
+    const underlyingBalance = prettyPoolBalance * prettyPricePerFullShareLpToken
 
     return {
       name: relatedVault ? relatedVault.contract.name : pool.contract.name,
       earnFarm: true,
       farmToClaim: rewardTokenAreInFARM,
-      stakedBalance: poolBalanceIntNumber,
+      stakedBalance: prettyPoolBalance,
       percentOfPool,
       value: calcValue(),
       unstakedBalance: lpTokenBalanceIntNumber,
@@ -165,6 +163,11 @@ export const getAssets = async (
       const isIFarm =
         vault.contract.address.toLowerCase() ===
         '0x1571eD0bed4D987fe2b498DdBaE7DFA19519F651'.toLowerCase()
+
+      // is this Vault PS?
+      const isPS =
+        vault.contract.address.toLowerCase() ===
+        '0x25550cccbd68533fa04bfd3e3ac4d09f9e00fc50'
 
       // a pool that has the same token as a vault
       const vaultRelatedPool = actualPools.find((pool) => {
@@ -234,11 +237,7 @@ export const getAssets = async (
         }
       }
 
-      // PS vault
-      if (
-        vault.contract.address.toLowerCase() ===
-        '0x25550cccbd68533fa04bfd3e3ac4d09f9e00fc50'
-      ) {
+      if (isPS) {
         const farmContract = new Contract(
           farmAddress,
           PS_VAULT_ABI,
@@ -255,6 +254,7 @@ export const getAssets = async (
         ])
         const prettyVaultBalance =
           parseInt(vaultBalance._hex, 16) / 10 ** vault.decimals
+
         const prettyFarmBalance =
           parseInt(farmBalance._hex, 16) / 10 ** farmDecimals
 
