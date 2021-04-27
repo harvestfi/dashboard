@@ -1,4 +1,4 @@
-import { Contract, ethers } from 'ethers'
+import { Contract, ethers, BigNumber } from 'ethers'
 import { API } from '../api'
 import {
   farmDecimals,
@@ -82,55 +82,66 @@ export const getAssets = async (
       : pool.lpToken.address
     /**
      * lpTokenBalance - balance of a wallet in the liquidity-pool
-     * poolBalance - balance of a wallet in the pool (are in fToken)
-     * underlyingPrice - the price are in USD
      * rewardTokenPrice - the price are in USD (for FARM or iFARM)
      * reward - reward of a wallet in the pool
      * poolTotalSupply - the total number of tokens in the pool of all participants
-     * rewardPricePerFullShare = (iFARMPrice / farmPrice) * 10 ** rewardDecimals
      * pricePerFullShareLpToken = (nativeToken / fToken ) * 10 ** lpTokenDecimals
      */
     const [
       lpTokenBalance,
       poolBalance,
-      underlyingPrice,
       reward,
-      poolTotalSupply,
-      rewardPricePerFullShare,
       pricePerFullShareLpToken,
       lpTokenDecimals,
-    ] = await Promise.all([
+    ] = await Promise.all<
+      BigNumber,
+      BigNumber,
+      BigNumber,
+      BigNumber | null,
+      number
+    >([
       lpTokenContract.balanceOf(walletAddress),
       poolContract.balanceOf(walletAddress),
-      API.getPrice(priceAddress, provider),
       poolContract.earned(walletAddress),
-      poolContract.totalSupply(),
-      rewardIsFarm ? null : iFarmRewardPool.getPricePerFullShare(),
       relatedVault ? lpTokenContract.getPricePerFullShare() : null,
       relatedVault ? relatedVault.decimals : lpTokenContract.decimals(),
     ])
-
-    const lpTokenBalanceIntNumber =
+    const prettyLpTokenBalance =
       parseInt(lpTokenBalance._hex, 16) / 10 ** lpTokenDecimals
     const prettyPoolBalance =
       parseInt(poolBalance._hex, 16) / 10 ** lpTokenDecimals
 
-    const prettyPricePerFullShareLpToken = relatedVault
+    const prettyPricePerFullShareLpToken = pricePerFullShareLpToken
       ? parseInt(pricePerFullShareLpToken._hex, 16) / 10 ** lpTokenDecimals
       : 1
 
-    const prettyRewardPricePerFullShare = rewardIsFarm
-      ? 1
-      : parseInt(rewardPricePerFullShare._hex, 16) / 10 ** farmDecimals
-
     const prettyRewardTokenBalance =
       parseInt(reward._hex, 16) / 10 ** farmDecimals
+    /**
+     * underlyingPrice - the price are in USD
+     * iFarmPricePerFullShare = (iFARMPrice / farmPrice) * 10 ** rewardDecimals
+     * poolBalance - balance of a wallet in the pool (are in fToken)
+     */
+    const [
+      underlyingPrice,
+      iFarmPricePerFullShare,
+      poolTotalSupply,
+    ] = await Promise.all<number, BigNumber | false | 0, BigNumber>([
+      prettyPoolBalance ? API.getPrice(priceAddress, provider) : 0,
+      prettyRewardTokenBalance &&
+        !rewardIsFarm &&
+        iFarmRewardPool.getPricePerFullShare(),
+      prettyPoolBalance ? poolContract.totalSupply() : 1,
+    ])
 
-    const rewardTokenAreInFARM = rewardIsFarm
-      ? prettyRewardTokenBalance
-      : prettyRewardTokenBalance * prettyRewardPricePerFullShare
+    const prettyRewardPricePerFullShare = iFarmPricePerFullShare
+      ? parseInt(iFarmPricePerFullShare._hex, 16) / 10 ** farmDecimals
+      : 1
 
-    const percentOfPool = (poolBalance * 100) / poolTotalSupply
+    const rewardTokenAreInFARM =
+      prettyRewardTokenBalance * prettyRewardPricePerFullShare
+
+    const percentOfPool = (poolBalance / poolTotalSupply) * 100
 
     /** All account assets that contains in the pool are in USD */
     const calcValue = () => {
@@ -150,7 +161,7 @@ export const getAssets = async (
       stakedBalance: prettyPoolBalance,
       percentOfPool,
       value: calcValue(),
-      unstakedBalance: lpTokenBalanceIntNumber,
+      unstakedBalance: prettyLpTokenBalance,
       address: relatedVault
         ? relatedVault.contract.address
         : pool.contract.address,
@@ -200,7 +211,13 @@ export const getAssets = async (
           totalSupply,
           underlyingBalanceWithInvestmentForHolder,
           pricePerFullShare,
-        ] = await Promise.all([
+        ] = await Promise.all<
+          BigNumber,
+          BigNumber,
+          BigNumber,
+          BigNumber,
+          BigNumber
+        >([
           vaultContract.balanceOf(walletAddress),
           farmContract.balanceOf(walletAddress),
           vaultContract.totalSupply(),
@@ -249,7 +266,10 @@ export const getAssets = async (
           PS_VAULT_ABI,
           ethersProvider,
         )
-        const [vaultBalance, farmBalance] = await Promise.all([
+        const [vaultBalance, farmBalance] = await Promise.all<
+          BigNumber,
+          BigNumber
+        >([
           PSvaultContract.balanceOf(walletAddress),
           farmContract.balanceOf(walletAddress),
         ])
@@ -276,12 +296,16 @@ export const getAssets = async (
         }
       }
 
-      const [vaultBalance, totalSupply] = await Promise.all([
-        vaultContract.balanceOf(walletAddress),
-        vaultContract.totalSupply(),
-      ])
-      const vaultBalanceIntNumber =
+      const vaultBalance: BigNumber = await vaultContract.balanceOf(
+        walletAddress,
+      )
+      const prettyVaultBalance =
         parseInt(vaultBalance._hex, 16) / 10 ** vault.decimals
+
+      const totalSupply = prettyVaultBalance
+        ? await vaultContract.totalSupply()
+        : 1
+
       const percentOfPool = totalSupply ? (vaultBalance / totalSupply) * 100 : 0
 
       return {
@@ -291,9 +315,9 @@ export const getAssets = async (
         stakedBalance: 0,
         percentOfPool,
         value: 0,
-        unstakedBalance: vaultBalanceIntNumber,
+        unstakedBalance: prettyVaultBalance,
         address: vault.contract.address,
-        underlyingBalance: vaultBalanceIntNumber,
+        underlyingBalance: prettyVaultBalance,
       }
     })
   }

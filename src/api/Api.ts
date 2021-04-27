@@ -2,13 +2,8 @@ import axios from 'axios'
 
 import { IPool, IVault } from '../types/Entities'
 import { contractForGettingPrices } from '@/constants/constants'
-import { Contract, ethers } from 'ethers'
+import { BigNumber, Contract, ethers } from 'ethers'
 import { PRICE_ORACLE_ABI } from '@/lib/data/ABIs'
-
-interface ITokenPriceResponce {
-  data: number
-}
-
 export class API {
   static async getPools(): Promise<IPool[]> {
     const response = await axios.get(
@@ -66,7 +61,7 @@ export class API {
       ethersProvider,
     )
     const everyPriceDecimals = 18
-    const price = await gettingPricesContract.getPrice(tokenAddress)
+    const price: BigNumber = await gettingPricesContract.getPrice(tokenAddress)
     const prettyPrice = price
       ? parseInt(price._hex, 16) / 10 ** everyPriceDecimals
       : 0
