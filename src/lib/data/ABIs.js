@@ -34,7 +34,7 @@ export const PS_VAULT_ABI = [
   },
 ]
 
-export const FOR_GETTING_PRICES_ABI = [
+export const PRICE_ORACLE_ABI = [
   {
     inputs: [{ internalType: 'address', name: '_storage', type: 'address' }],
     stateMutability: 'nonpayable',

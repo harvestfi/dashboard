@@ -3,7 +3,7 @@ import axios from 'axios'
 import { IPool, IVault } from '../types/Entities'
 import { contractForGettingPrices } from '@/constants/constants'
 import { Contract, ethers } from 'ethers'
-import { FOR_GETTING_PRICES_ABI } from '@/lib/data/ABIs'
+import { PRICE_ORACLE_ABI } from '@/lib/data/ABIs'
 
 interface ITokenPriceResponce {
   data: number
@@ -62,7 +62,7 @@ export class API {
 
     const gettingPricesContract = new Contract(
       contractForGettingPrices,
-      FOR_GETTING_PRICES_ABI,
+      PRICE_ORACLE_ABI,
       ethersProvider,
     )
     const everyPriceDecimals = 18
