@@ -1,0 +1,4250 @@
+{
+  "data": [
+    {
+      "id": 89,
+      "contract": {
+        "id": 382,
+        "address": "0x02d77f6925f4ef89ee2c35eb3dd5793f5695356f",
+        "name": "CRV_USDP",
+        "created": 12016868,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 383,
+        "address": "0x127bfdc843a35607b024781324311522907bca66",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 384,
+        "address": "0x7eb40e450b9655f4b3cc4259bcc731c63ff55ae6",
+        "name": "CRV_USDP",
+        "created": 11921924,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_usdp3CRV",
+      "symbol": "fusdp3CRV",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 67,
+      "contract": {
+        "id": 181,
+        "address": "0xb4e3fc276532f27bd0f738928ce083a3b064ba61",
+        "name": "UNI_WBTC_KLON",
+        "created": 11924821,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 386,
+        "address": "0x170f77e70e488fb7d486ab916e305ca85d45364f",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 387,
+        "address": "0x69cda6eda9986f7fca8a5dba06c819b535f4fc50",
+        "name": "UNKNOWN_UNDERLYING",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 17,
+      "contract": {
+        "id": 47,
+        "address": "0xfe09e53a81fe2808bc493ea64319109b5baa573e",
+        "name": "WETH",
+        "created": 11086824,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 48,
+        "address": "0x1dcaf36c8c4222139899690945f4382f298f8735",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 8,
+        "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "name": "ETH",
+        "created": 4719568,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_WETH",
+      "symbol": "fWETH",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 2,
+      "contract": {
+        "id": 6,
+        "address": "0x8e298734681adbfc41ee5d17ff8b0d6d803e7098",
+        "name": "WETH_V0",
+        "created": 10861886,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 7,
+        "address": "0xf328f799a9c719f446e05385eb64c8a29d3b0674",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 8,
+        "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "name": "ETH",
+        "created": 4719568,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_WETH",
+      "symbol": "fWETH",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 21,
+      "contract": {
+        "id": 55,
+        "address": "0x5d9d25c7c457dd82fc8668ffc6b9746b674d4ecb",
+        "name": "WBTC",
+        "created": 11068089,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 56,
+        "address": "0xb8e9db02262d37233442932e1a6626d88c649c6e",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 20,
+        "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "name": "WBTC",
+        "created": 6766284,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_WBTC",
+      "symbol": "fWBTC",
+      "decimals": 8,
+      "underlyingUnit": 100000000
+    },
+    {
+      "id": 6,
+      "contract": {
+        "id": 18,
+        "address": "0xc07eb91961662d275e2d285bdc21885a4db136b0",
+        "name": "WBTC_V0",
+        "created": 10802976,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 19,
+        "address": "0x66db507e7e3efdf92435fa09333b83187b6d46e6",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 20,
+        "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "name": "WBTC",
+        "created": 6766284,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_WBTC",
+      "symbol": "fWBTC",
+      "decimals": 8,
+      "underlyingUnit": 100000000
+    },
+    {
+      "id": 20,
+      "contract": {
+        "id": 53,
+        "address": "0xab7fa2b2985bccfc13c6d86b1d5a17486ab1e04c",
+        "name": "DAI",
+        "created": 11086832,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 54,
+        "address": "0x9a6de10fc9b9d1ca9df3caf306ed60ef1c419774",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 17,
+        "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "name": "DAI",
+        "created": 8928158,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_DAI",
+      "symbol": "fDAI",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 5,
+      "contract": {
+        "id": 15,
+        "address": "0xe85c8581e60d7cd32bbfd86303d2a4fa6a951dac",
+        "name": "DAI_V0",
+        "created": 10770103,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 16,
+        "address": "0xa3347ce982fde100caab13fd603b42a014c95550",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 17,
+        "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "name": "DAI",
+        "created": 8928158,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_DAI",
+      "symbol": "fDAI",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 19,
+      "contract": {
+        "id": 51,
+        "address": "0x053c80ea73dc6941f518a68e2fc52ac45bde7c9c",
+        "name": "USDT",
+        "created": 11086849,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 52,
+        "address": "0x5b96d6b56d4051cb54269f3620c262db22366194",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 14,
+        "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "name": "USDT",
+        "created": 4634748,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_USDT",
+      "symbol": "fUSDT",
+      "decimals": 6,
+      "underlyingUnit": 1000000
+    },
+    {
+      "id": 4,
+      "contract": {
+        "id": 12,
+        "address": "0xc7ee21406bb581e741fbb8b21f213188433d9f2f",
+        "name": "USDT_V0",
+        "created": 10770108,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 13,
+        "address": "0x0a558a65a3b7c9a5c05c520fb55b17bcab9432e0",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 14,
+        "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "name": "USDT",
+        "created": 4634748,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_USDT",
+      "symbol": "fUSDT",
+      "decimals": 6,
+      "underlyingUnit": 1000000
+    },
+    {
+      "id": 27,
+      "contract": {
+        "id": 69,
+        "address": "0x7674622c63bee7f46e86a4a5a18976693d54441b",
+        "name": "TUSD",
+        "created": 10997721,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 70,
+        "address": "0xc78589912c85b3c86055a244580629a8c6504695",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 71,
+        "address": "0x0000000000085d4780b73119b644ae5ecd22b376",
+        "name": "TUSD",
+        "created": 6988184,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_TUSD",
+      "symbol": "fTUSD",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 25,
+      "contract": {
+        "id": 64,
+        "address": "0x0fe4283e0216f94f5f9750a7a11ac54d3c9c38f3",
+        "name": "YCRV",
+        "created": 11152258,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 65,
+        "address": "0x6945f180b339825ac734649c12a1557e93b2b73a",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 5,
+        "address": "0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8",
+        "name": "YCRV",
+        "created": 9476452,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_yDAI+yUSDC+yUSDT+yTUSD",
+      "symbol": "fyDAI+yUSDC+yUSDT+yTUSD",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 1,
+      "contract": {
+        "id": 1,
+        "address": "0xf2b223eb3d2b382ead8d85f3c1b7ef87c1d35f3a",
+        "name": "YCRV_V0",
+        "created": 10770117,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 4,
+        "address": "0x2427da81376a0c0a0c654089a951887242d67c92",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 5,
+        "address": "0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8",
+        "name": "YCRV",
+        "created": 9476452,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_yDAI+yUSDC+yUSDT+yTUSD",
+      "symbol": "fyDAI+yUSDC+yUSDT+yTUSD",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 26,
+      "contract": {
+        "id": 66,
+        "address": "0x71b9ec42bb3cb40f017d8ad8011be8e384a95fa5",
+        "name": "3CRV",
+        "created": 11159005,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 67,
+        "address": "0x0623cf5d4cd761e2c237fb02d1fa6424e03f5c8c",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 68,
+        "address": "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+        "name": "3CRV",
+        "created": 10809467,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_3Crv",
+      "symbol": "f3Crv",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 22,
+      "contract": {
+        "id": 57,
+        "address": "0xc391d1b08c1403313b0c28d47202dfda015633c4",
+        "name": "RENBTC",
+        "created": 11086855,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 58,
+        "address": "0x323c726c899ca9fb7b747ff61bc30183bdeb3c09",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 23,
+        "address": "0xeb4c2781e4eba804ce9a9803c67d0893436bb27d",
+        "name": "RENBTC",
+        "created": 9736969,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_renBTC",
+      "symbol": "frenBTC",
+      "decimals": 8,
+      "underlyingUnit": 100000000
+    },
+    {
+      "id": 7,
+      "contract": {
+        "id": 21,
+        "address": "0xfbe122d0ba3c75e1f7c80bd27613c9f35b81feec",
+        "name": "RENBTC_V0",
+        "created": 10802986,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 22,
+        "address": "0xc898445efe22dd43ed62e8accbbb4a5670926a74",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 23,
+        "address": "0xeb4c2781e4eba804ce9a9803c67d0893436bb27d",
+        "name": "RENBTC",
+        "created": 9736969,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_renBTC",
+      "symbol": "frenBTC",
+      "decimals": 8,
+      "underlyingUnit": 100000000
+    },
+    {
+      "id": 13,
+      "contract": {
+        "id": 39,
+        "address": "0x307e2752e8b8a9c29005001be66b1c012ca9cdb7",
+        "name": "UNI_ETH_DAI",
+        "created": 11041674,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 40,
+        "address": "0x2cf4ceb36172fb2196a47490419d57584234cbd4",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 29,
+        "address": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
+        "name": "UNI_LP_ETH_DAI",
+        "created": 10042267,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 9,
+      "contract": {
+        "id": 27,
+        "address": "0x1a9f22b4c385f78650e7874d64e442839dc32327",
+        "name": "UNI_ETH_DAI_V0",
+        "created": 10883048,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 28,
+        "address": "0xc439e9f952600ed8f3e87d94b08dec91c03d3290",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 29,
+        "address": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
+        "name": "UNI_LP_ETH_DAI",
+        "created": 10042267,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 14,
+      "contract": {
+        "id": 41,
+        "address": "0xa79a083fdd87f73c2f983c5551ec974685d6bb36",
+        "name": "UNI_ETH_USDC",
+        "created": 11041667,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 42,
+        "address": "0xc6e973b8fe772c58ad0d20099d43d2b3f0aef5c0",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 32,
+        "address": "0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc",
+        "name": "UNI_LP_USDC_ETH",
+        "created": 10008355,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 10,
+      "contract": {
+        "id": 30,
+        "address": "0x63671425ef4d25ec2b12c7d05de855c143f16e3b",
+        "name": "UNI_ETH_USDC_V0",
+        "created": 10883030,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 31,
+        "address": "0x6c91cea46f54897a039998ad5578e7066fcb2fa3",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 32,
+        "address": "0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc",
+        "name": "UNI_LP_USDC_ETH",
+        "created": 10008355,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 15,
+      "contract": {
+        "id": 43,
+        "address": "0x7ddc3fff0612e75ea5ddc0d6bd4e268f70362cff",
+        "name": "UNI_ETH_USDT",
+        "created": 11011433,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 44,
+        "address": "0x0fd7c77b473e3efe3170536805a14b61050efc6e",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 35,
+        "address": "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852",
+        "name": "UNI_LP_ETH_USDT",
+        "created": 10093341,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 11,
+      "contract": {
+        "id": 33,
+        "address": "0xb19ebfb37a936cce783142955d39ca70aa29d43c",
+        "name": "UNI_ETH_USDT_V0",
+        "created": 10883026,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 34,
+        "address": "0xb1eb7afe51f1663f07cd3961171e89f43f67f7c5",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 35,
+        "address": "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852",
+        "name": "UNI_LP_ETH_USDT",
+        "created": 10093341,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 16,
+      "contract": {
+        "id": 45,
+        "address": "0x01112a60f427205dca6e229425306923c3cc2073",
+        "name": "UNI_ETH_WBTC",
+        "created": 11041683,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 46,
+        "address": "0x46ec909099f9691b43b64413f1bc662edfbee00a",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 38,
+        "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940",
+        "name": "UNI_LP_ETH_WBTC",
+        "created": 10091097,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 12,
+      "contract": {
+        "id": 36,
+        "address": "0xb1feb6ab4ef7d0f41363da33868e85eb0f3a57ee",
+        "name": "UNI_ETH_WBTC_V0",
+        "created": 10883054,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 37,
+        "address": "0x4a892b63409e222b6ea4af69dff8e1626a4e535c",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 38,
+        "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940",
+        "name": "UNI_LP_ETH_WBTC",
+        "created": 10091097,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 24,
+      "contract": {
+        "id": 61,
+        "address": "0xf553e1f826f42716cdfe02bde5ee76b2a52fc7eb",
+        "name": "SUSHI_WBTC_TBTC",
+        "created": 11036219,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 62,
+        "address": "0x53df6664b3dde086dce6315c317d1002b14b87e3",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 63,
+        "address": "0x2dbc7dd86c6cd87b525bd54ea73ebeebbc307f68",
+        "name": "SUSHI_LP_WBTC_TBTC",
+        "created": 10994541,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_SLP",
+      "symbol": "fSLP",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 23,
+      "contract": {
+        "id": 59,
+        "address": "0x9aa8f427a17d6b0d91b6262989edc7d45d6aedf8",
+        "name": "CRVRENWBTC",
+        "created": 11086865,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 60,
+        "address": "0x3952555b3be488f51f0b03315a85560a83c24e04",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 26,
+        "address": "0x49849c98ae39fff122806c06791fa73784fb3675",
+        "name": "CRV_RENWBTC",
+        "created": 10151366,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_crvRenWBTC",
+      "symbol": "fcrvRenWBTC",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 8,
+      "contract": {
+        "id": 24,
+        "address": "0x192e9d29d43db385063799bc239e772c3b6888f3",
+        "name": "CRVRENWBTC_V0",
+        "created": 10815917,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 25,
+        "address": "0x19b3aba7ba46f9cac08ba2872cbcf8f96ae8de15",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 26,
+        "address": "0x49849c98ae39fff122806c06791fa73784fb3675",
+        "name": "CRV_RENWBTC",
+        "created": 10151366,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_crvRenWBTC",
+      "symbol": "fcrvRenWBTC",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 53,
+      "contract": {
+        "id": 139,
+        "address": "0x45a9e027ddd8486fad6fca647bb132ad03303ec2",
+        "name": "ESD",
+        "created": 11655609,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 140,
+        "address": "0x9b29fb315be3333281a6f7c62ebff799a6b6dc80",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 141,
+        "address": "0x36f3fd68e7325a35eb768f1aedaae9ea0689d723",
+        "name": "ESD",
+        "created": 10722554,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_ESD",
+      "symbol": "fESD",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 54,
+      "contract": {
+        "id": 142,
+        "address": "0x8bf3c1c7b1961764ecb19b4fc4491150ceb1abb1",
+        "name": "DSD",
+        "created": 11655624,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 143,
+        "address": "0x8b6bef8d373d959a5f20d959bc44ebca876f5464",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 144,
+        "address": "0xbd2f0cd039e0bfcf88901c98c0bfac5ab27566e3",
+        "name": "DSD",
+        "created": 11330242,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_DSD",
+      "symbol": "fDSD",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 31,
+      "contract": {
+        "id": 77,
+        "address": "0x998ceb152a42a3eac1f555b1e911642bebf00fad",
+        "name": "CRV_CMPND",
+        "created": 11257781,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 78,
+        "address": "0x1825a0013e030dd668c5e4a00ae76fb6e94687f6",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 79,
+        "address": "0x845838df265dcd2c412a1dc9e959c7d08537f8a2",
+        "name": "CRV_CMPND",
+        "created": 9554031,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_cDAI+cUSDC",
+      "symbol": "fcDAI+cUSDC",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 32,
+      "contract": {
+        "id": 80,
+        "address": "0x4b1cbd6f6d8676ace5e412c78b7a59b4a1bbb68a",
+        "name": "CRV_BUSD",
+        "created": 11257802,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 81,
+        "address": "0x2b7caa7d87c01152a82c266791ada69ccfe64045",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 82,
+        "address": "0x3b3ac5386837dc563660fb6a0937dfaa5924333b",
+        "name": "CRV_BUSD",
+        "created": 9567293,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_yDAI+yUSDC+yUSDT+yBUSD",
+      "symbol": "fyDAI+yUSDC+yUSDT+yBUSD",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 33,
+      "contract": {
+        "id": 83,
+        "address": "0x683e683fbe6cf9b635539712c999f3b3edcb8664",
+        "name": "CRV_USDN",
+        "created": 11257784,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 84,
+        "address": "0x50f3cfb398a25a5918b27c77465e9c3ede7888b7",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 85,
+        "address": "0x4f3e8f405cf5afc05d68142f3783bdfe13811522",
+        "name": "CRV_USDN",
+        "created": 11010502,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_usdn3CRV",
+      "symbol": "fusdn3CRV",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 56,
+      "contract": {
+        "id": 148,
+        "address": "0x84a1dfadd698886a614fd70407936816183c0a02",
+        "name": "CRV_UST",
+        "created": 11680899,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 149,
+        "address": "0xc55f8be3cc55cae1bfbe5558d9e5b44906ed248a",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 150,
+        "address": "0x94e131324b6054c0d789b190b2dac504e4361b53",
+        "name": "CRV_UST",
+        "created": 11466549,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_ust3CRV",
+      "symbol": "fust3CRV",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 55,
+      "contract": {
+        "id": 145,
+        "address": "0x6eb941bd065b8a5bd699c5405a928c1f561e2e5a",
+        "name": "CRV_EURS",
+        "created": 11674631,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 146,
+        "address": "0x807a637a1c82ca37d4bac0ab2684b33600c4a60a",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 147,
+        "address": "0x194ebd173f6cdace046c53eacce9b953f28411d1",
+        "name": "CRV_EURS",
+        "created": 11466859,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_eursCRV",
+      "symbol": "feursCRV",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 45,
+      "contract": {
+        "id": 119,
+        "address": "0x966a70a4d3719a6de6a94236532a0167d5246c72",
+        "name": "CRV_OBTC",
+        "created": 11639716,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 120,
+        "address": "0x2e916cf581547c1641bd259c01507136b4ac6454",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 121,
+        "address": "0x2fe94ea3d5d4a175184081439753de15aef9d614",
+        "name": "CRV_OBTC",
+        "created": 11459238,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_oBTC/sbtcCRV",
+      "symbol": "foBTC/sbtcCRV",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 38,
+      "contract": {
+        "id": 98,
+        "address": "0x2a32dcbb121d48c106f6d94cf2b4714c0b4dfe48",
+        "name": "IDX_ETH_DPI",
+        "created": 11374134,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 99,
+        "address": "0x7f522f8619018f6d905a670830800903bcee544d",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 100,
+        "address": "0x4d5ef58aac27d99935e5b6b4a6778ff292059991",
+        "name": "UNI_LP_ETH_DPI",
+        "created": 10836224,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 74,
+      "contract": {
+        "id": 202,
+        "address": "0x29ec64560ab14d3166222bf07c3f29c4916e0027",
+        "name": "ETH_DAI_HODL",
+        "created": 11998979,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 203,
+        "address": "0x923ca6dcef62030bed25aa3ef854f39dc45dda65",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 88,
+        "address": "0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f",
+        "name": "SUSHI_LP_ETH_DAI",
+        "created": 10829331,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_SLP",
+      "symbol": "fSLP",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 46,
+      "contract": {
+        "id": 122,
+        "address": "0x8e53031462e930827a8d482e7d80603b1f86e32d",
+        "name": "ONEINCH_ETH_DAI",
+        "created": 11647784,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 123,
+        "address": "0xbf31d6b3ada99555a0ce04c840916ec410a3b78b",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 88,
+        "address": "0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f",
+        "name": "SUSHI_LP_ETH_DAI",
+        "created": 10829331,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_1LP-ETH-DAI",
+      "symbol": "f1LP-ETH-DAI",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 34,
+      "contract": {
+        "id": 86,
+        "address": "0x203e97aa6eb65a1a02d9e80083414058303f241e",
+        "name": "SUSHI_ETH_DAI",
+        "created": 11269733,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 87,
+        "address": "0x895cc1b32aa6f5fedf0e113eac556309ad225322",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 88,
+        "address": "0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f",
+        "name": "SUSHI_LP_ETH_DAI",
+        "created": 10829331,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_SLP",
+      "symbol": "fSLP",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 75,
+      "contract": {
+        "id": 204,
+        "address": "0x5774260ccd87f4fffc4456260857207fc8bcb89a",
+        "name": "ETH_USDC_HODL",
+        "created": 11998977,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 205,
+        "address": "0x8e8c911d46badc3e69d781744d57884eef6b4c43",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 91,
+        "address": "0x397ff1542f962076d0bfe58ea045ffa2d347aca0",
+        "name": "SUSHI_LP_ETH_USDC",
+        "created": 10829331,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_SLP",
+      "symbol": "fSLP",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 47,
+      "contract": {
+        "id": 124,
+        "address": "0xd162395c21357b126c5afed6921bc8b13e48d690",
+        "name": "ONEINCH_ETH_USDC",
+        "created": 11647839,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 125,
+        "address": "0x44173f2fb495c0c397b9d66110bfacd5a626cc7a",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 91,
+        "address": "0x397ff1542f962076d0bfe58ea045ffa2d347aca0",
+        "name": "SUSHI_LP_ETH_USDC",
+        "created": 10829331,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_1LP-ETH-USDC",
+      "symbol": "f1LP-ETH-USDC",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 35,
+      "contract": {
+        "id": 89,
+        "address": "0x01bd09a1124960d9be04b638b142df9df942b04a",
+        "name": "SUSHI_ETH_USDC",
+        "created": 11269722,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 90,
+        "address": "0xd5d2adcb5e6ad20425b0650e4050c0ea9ec3cec0",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 91,
+        "address": "0x397ff1542f962076d0bfe58ea045ffa2d347aca0",
+        "name": "SUSHI_LP_ETH_USDC",
+        "created": 10829331,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_SLP",
+      "symbol": "fSLP",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 76,
+      "contract": {
+        "id": 206,
+        "address": "0x4d4b6f8efb685b774234fd427201b3a9bf36ffc8",
+        "name": "ETH_USDT_HODL",
+        "created": 11998971,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 207,
+        "address": "0x33fed4ccb4175484a692c83942d4374fcd1a3cd4",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 94,
+        "address": "0x06da0fd433c1a5d7a4faa01111c044910a184553",
+        "name": "SUSHI_LP_ETH_USDT",
+        "created": 10822038,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_SLP",
+      "symbol": "fSLP",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 48,
+      "contract": {
+        "id": 126,
+        "address": "0x4bf633a09bd593f6fb047db3b4c25ef5b9c5b99e",
+        "name": "ONEINCH_ETH_USDT",
+        "created": 11647866,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 127,
+        "address": "0xa96865a53fcca2bd131d47ebdb9263cdc603a6f8",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 94,
+        "address": "0x06da0fd433c1a5d7a4faa01111c044910a184553",
+        "name": "SUSHI_LP_ETH_USDT",
+        "created": 10822038,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_1LP-ETH-USDT",
+      "symbol": "f1LP-ETH-USDT",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 36,
+      "contract": {
+        "id": 92,
+        "address": "0x64035b583c8c694627a199243e863bb33be60745",
+        "name": "SUSHI_ETH_USDT",
+        "created": 11269716,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 93,
+        "address": "0x180a71c5688ac7e2368890ef77b0036af8e261b6",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 94,
+        "address": "0x06da0fd433c1a5d7a4faa01111c044910a184553",
+        "name": "SUSHI_LP_ETH_USDT",
+        "created": 10822038,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_SLP",
+      "symbol": "fSLP",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 77,
+      "contract": {
+        "id": 208,
+        "address": "0xb677bca369f2523f62862f88d83471d892dd55b9",
+        "name": "ETH_WBTC_HODL",
+        "created": 11998984,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 209,
+        "address": "0x4cad48bf9a362d3576d2aacd5fd0dbd4f9e9fab8",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 97,
+        "address": "0xceff51756c56ceffca006cd410b03ffc46dd3a58",
+        "name": "SUSHI_LP_ETH_WBTC",
+        "created": 10840845,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_SLP",
+      "symbol": "fSLP",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 49,
+      "contract": {
+        "id": 128,
+        "address": "0x859222dd0b249d0ea960f5102dab79b294d6874a",
+        "name": "ONEINCH_ETH_WBTC",
+        "created": 11647897,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 129,
+        "address": "0x639422a625140e12b241352123fcafc550379538",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 97,
+        "address": "0xceff51756c56ceffca006cd410b03ffc46dd3a58",
+        "name": "SUSHI_LP_ETH_WBTC",
+        "created": 10840845,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_1LP-ETH-WBTC",
+      "symbol": "f1LP-ETH-WBTC",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 37,
+      "contract": {
+        "id": 95,
+        "address": "0x5c0a3f55aac52aa320ff5f280e77517cbaf85524",
+        "name": "SUSHI_ETH_WBTC",
+        "created": 11269739,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 96,
+        "address": "0xdd1dfbb5a580e96c2723ccaf687227900f97f053",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 97,
+        "address": "0xceff51756c56ceffca006cd410b03ffc46dd3a58",
+        "name": "SUSHI_LP_ETH_WBTC",
+        "created": 10840845,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_SLP",
+      "symbol": "fSLP",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 41,
+      "contract": {
+        "id": 107,
+        "address": "0x6bccd7e983e438a56ba2844883a664da87e4c43b",
+        "name": "UNI_BAC_DAI",
+        "created": 11608433,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 108,
+        "address": "0x6b477831b8af02393f1fedd36956418ce9927894",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 109,
+        "address": "0xd4405f0704621dbe9d4dea60e128e0c3b26bddbd",
+        "name": "UNI_LP_BAC_DAI",
+        "created": 11355401,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 43,
+      "contract": {
+        "id": 113,
+        "address": "0x6f14165c6d529ea3bfe1814d0998449e9c8d157d",
+        "name": "SUSHI_MIC_USDT",
+        "created": 11608456,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 114,
+        "address": "0xe12c4bb7b88b3cfe2d44a8e49037392b06bfae72",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 115,
+        "address": "0xc9cb53b48a2f3a9e75982685644c1870f1405ccb",
+        "name": "SUSHI_LP_MIC_USDT",
+        "created": 11549969,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_SLP",
+      "symbol": "fSLP",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 44,
+      "contract": {
+        "id": 116,
+        "address": "0x145f39b3c6e6a885aa6a8fade4ca69d64bab69c8",
+        "name": "SUSHI_MIS_USDT",
+        "created": 11608466,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 117,
+        "address": "0x636a37802da562f7d562c1915cc2a948a1d3e5a0",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 118,
+        "address": "0x066f3a3b7c8fa077c71b9184d862ed0a4d5cf3e0",
+        "name": "SUSHI_LP_MIS_USDT",
+        "created": 11549972,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_SLP",
+      "symbol": "fSLP",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 50,
+      "contract": {
+        "id": 130,
+        "address": "0x639d4f3f41daa5f4b94d63c2a5f3e18139ba9e54",
+        "name": "DAI_BSG",
+        "created": 11660618,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 131,
+        "address": "0x8d640378c983c6aab076bdb5d86a58f9179055ed",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 132,
+        "address": "0x4a9596e5d2f9bef50e4de092ad7181ae3c40353e",
+        "name": "UNI_LP_DAI_BSG",
+        "created": 11644509,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 51,
+      "contract": {
+        "id": 133,
+        "address": "0x633c4861a4e9522353eda0bb652878b079fb75fd",
+        "name": "DAI_BSGS",
+        "created": 11660626,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 134,
+        "address": "0x3f37185399537e95686a66247514de55c8792eb3",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 135,
+        "address": "0x980a07e4f64d21a0cb2ef8d4af362a79b9f5c0da",
+        "name": "UNI_LP_DAI_BSGS",
+        "created": 11644511,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 57,
+      "contract": {
+        "id": 151,
+        "address": "0x11804d69acac6ae9466798325fa7de023f63ab53",
+        "name": "MAAPL_UST",
+        "created": 11681744,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 152,
+        "address": "0xa5a091fd156ff5e44f22bef544923cdc850d9d46",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 153,
+        "address": "0xb022e08adc8ba2de6ba4fecb59c6d502f66e953b",
+        "name": "UNI_LP_MAAPL_UST",
+        "created": 11380524,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 42,
+      "contract": {
+        "id": 110,
+        "address": "0xf8b7235fcfd5a75cfdcc0d7bc813817f3dd17858",
+        "name": "UNI_DAI_BAS",
+        "created": 11608445,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 111,
+        "address": "0x1adafe68f46e0aecd5364b85966c8c16d4079361",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 112,
+        "address": "0x3e78f2e7dade07ea685f8612f00477fd97162f1e",
+        "name": "UNI_LP_BASv2_DAI",
+        "created": 11819340,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 62,
+      "contract": {
+        "id": 166,
+        "address": "0xb8671e33fcfc7fea2f7a3ea4a117f065ec4b009e",
+        "name": "CRV_GUSD",
+        "created": 11745394,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 167,
+        "address": "0xa505917c1326670451eff9ea75fe0d49a3853acf",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 168,
+        "address": "0xd2967f45c4f384deea880f807be904762a3dea07",
+        "name": "CRV_GUSD",
+        "created": 11005599,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_gusd3CRV",
+      "symbol": "fgusd3CRV",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 61,
+      "contract": {
+        "id": 163,
+        "address": "0xc27bfe32e0a934a12681c1b35acf0dba0e7460ba",
+        "name": "CRV_STETH",
+        "created": 11686113,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 164,
+        "address": "0x52d8f04f071dd397c71514853a58664613b91192",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 165,
+        "address": "0x06325440d014e39736583c165c2963ba99faf14e",
+        "name": "CRV_STETH",
+        "created": 11591275,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_steCRV",
+      "symbol": "fsteCRV",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 63,
+      "contract": {
+        "id": 169,
+        "address": "0xc3ef8c4043d7cf1d15b6bb4cd307c844e0ba9d42",
+        "name": "CRV_AAVE",
+        "created": 11830928,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 170,
+        "address": "0xdc9a3e8c6327c6fea1780019e00f7b0558f638a5",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 171,
+        "address": "0xfd2a8fa60abd58efe3eee34dd494cd491dc14900",
+        "name": "CRV_AAVE",
+        "created": 11497098,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_a3CRV",
+      "symbol": "fa3CRV",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 73,
+      "contract": {
+        "id": 199,
+        "address": "0x274aa8b58e8c57c4e347c8768ed853eb6d375b48",
+        "name": "SUSHI_HODL",
+        "created": 11954195,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 389,
+        "address": "0x40d94aefec6ac00fa80689a38135d83eeaa58999",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 201,
+        "address": "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2",
+        "name": "SUSHI",
+        "created": 10736094,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_SUSHI",
+      "symbol": "fSUSHI",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 72,
+      "contract": {
+        "id": 196,
+        "address": "0x24c562e24a4b5d905f16f2391e07213efcfd216e",
+        "name": "CRV_LINK",
+        "created": 11954288,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 197,
+        "address": "0x3a0073726e60fd202fd228a9c88288f331977d04",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 198,
+        "address": "0xcee60cfa923170e4f8204ae08b4fa6a3f5656f3a",
+        "name": "CRV_LINK",
+        "created": 11875162,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_linkCRV",
+      "symbol": "flinkCRV",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 58,
+      "contract": {
+        "id": 154,
+        "address": "0x8334a61012a779169725fcc43adcff1f581350b7",
+        "name": "MAMZN_UST",
+        "created": 11681033,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 155,
+        "address": "0x0c3d0b5910b0603d68be29a647c0f6187a8c3d36",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 156,
+        "address": "0x0ae8cb1f57e3b1b7f4f5048743710084aa69e796",
+        "name": "UNI_LP_MAMZN_UST",
+        "created": 11380782,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 59,
+      "contract": {
+        "id": 157,
+        "address": "0x07dbe6aa35ef70dad124f4e2b748ffa6c9e1963a",
+        "name": "MGOOGL_UST",
+        "created": 11681049,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 158,
+        "address": "0x0a6ade7348598e42da381b03c1c40c9ba1c7747d",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 159,
+        "address": "0x4b70ccd1cf9905be1faed025eadbd3ab124efe9a",
+        "name": "UNI_LP_MGOOGL_UST",
+        "created": 11380543,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 60,
+      "contract": {
+        "id": 160,
+        "address": "0xc800982d906671637e23e031e907d2e3487291bc",
+        "name": "MTSLA_UST",
+        "created": 11681065,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 161,
+        "address": "0xb5480a276c49b5e3a1bc13659030b4e94018a817",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 162,
+        "address": "0x5233349957586a8207c52693a959483f9aeaa50c",
+        "name": "UNI_LP_MTSLA_UST",
+        "created": 11380570,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 64,
+      "contract": {
+        "id": 172,
+        "address": "0x5ade382f38a09a1f8759d06ffe2067992ab5c78e",
+        "name": "SUSHI_SUSHI_ETH",
+        "created": 11777480,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 173,
+        "address": "0xa44ffa733f1d500fd10c613cf66c87320d87ebee",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 174,
+        "address": "0x795065dcc9f64b5614c407a6efdc400da6221fb0",
+        "name": "SUSHI_LP_SUSHI_ETH",
+        "created": 10829340,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_SLP",
+      "symbol": "fSLP",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 66,
+      "contract": {
+        "id": 178,
+        "address": "0xfca949e34ecd9de519542cf02054de707cf361ce",
+        "name": "ONEINCH_ETH_ONEINCH",
+        "created": 11905238,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 179,
+        "address": "0x45d17d7c638a0ab6ec4eb736f87313d91effbbd5",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 180,
+        "address": "0x0ef1b8a0e726fc3948e15b23993015eb1627f210",
+        "name": "ONEINCH_LP_ONEINCH_ETH",
+        "created": 11607879,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_1LP-ETH-1INCH",
+      "symbol": "f1LP-ETH-1INCH",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 68,
+      "contract": {
+        "id": 184,
+        "address": "0x5cd9db40639013a08d797a839c9becd6ec5dcd4d",
+        "name": "UNI_WBTC_KBTC",
+        "created": 11924877,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 388,
+        "address": "0x6cb5e2fc7c258a1ec07f6a251f8e67a4e485812f",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 186,
+        "address": "0x1f3d61248ec81542889535595903078109707941",
+        "name": "UNI_LP_WBTC_KBTC",
+        "created": 11733661,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 71,
+      "contract": {
+        "id": 193,
+        "address": "0x4d4d85c6a1ffe6bb7a1bef51c9e2282893fee521",
+        "name": "SUSHI_ETH_UST",
+        "created": 11954053,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 194,
+        "address": "0x18fe4b095dc23411857e174d8c561c860c6c7cd5",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 195,
+        "address": "0x8b00ee8606cc70c2dce68dea0cefe632cca0fb7b",
+        "name": "SUSHI_LP_ETH_UST",
+        "created": 11508188,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_SLP",
+      "symbol": "fSLP",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 70,
+      "contract": {
+        "id": 190,
+        "address": "0xb37c79f954e3e1a4accc14a5cca3e46f226038b7",
+        "name": "MTWTR_UST",
+        "created": 11953999,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 191,
+        "address": "0x18fbe81e56133118669660a46d050546045ab9b3",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 192,
+        "address": "0x34856be886a2dba5f7c38c4df7fd86869ab08040",
+        "name": "UNI_LP_MTWTR_UST",
+        "created": 11380726,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 78,
+      "contract": {
+        "id": 210,
+        "address": "0xc45d471c77ff31c39474d68a5080fe1ffacdbc04",
+        "name": "MUSE_ETH",
+        "created": 12044241,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 211,
+        "address": "0x21546068903b82695c6cc26164b4cd15ad906f60",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 212,
+        "address": "0x20d2c17d1928ef4290bf17f922a10eaa2770bf43",
+        "name": "UNI_LP_MUSE_ETH",
+        "created": 11023967,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 79,
+      "contract": {
+        "id": 213,
+        "address": "0x1e5f4e7127ea3981551d2bf97dcc8f17a4ecebef",
+        "name": "DUDES20_ETH",
+        "created": 12044243,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 214,
+        "address": "0x32448d412e1821e5fb598291dc2de2ad91a78658",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 215,
+        "address": "0x04914cb01eec94e320e3a88b3c7a7e9b1609d13c",
+        "name": "UNI_LP_DUDES20_ETH",
+        "created": 12010817,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 80,
+      "contract": {
+        "id": 216,
+        "address": "0xf2a671645d0df54d2f03e9ad7916c8f7368d1c29",
+        "name": "MASK20_ETH",
+        "created": 12044246,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 217,
+        "address": "0xfdaf72d8b6e0f553c137a03f73c8ed210712f143",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 218,
+        "address": "0xaa617c8726adfde9e7b08746457e6b90ddb21480",
+        "name": "UNI_LP_MASK20_ETH",
+        "created": 11844164,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 81,
+      "contract": {
+        "id": 219,
+        "address": "0xaf9486e3da0ce8d125af9b256b3ecd104a3031b9",
+        "name": "ROPE20_ETH",
+        "created": 12044248,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 220,
+        "address": "0x7ce0c1e2985677743a789dc4b64e9230f8862395",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 221,
+        "address": "0x95acf4ba2c53e31db1459172332d52baac433bb3",
+        "name": "UNI_LP_ROPE20_ETH",
+        "created": 11878846,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 65,
+      "contract": {
+        "id": 175,
+        "address": "0x1571ed0bed4d987fe2b498ddbae7dfa19519f651",
+        "name": "iPS",
+        "created": 11775913,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 176,
+        "address": "0xf2004f64f71f110e9e50b5ff36253fe8785b2bcc",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 177,
+        "address": "0xa0246c9032bc3a600820415ae600c6388619a14d",
+        "name": "FARM",
+        "created": 10770079,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "iFARM",
+      "symbol": "iFARM",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 18,
+      "contract": {
+        "id": 49,
+        "address": "0xf0358e8c3cd5fa238a29301d0bea3d63a17bedbe",
+        "name": "USDC",
+        "created": 11086842,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 50,
+        "address": "0xa5f125c0d571fd67d564c05a234e9a6f4e5d0624",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 11,
+        "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "name": "USDC",
+        "created": 6082465,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_USDC",
+      "symbol": "fUSDC",
+      "decimals": 6,
+      "underlyingUnit": 1000000
+    },
+    {
+      "id": 3,
+      "contract": {
+        "id": 9,
+        "address": "0xc3f7ffb5d5869b3ade9448d094d81b0521e8326f",
+        "name": "USDC_V0",
+        "created": 10770105,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 10,
+        "address": "0x1e716d6a2afe986f534611e5aa03fa95036f9964",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 11,
+        "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "name": "USDC",
+        "created": 6082465,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_USDC",
+      "symbol": "fUSDC",
+      "decimals": 6,
+      "underlyingUnit": 1000000
+    },
+    {
+      "id": 52,
+      "contract": {
+        "id": 136,
+        "address": "0x371e78676cd8547ef969f89d2ee8fa689c50f86b",
+        "name": "BAC",
+        "created": 11655592,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 137,
+        "address": "0xcbe0b706f50e2f89beb238174fc3e04f5206985e",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 138,
+        "address": "0x3449fc1cd036255ba1eb19d65ff4ba2b8903a69a",
+        "name": "BAC",
+        "created": 11355386,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_BAC",
+      "symbol": "fBAC",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 69,
+      "contract": {
+        "id": 187,
+        "address": "0x99c2564c9d4767c13e13f38ab073d4758af396ae",
+        "name": "MNFLX_UST",
+        "created": 11953907,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 188,
+        "address": "0x97487c1f352a8076a738fbdcd316a10f01046567",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 189,
+        "address": "0xc99a74145682c4b4a6e9fa55d559eb49a6884f75",
+        "name": "UNI_LP_MNFLX_UST",
+        "created": 11380589,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 87,
+      "contract": {
+        "id": 363,
+        "address": "0xddb4669f39c03a6eda92ffb5b78a9c1a74615f1b",
+        "name": "ONEINCH_ONEINCH_WBTC",
+        "created": 12063558,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 364,
+        "address": "0xb3ffe89b4f9e0b76980ee06301409521cf6825cc",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 365,
+        "address": "0xe179d801e6882e628d6ce58b94b3c41e35c8518a",
+        "name": "UNKNOWN_UNDERLYING",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "name": "FARM_1LP-1INCH-WBTC",
+      "symbol": "f1LP-1INCH-WBTC",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 88,
+      "contract": {
+        "id": 366,
+        "address": "0xf174dddd9dbffeaea5d908a77d695a77e53025b3",
+        "name": "ONEINCH_ONEINCH_USDC",
+        "created": 12063513,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 367,
+        "address": "0x8d7da935c449be284b27d96b6f215d6dba95d8d1",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 368,
+        "address": "0x69ab07348f51c639ef81d7991692f0049b10d522",
+        "name": "UNKNOWN_UNDERLYING",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "name": "FARM_1LP-1INCH-USDC",
+      "symbol": "f1LP-1INCH-USDC",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 40,
+      "contract": {
+        "id": 104,
+        "address": "0xcc775989e76ab386e9253df5b0c0b473e22102e2",
+        "name": "CRV_HBTC",
+        "created": 11380817,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 105,
+        "address": "0x5e10a2a23393118306cce080e3d3fc5447d0151b",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 106,
+        "address": "0xb19059ebb43466c323583928285a49f558e572fd",
+        "name": "CRV_HBTC",
+        "created": 10732326,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_hCRV",
+      "symbol": "fhCRV",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 39,
+      "contract": {
+        "id": 101,
+        "address": "0x29780c39164ebbd62e9ddde50c151810070140f2",
+        "name": "CRV_HUSD",
+        "created": 11380823,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 102,
+        "address": "0x5905569d78ed1fa22299eab74ef0443d02b40000",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 103,
+        "address": "0x5b5cfe992adac0c9d48e05854b2d91c73a003858",
+        "name": "CRV_HUSD",
+        "created": 11010066,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_husd3CRV",
+      "symbol": "fhusd3CRV",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 28,
+      "contract": {
+        "id": 72,
+        "address": "0x640704d106e79e105fda424f05467f005418f1b5",
+        "name": "CRV_TBTC",
+        "created": 11230944,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 73,
+        "address": "0xe26d94ded203f5402882d19fef92ee04f6b73ef9",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 74,
+        "address": "0x64eda51d3ad40d56b9dfc5554e06f94e1dd786fd",
+        "name": "CRV_SBTC",
+        "created": 11095911,
+        "type": 4,
+        "network": "eth"
+      },
+      "name": "FARM_tbtc/sbtcCrv",
+      "symbol": "ftbtc/sbtcCrv",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 82,
+      "contract": {
+        "id": 348,
+        "address": "0x0ca19915439c12b16c0a8c119ec05fa801365a15",
+        "name": "MCAT20_ETH",
+        "created": 12135514,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 349,
+        "address": "0x405fe1198edabae6a85c494dcf09f7be6a957b1d",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 350,
+        "address": "0x31c507636a4cab752a8a069b865099924bd5f1a9",
+        "name": "UNI_LP_MCAT20_ETH",
+        "created": 12030599,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 83,
+      "contract": {
+        "id": 351,
+        "address": "0x227a46266329767cea8883bfc81d21f1ea0edbb3",
+        "name": "MEME20_ETH",
+        "created": 12226541,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 352,
+        "address": "0xbdc7d6284bad0d7243bf3ca4dceae2a86deee37d",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 353,
+        "address": "0xe14f1283059afa8d3c9c52eff76fe91854f5d1b3",
+        "name": "UNI_LP_MEME20_ETH",
+        "created": 11858183,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 84,
+      "contract": {
+        "id": 354,
+        "address": "0xe6e0b4294ef6a518bb702402e9842df2a2abf1b1",
+        "name": "GPUNK20_ETH",
+        "created": 12226232,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 355,
+        "address": "0x7e33ef42d0b7f2b25e27b49004ce79e1b11f2649",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 356,
+        "address": "0xbb1565072fb4f3244ebce5bc8dfeda6baeb78ad3",
+        "name": "UNI_LP_GPUNK20_ETH",
+        "created": 12012664,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 85,
+      "contract": {
+        "id": 357,
+        "address": "0x5ea74c6abf0e523fdecfe218ccb3d2fde2339613",
+        "name": "MVI_ETH",
+        "created": 12226571,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 358,
+        "address": "0x991c40f931446321e3219a867a36b505b76e9522",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 359,
+        "address": "0x4d3c5db2c68f6859e0cd05d080979f597dd64bff",
+        "name": "UNI_LP_MVI_ETH",
+        "created": 12184158,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 86,
+      "contract": {
+        "id": 360,
+        "address": "0x26193024f481aa987fc5230e107f1651b3e01741",
+        "name": "KXUSD_DAI",
+        "created": 12226909,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": {
+        "id": 361,
+        "address": "0xa03833a5eef48fad3295c11e6c1e5701c2817e16",
+        "name": "UNKNOWN_STRATEGY",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "underlying": {
+        "id": 362,
+        "address": "0x672c973155c46fc264c077a41218ddc397bb7532",
+        "name": "UNI_LP_KXUSD_DAI",
+        "created": 12189129,
+        "type": 2,
+        "network": "eth"
+      },
+      "name": "FARM_UNI-V2",
+      "symbol": "fUNI-V2",
+      "decimals": 18,
+      "underlyingUnit": 1000000000000000000
+    },
+    {
+      "id": 29,
+      "contract": {
+        "id": 75,
+        "address": "0x25550cccbd68533fa04bfd3e3ac4d09f9e00fc50",
+        "name": "PS",
+        "created": 10957909,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": null,
+      "underlying": null,
+      "name": "PS vault",
+      "symbol": null,
+      "decimals": 18,
+      "underlyingUnit": null
+    },
+    {
+      "id": 30,
+      "contract": {
+        "id": 76,
+        "address": "0x59258f4e15a5fc74a7284055a8094f58108dbd4f",
+        "name": "PS_V0",
+        "created": 10797544,
+        "type": 0,
+        "network": "eth"
+      },
+      "updatedBlock": 12317700,
+      "controller": {
+        "id": 2,
+        "address": "0x222412af183bceadefd72e4cb1b71f1889953b1c",
+        "name": "CONTROLLER",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "governance": {
+        "id": 3,
+        "address": "0xf00dd244228f51547f0563e60bca65a30fbf5f7f",
+        "name": "GOVERNANCE",
+        "created": 0,
+        "type": 3,
+        "network": "eth"
+      },
+      "strategy": null,
+      "underlying": null,
+      "name": "PS vault",
+      "symbol": null,
+      "decimals": 18,
+      "underlyingUnit": null
+    }
+  ],
+  "code": "200",
+  "status": "OK"
+}
