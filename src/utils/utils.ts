@@ -275,7 +275,6 @@ export const getAssets = async (
         ])
         const prettyVaultBalance =
           parseInt(vaultBalance._hex, 16) / 10 ** vault.decimals
-
         const prettyFarmBalance =
           parseInt(farmBalance._hex, 16) / 10 ** farmDecimals
 
