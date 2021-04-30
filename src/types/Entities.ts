@@ -5,7 +5,7 @@ interface IContract {
   created: number
   type: number
   /** TODO: to type */
-  network: null
+  network: null | string
 }
 
 interface IRewardToken extends IContract {

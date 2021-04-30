@@ -4,7 +4,11 @@ export const vaultsWithoutReward = new Set<string>([])
 // FARM decimals
 export const farmDecimals = 18
 
+// Etherium
 export const farmAddress = '0xa0246c9032bc3a600820415ae600c6388619a14d'
+
+// BSC
+export const bFarmAddress = '0x4b5c23cac08a567ecf0c1ffca8372a45a5d33743'
 
 export const outdatedVaults = new Set<string>([
   '0xf2b223eb3d2b382ead8d85f3c1b7ef87c1d35f3a',
@@ -26,5 +30,10 @@ export const outdatedPools = new Set<string>([
   '0x8f5adc58b32d4e5ca02eac0e293d35855999436c',
 ])
 
-export const contractForGettingPrices =
+export const ETHERIUM_CONTRACT_FOR_GETTING_PRICES =
   '0x48dc32eca58106f06b41de514f29780ffa59c279'
+
+export const BSC_CONTRACT_FOR_GETTING_PRICES =
+  '0x643cF46eef91Bd878D9710ceEB6a7E6F929F2608'
+
+export const BSC_URL = 'https://bsc-dataseed.binance.org/'

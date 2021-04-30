@@ -1,4 +1,5 @@
 import { Contract, ethers, BigNumber } from 'ethers'
+import Web3 from 'web3'
 import { API } from '../api'
 import {
   farmDecimals,
@@ -6,6 +7,8 @@ import {
   farmAddress,
   outdatedVaults,
   outdatedPools,
+  bFarmAddress,
+  BSC_URL,
 } from '../constants/constants'
 import {
   FTOKEN_ABI,
@@ -47,7 +50,11 @@ export const getAssets = async (
     IPool[],
     IVault[],
     number
-  >([API.getPools(), API.getVaults(), API.getPrice(farmAddress, provider)])
+  >([
+    API.getPools(),
+    API.getVaults(),
+    API.getEtheriumPrice(farmAddress, provider),
+  ])
 
   const actualVaults = vaults.filter((v) => {
     return !outdatedVaults.has(v.contract.address)
@@ -127,7 +134,7 @@ export const getAssets = async (
       iFarmPricePerFullShare,
       poolTotalSupply,
     ] = await Promise.all<number, BigNumber | false | 0, BigNumber>([
-      prettyPoolBalance ? API.getPrice(priceAddress, provider) : 0,
+      prettyPoolBalance ? API.getEtheriumPrice(priceAddress, provider) : 0,
       prettyRewardTokenBalance &&
         !rewardIsFarm &&
         iFarmRewardPool.getPricePerFullShare(),
@@ -170,7 +177,7 @@ export const getAssets = async (
   }
 
   const getAssetsFromVaults = (): Promise<IAssetsInfo>[] => {
-    return actualVaults.map(async (vault) => {
+    return actualVaults.map(async (vault: IVault) => {
       // is this Vault iFarm?
       const isIFarm =
         vault.contract.address.toLowerCase() ===
@@ -324,6 +331,176 @@ export const getAssets = async (
   const assetsFromVaultsPromises = getAssetsFromVaults()
 
   const poolsWithoutVaults = actualPools.filter((pool) => {
+    return !vaults.find(
+      (vault) => vault.contract.address === pool.lpToken.address,
+    )
+  })
+
+  const assetsFromPoolsWithoutVaultsPromises = poolsWithoutVaults.map((pool) =>
+    getAssetsFromPool(pool),
+  )
+
+  const assetsDataResolved: IAssetsInfo[] = await Promise.all([
+    ...assetsFromVaultsPromises,
+    ...assetsFromPoolsWithoutVaultsPromises,
+  ])
+  const nonZeroAssets = assetsDataResolved.filter((asset) => {
+    return (
+      asset.farmToClaim ||
+      asset.stakedBalance ||
+      asset.value ||
+      asset.unstakedBalance ||
+      asset.underlyingBalance
+    )
+  })
+
+  return nonZeroAssets
+}
+
+export const getBSCAssets = async (walletAddress: string) => {
+  // set the provider you want from Web3.providers
+  const web3 = new Web3(BSC_URL)
+
+  const [vaults, pools, bFarmPrice] = await Promise.all<
+    IVault[],
+    IPool[],
+    number
+  >([API.getBSCVaults(), API.getBSCPools(), API.getBSCPrice(bFarmAddress)])
+
+  const getAssetsFromPool = async (
+    pool: IPool,
+    relatedVault?: IVault,
+  ): Promise<IAssetsInfo> => {
+    const lpTokenContract = new web3.eth.Contract(
+      FTOKEN_ABI,
+      pool.lpToken.address,
+    )
+
+    const poolContract = new web3.eth.Contract(
+      REWARDS_ABI,
+      pool.contract.address,
+    )
+
+    const priceAddress = relatedVault
+      ? relatedVault.underlying.address
+      : pool.lpToken.address
+    /**
+     * lpTokenBalance - balance of a wallet in the liquidity-pool
+     * rewardTokenPrice - the price are in USD (for FARM or iFARM)
+     * reward - reward of a wallet in the pool
+     * poolTotalSupply - the total number of tokens in the pool of all participants
+     * pricePerFullShareLpToken = (nativeToken / fToken ) * 10 ** lpTokenDecimals
+     */
+    const [
+      lpTokenBalance,
+      poolBalance,
+      reward,
+      pricePerFullShareLpToken,
+      lpTokenDecimals,
+    ] = await Promise.all<string, string, string, string | null, number>([
+      lpTokenContract.methods.balanceOf(walletAddress).call(),
+      poolContract.methods.balanceOf(walletAddress).call(),
+      poolContract.methods.earned(walletAddress).call(),
+      relatedVault
+        ? lpTokenContract.methods.getPricePerFullShare().call()
+        : null,
+      relatedVault ? relatedVault.decimals : lpTokenContract.methods.decimals(),
+    ])
+    const prettyLpTokenBalance = Number(lpTokenBalance) / 10 ** lpTokenDecimals
+    const prettyPoolBalance = Number(poolBalance) / 10 ** lpTokenDecimals
+
+    const prettyPricePerFullShareLpToken = pricePerFullShareLpToken
+      ? Number(pricePerFullShareLpToken) / 10 ** lpTokenDecimals
+      : 1
+
+    const prettyRewardTokenBalance = Number(reward) / 10 ** farmDecimals
+    /**
+     * underlyingPrice - the price are in USD
+     * poolBalance - balance of a wallet in the pool (are in fToken)
+     */
+    const [underlyingPrice, poolTotalSupply] = await Promise.all<
+      number,
+      BigNumber
+    >([
+      prettyPoolBalance ? API.getBSCPrice(priceAddress) : 0,
+      prettyPoolBalance ? poolContract.methods.totalSupply() : 1,
+    ])
+
+    const percentOfPool = (Number(poolBalance) / Number(poolTotalSupply)) * 100
+
+    /** All account assets that contains in the pool are in USD */
+    const calcValue = () => {
+      return (
+        underlyingPrice * prettyPoolBalance * prettyPricePerFullShareLpToken +
+        bFarmPrice * prettyRewardTokenBalance
+      )
+    }
+
+    // fTokens balance in underlying Tokens;
+    const underlyingBalance = prettyPoolBalance * prettyPricePerFullShareLpToken
+
+    return {
+      name: relatedVault ? relatedVault.contract.name : pool.contract.name,
+      earnFarm: true,
+      farmToClaim: prettyRewardTokenBalance,
+      stakedBalance: prettyPoolBalance,
+      percentOfPool,
+      value: calcValue(),
+      unstakedBalance: prettyLpTokenBalance,
+      address: relatedVault
+        ? relatedVault.contract.address
+        : pool.contract.address,
+      underlyingBalance,
+    }
+  }
+
+  const getAssetsFromVault = (): Promise<IAssetsInfo>[] => {
+    return vaults.map(async (vault: IVault) => {
+      const vaultRelatedPool = pools.find((pool) => {
+        return (
+          vault.contract.address.toLowerCase() ===
+          pool.lpToken.address.toLowerCase()
+        )
+      })
+      if (vaultRelatedPool) {
+        return getAssetsFromPool(vaultRelatedPool, vault)
+      }
+
+      const vaultContract = new web3.eth.Contract(
+        FTOKEN_ABI,
+        vault.contract.address,
+      )
+
+      const vaultBalance: BigNumber = await vaultContract.methods.balanceOf(
+        walletAddress,
+      )
+      const prettyVaultBalance = Number(vaultBalance) / 10 ** vault.decimals
+
+      const totalSupply = prettyVaultBalance
+        ? await vaultContract.methods.totalSupply()
+        : 1
+
+      const percentOfPool = totalSupply
+        ? (Number(vaultBalance) / Number(totalSupply)) * 100
+        : 0
+
+      return {
+        name: vault.contract.name,
+        earnFarm: !vaultsWithoutReward.has(vault.contract.name),
+        farmToClaim: 0,
+        stakedBalance: 0,
+        percentOfPool,
+        value: 0,
+        unstakedBalance: prettyVaultBalance,
+        address: vault.contract.address,
+        underlyingBalance: prettyVaultBalance,
+      }
+    })
+  }
+
+  const assetsFromVaultsPromises: Promise<IAssetsInfo>[] = getAssetsFromVault()
+
+  const poolsWithoutVaults = pools.filter((pool: IPool) => {
     return !vaults.find(
       (vault) => vault.contract.address === pool.lpToken.address,
     )

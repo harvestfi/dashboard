@@ -30,7 +30,7 @@ import TokenMessage from './components/statusMessages/TokenMessage'
 import HarvestAndStakeMessage from './components/statusMessages/HarvestAndStakeMessage'
 import Sidedrawer from './components/userSettings/sidedrawer/Sidedrawer'
 
-import { getAssets } from './utils/utils'
+import { getAssets, getBSCAssets } from './utils/utils'
 
 const web3Modal = new Web3Modal({
   network: 'mainnet', // optional
@@ -106,12 +106,11 @@ export function App() {
   useEffect(() => {
     const setAssets = async () => {
       if (state.provider && userWalletAddress) {
-        const userAssetArray = await getAssets(
-          userWalletAddress,
-          state.provider,
-          state.farmPrice,
-        )
-        setUserAssets(userAssetArray)
+        const [userEtheriumAssets, userBSCAssets] = await Promise.all([
+          getAssets(userWalletAddress, state.provider, state.farmPrice),
+          getBSCAssets(userWalletAddress),
+        ])
+        setUserAssets([...userEtheriumAssets, ...userBSCAssets])
         setShowUserAssets(true)
       }
     }

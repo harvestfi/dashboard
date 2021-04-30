@@ -14,7 +14,7 @@ import Wallet from '../Wallet'
 // CONTEXT
 import { HarvestContext } from '../../Context/HarvestContext'
 
-import { getAssets } from '../../utils/utils'
+import { getAssets, getBSCAssets } from '../../utils/utils'
 
 const CheckBalance = () => {
   const {
@@ -48,12 +48,15 @@ const CheckBalance = () => {
   const setCheck = async () => {
     if (addressFromChangeEvent && validateAddress(addressFromChangeEvent)) {
       setCheckingBalance(true)
+
       setWalletAddressToCheck(addressFromChangeEvent)
-      const assetsToCheck = await getAssets(
-        addressFromChangeEvent,
-        state.provider,
-      )
-      setAssetsToCheck(assetsToCheck)
+
+      const [assetsToCheck, BSCAssetsToCheck] = await Promise.all([
+        getAssets(addressFromChangeEvent, state.provider),
+        getBSCAssets(addressFromChangeEvent),
+      ])
+
+      setAssetsToCheck([...assetsToCheck, ...BSCAssetsToCheck])
       setShowAssetsToCheck(true)
     } else {
       setValidationMessage('You must enter a valid address')
