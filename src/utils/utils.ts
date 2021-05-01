@@ -366,6 +366,7 @@ export const getBSCAssets = async (walletAddress: string) => {
     IPool[],
     number
   >([API.getBSCVaults(), API.getBSCPools(), API.getBSCPrice(bFarmAddress)])
+
   const getAssetsFromPool = async (
     pool: IPool,
     relatedVault?: IVault,
@@ -385,9 +386,8 @@ export const getBSCAssets = async (walletAddress: string) => {
       : pool.lpToken.address
     /**
      * lpTokenBalance - balance of a wallet in the liquidity-pool
-     * rewardTokenPrice - the price are in USD (for FARM or iFARM)
+     * poolBalance - balance of a wallet in the pool
      * reward - reward of a wallet in the pool
-     * poolTotalSupply - the total number of tokens in the pool of all participants
      * pricePerFullShareLpToken = (nativeToken / fToken ) * 10 ** lpTokenDecimals
      */
     const [
@@ -405,6 +405,7 @@ export const getBSCAssets = async (walletAddress: string) => {
         : null,
       relatedVault ? relatedVault.decimals : lpTokenContract.methods.decimals(),
     ])
+
     const prettyLpTokenBalance = Number(lpTokenBalance) / 10 ** lpTokenDecimals
     const prettyPoolBalance = Number(poolBalance) / 10 ** lpTokenDecimals
 
@@ -415,7 +416,7 @@ export const getBSCAssets = async (walletAddress: string) => {
     const prettyRewardTokenBalance = Number(reward) / 10 ** farmDecimals
     /**
      * underlyingPrice - the price are in USD
-     * poolBalance - balance of a wallet in the pool (are in fToken)
+     * poolTotalSupply - the total number of tokens in the pool of all participants
      */
     const [underlyingPrice, poolTotalSupply] = await Promise.all<
       number,
@@ -449,7 +450,7 @@ export const getBSCAssets = async (walletAddress: string) => {
     }
   }
 
-  const getAssetsFromVault = (): Promise<IAssetsInfo>[] => {
+  const getAssetsFromVaults = (): Promise<IAssetsInfo>[] => {
     return vaults.map(async (vault: IVault) => {
       const vaultRelatedPool = pools.find((pool) => {
         return (
@@ -466,7 +467,7 @@ export const getBSCAssets = async (walletAddress: string) => {
         vault.contract.address,
       )
 
-      const vaultBalance: BigNumber = await vaultContract.methods.balanceOf(
+      const vaultBalance: number = await vaultContract.methods.balanceOf(
         walletAddress,
       )
       const prettyVaultBalance = Number(vaultBalance) / 10 ** vault.decimals
@@ -493,7 +494,7 @@ export const getBSCAssets = async (walletAddress: string) => {
     })
   }
 
-  const assetsFromVaultsPromises: Promise<IAssetsInfo>[] = getAssetsFromVault()
+  const assetsFromVaultsPromises: Promise<IAssetsInfo>[] = getAssetsFromVaults()
 
   const poolsWithoutVaults = pools.filter((pool: IPool) => {
     return !vaults.find(
