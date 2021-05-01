@@ -37,7 +37,7 @@ export const convertStandardNumber = (num: number, currency: string) => {
 // Case 3: Pool without Vault.
 // Case 4: Vault it is iFarm.
 // Case 5: Vault it is PS.
-export const getAssets = async (
+export const getEtheriumAssets = async (
   walletAddress: string,
   provider:
     | ethers.providers.ExternalProvider
@@ -357,7 +357,9 @@ export const getAssets = async (
   return nonZeroAssets
 }
 
-export const getBSCAssets = async (walletAddress: string) => {
+export const getBSCAssets = async (
+  walletAddress: string,
+): Promise<IAssetsInfo[]> => {
   // set the provider you want from Web3.providers
   const web3 = new Web3(BSC_URL)
 
@@ -502,8 +504,8 @@ export const getBSCAssets = async (walletAddress: string) => {
     )
   })
 
-  const assetsFromPoolsWithoutVaultsPromises = poolsWithoutVaults.map((pool) =>
-    getAssetsFromPool(pool),
+  const assetsFromPoolsWithoutVaultsPromises: Promise<IAssetsInfo>[] = poolsWithoutVaults.map(
+    (pool) => getAssetsFromPool(pool),
   )
 
   const assetsDataResolved: IAssetsInfo[] = await Promise.all([
