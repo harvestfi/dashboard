@@ -98,12 +98,10 @@ export class API {
       BSC_CONTRACT_FOR_GETTING_PRICES,
     )
     const everyPriceDecimals = 18
-    const price: BigNumber = await gettingPricesContract.methods.getPrice(
-      tokenAddress,
-    )
-    const prettyPrice = price
-      ? parseInt(price._hex, 16) / 10 ** everyPriceDecimals
-      : 0
+    const price: number = await gettingPricesContract.methods
+      .getPrice(tokenAddress)
+      .call()
+    const prettyPrice = price ? price / 10 ** everyPriceDecimals : 0
     return prettyPrice
   }
 }

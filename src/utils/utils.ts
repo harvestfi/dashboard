@@ -366,7 +366,6 @@ export const getBSCAssets = async (walletAddress: string) => {
     IPool[],
     number
   >([API.getBSCVaults(), API.getBSCPools(), API.getBSCPrice(bFarmAddress)])
-
   const getAssetsFromPool = async (
     pool: IPool,
     relatedVault?: IVault,
@@ -420,14 +419,12 @@ export const getBSCAssets = async (walletAddress: string) => {
      */
     const [underlyingPrice, poolTotalSupply] = await Promise.all<
       number,
-      BigNumber
+      number
     >([
       prettyPoolBalance ? API.getBSCPrice(priceAddress) : 0,
-      prettyPoolBalance ? poolContract.methods.totalSupply() : 1,
+      prettyPoolBalance ? poolContract.methods.totalSupply().call() : 1,
     ])
-
     const percentOfPool = (Number(poolBalance) / Number(poolTotalSupply)) * 100
-
     /** All account assets that contains in the pool are in USD */
     const calcValue = () => {
       return (
@@ -435,10 +432,8 @@ export const getBSCAssets = async (walletAddress: string) => {
         bFarmPrice * prettyRewardTokenBalance
       )
     }
-
     // fTokens balance in underlying Tokens;
     const underlyingBalance = prettyPoolBalance * prettyPricePerFullShareLpToken
-
     return {
       name: relatedVault ? relatedVault.contract.name : pool.contract.name,
       earnFarm: true,
