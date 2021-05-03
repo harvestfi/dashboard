@@ -9,12 +9,16 @@ import {
   outdatedPools,
   bFarmAddress,
   BSC_URL,
+  DEFAULT_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES,
+  LEGACY_BSC_FACTORY,
+  LEGACY_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES,
 } from '../constants/constants'
 import {
   FTOKEN_ABI,
   REWARDS_ABI,
   ERC20_ABI_GET_PRICE_PER_FULL_SHARE,
   PS_VAULT_ABI,
+  BSC_UNDERLYING_ABI,
 } from '../lib/data/ABIs'
 import { IAssetsInfo, IPool, IVault } from '../types'
 
@@ -367,7 +371,14 @@ export const getBSCAssets = async (
     IVault[],
     IPool[],
     number
-  >([API.getBSCVaults(), API.getBSCPools(), API.getBSCPrice(bFarmAddress)])
+  >([
+    API.getBSCVaults(),
+    API.getBSCPools(),
+    API.getBSCPrice(
+      bFarmAddress,
+      DEFAULT_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES,
+    ),
+  ])
 
   const getAssetsFromPool = async (
     pool: IPool,
@@ -381,6 +392,11 @@ export const getBSCAssets = async (
     const poolContract = new web3.eth.Contract(
       REWARDS_ABI,
       pool.contract.address,
+    )
+
+    const underlyingContract = new web3.eth.Contract(
+      BSC_UNDERLYING_ABI,
+      relatedVault ? relatedVault.underlying.address : pool.lpToken.address,
     )
 
     const priceAddress = relatedVault
@@ -417,16 +433,29 @@ export const getBSCAssets = async (
 
     const prettyRewardTokenBalance = Number(reward) / 10 ** farmDecimals
     /**
-     * underlyingPrice - the price are in USD
+     * factory - determines which contract address should be used to get underlying token prices
      * poolTotalSupply - the total number of tokens in the pool of all participants
      */
-    const [underlyingPrice, poolTotalSupply] = await Promise.all<
-      number,
+    const [factory, poolTotalSupply] = await Promise.all<
+      string | undefined,
       number
     >([
-      prettyPoolBalance ? API.getBSCPrice(priceAddress) : 0,
+      prettyPoolBalance
+        ? underlyingContract.methods.factory().call()
+        : undefined,
       prettyPoolBalance ? poolContract.methods.totalSupply().call() : 1,
     ])
+
+    const oracleAddressForGettingPrices =
+      factory?.toLowerCase() === LEGACY_BSC_FACTORY
+        ? LEGACY_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES
+        : DEFAULT_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES
+
+    // underlyingPrice - the price are in USD
+    const underlyingPrice = prettyPoolBalance
+      ? await API.getBSCPrice(priceAddress, oracleAddressForGettingPrices)
+      : 0
+
     const percentOfPool = (Number(poolBalance) / Number(poolTotalSupply)) * 100
     /** All account assets that contains in the pool are in USD */
     const calcValue = () => {

@@ -33,7 +33,12 @@ export const outdatedPools = new Set<string>([
 export const ETHERIUM_CONTRACT_FOR_GETTING_PRICES =
   '0x48dc32eca58106f06b41de514f29780ffa59c279'
 
-export const BSC_CONTRACT_FOR_GETTING_PRICES =
+export const DEFAULT_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES =
   '0x643cF46eef91Bd878D9710ceEB6a7E6F929F2608'
+
+export const LEGACY_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES =
+  '0xE0e9F05054Ad3a2b6414AD13D768be91a84b47e8'
+
+export const LEGACY_BSC_FACTORY = '0xbcfccbde45ce874adcb698cc183debcf17952812'
 
 export const BSC_URL = 'https://bsc-dataseed.binance.org/'
