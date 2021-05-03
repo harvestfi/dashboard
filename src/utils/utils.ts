@@ -432,6 +432,7 @@ export const getBSCAssets = async (
       : 1
 
     const prettyRewardTokenBalance = Number(reward) / 10 ** farmDecimals
+
     /**
      * factory - determines which contract address should be used to get underlying token prices
      * poolTotalSupply - the total number of tokens in the pool of all participants
@@ -441,7 +442,9 @@ export const getBSCAssets = async (
       number
     >([
       prettyPoolBalance
-        ? underlyingContract.methods.factory().call()
+        ? Promise.resolve(
+            underlyingContract.methods.factory().call(),
+          ).catch((e) => {})
         : undefined,
       prettyPoolBalance ? poolContract.methods.totalSupply().call() : 1,
     ])

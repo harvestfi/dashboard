@@ -92,6 +92,7 @@ export class API {
       BSC_ORACLE_ABI_FOR_GETTING_PRICES,
       oracleAddressForGettingPrices,
     )
+
     const everyPriceDecimals = 18
     const price: number = await gettingPricesContract.methods
       .getPrice(tokenAddress)
