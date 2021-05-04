@@ -1,12 +1,13 @@
 import axios from 'axios'
 import Web3 from 'web3'
+import BigNumber from 'bignumber.js'
 
 import { IPool, IVault } from '../types/Entities'
 import {
   ETHERIUM_CONTRACT_FOR_GETTING_PRICES,
   BSC_URL,
 } from '@/constants/constants'
-import { BigNumber, Contract, ethers } from 'ethers'
+import { BigNumber as EtherNumber, Contract, ethers } from 'ethers'
 import {
   PRICE_ORACLE_ABI,
   BSC_ORACLE_ABI_FOR_GETTING_PRICES,
@@ -59,7 +60,9 @@ export class API {
     )
     const everyPriceDecimals = 18
 
-    const price: BigNumber = await gettingPricesContract.getPrice(tokenAddress)
+    const price: EtherNumber = await gettingPricesContract.getPrice(
+      tokenAddress,
+    )
     const prettyPrice = price
       ? parseInt(price._hex, 16) / 10 ** everyPriceDecimals
       : 0
@@ -85,19 +88,22 @@ export class API {
   static async getBSCPrice(
     tokenAddress: string,
     oracleAddressForGettingPrices: string,
-  ): Promise<number> {
+  ): Promise<BigNumber> {
     const web3 = new Web3(BSC_URL)
 
     const gettingPricesContract = new web3.eth.Contract(
       BSC_ORACLE_ABI_FOR_GETTING_PRICES,
       oracleAddressForGettingPrices,
     )
-
     const everyPriceDecimals = 18
-    const price: number = await gettingPricesContract.methods
+
+    const price: string = await gettingPricesContract.methods
       .getPrice(tokenAddress)
       .call()
-    const prettyPrice = price ? price / 10 ** everyPriceDecimals : 0
+
+    const prettyPrice = price
+      ? new BigNumber(price).dividedBy(10 ** everyPriceDecimals)
+      : new BigNumber(0)
     return prettyPrice
   }
 }

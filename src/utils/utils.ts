@@ -1,5 +1,7 @@
-import { Contract, ethers, BigNumber } from 'ethers'
+import { Contract, ethers, BigNumber as BigEthNumber } from 'ethers'
 import Web3 from 'web3'
+import BigNumber from 'bignumber.js'
+
 import { API } from '../api'
 import {
   farmDecimals,
@@ -21,6 +23,11 @@ import {
   BSC_UNDERLYING_ABI,
 } from '../lib/data/ABIs'
 import { IAssetsInfo, IPool, IVault } from '../types'
+import { IAssetsInfoBigNumber } from '@types/Entities'
+
+const BigNumberZero = new BigNumber(0)
+
+const BigNumberOne = new BigNumber(1)
 
 const currencyFormatter = (currency: string) =>
   new Intl.NumberFormat('en-US', {
@@ -46,7 +53,7 @@ export const getEtheriumAssets = async (
   provider:
     | ethers.providers.ExternalProvider
     | ethers.providers.JsonRpcFetchFunc,
-): Promise<IAssetsInfo[]> => {
+): Promise<IAssetsInfoBigNumber[]> => {
   const ethersProvider = new ethers.providers.Web3Provider(provider)
 
   // get all pools and vaults
@@ -105,10 +112,10 @@ export const getEtheriumAssets = async (
       pricePerFullShareLpToken,
       lpTokenDecimals,
     ] = await Promise.all<
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber | null,
+      BigEthNumber,
+      BigEthNumber,
+      BigEthNumber,
+      BigEthNumber | null,
       number
     >([
       lpTokenContract.balanceOf(walletAddress),
@@ -137,7 +144,7 @@ export const getEtheriumAssets = async (
       underlyingPrice,
       iFarmPricePerFullShare,
       poolTotalSupply,
-    ] = await Promise.all<number, BigNumber | false | 0, BigNumber>([
+    ] = await Promise.all<number, BigEthNumber | false | 0, BigEthNumber>([
       prettyPoolBalance ? API.getEtheriumPrice(priceAddress, provider) : 0,
       prettyRewardTokenBalance &&
         !rewardIsFarm &&
@@ -223,11 +230,11 @@ export const getEtheriumAssets = async (
           underlyingBalanceWithInvestmentForHolder,
           pricePerFullShare,
         ] = await Promise.all<
-          BigNumber,
-          BigNumber,
-          BigNumber,
-          BigNumber,
-          BigNumber
+          BigEthNumber,
+          BigEthNumber,
+          BigEthNumber,
+          BigEthNumber,
+          BigEthNumber
         >([
           vaultContract.balanceOf(walletAddress),
           farmContract.balanceOf(walletAddress),
@@ -278,8 +285,8 @@ export const getEtheriumAssets = async (
           ethersProvider,
         )
         const [vaultBalance, farmBalance] = await Promise.all<
-          BigNumber,
-          BigNumber
+          BigEthNumber,
+          BigEthNumber
         >([
           PSvaultContract.balanceOf(walletAddress),
           farmContract.balanceOf(walletAddress),
@@ -306,7 +313,7 @@ export const getEtheriumAssets = async (
         }
       }
 
-      const vaultBalance: BigNumber = await vaultContract.balanceOf(
+      const vaultBalance: BigEthNumber = await vaultContract.balanceOf(
         walletAddress,
       )
       const prettyVaultBalance =
@@ -363,14 +370,14 @@ export const getEtheriumAssets = async (
 
 export const getBSCAssets = async (
   walletAddress: string,
-): Promise<IAssetsInfo[]> => {
+): Promise<IAssetsInfoBigNumber[]> => {
   // set the provider you want from Web3.providers
   const web3 = new Web3(BSC_URL)
 
   const [vaults, pools, bFarmPrice] = await Promise.all<
     IVault[],
     IPool[],
-    number
+    BigNumber
   >([
     API.getBSCVaults(),
     API.getBSCPools(),
@@ -383,7 +390,7 @@ export const getBSCAssets = async (
   const getAssetsFromPool = async (
     pool: IPool,
     relatedVault?: IVault,
-  ): Promise<IAssetsInfo> => {
+  ): Promise<IAssetsInfoBigNumber> => {
     const lpTokenContract = new web3.eth.Contract(
       FTOKEN_ABI,
       pool.lpToken.address,
@@ -424,14 +431,20 @@ export const getBSCAssets = async (
       relatedVault ? relatedVault.decimals : lpTokenContract.methods.decimals(),
     ])
 
-    const prettyLpTokenBalance = Number(lpTokenBalance) / 10 ** lpTokenDecimals
-    const prettyPoolBalance = Number(poolBalance) / 10 ** lpTokenDecimals
+    const prettyLpTokenBalance = new BigNumber(lpTokenBalance).dividedBy(
+      10 ** lpTokenDecimals,
+    )
+    const prettyPoolBalance = new BigNumber(poolBalance).dividedBy(
+      10 ** lpTokenDecimals,
+    )
 
     const prettyPricePerFullShareLpToken = pricePerFullShareLpToken
-      ? Number(pricePerFullShareLpToken) / 10 ** lpTokenDecimals
-      : 1
+      ? new BigNumber(pricePerFullShareLpToken).dividedBy(10 ** lpTokenDecimals)
+      : BigNumberOne
 
-    const prettyRewardTokenBalance = Number(reward) / 10 ** farmDecimals
+    const prettyRewardTokenBalance = new BigNumber(reward).dividedBy(
+      10 ** farmDecimals,
+    )
 
     /**
      * factory - determines which contract address should be used to get underlying token prices
@@ -439,14 +452,15 @@ export const getBSCAssets = async (
      */
     const [factory, poolTotalSupply] = await Promise.all<
       string | undefined,
-      number
+      string
     >([
-      prettyPoolBalance
+      poolBalance
         ? Promise.resolve(
             underlyingContract.methods.factory().call(),
-          ).catch((e) => {})
+            // TODO create error handler
+          ).catch(() => {})
         : undefined,
-      prettyPoolBalance ? poolContract.methods.totalSupply().call() : 1,
+      poolBalance ? poolContract.methods.totalSupply().call() : 1,
     ])
 
     const oracleAddressForGettingPrices =
@@ -455,20 +469,25 @@ export const getBSCAssets = async (
         : DEFAULT_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES
 
     // underlyingPrice - the price are in USD
-    const underlyingPrice = prettyPoolBalance
+    const underlyingPrice: BigNumber = prettyPoolBalance
       ? await API.getBSCPrice(priceAddress, oracleAddressForGettingPrices)
-      : 0
+      : new BigNumber(0)
 
-    const percentOfPool = (Number(poolBalance) / Number(poolTotalSupply)) * 100
+    const percentOfPool = new BigNumber(poolBalance)
+      .dividedBy(poolTotalSupply)
+      .multipliedBy(100)
+
     /** All account assets that contains in the pool are in USD */
     const calcValue = () => {
-      return (
-        underlyingPrice * prettyPoolBalance * prettyPricePerFullShareLpToken +
-        bFarmPrice * prettyRewardTokenBalance
-      )
+      return underlyingPrice
+        .multipliedBy(prettyPoolBalance)
+        .multipliedBy(prettyPricePerFullShareLpToken)
+        .plus(bFarmPrice.multipliedBy(prettyRewardTokenBalance))
     }
     // fTokens balance in underlying Tokens;
-    const underlyingBalance = prettyPoolBalance * prettyPricePerFullShareLpToken
+    const underlyingBalance = prettyPoolBalance.multipliedBy(
+      prettyPricePerFullShareLpToken,
+    )
     return {
       name: relatedVault ? relatedVault.contract.name : pool.contract.name,
       earnFarm: true,
@@ -484,7 +503,7 @@ export const getBSCAssets = async (
     }
   }
 
-  const getAssetsFromVaults = (): Promise<IAssetsInfo>[] => {
+  const getAssetsFromVaults = (): Promise<IAssetsInfoBigNumber>[] => {
     return vaults.map(async (vault: IVault) => {
       const vaultRelatedPool = pools.find((pool) => {
         return (
@@ -501,26 +520,31 @@ export const getBSCAssets = async (
         vault.contract.address,
       )
 
-      const vaultBalance: number = await vaultContract.methods.balanceOf(
-        walletAddress,
+      const vaultBalance: BigNumber = new BigNumber(
+        await vaultContract.methods.balanceOf(walletAddress).call(),
       )
-      const prettyVaultBalance = Number(vaultBalance) / 10 ** vault.decimals
 
-      const totalSupply = prettyVaultBalance
-        ? await vaultContract.methods.totalSupply()
-        : 1
+      const prettyVaultBalance = new BigNumber(vaultBalance).dividedBy(
+        10 ** vault.decimals,
+      )
 
-      const percentOfPool = totalSupply
-        ? (Number(vaultBalance) / Number(totalSupply)) * 100
-        : 0
+      const totalSupply: BigNumber =
+        vaultBalance.toString() !== '0'
+          ? new BigNumber(await vaultContract.methods.totalSupply())
+          : BigNumberOne
+
+      const percentOfPool: BigNumber =
+        totalSupply.toString() !== '0'
+          ? vaultBalance.dividedToIntegerBy(totalSupply).multipliedBy(100)
+          : BigNumberZero
 
       return {
         name: vault.contract.name,
         earnFarm: !vaultsWithoutReward.has(vault.contract.name),
-        farmToClaim: 0,
-        stakedBalance: 0,
+        farmToClaim: BigNumberZero,
+        stakedBalance: BigNumberZero,
         percentOfPool,
-        value: 0,
+        value: BigNumberZero,
         unstakedBalance: prettyVaultBalance,
         address: vault.contract.address,
         underlyingBalance: prettyVaultBalance,
@@ -528,7 +552,7 @@ export const getBSCAssets = async (
     })
   }
 
-  const assetsFromVaultsPromises: Promise<IAssetsInfo>[] = getAssetsFromVaults()
+  const assetsFromVaultsPromises: Promise<IAssetsInfoBigNumber>[] = getAssetsFromVaults()
 
   const poolsWithoutVaults = pools.filter((pool: IPool) => {
     return !vaults.find(
@@ -536,25 +560,37 @@ export const getBSCAssets = async (
     )
   })
 
-  const assetsFromPoolsWithoutVaultsPromises: Promise<IAssetsInfo>[] = poolsWithoutVaults.map(
+  const assetsFromPoolsWithoutVaultsPromises: Promise<IAssetsInfoBigNumber>[] = poolsWithoutVaults.map(
     (pool) => getAssetsFromPool(pool),
   )
 
-  const assetsDataResolved: IAssetsInfo[] = await Promise.all([
+  const assetsDataResolved: IAssetsInfoBigNumber[] = await Promise.all([
     ...assetsFromVaultsPromises,
     ...assetsFromPoolsWithoutVaultsPromises,
   ])
   const nonZeroAssets = assetsDataResolved.filter((asset) => {
     return (
-      asset.farmToClaim ||
-      asset.stakedBalance ||
-      asset.value ||
-      asset.unstakedBalance ||
-      asset.underlyingBalance
+      asset.farmToClaim.toNumber() ||
+      asset.stakedBalance.toNumber() ||
+      asset.value.toNumber() ||
+      asset.unstakedBalance.toNumber() ||
+      asset.underlyingBalance.toNumber()
     )
   })
-
-  return nonZeroAssets
+  const stringAssets = nonZeroAssets.map((asset) => {
+    return {
+      ...asset,
+      farmToClaim: asset.farmToClaim.toString(),
+      stakedBalance: asset.stakedBalance.toString(),
+      value: asset.value.toString(),
+      unstakedBalance: asset.unstakedBalance.toString(),
+      underlyingBalance: asset.underlyingBalance.toString(),
+      percentOfPool: asset.percentOfPool.toString(),
+    }
+  })
+  console.log(stringAssets)
+  // return nonZeroAssets
+  return []
 }
 
 export const prettyEthAddress = (address: string) => {
