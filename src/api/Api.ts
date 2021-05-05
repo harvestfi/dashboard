@@ -6,10 +6,11 @@ import { IPool, IVault } from '../types/Entities'
 import {
   ETHERIUM_CONTRACT_FOR_GETTING_PRICES,
   BSC_URL,
+  PRICE_DECIMALS,
+  ETH_URL,
 } from '@/constants/constants'
-import { BigNumber as EtherNumber, Contract, ethers } from 'ethers'
 import {
-  PRICE_ORACLE_ABI,
+  ETH_ORACLE_ABI_FOR_GETTING_PRICES,
   BSC_ORACLE_ABI_FOR_GETTING_PRICES,
 } from '@/lib/data/ABIs'
 export class API {
@@ -45,27 +46,21 @@ export class API {
     return savedGas
   }
 
-  static async getEtheriumPrice(
-    tokenAddress: string,
-    provider:
-      | ethers.providers.ExternalProvider
-      | ethers.providers.JsonRpcFetchFunc,
-  ): Promise<number> {
-    const ethersProvider = new ethers.providers.Web3Provider(provider)
+  static async getEtheriumPrice(tokenAddress: string): Promise<BigNumber> {
+    const web3 = new Web3(`${ETH_URL}${process.env.REACT_APP_INFURA_KEY}`)
 
-    const gettingPricesContract = new Contract(
+    const gettingPricesContract = new web3.eth.Contract(
+      ETH_ORACLE_ABI_FOR_GETTING_PRICES,
       ETHERIUM_CONTRACT_FOR_GETTING_PRICES,
-      PRICE_ORACLE_ABI,
-      ethersProvider,
     )
-    const everyPriceDecimals = 18
 
-    const price: EtherNumber = await gettingPricesContract.getPrice(
-      tokenAddress,
-    )
+    const price: string = await gettingPricesContract.methods
+      .getPrice(tokenAddress)
+      .call()
+
     const prettyPrice = price
-      ? parseInt(price._hex, 16) / 10 ** everyPriceDecimals
-      : 0
+      ? new BigNumber(price).dividedBy(10 ** PRICE_DECIMALS)
+      : new BigNumber(0)
     return prettyPrice
   }
 
@@ -95,14 +90,13 @@ export class API {
       BSC_ORACLE_ABI_FOR_GETTING_PRICES,
       oracleAddressForGettingPrices,
     )
-    const everyPriceDecimals = 18
 
     const price: string = await gettingPricesContract.methods
       .getPrice(tokenAddress)
       .call()
 
     const prettyPrice = price
-      ? new BigNumber(price).dividedBy(10 ** everyPriceDecimals)
+      ? new BigNumber(price).dividedBy(10 ** PRICE_DECIMALS)
       : new BigNumber(0)
     return prettyPrice
   }

@@ -25,8 +25,12 @@ export const FarmInfo: React.FC<IProps> = ({ assets, savedGas }) => {
 
   useEffect(() => {
     const getFarmPrice = async () => {
-      const farmPrice = await API.getEtheriumPrice(farmAddress, state.provider)
-      setState((prevState) => ({ ...prevState, farmPrice }))
+      const farmPrice = await API.getEtheriumPrice(farmAddress)
+
+      setState((prevState) => ({
+        ...prevState,
+        farmPrice: farmPrice.toNumber(),
+      }))
     }
 
     if (state.provider) {

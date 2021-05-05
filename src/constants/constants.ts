@@ -4,8 +4,13 @@ export const vaultsWithoutReward = new Set<string>([])
 // FARM decimals
 export const farmDecimals = 18
 
+// every price decimals
+export const PRICE_DECIMALS = 18
+
 // Etherium
 export const farmAddress = '0xa0246c9032bc3a600820415ae600c6388619a14d'
+
+export const PSAddress = '0x25550cccbd68533fa04bfd3e3ac4d09f9e00fc50'
 
 // BSC
 export const bFarmAddress = '0x4b5c23cac08a567ecf0c1ffca8372a45a5d33743'
@@ -42,3 +47,5 @@ export const LEGACY_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES =
 export const LEGACY_BSC_FACTORY = '0xbcfccbde45ce874adcb698cc183debcf17952812'
 
 export const BSC_URL = 'https://bsc-dataseed.binance.org/'
+
+export const ETH_URL = 'https://mainnet.infura.io/v3/'
