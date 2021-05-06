@@ -106,39 +106,21 @@ export const getEtheriumAssets = async (
      * rewardTokenPrice - the price are in USD (for FARM or iFARM)
      * reward - reward of a wallet in the pool
      * poolTotalSupply - the total number of tokens in the pool of all participants
-     * pricePerFullShareLpToken = (nativeToken / fToken ) * 10 ** lpTokenDecimals
      */
-    const [
-      lpTokenBalance,
-      poolBalance,
-      reward,
-      pricePerFullShareLpToken,
-      lpTokenDecimals,
-    ] = await Promise.all<string, string, string, string | null, number>([
+    const [lpTokenBalance, poolBalance, reward] = await Promise.all<
+      string,
+      string,
+      string,
+      number
+    >([
       lpTokenContract.methods.balanceOf(walletAddress).call(),
       poolContract.methods.balanceOf(walletAddress).call(),
       poolContract.methods.earned(walletAddress).call(),
 
       relatedVault
-        ? lpTokenContract.methods.getPricePerFullShare().call()
-        : null,
-
-      relatedVault
         ? relatedVault.decimals
         : lpTokenContract.methods.decimals().call(),
     ])
-
-    const prettyLpTokenBalance = new BigNumber(lpTokenBalance).dividedBy(
-      10 ** lpTokenDecimals,
-    )
-
-    const prettyPoolBalance = new BigNumber(poolBalance).dividedBy(
-      10 ** lpTokenDecimals,
-    )
-
-    const prettyPricePerFullShareLpToken = pricePerFullShareLpToken
-      ? new BigNumber(pricePerFullShareLpToken).dividedBy(10 ** lpTokenDecimals)
-      : 1
 
     const prettyRewardTokenBalance = new BigNumber(reward).dividedBy(
       10 ** farmDecimals,
@@ -148,16 +130,34 @@ export const getEtheriumAssets = async (
     const shouldGetPricePerFullShareBeCalled: boolean =
       !!prettyRewardTokenBalance.toNumber() && !rewardIsFarm
 
+    const getDecimals = () => {
+      if (relatedVault) {
+        return relatedVault.decimals
+      }
+      return lpTokenBalance !== '0' || poolBalance !== '0'
+        ? lpTokenContract.methods.decimals().call()
+        : null
+    }
+
     /**
      * underlyingPrice - the price are in USD
      * iFarmPricePerFullShare = (iFARMPrice / farmPrice) * 10 ** rewardDecimals
      * poolBalance - balance of a wallet in the pool (are in fToken)
+     * pricePerFullShareLpToken = (nativeToken / fToken ) * 10 ** lpTokenDecimals
      */
     const [
       underlyingPrice,
       iFarmPricePerFullShare,
       poolTotalSupply,
-    ] = await Promise.all<BigNumber, string | false, string>([
+      pricePerFullShareLpToken,
+      lpTokenDecimals,
+    ] = await Promise.all<
+      BigNumber,
+      string | false,
+      string,
+      string | null,
+      number | null
+    >([
       poolBalance !== '0' ? API.getEtheriumPrice(priceAddress) : BigNumberZero,
 
       shouldGetPricePerFullShareBeCalled &&
@@ -166,7 +166,28 @@ export const getEtheriumAssets = async (
       poolBalance !== '0'
         ? poolContract.methods.totalSupply().call()
         : BigNumberOne,
+
+      relatedVault && poolBalance !== '0'
+        ? lpTokenContract.methods.getPricePerFullShare().call()
+        : null,
+
+      getDecimals(),
     ])
+
+    const prettyLpTokenBalance = lpTokenDecimals
+      ? new BigNumber(lpTokenBalance).dividedBy(10 ** lpTokenDecimals)
+      : BigNumberZero
+
+    const prettyPoolBalance = lpTokenDecimals
+      ? new BigNumber(poolBalance).dividedBy(10 ** lpTokenDecimals)
+      : BigNumberZero
+
+    const prettyPricePerFullShareLpToken =
+      pricePerFullShareLpToken && lpTokenDecimals
+        ? new BigNumber(pricePerFullShareLpToken).dividedBy(
+            10 ** lpTokenDecimals,
+          )
+        : 1
 
     const prettyRewardPricePerFullShare = iFarmPricePerFullShare
       ? new BigNumber(iFarmPricePerFullShare).dividedBy(10 ** farmDecimals)
@@ -181,11 +202,13 @@ export const getEtheriumAssets = async (
       .multipliedBy(100)
 
     /** All account assets that contains in the pool are in USD */
-    const calcValue = () => {
-      return underlyingPrice
-        .multipliedBy(prettyPoolBalance)
-        .multipliedBy(prettyPricePerFullShareLpToken)
-        .plus(farmPrice.multipliedBy(rewardTokenAreInFARM))
+    const calcValue = (): BigNumber | null => {
+      return underlyingPrice.toString() !== '0'
+        ? underlyingPrice
+            .multipliedBy(prettyPoolBalance)
+            .multipliedBy(prettyPricePerFullShareLpToken)
+            .plus(farmPrice.multipliedBy(rewardTokenAreInFARM))
+        : null
     }
 
     // fTokens balance in underlying Tokens;
@@ -343,6 +366,7 @@ export const getEtheriumAssets = async (
         }
       }
 
+      // Case: vault without pool
       const vaultBalance: string = await vaultContract.methods
         .balanceOf(walletAddress)
         .call()
@@ -357,7 +381,7 @@ export const getEtheriumAssets = async (
         farmToClaim: BigNumberZero,
         stakedBalance: BigNumberZero,
         percentOfPool: BigNumberZero,
-        value: BigNumberZero,
+        value: null,
         unstakedBalance: prettyVaultBalance,
         address: vault.contract.address,
         underlyingBalance: prettyVaultBalance,
@@ -385,7 +409,7 @@ export const getEtheriumAssets = async (
     return (
       asset.farmToClaim.toNumber() ||
       asset.stakedBalance.toNumber() ||
-      asset.value.toNumber() ||
+      (asset.value && asset.value.toNumber()) ||
       asset.unstakedBalance.toNumber() ||
       asset.underlyingBalance.toNumber()
     )
@@ -441,55 +465,74 @@ export const getBSCAssets = async (
      * reward - reward of a wallet in the pool
      * pricePerFullShareLpToken = (nativeToken / fToken ) * 10 ** lpTokenDecimals
      */
-    const [
-      lpTokenBalance,
-      poolBalance,
-      reward,
-      pricePerFullShareLpToken,
-      lpTokenDecimals,
-    ] = await Promise.all<string, string, string, string | null, number>([
+    const [lpTokenBalance, poolBalance, reward] = await Promise.all<
+      string,
+      string,
+      string
+    >([
       lpTokenContract.methods.balanceOf(walletAddress).call(),
       poolContract.methods.balanceOf(walletAddress).call(),
       poolContract.methods.earned(walletAddress).call(),
-      relatedVault
-        ? lpTokenContract.methods.getPricePerFullShare().call()
-        : null,
-      relatedVault
-        ? relatedVault.decimals
-        : lpTokenContract.methods.decimals().call(),
     ])
-
-    const prettyLpTokenBalance = new BigNumber(lpTokenBalance).dividedBy(
-      10 ** lpTokenDecimals,
-    )
-    const prettyPoolBalance = new BigNumber(poolBalance).dividedBy(
-      10 ** lpTokenDecimals,
-    )
-
-    const prettyPricePerFullShareLpToken = pricePerFullShareLpToken
-      ? new BigNumber(pricePerFullShareLpToken).dividedBy(10 ** lpTokenDecimals)
-      : BigNumberOne
 
     const prettyRewardTokenBalance = new BigNumber(reward).dividedBy(
       10 ** farmDecimals,
     )
 
+    const getDecimals = (): number | null => {
+      if (relatedVault) {
+        return relatedVault.decimals
+      }
+      return lpTokenBalance !== '0' || poolBalance !== '0'
+        ? lpTokenContract.methods.decimals().call()
+        : null
+    }
+
     /**
      * factory - determines which contract address should be used to get underlying token prices
      * poolTotalSupply - the total number of tokens in the pool of all participants
      */
-    const [factory, poolTotalSupply] = await Promise.all<
-      string | undefined,
-      string
+    const [
+      factory,
+      poolTotalSupply,
+      lpTokenPricePerFullShare,
+      lpTokenDecimals,
+    ] = await Promise.all<
+      string | null,
+      string | null,
+      string | null,
+      number | null
     >([
-      poolBalance
+      poolBalance !== '0'
         ? Promise.resolve(
             underlyingContract.methods.factory().call(),
             // TODO create error handler
           ).catch(() => {})
-        : undefined,
-      poolBalance ? poolContract.methods.totalSupply().call() : 1,
+        : null,
+
+      poolBalance !== '0' ? poolContract.methods.totalSupply().call() : null,
+
+      relatedVault && poolBalance !== '0'
+        ? lpTokenContract.methods.getPricePerFullShare().call()
+        : null,
+
+      getDecimals(),
     ])
+
+    const prettyLpTokenBalance = lpTokenDecimals
+      ? new BigNumber(lpTokenBalance).dividedBy(10 ** lpTokenDecimals)
+      : BigNumberZero
+
+    const prettyPoolBalance = lpTokenDecimals
+      ? new BigNumber(poolBalance).dividedBy(10 ** lpTokenDecimals)
+      : BigNumberZero
+
+    const lpTokenPrettyPricePerFullShare =
+      lpTokenPricePerFullShare && lpTokenDecimals
+        ? new BigNumber(lpTokenPricePerFullShare).dividedBy(
+            10 ** lpTokenDecimals,
+          )
+        : BigNumberOne
 
     const oracleAddressForGettingPrices =
       factory?.toLowerCase() === LEGACY_BSC_FACTORY
@@ -497,24 +540,27 @@ export const getBSCAssets = async (
         : DEFAULT_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES
 
     // underlyingPrice - the price are in USD
-    const underlyingPrice: BigNumber = prettyPoolBalance
-      ? await API.getBSCPrice(priceAddress, oracleAddressForGettingPrices)
-      : new BigNumber(0)
+    const underlyingPrice: BigNumber =
+      poolBalance !== '0'
+        ? await API.getBSCPrice(priceAddress, oracleAddressForGettingPrices)
+        : new BigNumber(0)
 
-    const percentOfPool = new BigNumber(poolBalance)
-      .dividedBy(poolTotalSupply)
-      .multipliedBy(100)
+    const percentOfPool = poolTotalSupply
+      ? new BigNumber(poolBalance).dividedBy(poolTotalSupply).multipliedBy(100)
+      : null
 
     /** All account assets that contains in the pool are in USD */
     const calcValue = () => {
       return underlyingPrice
-        .multipliedBy(prettyPoolBalance)
-        .multipliedBy(prettyPricePerFullShareLpToken)
-        .plus(bFarmPrice.multipliedBy(prettyRewardTokenBalance))
+        ? underlyingPrice
+            .multipliedBy(prettyPoolBalance)
+            .multipliedBy(lpTokenPrettyPricePerFullShare)
+            .plus(bFarmPrice.multipliedBy(prettyRewardTokenBalance))
+        : null
     }
     // fTokens balance in underlying Tokens;
     const underlyingBalance = prettyPoolBalance.multipliedBy(
-      prettyPricePerFullShareLpToken,
+      lpTokenPrettyPricePerFullShare,
     )
     return {
       name: relatedVault ? relatedVault.contract.name : pool.contract.name,
@@ -572,7 +618,7 @@ export const getBSCAssets = async (
         farmToClaim: BigNumberZero,
         stakedBalance: BigNumberZero,
         percentOfPool,
-        value: BigNumberZero,
+        value: null,
         unstakedBalance: prettyVaultBalance,
         address: vault.contract.address,
         underlyingBalance: prettyVaultBalance,
@@ -600,7 +646,7 @@ export const getBSCAssets = async (
     return (
       asset.farmToClaim.toNumber() ||
       asset.stakedBalance.toNumber() ||
-      asset.value.toNumber() ||
+      (asset.value && asset.value.toNumber()) ||
       asset.unstakedBalance.toNumber() ||
       asset.underlyingBalance.toNumber()
     )

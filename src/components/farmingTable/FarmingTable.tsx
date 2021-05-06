@@ -123,10 +123,12 @@ export const FarmingTable: React.FC<IProps> = ({
       asset.underlyingBalance.toNumber(),
     )
 
-    const prettyValue = prettyCurrency(
-      Number(asset.value.toNumber() * currentExchangeRate),
-      baseCurrency,
-    )
+    const prettyValue = asset.value
+      ? prettyCurrency(
+          Number(asset.value.toNumber() * currentExchangeRate),
+          baseCurrency,
+        )
+      : '-'
 
     const prettyUnstakedBalance = prettyNumber(asset.unstakedBalance.toNumber())
 

@@ -44,8 +44,8 @@ export interface IAssetsInfo {
   earnFarm: boolean
   farmToClaim: BigNumber
   stakedBalance: BigNumber
-  percentOfPool: BigNumber
-  value: BigNumber
+  percentOfPool: BigNumber | null
+  value: BigNumber | null
   unstakedBalance: BigNumber
   address: string
   underlyingBalance: BigNumber
