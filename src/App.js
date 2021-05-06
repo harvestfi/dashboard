@@ -29,6 +29,8 @@ import CheckBalance from './components/checkBalance/CheckBalance'
 import TokenMessage from './components/statusMessages/TokenMessage'
 import HarvestAndStakeMessage from './components/statusMessages/HarvestAndStakeMessage'
 import Sidedrawer from './components/userSettings/sidedrawer/Sidedrawer'
+import { Provider as MobxProvider } from 'mobx-react'
+import * as stores from '@/stores'
 
 import { getEtheriumAssets, getBSCAssets } from './utils/utils'
 import BigNumber from 'bignumber.js'
@@ -197,123 +199,120 @@ export function App() {
   }
 
   return (
-    <HarvestContext.Provider
-      value={{
-        setShowAssetsToCheck,
-        showAssetsToCheck,
-        showUserAssets,
-        walletAddressToCheck,
-        setWalletAddressToCheck,
-        userWalletAddress,
-        setUserWalletAddress,
-        setAssetsToCheck,
-        assetsToCheck,
-        displayFarmInfo,
-        userAssets,
-        state,
-        setState,
-        radio,
-        setRadio,
-        toggleRadio,
-        tokenAddedMessage,
-        setTokenAddedMessage,
-        isConnecting,
-        setIsConnecting,
-        isCheckingBalance,
-        setCheckingBalance: setCheckingBalanceStatus,
-        setConnection,
-        disconnect,
-        harvestAndStakeMessage,
-        setHarvestAndStakeMessage,
-        exchangeRates,
-        baseCurrency,
-        setBaseCurrency,
-        currentExchangeRate,
-        setCurrentExchangeRate,
-        settingsOpen,
-        toggleUserSettings,
-        openDrawer,
-        toggleSideDrawer,
-        web3Modal,
-      }}
-    >
-      <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
-        <GlobalStyle />
-        {openDrawer ? <Sidedrawer /> : null}
+    <MobxProvider {...stores}>
+      <HarvestContext.Provider
+        value={{
+          setShowAssetsToCheck,
+          showAssetsToCheck,
+          showUserAssets,
+          walletAddressToCheck,
+          setWalletAddressToCheck,
+          userWalletAddress,
+          setUserWalletAddress,
+          setAssetsToCheck,
+          assetsToCheck,
+          displayFarmInfo,
+          userAssets,
+          state,
+          setState,
+          radio,
+          setRadio,
+          toggleRadio,
+          tokenAddedMessage,
+          setTokenAddedMessage,
+          isConnecting,
+          setIsConnecting,
+          isCheckingBalance,
+          setCheckingBalance: setCheckingBalanceStatus,
+          setConnection,
+          disconnect,
+          harvestAndStakeMessage,
+          setHarvestAndStakeMessage,
+          exchangeRates,
+          baseCurrency,
+          setBaseCurrency,
+          currentExchangeRate,
+          setCurrentExchangeRate,
+          settingsOpen,
+          toggleUserSettings,
+          openDrawer,
+          toggleSideDrawer,
+          web3Modal,
+        }}
+      >
+        <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
+          <GlobalStyle />
+          {openDrawer ? <Sidedrawer /> : null}
 
-        <Container>
-          <Row>
-            <Col col>
-              <Topbar>
-                <Brand>
-                  <img src={logo} alt="harvest finance logo" />{' '}
-                  {openDrawer ? '' : <span>harvest.dashboard</span>}
-                </Brand>
-                <i
-                  onClick={toggleUserSettings}
-                  onKeyUp={toggleUserSettings}
-                  className="fas fa-user-cog"
-                  role="button"
-                  tabIndex="0"
-                />
-                {settingsOpen ? <SettingsModal /> : ''}
-                <i
-                  className="fas fa-bars"
-                  onClick={toggleSideDrawer}
-                  onKeyUp={toggleSideDrawer}
-                  role="button"
-                  tabIndex="0"
-                />
-              </Topbar>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col>
-              <>
-                {!isCheckingBalance && (
-                  <>
-                    <TabContainer />
-                    <Panel>
-                      <Radio />
-
-                      <TokenMessage />
-                      <HarvestAndStakeMessage />
-
-                      {state.provider ? (
-                        <ModeSelectBoard state={state} setState={setState} />
-                      ) : (
-                        <Row>
-                          <Col>
-                            <WelcomeText
-                              state={state}
-                              openModal={openModal}
-                              disconnect={disconnect}
-                              setConnection={setConnection}
-                              setAddress={setUserWalletAddress}
-                            />
-                          </Col>
-                        </Row>
-                      )}
-                    </Panel>
-                  </>
-                )}
-              </>
-            </Col>
-          </Row>
-          {state.provider && !isConnecting && (
+          <Container>
             <Row>
-              <Col style={{ marginTop: '3rem', marginBottom: '3rem' }}>
-                {isCheckingBalance ? <TabContainer /> : ''}
-                <Panel>
-                  <CheckBalance state={state} />
-                </Panel>
+              <Col col>
+                <Topbar>
+                  <Brand>
+                    <img src={logo} alt="harvest finance logo" />{' '}
+                    {openDrawer ? '' : <span>harvest.dashboard</span>}
+                  </Brand>
+                  <i
+                    onClick={toggleUserSettings}
+                    onKeyUp={toggleUserSettings}
+                    className="fas fa-user-cog"
+                    role="button"
+                    tabIndex="0"
+                  />
+                  {settingsOpen ? <SettingsModal /> : ''}
+                  <i
+                    className="fas fa-bars"
+                    onClick={toggleSideDrawer}
+                    onKeyUp={toggleSideDrawer}
+                    role="button"
+                    tabIndex="0"
+                  />
+                </Topbar>
               </Col>
             </Row>
-          )}
-        </Container>
-        <ErrorModal state={state} onClose={() => closeErrorModal()} />
-      </ThemeProvider>
-    </HarvestContext.Provider>
+
+            <Row>
+              <Col>
+                <>
+                  {!isCheckingBalance && (
+                    <>
+                      <TabContainer />
+                      <Panel>
+                        <Radio />
+
+                        <TokenMessage />
+                        <HarvestAndStakeMessage />
+                        {state.provider ? (
+                          <ModeSelectBoard state={state} setState={setState} />
+                        ) : (
+                          <WelcomeText
+                            state={state}
+                            openModal={openModal}
+                            disconnect={disconnect}
+                            setConnection={setConnection}
+                            setAddress={setUserWalletAddress}
+                          />
+                        )}
+                      </Panel>
+                    </>
+                  )}
+                </>
+              </Col>
+            </Row>
+            {state.provider && !isConnecting && (
+              <Row>
+                <Col style={{ marginTop: '3rem', marginBottom: '3rem' }}>
+                  {isCheckingBalance ? <TabContainer /> : ''}
+                  <Panel>
+                    <CheckBalance state={state} />
+                  </Panel>
+                </Col>
+              </Row>
+            )}
+          </Container>
+          <ErrorModal state={state} onClose={() => closeErrorModal()} />
+        </ThemeProvider>
+      </HarvestContext.Provider>
+    </MobxProvider>
   )
 }
