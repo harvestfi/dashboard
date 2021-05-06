@@ -5,7 +5,7 @@ import { fonts } from '@/styles/appStyles'
 
 @inject((stores) => ({ metaMaskStore: stores.metaMaskStore }))
 @observer
-export const WelcomeText = (props) => {
+export const ConnectWallet = (props) => {
   const { metaMaskStore, openModal } = props
 
   return (
