@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { fonts } from '../../styles/appStyles'
 import { IAssetsInfo } from '../../types'
-import { prettyBalance } from '../../utils/utils'
+import { prettyNumber, prettyCurrency } from '../../utils/utils'
 import {
   TableContainer,
   MainTableInner,
@@ -116,10 +116,19 @@ export const FarmingTable: React.FC<IProps> = ({
   // }, [setState, state.summaries]);
 
   const assetRows = assets.map((asset) => {
-    const prettyValue = prettyBalance(
-      Number((asset.value * currentExchangeRate).toFixed(2)),
+    const prettyFarmToClaim = prettyNumber(asset.farmToClaim.toNumber())
+    const prettyStakedBalance = prettyNumber(asset.stakedBalance.toNumber())
+
+    const prettyUnderlyingBalance = prettyNumber(
+      asset.underlyingBalance.toNumber(),
+    )
+
+    const prettyValue = prettyCurrency(
+      Number(asset.value.toNumber() * currentExchangeRate),
       baseCurrency,
     )
+
+    const prettyUnstakedBalance = prettyNumber(asset.unstakedBalance.toNumber())
 
     return (
       <MainTableRow key={asset.address}>
@@ -133,13 +142,13 @@ export const FarmingTable: React.FC<IProps> = ({
           role="button"
           tabIndex={0}
         >
-          {asset.farmToClaim.toFixed(6)}
+          {prettyFarmToClaim}
         </div>
-        <div className="staked">{asset.stakedBalance.toFixed(6)}</div>
+        <div className="staked">{prettyStakedBalance}</div>
         <div className="pool">{`${asset.percentOfPool.toFixed(6)}%`}</div>
-        <div className="underlying">{asset.underlyingBalance.toFixed(6)}</div>
+        <div className="underlying">{prettyUnderlyingBalance}</div>
         <div className="value">{prettyValue}</div>
-        <div className="unstaked">{asset.unstakedBalance.toFixed(6)}</div>
+        <div className="unstaked">{prettyUnstakedBalance}</div>
       </MainTableRow>
     )
   })

@@ -42,18 +42,6 @@ export interface IVault {
 export interface IAssetsInfo {
   name: string
   earnFarm: boolean
-  farmToClaim: number
-  stakedBalance: number
-  percentOfPool: number
-  value: number
-  unstakedBalance: number
-  address: string
-  underlyingBalance: number
-}
-
-export interface IAssetsInfoBigNumber {
-  name: string
-  earnFarm: boolean
   farmToClaim: BigNumber
   stakedBalance: BigNumber
   percentOfPool: BigNumber

@@ -24,7 +24,7 @@ import {
   BSC_UNDERLYING_ABI,
   PS_VAULT_ABI,
 } from '../lib/data/ABIs'
-import { IPool, IVault, IAssetsInfoBigNumber } from '../types'
+import { IPool, IVault, IAssetsInfo } from '../types'
 
 const BigNumberZero = new BigNumber(0)
 
@@ -36,7 +36,14 @@ const currencyFormatter = (currency: string) =>
     currency,
   })
 
-export const prettyBalance = (balance: number, currency: string) => {
+const numberFormatter = () =>
+  new Intl.NumberFormat('en-US', { maximumFractionDigits: 6 })
+
+export const prettyNumber = (number: number) => {
+  return numberFormatter().format(number)
+}
+
+export const prettyCurrency = (balance: number, currency: string) => {
   return currencyFormatter(currency).format(balance)
 }
 
@@ -51,7 +58,7 @@ export const convertStandardNumber = (num: number, currency: string) => {
 // Case 5: Vault it is PS.
 export const getEtheriumAssets = async (
   walletAddress: string,
-): Promise<IAssetsInfoBigNumber[]> => {
+): Promise<IAssetsInfo[]> => {
   // set the provider you want from Web3.providers
   const web3 = new Web3(`${ETH_URL}${process.env.REACT_APP_INFURA_KEY}`)
 
@@ -73,7 +80,7 @@ export const getEtheriumAssets = async (
   const getAssetsFromPool = async (
     pool: IPool,
     relatedVault?: IVault,
-  ): Promise<IAssetsInfoBigNumber> => {
+  ): Promise<IAssetsInfo> => {
     const lpTokenContract = new web3.eth.Contract(
       FTOKEN_ABI,
       pool.lpToken.address,
@@ -201,7 +208,7 @@ export const getEtheriumAssets = async (
     }
   }
 
-  const getAssetsFromVaults = (): Promise<IAssetsInfoBigNumber>[] => {
+  const getAssetsFromVaults = (): Promise<IAssetsInfo>[] => {
     return actualVaults.map(async (vault: IVault) => {
       // is this Vault iFarm?
       const isIFarm =
@@ -370,7 +377,7 @@ export const getEtheriumAssets = async (
     getAssetsFromPool(pool),
   )
 
-  const assetsDataResolved: IAssetsInfoBigNumber[] = await Promise.all([
+  const assetsDataResolved: IAssetsInfo[] = await Promise.all([
     ...assetsFromVaultsPromises,
     ...assetsFromPoolsWithoutVaultsPromises,
   ])
@@ -383,24 +390,13 @@ export const getEtheriumAssets = async (
       asset.underlyingBalance.toNumber()
     )
   })
-  const stringAssets = nonZeroAssets.map((asset) => {
-    return {
-      ...asset,
-      farmToClaim: asset.farmToClaim.toString(),
-      stakedBalance: asset.stakedBalance.toString(),
-      value: asset.value.toString(),
-      unstakedBalance: asset.unstakedBalance.toString(),
-      underlyingBalance: asset.underlyingBalance.toString(),
-      percentOfPool: asset.percentOfPool.toString(),
-    }
-  })
-  // return nonZeroAssets
-  return []
+
+  return nonZeroAssets
 }
 
 export const getBSCAssets = async (
   walletAddress: string,
-): Promise<IAssetsInfoBigNumber[]> => {
+): Promise<IAssetsInfo[]> => {
   // set the provider you want from Web3.providers
   const web3 = new Web3(BSC_URL)
 
@@ -420,7 +416,7 @@ export const getBSCAssets = async (
   const getAssetsFromPool = async (
     pool: IPool,
     relatedVault?: IVault,
-  ): Promise<IAssetsInfoBigNumber> => {
+  ): Promise<IAssetsInfo> => {
     const lpTokenContract = new web3.eth.Contract(
       FTOKEN_ABI,
       pool.lpToken.address,
@@ -535,7 +531,7 @@ export const getBSCAssets = async (
     }
   }
 
-  const getAssetsFromVaults = (): Promise<IAssetsInfoBigNumber>[] => {
+  const getAssetsFromVaults = (): Promise<IAssetsInfo>[] => {
     return vaults.map(async (vault: IVault) => {
       const vaultRelatedPool = pools.find((pool) => {
         return (
@@ -584,7 +580,7 @@ export const getBSCAssets = async (
     })
   }
 
-  const assetsFromVaultsPromises: Promise<IAssetsInfoBigNumber>[] = getAssetsFromVaults()
+  const assetsFromVaultsPromises: Promise<IAssetsInfo>[] = getAssetsFromVaults()
 
   const poolsWithoutVaults = pools.filter((pool: IPool) => {
     return !vaults.find(
@@ -592,11 +588,11 @@ export const getBSCAssets = async (
     )
   })
 
-  const assetsFromPoolsWithoutVaultsPromises: Promise<IAssetsInfoBigNumber>[] = poolsWithoutVaults.map(
+  const assetsFromPoolsWithoutVaultsPromises: Promise<IAssetsInfo>[] = poolsWithoutVaults.map(
     (pool) => getAssetsFromPool(pool),
   )
 
-  const assetsDataResolved: IAssetsInfoBigNumber[] = await Promise.all([
+  const assetsDataResolved: IAssetsInfo[] = await Promise.all([
     ...assetsFromVaultsPromises,
     ...assetsFromPoolsWithoutVaultsPromises,
   ])
@@ -609,17 +605,7 @@ export const getBSCAssets = async (
       asset.underlyingBalance.toNumber()
     )
   })
-  const stringAssets = nonZeroAssets.map((asset) => {
-    return {
-      ...asset,
-      farmToClaim: asset.farmToClaim.toString(),
-      stakedBalance: asset.stakedBalance.toString(),
-      value: asset.value.toString(),
-      unstakedBalance: asset.unstakedBalance.toString(),
-      underlyingBalance: asset.underlyingBalance.toString(),
-      percentOfPool: asset.percentOfPool.toString(),
-    }
-  })
+
   return nonZeroAssets
 }
 

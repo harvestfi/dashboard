@@ -31,6 +31,7 @@ import HarvestAndStakeMessage from './components/statusMessages/HarvestAndStakeM
 import Sidedrawer from './components/userSettings/sidedrawer/Sidedrawer'
 
 import { getEtheriumAssets, getBSCAssets } from './utils/utils'
+import BigNumber from 'bignumber.js'
 
 const web3Modal = new Web3Modal({
   network: 'mainnet', // optional
@@ -87,7 +88,7 @@ export function App() {
     theme: window.localStorage.getItem('HarvestFinance:Theme'),
     minimumHarvestAmount: '0',
     apy: 0,
-    farmPrice: 0,
+    farmPrice: new BigNumber(0),
     totalFarmEarned: 0,
   })
 
@@ -107,7 +108,7 @@ export function App() {
     const setAssets = async () => {
       if (state.provider && userWalletAddress) {
         const [userEtheriumAssets, userBSCAssets] = await Promise.all([
-          getEtheriumAssets(userWalletAddress, state.provider, state.farmPrice),
+          getEtheriumAssets(userWalletAddress),
           getBSCAssets(userWalletAddress),
         ])
         setUserAssets([...userEtheriumAssets, ...userBSCAssets])

@@ -1,11 +1,12 @@
 import React, { useContext, useEffect } from 'react'
+import BigNumber from 'bignumber.js'
 
 import { HarvestContext } from '../../Context/HarvestContext'
 import Container from './FarmInfoStyles'
 import { BluePanel } from '../bluePanel/BluePanel'
 import { LoadingBluePanel } from '../bluePanel/components/loadingBluePanel/LoadingBluePanel.styles'
 import { IAssetsInfo } from '../../types'
-import { prettyBalance, convertStandardNumber } from '../../utils/utils'
+import { prettyCurrency, convertStandardNumber } from '../../utils/utils'
 import { API } from '@/api'
 import { farmAddress } from '@/constants/constants'
 
@@ -29,33 +30,35 @@ export const FarmInfo: React.FC<IProps> = ({ assets, savedGas }) => {
 
       setState((prevState) => ({
         ...prevState,
-        farmPrice: farmPrice.toNumber(),
+        farmPrice,
       }))
     }
 
     if (state.provider) {
       getFarmPrice()
     }
-  }, [state.provider])
+  }, [])
 
   const farmPriceValue = convertStandardNumber(
-    state.farmPrice * currentExchangeRate,
+    state.farmPrice.toNumber() * currentExchangeRate,
     baseCurrency,
   )
 
-  const stakedBalance = assets.reduce((acc, currentAsset) => {
-    return acc + currentAsset.value
-  }, 0)
+  const stakedBalance = assets
+    .reduce((acc, currentAsset) => {
+      return acc.plus(currentAsset.value)
+    }, new BigNumber(0))
+    .multipliedBy(currentExchangeRate)
 
   const cellsData = [
     {
-      value: prettyBalance(stakedBalance, baseCurrency),
+      value: prettyCurrency(stakedBalance.toNumber(), baseCurrency),
       text: 'Staked Balance',
     },
     { value: `${state.apy}%`, text: 'Profit Share APY' },
     { value: farmPriceValue, text: 'FARM price' },
     {
-      value: prettyBalance(savedGas, baseCurrency),
+      value: prettyCurrency(savedGas, baseCurrency),
       text: 'Personal Saved Gas',
     },
     // TODO: fix 'farm earned'
