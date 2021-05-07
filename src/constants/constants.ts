@@ -47,5 +47,3 @@ export const LEGACY_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES =
 export const LEGACY_BSC_FACTORY = '0xbcfccbde45ce874adcb698cc183debcf17952812'
 
 export const BSC_URL = 'https://bsc-dataseed.binance.org/'
-
-export const ETH_URL = 'https://mainnet.infura.io/v3/'
