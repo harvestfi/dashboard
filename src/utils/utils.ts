@@ -60,7 +60,7 @@ export const getEtheriumAssets = async (
   walletAddress: string,
 ): Promise<IAssetsInfo[]> => {
   // set the provider you want from Web3.providers
-  const web3 = new Web3(`${ETH_URL}${process.env.REACT_APP_INFURA_KEY}`)
+  const web3 = new Web3(process.env.REACT_APP_ETH_URL!)
 
   // get all pools and vaults
   const [pools, vaults, farmPrice] = await Promise.all<

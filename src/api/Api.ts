@@ -47,7 +47,7 @@ export class API {
   }
 
   static async getEtheriumPrice(tokenAddress: string): Promise<BigNumber> {
-    const web3 = new Web3(`${ETH_URL}${process.env.REACT_APP_INFURA_KEY}`)
+    const web3 = new Web3(process.env.REACT_APP_ETH_URL!)
 
     const gettingPricesContract = new web3.eth.Contract(
       ETH_ORACLE_ABI_FOR_GETTING_PRICES,
