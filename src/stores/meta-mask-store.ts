@@ -4,8 +4,9 @@ import { web3Store } from './web3-store'
 
 class MetaMaskStore {
   private web3Store: typeof web3Store
-  provider = null
-  address = ''
+  private provider: any = null
+  private address = ''
+
   isConnecting = false
   isCheckingBalance = false
 
@@ -15,7 +16,7 @@ class MetaMaskStore {
     this.web3Store = web3Store
 
     if (this.web3Store.web3modal.cachedProvider) {
-      this.connectMetamask()
+      this.connectMetaMask()
     }
 
     window.ethereum.on('accountsChanged', this.disconnect)
@@ -33,7 +34,7 @@ class MetaMaskStore {
     this.address = value
   }
 
-  setConnection(provider) {
+  setConnection(provider: any) {
     this.provider = provider
   }
 
@@ -45,24 +46,24 @@ class MetaMaskStore {
     this.isCheckingBalance = value
   }
 
-  async setProvider(provider, onCatch) {
+  setProvider(provider: any, onError?: Function) {
     const ethersProvider = new ethers.providers.Web3Provider(provider)
 
     const signer = ethersProvider.getSigner()
 
     this.setConnection(provider)
 
-    // get the user address
     signer
-      .getAddress() // refreshButtonAction called initially to load table
+      .getAddress()
       .then((address) => {
         this.setAddress(address)
       })
-      .catch(onCatch)
-    // this.web3Store.web3modal.openModal('Something has gone wrong, retrying...', 'error')
+      .catch(() => {
+        if (onError) onError()
+      })
   }
 
-  connectMetamask({ onError, onProviderError }) {
+  async connectMetaMask(onError?: Function, onProviderError?: Function) {
     this.setIsConnecting(false)
     this.setCheckingBalance(false)
 
@@ -75,9 +76,11 @@ class MetaMaskStore {
           window.ethereum
             .enable()
             .then(() => {
-              this.setProvider(provider)
+              this.setProvider(provider, onError)
             })
-            .catch(onError)
+            .catch(() => {
+              if (onError) onError()
+            })
         }
       })
       .catch((err) => {

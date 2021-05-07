@@ -15,7 +15,7 @@ class Web3Store {
         walletconnect: {
           package: WalletConnectProvider,
           options: {
-            infuraId: process.env.REACT_APP_INFURA_KEY,
+            infuraId: `${process.env.REACT_APP_INFURA_KEY}`,
           },
         },
       },

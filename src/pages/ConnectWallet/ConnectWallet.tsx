@@ -1,12 +1,10 @@
 import React from 'react'
 import * as Styled from './styles'
-import { inject, observer } from 'mobx-react'
-import { fonts } from '@/styles/appStyles'
+import { useStores } from '@/stores/utils'
 
-@inject((stores) => ({ metaMaskStore: stores.metaMaskStore }))
-@observer
 export const ConnectWallet = (props) => {
-  const { metaMaskStore, openModal } = props
+  const { openModal } = props
+  const { metaMaskStore } = useStores()
 
   return (
     <Styled.WelcomeTextPanel>
@@ -16,17 +14,17 @@ export const ConnectWallet = (props) => {
         <button
           className="button"
           onClick={() => {
-            metaMaskStore.connectMetamask({
-              onError: () => {
+            metaMaskStore.connectMetaMask(
+              () => {
                 openModal('Something has gone wrong, retrying...', 'error')
               },
-              onProviderError: () => {
+              () => {
                 openModal(
                   'No provider, please install a supported Web3 wallet.',
                   'error',
                 )
               },
-            })
+            )
           }}
           type="button"
         >

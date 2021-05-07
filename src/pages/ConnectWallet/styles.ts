@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { fonts } from '@/styles/appStyles'
+
 export const WelcomeTextPanel = styled.div`
   width: 98%;
   margin: 0 auto;
