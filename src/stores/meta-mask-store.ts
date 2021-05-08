@@ -1,11 +1,24 @@
 import { makeAutoObservable } from 'mobx'
 import { ethers } from 'ethers'
 import { web3Store } from './web3-store'
+import { assetsStore } from './assets-store'
+import { getEtheriumAssets, getBSCAssets } from '@/utils/utils'
+
+const validateAddress = (address: string) => {
+  try {
+    ethers.utils.getAddress(address)
+  } catch (e) {
+    return false
+  }
+  return true
+}
 
 class MetaMaskStore {
   private web3Store: typeof web3Store
+  private assetsStore: typeof assetsStore
   private provider: any = null
   private address = ''
+  validationMessage = ''
 
   isConnecting = false
   isCheckingBalance = false
@@ -14,6 +27,7 @@ class MetaMaskStore {
     makeAutoObservable(this)
 
     this.web3Store = web3Store
+    this.assetsStore = assetsStore
 
     if (this.web3Store.web3modal.cachedProvider) {
       this.connectMetaMask()
@@ -28,10 +42,31 @@ class MetaMaskStore {
     this.address = ''
     this.isConnecting = false
     this.isCheckingBalance = false
+    this.validationMessage = ''
   }
 
   setAddress(value: string) {
     this.address = value
+  }
+
+  async setAddressToCheck(address: string, onError: (error: string) => void) {
+    if (address && validateAddress(address)) {
+      metaMaskStore.setCheckingBalance(true)
+
+      const [etheriumAssetsToCheck, BSCAssetsToCheck] = await Promise.all([
+        getEtheriumAssets(address),
+        getBSCAssets(address),
+      ])
+
+      this.assetsStore.setAssetsToCheck([
+        ...etheriumAssetsToCheck,
+        ...BSCAssetsToCheck,
+      ])
+      this.assetsStore.setShowAssetsToCheck(true)
+      this.address = address
+    } else {
+      this.validationMessage = 'You must enter a valid address'
+    }
   }
 
   setConnection(provider: any) {

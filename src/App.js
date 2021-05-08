@@ -37,19 +37,19 @@ import BigNumber from 'bignumber.js'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { ConnectWallet } from '@/pages/ConnectWallet'
 
-const web3Modal = null
-// new Web3Modal({
-//   network: 'mainnet', // optional
-//   cacheProvider: false, // optional
-//   providerOptions: {
-//     walletconnect: {
-//       package: WalletConnectProvider, // required
-//       options: {
-//         infuraId: `${process.env.REACT_APP_INFURA_KEY}`, // required
-//       },
-//     },
-//   },
-// })
+// TODO: remove this const because repeated in mobx store
+const web3Modal = new Web3Modal({
+  network: 'mainnet', // optional
+  cacheProvider: false, // optional
+  providerOptions: {
+    walletconnect: {
+      package: WalletConnectProvider, // required
+      options: {
+        infuraId: `${process.env.REACT_APP_INFURA_KEY}`, // required
+      },
+    },
+  },
+})
 
 const ErrorModal = Loadable({
   loader: () => import('./components/ErrorModal'),
@@ -288,21 +288,24 @@ export function App() {
 
                           <TokenMessage />
                           <HarvestAndStakeMessage />
+
                           {state.provider ? (
-                            <ModeSelectBoard
-                              state={state}
-                              setState={setState}
-                            />
+                            <>
+                              <ModeSelectBoard
+                                state={state}
+                                setState={setState}
+                              />
+                            </>
                           ) : (
                             <>
                               <ConnectWallet />
-                              {/* <WelcomeText
+                              <WelcomeText
                                 state={state}
                                 openModal={openModal}
                                 disconnect={disconnect}
                                 setConnection={setConnection}
-                                setAddress={setUserWalletAddress} */}
-                              {/* /> */}
+                                setAddress={setUserWalletAddress}
+                              />
                             </>
                           )}
                         </Panel>

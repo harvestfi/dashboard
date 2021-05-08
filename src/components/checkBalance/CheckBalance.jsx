@@ -133,7 +133,9 @@ const CheckBalance = () => {
     </>
   )
 }
+
 export default CheckBalance
+
 const Panel = styled.div`
   display: flex;
   flex-direction: column;
