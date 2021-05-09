@@ -13,7 +13,6 @@ import {
   DEFAULT_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES,
   LEGACY_BSC_FACTORY,
   LEGACY_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES,
-  ETH_URL,
   PSAddress,
 } from '../constants/constants'
 import {
