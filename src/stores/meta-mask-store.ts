@@ -3,6 +3,7 @@ import { ethers } from 'ethers'
 import { web3Store } from './web3-store'
 import { assetsStore } from './assets-store'
 import { getEtheriumAssets, getBSCAssets } from '@/utils/utils'
+import { errorModalStore } from '@/stores/views'
 
 const validateAddress = (address: string) => {
   try {
@@ -16,18 +17,25 @@ const validateAddress = (address: string) => {
 class MetaMaskStore {
   private web3Store: typeof web3Store
   private assetsStore: typeof assetsStore
-  private provider: any = null
-  private address = ''
-  validationMessage = ''
+  private errorModalStore: typeof errorModalStore
 
+  private address = ''
+
+  validationMessage = ''
+  provider: any = null
   isConnecting = false
   isCheckingBalance = false
+
+  get isConnected() {
+    return this.provider !== null
+  }
 
   constructor() {
     makeAutoObservable(this)
 
     this.web3Store = web3Store
     this.assetsStore = assetsStore
+    this.errorModalStore = errorModalStore
 
     if (this.web3Store.web3modal.cachedProvider) {
       this.connectMetaMask()
@@ -49,7 +57,7 @@ class MetaMaskStore {
     this.address = value
   }
 
-  async setAddressToCheck(address: string, onError: (error: string) => void) {
+  async setAddressToCheck(address: string) {
     if (address && validateAddress(address)) {
       metaMaskStore.setCheckingBalance(true)
 
@@ -81,46 +89,46 @@ class MetaMaskStore {
     this.isCheckingBalance = value
   }
 
-  setProvider(provider: any, onError?: Function) {
+  async setProvider(provider: any) {
     const ethersProvider = new ethers.providers.Web3Provider(provider)
-
     const signer = ethersProvider.getSigner()
-
     this.setConnection(provider)
 
-    signer
-      .getAddress()
-      .then((address) => {
-        this.setAddress(address)
-      })
-      .catch(() => {
-        if (onError) onError()
-      })
+    try {
+      const address = await signer.getAddress()
+      this.setAddress(address)
+    } catch (error) {
+      this.errorModalStore.open(
+        'Something has gone wrong, retrying...',
+        'error',
+      )
+      console.log(error)
+    }
   }
 
-  async connectMetaMask(onError?: Function, onProviderError?: Function) {
+  async connectMetaMask() {
     this.setIsConnecting(false)
     this.setCheckingBalance(false)
 
-    this.web3Store.web3modal
-      .connect()
-      .then((provider) => {
-        if (!provider) {
-          if (onProviderError) onProviderError()
-        } else {
-          window.ethereum
-            .enable()
-            .then(() => {
-              this.setProvider(provider, onError)
-            })
-            .catch(() => {
-              if (onError) onError()
-            })
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    const provider = await this.web3Store.web3modal.connect()
+
+    if (!provider) {
+      this.errorModalStore.open(
+        'No provider, please install a supported Web3 wallet.',
+        'error',
+      )
+    } else {
+      try {
+        await window.ethereum.enable()
+        await this.setProvider(provider)
+      } catch (error) {
+        this.errorModalStore.open(
+          'Something has gone wrong, retrying...',
+          'error',
+        )
+        console.log(error)
+      }
+    }
   }
 }
 

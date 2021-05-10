@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { fonts } from '@/styles/appStyles'
 
 export const Panel = styled.div`
   display: flex;

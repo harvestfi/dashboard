@@ -1,33 +1,27 @@
 import React from 'react'
 import * as Styled from './styles'
 import { useStores } from '@/stores/utils'
+import { observer } from 'mobx-react'
+import { useHistory } from 'react-router-dom'
 
-export const ConnectWallet = (props) => {
-  const { openModal } = props
+type ConnectWalletProps = {}
+
+export const ConnectWallet: React.FC<ConnectWalletProps> = observer((props) => {
   const { metaMaskStore } = useStores()
+  const history = useHistory()
+
+  const connectWallet = () => {
+    metaMaskStore.connectMetaMask().then(() => {
+      history.push('/switch-balance')
+    })
+  }
 
   return (
     <Styled.WelcomeTextPanel>
       <h1>Harvest Finance Dashboard</h1>
       <h4>Connect a wallet to get started</h4>
       {!metaMaskStore.isConnecting && (
-        <button
-          className="button"
-          onClick={() => {
-            metaMaskStore.connectMetaMask(
-              () => {
-                openModal('Something has gone wrong, retrying...', 'error')
-              },
-              () => {
-                openModal(
-                  'No provider, please install a supported Web3 wallet.',
-                  'error',
-                )
-              },
-            )
-          }}
-          type="button"
-        >
+        <button className="button" onClick={connectWallet} type="button">
           Connect Wallet
         </button>
       )}
@@ -36,4 +30,4 @@ export const ConnectWallet = (props) => {
       </h6>
     </Styled.WelcomeTextPanel>
   )
-}
+})

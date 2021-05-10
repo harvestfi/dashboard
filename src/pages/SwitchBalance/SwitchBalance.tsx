@@ -7,7 +7,11 @@ type CheckBalanceProps = {}
 export const SwitchBalance: React.FC<CheckBalanceProps> = (props) => {
   return (
     <>
-      <UserDashboard onGoDashboard={() => {}} />
+      <UserDashboard
+        onGoDashboard={() => {
+          console.log('- - - - ->')
+        }}
+      />
       <CheckBalance />
     </>
   )

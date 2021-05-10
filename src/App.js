@@ -29,27 +29,17 @@ import CheckBalance from './components/checkBalance/CheckBalance'
 import TokenMessage from './components/statusMessages/TokenMessage'
 import HarvestAndStakeMessage from './components/statusMessages/HarvestAndStakeMessage'
 import Sidedrawer from './components/userSettings/sidedrawer/Sidedrawer'
-import { Provider as MobxProvider } from 'mobx-react'
-import * as stores from '@/stores'
-
 import { getEtheriumAssets, getBSCAssets } from './utils/utils'
 import BigNumber from 'bignumber.js'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { ConnectWallet } from '@/pages/ConnectWallet'
+import { SwitchBalance } from '@/pages/SwitchBalance'
+import { web3Store } from '@/stores/web3-store'
+import { useStores } from '@/stores/utils'
+import { observer } from 'mobx-react'
+import { Routes } from '@/routes/'
 
 // TODO: remove this const because repeated in mobx store
-const web3Modal = new Web3Modal({
-  network: 'mainnet', // optional
-  cacheProvider: false, // optional
-  providerOptions: {
-    walletconnect: {
-      package: WalletConnectProvider, // required
-      options: {
-        infuraId: `${process.env.REACT_APP_INFURA_KEY}`, // required
-      },
-    },
-  },
-})
+// const web3Modal = web3Store.web3modal
 
 const ErrorModal = Loadable({
   loader: () => import('./components/ErrorModal'),
@@ -58,7 +48,9 @@ const ErrorModal = Loadable({
   },
 })
 
-export function App() {
+export const App = observer(() => {
+  const { web3Store, metaMaskStore } = useStores()
+
   // states for user page
   const [userAssets, setUserAssets] = useState([])
   const [userWalletAddress, setUserWalletAddress] = useState('')
@@ -88,7 +80,7 @@ export function App() {
   })
 
   const [state, setState] = useState({
-    provider: undefined,
+    // provider: undefined,
     error: { message: null, type: null, display: false },
     theme: window.localStorage.getItem('HarvestFinance:Theme'),
     minimumHarvestAmount: '0',
@@ -111,7 +103,7 @@ export function App() {
 
   useEffect(() => {
     const setAssets = async () => {
-      if (state.provider && userWalletAddress) {
+      if (metaMaskStore.isConnected && userWalletAddress) {
         const [userEtheriumAssets, userBSCAssets] = await Promise.all([
           getEtheriumAssets(userWalletAddress),
           getBSCAssets(userWalletAddress),
@@ -121,7 +113,7 @@ export function App() {
       }
     }
     setAssets()
-  }, [state.provider, userWalletAddress])
+  }, [metaMaskStore.isConnected, userWalletAddress])
 
   useEffect(() => {
     const getAPY = async () => {
@@ -146,7 +138,7 @@ export function App() {
   const disconnect = () => {
     setState((prevState) => ({
       ...prevState,
-      provider: undefined,
+      // provider: undefined,
       totalFarmEarned: 0,
       error: { message: null, type: null, display: false },
       theme: window.localStorage.getItem('HarvestFinance:Theme'),
@@ -155,7 +147,7 @@ export function App() {
     setIsConnecting(false)
     setUserAssets([])
     setShowUserAssets(false)
-    web3Modal.clearCachedProvider()
+    web3Store.web3modal.clearCachedProvider()
   }
 
   const closeErrorModal = () => {
@@ -179,12 +171,12 @@ export function App() {
     setOpenDrawer(!openDrawer)
   }
 
-  const setConnection = (provider) => {
-    setState((prevState) => ({
-      ...prevState,
-      provider,
-    }))
-  }
+  // const setConnection = (provider) => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     provider,
+  //   }))
+  // }
 
   // Radio Modal
   const [radio, setRadio] = useState(false)
@@ -202,133 +194,127 @@ export function App() {
   }
 
   return (
-    <MobxProvider {...stores}>
-      <Router>
-        <HarvestContext.Provider
-          value={{
-            setShowAssetsToCheck,
-            showAssetsToCheck,
-            showUserAssets,
-            walletAddressToCheck,
-            setWalletAddressToCheck,
-            userWalletAddress,
-            setUserWalletAddress,
-            setAssetsToCheck,
-            assetsToCheck,
-            displayFarmInfo,
-            userAssets,
-            state,
-            setState,
-            radio,
-            setRadio,
-            toggleRadio,
-            tokenAddedMessage,
-            setTokenAddedMessage,
-            isConnecting,
-            setIsConnecting,
-            isCheckingBalance,
-            setCheckingBalance: setCheckingBalanceStatus,
-            setConnection,
-            disconnect,
-            harvestAndStakeMessage,
-            setHarvestAndStakeMessage,
-            exchangeRates,
-            baseCurrency,
-            setBaseCurrency,
-            currentExchangeRate,
-            setCurrentExchangeRate,
-            settingsOpen,
-            toggleUserSettings,
-            openDrawer,
-            toggleSideDrawer,
-            web3Modal,
-          }}
-        >
-          <ThemeProvider
-            theme={state.theme === 'dark' ? darkTheme : lightTheme}
-          >
-            <GlobalStyle />
-            {openDrawer ? <Sidedrawer /> : null}
+    <HarvestContext.Provider
+      value={{
+        setShowAssetsToCheck,
+        showAssetsToCheck,
+        showUserAssets,
+        walletAddressToCheck,
+        setWalletAddressToCheck,
+        userWalletAddress,
+        setUserWalletAddress,
+        setAssetsToCheck,
+        assetsToCheck,
+        displayFarmInfo,
+        userAssets,
+        state,
+        setState,
+        radio,
+        setRadio,
+        toggleRadio,
+        tokenAddedMessage,
+        setTokenAddedMessage,
+        isConnecting,
+        setIsConnecting,
+        isCheckingBalance,
+        setCheckingBalance: setCheckingBalanceStatus,
+        // setConnection,
+        disconnect,
+        harvestAndStakeMessage,
+        setHarvestAndStakeMessage,
+        exchangeRates,
+        baseCurrency,
+        setBaseCurrency,
+        currentExchangeRate,
+        setCurrentExchangeRate,
+        settingsOpen,
+        toggleUserSettings,
+        openDrawer,
+        toggleSideDrawer,
+        web3Modal: web3Store.web3modal,
+      }}
+    >
+      <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
+        <GlobalStyle />
 
-            <Container>
-              <Row>
-                <Col col>
-                  <Topbar>
-                    <Brand>
-                      <img src={logo} alt="harvest finance logo" />{' '}
-                      {openDrawer ? '' : <span>harvest.dashboard</span>}
-                    </Brand>
-                    <i
-                      onClick={toggleUserSettings}
-                      onKeyUp={toggleUserSettings}
-                      className="fas fa-user-cog"
-                      role="button"
-                      tabIndex="0"
-                    />
-                    {settingsOpen ? <SettingsModal /> : ''}
-                    <i
-                      className="fas fa-bars"
-                      onClick={toggleSideDrawer}
-                      onKeyUp={toggleSideDrawer}
-                      role="button"
-                      tabIndex="0"
-                    />
-                  </Topbar>
-                </Col>
-              </Row>
+        {openDrawer ? <Sidedrawer /> : null}
 
-              <Row>
-                <Col>
-                  <>
-                    {!isCheckingBalance && (
+        <Container>
+          <Row>
+            <Col col>
+              <Topbar>
+                <Brand>
+                  <img src={logo} alt="harvest finance logo" />{' '}
+                  {openDrawer ? '' : <span>harvest.dashboard</span>}
+                </Brand>
+                <i
+                  onClick={toggleUserSettings}
+                  onKeyUp={toggleUserSettings}
+                  className="fas fa-user-cog"
+                  role="button"
+                  tabIndex="0"
+                />
+                {settingsOpen ? <SettingsModal /> : ''}
+                <i
+                  className="fas fa-bars"
+                  onClick={toggleSideDrawer}
+                  onKeyUp={toggleSideDrawer}
+                  role="button"
+                  tabIndex="0"
+                />
+              </Topbar>
+            </Col>
+          </Row>
+          {/* <Row>
+            <Col>
+              {!isCheckingBalance && (
+                <>
+                   <TabContainer /> 
+                  <Panel>
+                    <Radio />
+
+                    <TokenMessage />
+                    <HarvestAndStakeMessage />
+
+                    {metaMaskStore.isConnected ? (
                       <>
-                        <TabContainer />
-                        <Panel>
-                          <Radio />
-
-                          <TokenMessage />
-                          <HarvestAndStakeMessage />
-
-                          {state.provider ? (
-                            <>
-                              <ModeSelectBoard
-                                state={state}
-                                setState={setState}
-                              />
-                            </>
-                          ) : (
-                            <>
-                              <ConnectWallet />
-                              <WelcomeText
-                                state={state}
-                                openModal={openModal}
-                                disconnect={disconnect}
-                                setConnection={setConnection}
-                                setAddress={setUserWalletAddress}
-                              />
-                            </>
-                          )}
-                        </Panel>
+                        <ModeSelectBoard state={state} setState={setState} />
+                      </>
+                    ) : (
+                      <>
+                        { <WelcomeText
+                          state={state}
+                          openModal={openModal}
+                          disconnect={disconnect}
+                          setConnection={setConnection}
+                          setAddress={setUserWalletAddress}
+                        /> *
                       </>
                     )}
-                  </>
+                  </Panel>
+                </>
+              )}
+            </Col>
+          </Row> */}
+
+          <TabContainer />
+          <Routes />
+
+          {/* {metaMaskStore.isConnected && !isConnecting && (
+            <>
+              <Row>
+                <Col style={{ marginTop: '3rem', marginBottom: '3rem' }}>
+                  {isCheckingBalance ? <TabContainer /> : ''}
+                  <Panel>
+                    <CheckBalance state={state} />
+                  </Panel>
                 </Col>
               </Row>
-              {state.provider && !isConnecting && (
-                <Row>
-                  <Col style={{ marginTop: '3rem', marginBottom: '3rem' }}>
-                    {isCheckingBalance ? <TabContainer /> : ''}
-                    <Panel>
-                      <CheckBalance state={state} />
-                    </Panel>
-                  </Col>
-                </Row>
-              )}
-            </Container>
-            <ErrorModal state={state} onClose={() => closeErrorModal()} />
-          </ThemeProvider>
-        </HarvestContext.Provider>
-      </Router>
-    </MobxProvider>
+            </>
+          )} */}
+        </Container>
+        <ErrorModal state={state} onClose={() => closeErrorModal()} />
+      </ThemeProvider>
+    </HarvestContext.Provider>
   )
-}
+})

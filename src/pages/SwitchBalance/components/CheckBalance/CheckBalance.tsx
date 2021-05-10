@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Panel, ValidationMessage } from './styles'
 import { useStores } from '@/stores/utils'
+import { observer } from 'mobx-react'
 
 type CheckBalanceProps = {}
 
-export const CheckBalance: React.FC<CheckBalanceProps> = (props) => {
+export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
   const [address, setAddress] = useState()
   const { metaMaskStore } = useStores()
 
@@ -17,7 +18,6 @@ export const CheckBalance: React.FC<CheckBalanceProps> = (props) => {
     <>
       {metaMaskStore.validationMessage && (
         <motion.div
-          key={metaMaskStore.validationMessage}
           initial={{ x: 0, y: -100, opacity: 0 }}
           animate={{ x: 0, y: 0, opacity: 1 }}
           exit={{ x: 0, y: -100, opacity: 1 }}
@@ -41,7 +41,9 @@ export const CheckBalance: React.FC<CheckBalanceProps> = (props) => {
           </div>
         </div>
         <button
-          onClick={() => metaMaskStore.setAddressToCheck(address)}
+          onClick={() => {
+            metaMaskStore.setAddressToCheck(address)
+          }}
           className="check-all button"
           type="button"
         >
@@ -50,4 +52,4 @@ export const CheckBalance: React.FC<CheckBalanceProps> = (props) => {
       </Panel>
     </>
   )
-}
+})
