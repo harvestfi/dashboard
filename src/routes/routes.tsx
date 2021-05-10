@@ -1,18 +1,34 @@
 import React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch,
+} from 'react-router-dom'
 
 import { ConnectWallet } from '@/pages/ConnectWallet'
 import { SwitchBalance } from '@/pages/SwitchBalance'
 import { CheckBalance } from '@/pages/CheckBalance'
 import { UserDashboard } from '@/pages/UserDashboard'
 
+export const PATHS = {
+  main: '/',
+  switchBalance: '/switch-balance',
+  checkBalance: '/check-balance',
+  userDashboard: '/user-dashboard',
+}
+
 export const Routes = () => {
   return (
     <Router>
-      <Route path="/" component={ConnectWallet} exact />
-      <Route path="/switch-balance" component={SwitchBalance} />
-      <Route path="/check-balance" component={CheckBalance} />
-      <Route path="/user-dashboard" component={UserDashboard} />
+      <Switch>
+        <Route path={PATHS.main} component={ConnectWallet} exact />
+        <Route path={PATHS.switchBalance} component={SwitchBalance} />
+        <Route path={PATHS.checkBalance} component={CheckBalance} />
+        <Route path={PATHS.userDashboard} component={UserDashboard} />
+        <Redirect to={PATHS.main} />
+      </Switch>
     </Router>
   )
 }

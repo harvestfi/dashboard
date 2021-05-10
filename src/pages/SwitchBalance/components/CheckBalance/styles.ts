@@ -15,7 +15,7 @@ export const Panel = styled.div`
   border-radius: 0.5rem;
   box-sizing: border-box;
   box-shadow: ${(props) => props.theme.style.panelBoxShadow};
-  z-index: 1;
+  z-index: 100;
   position: relative;
 
   h1 {
@@ -75,6 +75,7 @@ export const ValidationMessage = styled.div`
   position: absolute;
   left: 0%;
   right: 0%;
+  z-index: 100;
   @media (max-width: 768px) {
     left: 30%;
     right: 30%;

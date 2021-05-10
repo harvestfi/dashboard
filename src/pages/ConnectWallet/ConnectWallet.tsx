@@ -3,6 +3,7 @@ import * as Styled from './styles'
 import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
 import { useHistory } from 'react-router-dom'
+import { PATHS } from '@/routes'
 
 type ConnectWalletProps = {}
 
@@ -12,7 +13,7 @@ export const ConnectWallet: React.FC<ConnectWalletProps> = observer((props) => {
 
   const connectWallet = () => {
     metaMaskStore.connectMetaMask().then(() => {
-      history.push('/switch-balance')
+      history.push(PATHS.switchBalance)
     })
   }
 

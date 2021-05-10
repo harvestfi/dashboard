@@ -1,20 +1,24 @@
 import React from 'react'
 import Button from '@/components/Button'
 import { Panel } from '@/styles/AppJsStyles'
+import { useHistory } from 'react-router-dom'
+import { PATHS } from '@/routes'
 
-type UserDashboardProps = {
-  onGoDashboard(): void
-}
+type UserDashboardProps = {}
 
 export const UserDashboard: React.FC<UserDashboardProps> = (props) => {
-  const { onGoDashboard } = props
+  const history = useHistory()
+
+  const goDashboard = () => {
+    history.push(PATHS.userDashboard)
+  }
 
   return (
     <>
       <div className="mode-select-container">
         <Panel className="mode-select-user">
           <h1>Check your farming status</h1>
-          <Button onClick={onGoDashboard}>Go to user dashboard</Button>
+          <Button onClick={goDashboard}>Go to user dashboard</Button>
         </Panel>
       </div>
     </>

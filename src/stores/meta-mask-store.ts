@@ -5,15 +5,6 @@ import { assetsStore } from './assets-store'
 import { getEtheriumAssets, getBSCAssets } from '@/utils/utils'
 import { errorModalStore } from '@/stores/views'
 
-const validateAddress = (address: string) => {
-  try {
-    ethers.utils.getAddress(address)
-  } catch (e) {
-    return false
-  }
-  return true
-}
-
 class MetaMaskStore {
   private web3Store: typeof web3Store
   private assetsStore: typeof assetsStore
@@ -58,23 +49,19 @@ class MetaMaskStore {
   }
 
   async setAddressToCheck(address: string) {
-    if (address && validateAddress(address)) {
-      metaMaskStore.setCheckingBalance(true)
+    metaMaskStore.setCheckingBalance(true)
 
-      const [etheriumAssetsToCheck, BSCAssetsToCheck] = await Promise.all([
-        getEtheriumAssets(address),
-        getBSCAssets(address),
-      ])
+    const [etheriumAssetsToCheck, BSCAssetsToCheck] = await Promise.all([
+      getEtheriumAssets(address),
+      getBSCAssets(address),
+    ])
 
-      this.assetsStore.setAssetsToCheck([
-        ...etheriumAssetsToCheck,
-        ...BSCAssetsToCheck,
-      ])
-      this.assetsStore.setShowAssetsToCheck(true)
-      this.address = address
-    } else {
-      this.validationMessage = 'You must enter a valid address'
-    }
+    this.assetsStore.setAssetsToCheck([
+      ...etheriumAssetsToCheck,
+      ...BSCAssetsToCheck,
+    ])
+    this.assetsStore.setShowAssetsToCheck(true)
+    this.address = address
   }
 
   setConnection(provider: any) {
