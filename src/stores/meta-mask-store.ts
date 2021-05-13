@@ -10,7 +10,7 @@ class MetaMaskStore {
   private assetsStore: typeof assetsStore
   private errorModalStore: typeof errorModalStore
 
-  private address = ''
+  address = ''
 
   validationMessage = ''
   provider: any = null

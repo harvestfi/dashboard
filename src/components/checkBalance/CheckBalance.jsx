@@ -70,6 +70,7 @@ const CheckBalance = () => {
     setWalletAddressToCheck('')
   }
 
+
   return (
     <>
       {validationMessage ? (
