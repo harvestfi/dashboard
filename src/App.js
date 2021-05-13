@@ -63,7 +63,6 @@ export function App() {
   const [assetsToCheck, setAssetsToCheck] = useState([])
   const [walletAddressToCheck, setWalletAddressToCheck] = useState('')
   const [showAssetsToCheck, setShowAssetsToCheck] = useState(false)
-  const [displayFarmInfo, setDisplayFarmInfo] = useState(false)
 
   // for currency conversion
   const [baseCurrency, setBaseCurrency] = useState(
@@ -120,9 +119,8 @@ export function App() {
 
   useEffect(() => {
     const getAPY = async () => {
-      const [APY] = await Promise.all([API.getAPY()])
+      const APY = await API.getAPY()
       setState((prevState) => ({ ...prevState, apy: APY }))
-      setDisplayFarmInfo(true)
     }
     getAPY()
   }, [])
@@ -208,7 +206,6 @@ export function App() {
         setUserWalletAddress,
         setAssetsToCheck,
         assetsToCheck,
-        displayFarmInfo,
         userAssets,
         state,
         setState,
