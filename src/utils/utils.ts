@@ -634,9 +634,8 @@ export const getBSCAssets = async (
     )
   })
 
-  const assetsFromPoolsWithoutVaultsPromises: Promise<IAssetsInfo>[] = poolsWithoutVaults.map(
-    (pool) => getAssetsFromPool(pool),
-  )
+  const assetsFromPoolsWithoutVaultsPromises: Promise<IAssetsInfo>[] =
+    poolsWithoutVaults.map((pool) => getAssetsFromPool(pool))
 
   const assetsDataResolved: IAssetsInfo[] = await Promise.all([
     ...assetsFromVaultsPromises,
