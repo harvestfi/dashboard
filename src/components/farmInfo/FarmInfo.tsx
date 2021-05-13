@@ -4,7 +4,6 @@ import BigNumber from 'bignumber.js'
 import { HarvestContext } from '../../Context/HarvestContext'
 import Container from './FarmInfoStyles'
 import { BluePanel } from '../bluePanel/BluePanel'
-import { LoadingBluePanel } from '../bluePanel/components/loadingBluePanel/LoadingBluePanel.styles'
 import { IAssetsInfo } from '../../types'
 import { prettyCurrency, convertStandardNumber } from '../../utils/utils'
 import { API } from '@/api'
@@ -16,13 +15,8 @@ interface IProps {
 }
 
 export const FarmInfo: React.FC<IProps> = ({ assets, savedGas }) => {
-  const {
-    state,
-    currentExchangeRate,
-    displayFarmInfo,
-    baseCurrency,
-    setState,
-  } = useContext(HarvestContext)
+  const { state, currentExchangeRate, baseCurrency, setState } =
+    useContext(HarvestContext)
 
   useEffect(() => {
     const getFarmPrice = async () => {
@@ -50,12 +44,13 @@ export const FarmInfo: React.FC<IProps> = ({ assets, savedGas }) => {
     }, new BigNumber(0))
     .multipliedBy(currentExchangeRate)
 
+  const apy = state.apy ? `${state.apy}%` : 'Error'
   const cellsData = [
     {
       value: prettyCurrency(stakedBalance.toNumber(), baseCurrency),
       text: 'Staked Balance',
     },
-    { value: `${state.apy}%`, text: 'Profit Share APY' },
+    { value: apy, text: 'Profit Share APY' },
     { value: farmPriceValue, text: 'FARM price' },
     {
       value: prettyCurrency(savedGas, baseCurrency),
@@ -67,11 +62,7 @@ export const FarmInfo: React.FC<IProps> = ({ assets, savedGas }) => {
   ]
 
   const Cells = cellsData.map((item) => {
-    return displayFarmInfo ? (
-      <BluePanel key={item.text} value={item.value} text={item.text} />
-    ) : (
-      <LoadingBluePanel key={item.text} />
-    )
+    return <BluePanel key={item.text} value={item.value} text={item.text} />
   })
 
   return <Container>{Cells}</Container>
