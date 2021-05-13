@@ -86,7 +86,7 @@ export function App() {
     error: { message: null, type: null, display: false },
     theme: window.localStorage.getItem('HarvestFinance:Theme'),
     minimumHarvestAmount: '0',
-    apy: 0,
+    apy: '0',
     farmPrice: new BigNumber(0),
     totalFarmEarned: 0,
   })
