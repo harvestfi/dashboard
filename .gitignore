@@ -30,3 +30,4 @@ build
 .history
 storybook-static
 workingFiles
+.env

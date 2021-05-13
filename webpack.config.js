@@ -50,7 +50,11 @@ module.exports = {
   },
   plugins: [
     new Dotenv({
-      path: path.join(__dirname, '.env'),
+      safe: true,
+      allowEmptyValues: false,
+      systemvars: true,
+      silent: false,
+      defaults: false,
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
