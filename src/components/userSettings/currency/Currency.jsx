@@ -19,7 +19,7 @@ export const Currency = observer(() => {
         name="currency"
         id="currencies"
       >
-        {settingStore.settings.currency.options.map(option => {
+        {settingStore.settings.currency.options.map((option) => {
           return (
             <option key={option} value={option}>
               {option}

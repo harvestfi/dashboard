@@ -1,22 +1,23 @@
 import { makeAutoObservable } from 'mobx'
 import { ethers } from 'ethers'
 import { web3Store } from './web3-store'
-import { assetsStore } from './assets-store'
-import { getEtheriumAssets, getBSCAssets } from '@/utils/utils'
 import { errorModalStore } from '@/stores/views'
+import { userAssetsStore } from './resources/assets-store'
 
 class MetaMaskStore {
   private web3Store: typeof web3Store
-  private assetsStore: typeof assetsStore
   private errorModalStore: typeof errorModalStore
+  private userAssetsStore: typeof userAssetsStore
 
+  userAssets = []
   address = ''
-  walletAddressToCheck = ''
+
+  assetsToCheck = []
+  addressToCheck = ''
 
   validationMessage = ''
   provider: any = null
   isConnecting = false
-  isCheckingBalance = false
 
   get isConnected() {
     return this.provider !== null
@@ -26,8 +27,8 @@ class MetaMaskStore {
     makeAutoObservable(this)
 
     this.web3Store = web3Store
-    this.assetsStore = assetsStore
     this.errorModalStore = errorModalStore
+    this.userAssetsStore = userAssetsStore
 
     if (this.web3Store.web3modal.cachedProvider) {
       this.connectMetaMask()
@@ -39,30 +40,8 @@ class MetaMaskStore {
   disconnect() {
     this.web3Store.web3modal.clearCachedProvider()
     this.provider = null
-    this.address = ''
     this.isConnecting = false
-    this.isCheckingBalance = false
     this.validationMessage = ''
-  }
-
-  setAddress(value: string) {
-    this.address = value
-  }
-
-  async setAddressToCheck(address: string) {
-    metaMaskStore.setCheckingBalance(true)
-
-    const [etheriumAssetsToCheck, BSCAssetsToCheck] = await Promise.all([
-      getEtheriumAssets(address),
-      getBSCAssets(address),
-    ])
-
-    this.assetsStore.setAssetsToCheck([
-      ...etheriumAssetsToCheck,
-      ...BSCAssetsToCheck,
-    ])
-    this.assetsStore.setShowAssetsToCheck(true)
-    this.address = address
   }
 
   setConnection(provider: any) {
@@ -73,10 +52,6 @@ class MetaMaskStore {
     this.isConnecting = value
   }
 
-  setCheckingBalance(value: boolean) {
-    this.isCheckingBalance = value
-  }
-
   async setProvider(provider: any) {
     const ethersProvider = new ethers.providers.Web3Provider(provider)
     const signer = ethersProvider.getSigner()
@@ -84,7 +59,7 @@ class MetaMaskStore {
 
     try {
       const address = await signer.getAddress()
-      this.setAddress(address)
+      this.userAssetsStore.setAddress(address)
     } catch (error) {
       this.errorModalStore.open(
         'Something has gone wrong, retrying...',
@@ -96,7 +71,6 @@ class MetaMaskStore {
 
   async connectMetaMask() {
     this.setIsConnecting(false)
-    this.setCheckingBalance(false)
 
     const provider = await this.web3Store.web3modal.connect()
 

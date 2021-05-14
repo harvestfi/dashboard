@@ -1,13 +1,9 @@
 import { FetchResource } from './fetch-resource'
-import { makeAutoObservable } from 'mobx'
 import { API } from '@/api'
 
-class ExchangeRatesStore {
-  fetchResource: any
-
+class ExchangeRatesStore extends FetchResource<any> {
   constructor() {
-    makeAutoObservable(this)
-    this.fetchResource = new FetchResource(API.getExchangeRates)
+    super(API.getExchangeRates)
   }
 }
 

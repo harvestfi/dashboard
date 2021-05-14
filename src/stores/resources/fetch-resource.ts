@@ -7,7 +7,7 @@ export class FetchResource<T> {
 
   isFetching = false
 
-  constructor(private fetchFn: (params?: string) => Promise<T>) {
+  constructor(protected fetchFn?: Function) {
     makeAutoObservable(this)
   }
 
@@ -19,11 +19,15 @@ export class FetchResource<T> {
     this.isFetching = true
 
     try {
-      const response = await this.fetchFn(params)
-      this.value = response
-      this.isFetching = false
-
-      return response
+      if (!this.fetchFn) {
+        console.warn('[FetchResource.fetchFn] fetchFn must be defined')
+        this.isFetching = false
+      } else {
+        const response = await this.fetchFn(params)
+        this.value = response
+        this.isFetching = false
+        return response
+      }
     } catch (error) {
       this.error = error
     }
