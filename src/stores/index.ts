@@ -4,3 +4,4 @@ export * from './assets-store'
 export * from './settings-store'
 
 export * from './views'
+export * from './resources'

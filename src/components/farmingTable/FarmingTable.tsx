@@ -14,6 +14,8 @@ import {
   Tabs,
 } from './FarmingTableStyles'
 import FarmTableSkeleton from './FarmTableSkeleton'
+import { observer } from 'mobx-react'
+import { useStores } from '@/stores/utils'
 
 interface IProps {
   display: boolean
@@ -51,69 +53,12 @@ const columns = [
   },
 ]
 
-export const FarmingTable: React.FC<IProps> = ({
-  display,
-  assets,
-  currentExchangeRate,
-  baseCurrency,
-}) => {
-  // TODO: implement sorting on the table and remove the commented out code
+export const FarmingTable: React.FC<IProps> = observer((props) => {
+  const { display, assets } = props
+  const { settingsStore, exchangeRatesStore } = useStores()
 
-  // const [sortedSummary, setSortedSummary] = useState([]);
-  // const [sortDirection, setSortDirection] = useState(1);
-  // const sortSummary = (_col, index) => {
-  //   // earnedRewards, stakedBalance, percentOfPool, usdValueOf, unstakedBalance
-  //   const filteredArray = sortedSummary;
-  //   if (index >= 2 && index <= 6) {
-  //     filteredArray.sort((a, b) => {
-  //       const first =
-  //         index === 2
-  //           ? a.earnedRewards
-  //           : index === 3
-  //             ? a.stakedBalance
-  //             : index === 4
-  //               ? a.percentOfPool.substr(0, a.percentOfPool.length - 1)
-  //               : index === 5
-  //                 ? a.usdValueOf
-  //                 : index === 6
-  //                   ? a.unstakedBalance
-  //                   : 0;
-  //       const second =
-  //         index === 2
-  //           ? b.earnedRewards
-  //           : index === 3
-  //             ? b.stakedBalance
-  //             : index === 4
-  //               ? b.percentOfPool.substr(0, b.percentOfPool.length - 1)
-  //               : index === 5
-  //                 ? b.usdValueOf
-  //                 : index === 6
-  //                   ? b.unstakedBalance
-  //                   : 0;
-  //       return parseFloat(first) >= parseFloat(second) ? sortDirection : -sortDirection;
-  //     });
-  //   } else if (index === 1) {
-  //     filteredArray.sort((a, b) => {
-  //       return (a.isActive || 0) >= (b.isActive || 0) ? sortDirection : -sortDirection;
-  //     });
-  //   }
-  //   setSortedSummary([...filteredArray]);
-  //   setSortDirection(-sortDirection);
-  // };
-
-  // const getTotalFarmEarned = useCallback(() => {
-  //   let total = 0;
-  //   if (state.summaries.length !== 0) {
-  //     // eslint-disable-next-line
-  //     state.summaries.map(utils.prettyPosition).map((summary, _index) => {
-  //       total += parseFloat(summary.historicalRewards);
-  //       setState(prevState => ({
-  //         ...prevState,
-  //         totalFarmEarned: total,
-  //       }));
-  //     });
-  //   }
-  // }, [setState, state.summaries]);
+  const baseCurrency = settingsStore.settings.currency.value
+  const currentExchangeRate = exchangeRatesStore.value[baseCurrency]
 
   const assetRows = assets.map((asset) => {
     const prettyFarmToClaim = prettyNumber(asset.farmToClaim.toNumber())
@@ -189,8 +134,6 @@ export const FarmingTable: React.FC<IProps> = ({
                       className={`${col.name} table-header`}
                       key={col.name}
                       // TODO: implement sorting
-                      // onKeyUp={() => sortSummary(col, i)}
-                      // onClick={() => sortSummary(col, i)}
                       role="button"
                       tabIndex={0}
                     >
@@ -208,7 +151,7 @@ export const FarmingTable: React.FC<IProps> = ({
       )}
     </>
   )
-}
+})
 
 const NoAssetTable = styled.div`
   display: flex;

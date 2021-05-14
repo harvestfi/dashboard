@@ -100,4 +100,11 @@ export class API {
       : new BigNumber(0)
     return prettyPrice
   }
+
+  static async getExchangeRates(params?: string) {
+    const response = await axios.get(
+      `https://api.ratesapi.io/api/latest${params ?? ''}`,
+    )
+    return response?.data?.rates ?? {}
+  }
 }

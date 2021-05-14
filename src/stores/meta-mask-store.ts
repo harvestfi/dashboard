@@ -11,6 +11,7 @@ class MetaMaskStore {
   private errorModalStore: typeof errorModalStore
 
   address = ''
+  walletAddressToCheck = ''
 
   validationMessage = ''
   provider: any = null

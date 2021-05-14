@@ -16,12 +16,7 @@ export const UserDashboard: React.FC<UserDashboardProps> = observer((props) => {
   return (
     <Styled.Main>
       <Wallet />
-      <FarmingTable
-        currentExchangeRate={currentExchangeRate}
-        display={showUserAssets}
-        assets={assets}
-        baseCurrency={baseCurrency}
-      />
+      <FarmingTable display={showUserAssets} assets={assets} />
       <AddTokens />
     </Styled.Main>
   )

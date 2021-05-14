@@ -1,2 +1,2 @@
-export * from './exchange-rates'
+export * from './exchange-rates-store'
 export * from './fetch-resource'
