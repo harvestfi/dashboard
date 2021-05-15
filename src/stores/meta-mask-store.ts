@@ -3,13 +3,46 @@ import { ethers } from 'ethers'
 import { web3Store } from './web3-store'
 import { errorModalStore } from '@/stores/views'
 import { userAssetsStore } from './resources/assets-store'
+import { Contract, providers } from 'ethers'
+
+const checkForToken = async (token: any) => {
+  // The minimum ABI to get ERC20 Token balance
+  const minABI = [
+    // balanceOf
+    {
+      constant: true,
+      inputs: [{ name: '_owner', type: 'address' }],
+      name: 'balanceOf',
+      outputs: [{ name: 'balance', type: 'uint256' }],
+      type: 'function',
+    },
+    // decimals
+    {
+      constant: true,
+      inputs: [],
+      name: 'decimals',
+      outputs: [{ name: '', type: 'uint8' }],
+      type: 'function',
+    },
+  ]
+  // Get ERC20 Token contract instance
+  const contract = new Contract(
+    token.address,
+    minABI,
+    providers.getDefaultProvider(),
+  )
+  // calculate a balance
+  const balance = await contract.balanceOf(userAssetsStore.address)
+  return parseInt(balance, 16)
+}
 
 class MetaMaskStore {
   private readonly web3Store = web3Store
   private readonly errorModalStore = errorModalStore
   private readonly userAssetsStore = userAssetsStore
 
-  validationMessage = ''
+  tokenAddedMessage = ''
+
   provider: any = null
 
   get isConnected() {
@@ -29,17 +62,16 @@ class MetaMaskStore {
   disconnect() {
     this.web3Store.web3modal.clearCachedProvider()
     this.provider = null
-    this.validationMessage = ''
   }
 
-  setConnection(provider: any) {
-    this.provider = provider
+  setTokenAddedMessage(message: string) {
+    this.tokenAddedMessage = message
   }
 
   async setProvider(provider: any) {
     const ethersProvider = new ethers.providers.Web3Provider(provider)
     const signer = ethersProvider.getSigner()
-    this.setConnection(provider)
+    this.provider = provider
 
     try {
       const address = await signer.getAddress()
@@ -72,6 +104,30 @@ class MetaMaskStore {
         )
         console.log(error)
       }
+    }
+  }
+
+  async addTokenToWallet(token: any) {
+    const response = await window.ethereum.request({
+      method: 'metamask_watchAsset',
+      params: {
+        type: 'ERC20',
+        options: {
+          address: token.address,
+          symbol: token.symbol,
+          decimals: token.decimals,
+          image: token.tokenImage,
+        },
+      },
+      // id: Math.round(Math.random() * 100000),
+    })
+
+    if ((await checkForToken(token)) > 0 && response) {
+      this.setTokenAddedMessage(`${token.name} is already in your wallet.`)
+    } else if (response) {
+      this.setTokenAddedMessage(`${token.name} was added to your wallet.`)
+    } else {
+      this.setTokenAddedMessage(`${token.name} was not added to your wallet.`)
     }
   }
 }

@@ -12,18 +12,14 @@ import { farmAddress } from '@/constants/constants'
 import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
 
-interface IProps {
-  assets: IAssetsInfo[]
-  savedGas: number
-}
+interface IProps {}
 
-export const FarmInfo: React.FC<IProps> = observer(({ assets, savedGas }) => {
-  const { displayFarmInfo } = useContext(HarvestContext)
-
+export const FarmInfo: React.FC<IProps> = observer(() => {
   const {
     userAssetsStore,
     farmPriceStore,
     settingsStore,
+    savedGasStore,
     apyStore,
   } = useStores()
 
@@ -31,13 +27,20 @@ export const FarmInfo: React.FC<IProps> = observer(({ assets, savedGas }) => {
   const farmPriceValue = farmPriceStore.getValue()
   const baseCurrency = settingsStore.settings.currency.value
   const apy = apyStore.value
+  const savedGas = savedGasStore.value
+
+  const isLoading =
+    userAssetsStore.isFetching ||
+    farmPriceStore.isFetching ||
+    savedGasStore.isFetching ||
+    apyStore.isFetching
 
   const cellsData = [
     {
       value: prettyCurrency(stakedBalance.toNumber(), baseCurrency),
       text: 'Staked Balance',
     },
-    { value: `${state.apy}%`, text: 'Profit Share APY' },
+    { value: `${apy}%`, text: 'Profit Share APY' },
     { value: farmPriceValue, text: 'FARM price' },
     {
       value: prettyCurrency(savedGas, baseCurrency),
@@ -49,10 +52,10 @@ export const FarmInfo: React.FC<IProps> = observer(({ assets, savedGas }) => {
   ]
 
   const Cells = cellsData.map((item) => {
-    return displayFarmInfo ? (
-      <BluePanel key={item.text} value={item.value} text={item.text} />
-    ) : (
+    return isLoading ? (
       <LoadingBluePanel key={item.text} />
+    ) : (
+      <BluePanel key={item.text} value={item.value} text={item.text} />
     )
   })
 

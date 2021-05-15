@@ -10,7 +10,7 @@ class SettignsStore {
       value: 'USD',
     },
     theme: {
-      value: false,
+      value: 'light',
     },
   }
 

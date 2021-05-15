@@ -25,6 +25,10 @@ export class AssetsStore extends FetchResource<any> {
     const baseCurrency = this.settingsStore.settings.currency.value
     const currentExchangeRate = this.exchangeRatesStore.value[baseCurrency]
 
+    if (this.value === null) {
+      return new BigNumber(0)
+    }
+
     return this.value
       .reduce((acc, currentAsset) => {
         return acc.plus(currentAsset.value)
