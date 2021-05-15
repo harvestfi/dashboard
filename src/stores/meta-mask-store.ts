@@ -5,19 +5,12 @@ import { errorModalStore } from '@/stores/views'
 import { userAssetsStore } from './resources/assets-store'
 
 class MetaMaskStore {
-  private web3Store: typeof web3Store
-  private errorModalStore: typeof errorModalStore
-  private userAssetsStore: typeof userAssetsStore
-
-  userAssets = []
-  address = ''
-
-  assetsToCheck = []
-  addressToCheck = ''
+  private readonly web3Store = web3Store
+  private readonly errorModalStore = errorModalStore
+  private readonly userAssetsStore = userAssetsStore
 
   validationMessage = ''
   provider: any = null
-  isConnecting = false
 
   get isConnected() {
     return this.provider !== null
@@ -25,10 +18,6 @@ class MetaMaskStore {
 
   constructor() {
     makeAutoObservable(this)
-
-    this.web3Store = web3Store
-    this.errorModalStore = errorModalStore
-    this.userAssetsStore = userAssetsStore
 
     if (this.web3Store.web3modal.cachedProvider) {
       this.connectMetaMask()
@@ -40,16 +29,11 @@ class MetaMaskStore {
   disconnect() {
     this.web3Store.web3modal.clearCachedProvider()
     this.provider = null
-    this.isConnecting = false
     this.validationMessage = ''
   }
 
   setConnection(provider: any) {
     this.provider = provider
-  }
-
-  setIsConnecting(value: boolean) {
-    this.isConnecting = value
   }
 
   async setProvider(provider: any) {
@@ -70,8 +54,6 @@ class MetaMaskStore {
   }
 
   async connectMetaMask() {
-    this.setIsConnecting(false)
-
     const provider = await this.web3Store.web3modal.connect()
 
     if (!provider) {

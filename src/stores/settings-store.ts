@@ -21,7 +21,7 @@ class SettignsStore {
     this.init()
   }
 
-  change(key: keyof typeof settingStore.settings, value: string | boolean) {
+  change(key: keyof typeof settingsStore.settings, value: string | boolean) {
     this.settings[key].value = value
     this.updateCache()
   }
@@ -46,4 +46,4 @@ class SettignsStore {
   }
 }
 
-export const settingStore = new SettignsStore()
+export const settingsStore = new SettignsStore()

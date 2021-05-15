@@ -20,8 +20,6 @@ import { useStores } from '@/stores/utils'
 interface IProps {
   display: boolean
   assets: IAssetsInfo[]
-  currentExchangeRate: number
-  baseCurrency: string
 }
 
 // const { utils } = harvest;

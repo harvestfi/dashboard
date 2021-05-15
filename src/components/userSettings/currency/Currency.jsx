@@ -4,10 +4,10 @@ import { observer } from 'mobx-react'
 import { useStores } from '@/stores/utils'
 
 export const Currency = observer(() => {
-  const { settingStore } = useStores()
+  const { settingsStore } = useStores()
 
   const handleChange = (event) => {
-    settingStore.change('currency', event.target.value)
+    settingsStore.change('currency', event.target.value)
   }
 
   return (
@@ -15,11 +15,11 @@ export const Currency = observer(() => {
       <h3>Display currency in:</h3>
       <select
         onChange={handleChange}
-        value={settingStore.settings.currency.value}
+        value={settingsStore.settings.currency.value}
         name="currency"
         id="currencies"
       >
-        {settingStore.settings.currency.options.map((option) => {
+        {settingsStore.settings.currency.options.map((option) => {
           return (
             <option key={option} value={option}>
               {option}

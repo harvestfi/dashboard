@@ -33,7 +33,7 @@ export class API {
       `https://api-ui.harvest.finance/pools?key=${process.env.REACT_APP_HARVEST_KEY}`,
     )
 
-    const APY = response?.data?.eth[0].rewardAPY ?? 0
+    const APY = response?.data?.eth?.[0]?.rewardAPY ?? 0
     return APY
   }
 

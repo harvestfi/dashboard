@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import BigNumber from 'bignumber.js'
 
 import { HarvestContext } from '../../Context/HarvestContext'
@@ -9,46 +9,28 @@ import { IAssetsInfo } from '../../types'
 import { prettyCurrency, convertStandardNumber } from '../../utils/utils'
 import { API } from '@/api'
 import { farmAddress } from '@/constants/constants'
+import { useStores } from '@/stores/utils'
+import { observer } from 'mobx-react'
 
 interface IProps {
   assets: IAssetsInfo[]
   savedGas: number
 }
 
-export const FarmInfo: React.FC<IProps> = ({ assets, savedGas }) => {
+export const FarmInfo: React.FC<IProps> = observer(({ assets, savedGas }) => {
+  const { displayFarmInfo } = useContext(HarvestContext)
+
   const {
-    state,
-    currentExchangeRate,
-    displayFarmInfo,
-    baseCurrency,
-    setState,
-  } = useContext(HarvestContext)
+    userAssetsStore,
+    farmPriceStore,
+    settingsStore,
+    apyStore,
+  } = useStores()
 
-  useEffect(() => {
-    const getFarmPrice = async () => {
-      const farmPrice = await API.getEtheriumPrice(farmAddress)
-
-      setState((prevState) => ({
-        ...prevState,
-        farmPrice,
-      }))
-    }
-
-    if (state.provider) {
-      getFarmPrice()
-    }
-  }, [])
-
-  const farmPriceValue = convertStandardNumber(
-    state.farmPrice.toNumber() * currentExchangeRate,
-    baseCurrency,
-  )
-
-  const stakedBalance = assets
-    .reduce((acc, currentAsset) => {
-      return acc.plus(currentAsset.value)
-    }, new BigNumber(0))
-    .multipliedBy(currentExchangeRate)
+  const stakedBalance = userAssetsStore.stakedBalance
+  const farmPriceValue = farmPriceStore.getValue()
+  const baseCurrency = settingsStore.settings.currency.value
+  const apy = apyStore.value
 
   const cellsData = [
     {
@@ -75,4 +57,4 @@ export const FarmInfo: React.FC<IProps> = ({ assets, savedGas }) => {
   })
 
   return <Container>{Cells}</Container>
-}
+})
