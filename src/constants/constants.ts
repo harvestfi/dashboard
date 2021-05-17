@@ -15,7 +15,7 @@ export const PSAddress = '0x25550cccbd68533fa04bfd3e3ac4d09f9e00fc50'
 // BSC
 export const bFarmAddress = '0x4b5c23cac08a567ecf0c1ffca8372a45a5d33743'
 
-export const outdatedVaults = new Set<string>([
+export const etheriumOutdatedVaults = new Set<string>([
   '0xf2b223eb3d2b382ead8d85f3c1b7ef87c1d35f3a',
   '0x8e298734681adbfc41ee5d17ff8b0d6d803e7098',
   '0xc3f7ffb5d5869b3ade9448d094d81b0521e8326f',
@@ -28,11 +28,16 @@ export const outdatedVaults = new Set<string>([
   '0x63671425ef4d25ec2b12c7d05de855c143f16e3b',
   '0xb19ebfb37a936cce783142955d39ca70aa29d43c',
   '0xb1feb6ab4ef7d0f41363da33868e85eb0f3a57ee',
-  '0x59258f4e15a5fc74a7284055a8094f58108dbd4f',
+  '0xa860a99ba32f1768a4b46d898beae303637f0bc7',
+  '0x8a0f6b8a53556bdceddb5c710bb8f27f4bea33e7',
 ])
 export const outdatedPools = new Set<string>([
   '0x59258f4e15a5fc74a7284055a8094f58108dbd4f',
   '0x8f5adc58b32d4e5ca02eac0e293d35855999436c',
+])
+
+export const bscOutdatedVaults = new Set<string>([
+  '0x59258f4e15a5fc74a7284055a8094f58108dbd4f',
 ])
 
 export const ETHERIUM_CONTRACT_FOR_GETTING_PRICES =

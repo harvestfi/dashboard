@@ -6,14 +6,14 @@ import {
   farmDecimals,
   vaultsWithoutReward,
   farmAddress,
-  outdatedVaults,
+  etheriumOutdatedVaults,
+  bscOutdatedVaults,
   outdatedPools,
   bFarmAddress,
   BSC_URL,
   DEFAULT_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES,
   LEGACY_BSC_FACTORY,
   LEGACY_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES,
-  ETH_URL,
   PSAddress,
 } from '../constants/constants'
 import {
@@ -70,7 +70,10 @@ export const getEtheriumAssets = async (
   >([API.getPools(), API.getVaults(), API.getEtheriumPrice(farmAddress)])
 
   const actualVaults = vaults.filter((v) => {
-    return !outdatedVaults.has(v.contract.address)
+    if (v.contract.address.toLowerCase() === '') {
+      debugger
+    }
+    return !etheriumOutdatedVaults.has(v.contract.address.toLowerCase())
   })
 
   const actualPools = pools.filter((p) => {
@@ -107,20 +110,36 @@ export const getEtheriumAssets = async (
      * reward - reward of a wallet in the pool
      * poolTotalSupply - the total number of tokens in the pool of all participants
      */
-    const [lpTokenBalance, poolBalance, reward] = await Promise.all<
-      string,
-      string,
-      string,
-      number
-    >([
-      lpTokenContract.methods.balanceOf(walletAddress).call(),
-      poolContract.methods.balanceOf(walletAddress).call(),
-      poolContract.methods.earned(walletAddress).call(),
+    // const [lpTokenBalance, poolBalance, reward] = await Promise.all<
+    //   string,
+    //   string,
+    //   string,
+    //   number
+    // >([
+    //   lpTokenContract.methods.balanceOf(walletAddress).call(),
+    //   poolContract.methods.balanceOf(walletAddress).call(),
+    //   poolContract.methods.earned(walletAddress).call(),
 
-      relatedVault
-        ? relatedVault.decimals
-        : lpTokenContract.methods.decimals().call(),
-    ])
+    //   relatedVault
+    //     ? relatedVault.decimals
+    //     : lpTokenContract.methods.decimals().call(),
+    // ])
+
+    let lpTokenBalance: string, poolBalance: string, reward: string
+
+    try {
+      ;[lpTokenBalance, poolBalance, reward] = await Promise.all<
+        string,
+        string,
+        string
+      >([
+        lpTokenContract.methods.balanceOf(walletAddress).call(),
+        poolContract.methods.balanceOf(walletAddress).call(),
+        poolContract.methods.earned(walletAddress).call(),
+      ])
+    } catch (error) {
+      debugger
+    }
 
     const prettyRewardTokenBalance = new BigNumber(reward).dividedBy(
       10 ** farmDecimals,
@@ -437,6 +456,10 @@ export const getBSCAssets = async (
     ),
   ])
 
+  const actualVaults = vaults.filter((v) => {
+    return !bscOutdatedVaults.has(v.contract.address)
+  })
+
   const getAssetsFromPool = async (
     pool: IPool,
     relatedVault?: IVault,
@@ -578,7 +601,7 @@ export const getBSCAssets = async (
   }
 
   const getAssetsFromVaults = (): Promise<IAssetsInfo>[] => {
-    return vaults.map(async (vault: IVault) => {
+    return actualVaults.map(async (vault: IVault) => {
       const vaultRelatedPool = pools.find((pool) => {
         return (
           vault.contract.address.toLowerCase() ===
@@ -634,8 +657,9 @@ export const getBSCAssets = async (
     )
   })
 
-  const assetsFromPoolsWithoutVaultsPromises: Promise<IAssetsInfo>[] =
-    poolsWithoutVaults.map((pool) => getAssetsFromPool(pool))
+  const assetsFromPoolsWithoutVaultsPromises: Promise<IAssetsInfo>[] = poolsWithoutVaults.map(
+    (pool) => getAssetsFromPool(pool),
+  )
 
   const assetsDataResolved: IAssetsInfo[] = await Promise.all([
     ...assetsFromVaultsPromises,
