@@ -1,4 +1,6 @@
 /** This Set contains addresses of vaults that have no reward  */
+import { IVault } from '@/types'
+
 export const vaultsWithoutReward = new Set<string>([])
 
 // FARM decimals
@@ -14,6 +16,47 @@ export const PSAddress = '0x25550cccbd68533fa04bfd3e3ac4d09f9e00fc50'
 
 // BSC
 export const bFarmAddress = '0x4b5c23cac08a567ecf0c1ffca8372a45a5d33743'
+
+export const iPSAddress: IVault = {
+  id: 0,
+  contract: {
+    id: 0,
+    address: '0x1571eD0bed4D987fe2b498DdBaE7DFA19519F651',
+    name: 'iPS',
+    created: 0,
+    type: 0,
+    network: 'eth',
+  },
+  governance: {
+    id: 0,
+    address: '',
+    name: '',
+    created: 0,
+    type: 0,
+    network: 'eth',
+  },
+  strategy: {
+    id: 0,
+    address: '',
+    name: '',
+    created: 0,
+    type: 0,
+    network: 'eth',
+  },
+  underlying: {
+    id: 0,
+    address: '0xa0246c9032bc3a600820415ae600c6388619a14d',
+    name: 'FARM',
+    created: 0,
+    type: 4,
+    network: 'eth',
+  },
+  updatedBlock: 0,
+  name: 'iPS',
+  symbol: 'iPS',
+  decimals: 18,
+  underlyingUnit: 18,
+}
 
 export const etheriumOutdatedVaults = new Set<string>([
   '0xf2b223eb3d2b382ead8d85f3c1b7ef87c1d35f3a',

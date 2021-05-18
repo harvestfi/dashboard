@@ -15,6 +15,7 @@ import {
   LEGACY_BSC_FACTORY,
   LEGACY_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES,
   PSAddress,
+  iPSAddress,
 } from '../constants/constants'
 import {
   FTOKEN_ABI,
@@ -70,11 +71,10 @@ export const getEtheriumAssets = async (
   >([API.getPools(), API.getVaults(), API.getEtheriumPrice(farmAddress)])
 
   const actualVaults = vaults.filter((v) => {
-    if (v.contract.address.toLowerCase() === '') {
-      debugger
-    }
     return !etheriumOutdatedVaults.has(v.contract.address.toLowerCase())
   })
+
+  actualVaults.push(iPSAddress)
 
   const actualPools = pools.filter((p) => {
     return !outdatedPools.has(p.contract.address)
