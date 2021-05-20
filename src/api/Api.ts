@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Web3 from 'web3'
+import { Contract } from 'web3-eth-contract'
 import BigNumber from 'bignumber.js'
 
 import { IPool, IVault } from '../types/Entities'
@@ -7,12 +8,13 @@ import {
   ETHERIUM_CONTRACT_FOR_GETTING_PRICES,
   BSC_URL,
   PRICE_DECIMALS,
-  ETH_URL,
 } from '@/constants/constants'
 import {
   ETH_ORACLE_ABI_FOR_GETTING_PRICES,
   BSC_ORACLE_ABI_FOR_GETTING_PRICES,
+  POOL_WITH_EARNED_METHOD_WITH_2_ARGUMENTS,
 } from '@/lib/data/ABIs'
+import { blockchainAPI } from './blockchainAPI'
 export class API {
   static async getPools(): Promise<IPool[]> {
     const response = await axios.get(
@@ -65,18 +67,32 @@ export class API {
   }
 
   static async getBSCPools(): Promise<IPool[]> {
-    const response = await axios.get(
-      // TODO change to `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/pools?network=bsc`, when ready
-      `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/pools?network=bsc`,
-    )
+    let response: IPool[] = []
+    try {
+      response = await axios.get(
+        `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/pools?network=bsc`,
+      )
+    } catch (error) {
+      console.log(
+        `An error occurred while receiving BSC vaults. Error: ${error}`,
+      )
+    }
+
     return response?.data?.data ?? []
   }
 
   static async getBSCVaults(): Promise<IVault[]> {
-    const response = await axios.get(
-      // TODO change to `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/vaults?network=bsc`, when ready
-      `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/vaults?network=bsc`,
-    )
+    const response: IVault[] = []
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/vaults?network=bsc`,
+      )
+    } catch (error) {
+      console.log(
+        `An error occurred while receiving BSC vaults. Error: ${error}`,
+      )
+    }
+
     return response?.data?.data ?? []
   }
 
@@ -90,14 +106,20 @@ export class API {
       BSC_ORACLE_ABI_FOR_GETTING_PRICES,
       oracleAddressForGettingPrices,
     )
+    let price: string
 
-    const price: string = await gettingPricesContract.methods
-      .getPrice(tokenAddress)
-      .call()
+    try {
+      price = await gettingPricesContract.methods.getPrice(tokenAddress).call()
+    } catch (error) {
+      console.log(
+        `Something wrong in the "getBSCPrice" method. Token address: ${tokenAddress}. Error ${error}`,
+      )
+    }
 
     const prettyPrice = price
       ? new BigNumber(price).dividedBy(10 ** PRICE_DECIMALS)
       : new BigNumber(0)
+
     return prettyPrice
   }
 }

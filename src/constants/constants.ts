@@ -29,6 +29,7 @@ export const outdatedVaults = new Set<string>([
   '0xb19ebfb37a936cce783142955d39ca70aa29d43c',
   '0xb1feb6ab4ef7d0f41363da33868e85eb0f3a57ee',
   '0x59258f4e15a5fc74a7284055a8094f58108dbd4f',
+  '0xf4ead5142749316c8ca141959b510862fbba1807',
 ])
 export const outdatedPools = new Set<string>([
   '0x59258f4e15a5fc74a7284055a8094f58108dbd4f',
