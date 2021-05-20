@@ -5,21 +5,21 @@ import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
 
 export const Wallet = observer(() => {
-  const { metaMaskStore } = useStores()
+  const { userAssetsStore, metaMaskStore } = useStores()
 
   return (
     <Styled.WalletContainer>
       <Styled.WalletTab>wallet</Styled.WalletTab>
-      {metaMaskStore.address && (
+      {userAssetsStore.address && (
         <Styled.WalletConnection>
           <span className="connect-status-container">
             <span id="address">
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href={`https://etherscan.io/address/${metaMaskStore.address}`}
+                href={`https://etherscan.io/address/${userAssetsStore.address}`}
               >
-                {prettyEthAddress(metaMaskStore.address) || ''}
+                {prettyEthAddress(userAssetsStore.address) || ''}
               </a>
             </span>
 

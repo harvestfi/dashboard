@@ -6,10 +6,8 @@ import { observable, action, computed } from 'mobx'
 import BigNumber from 'bignumber.js'
 
 export class AssetsStore extends FetchResource<any> {
-  @observable
   private readonly settingsStore = settingsStore
 
-  @observable
   private readonly exchangeRatesStore = exchangeRatesStore
 
   @observable
