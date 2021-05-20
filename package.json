@@ -1,12 +1,11 @@
 {
   "version": "0.1.0",
-  "homepage": "https://harvestfi.github.io/dashboard",
   "scripts": {
+    "dev": "webpack-dev-server --port 3000 --mode development --open --hot",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
-    "start": "webpack-dev-server --port 3000 --mode development --open --hot",
+    "start": "",
     "predeploy": "npm run build",
-    "deploy": "./deploy.sh",
     "prettier": "prettier --write .",
     "lint": "eslint src/**/*.{js,ts,tsx} --quiet --fix --max-warnings 0",
     "test": "jest",
@@ -124,5 +123,9 @@
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
+  },
+  "engines": {
+    "node": "12.x",
+    "npm": "6.x"
   }
 }

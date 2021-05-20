@@ -60,7 +60,6 @@ export const App = observer(() => {
   const [assetsToCheck, setAssetsToCheck] = useState([])
   const [walletAddressToCheck, setWalletAddressToCheck] = useState('')
   const [showAssetsToCheck, setShowAssetsToCheck] = useState(false)
-  const [displayFarmInfo, setDisplayFarmInfo] = useState(false)
 
   // for currency conversion
   const [baseCurrency, setBaseCurrency] = useState(
@@ -84,7 +83,7 @@ export const App = observer(() => {
     error: { message: null, type: null, display: false },
     theme: window.localStorage.getItem('HarvestFinance:Theme'),
     minimumHarvestAmount: '0',
-    apy: 0,
+    apy: '0',
     farmPrice: new BigNumber(0),
     totalFarmEarned: 0,
   })
@@ -117,9 +116,8 @@ export const App = observer(() => {
 
   useEffect(() => {
     const getAPY = async () => {
-      const [APY] = await Promise.all([API.getAPY()])
+      const APY = await API.getAPY()
       setState((prevState) => ({ ...prevState, apy: APY }))
-      setDisplayFarmInfo(true)
     }
     getAPY()
   }, [])
@@ -205,7 +203,6 @@ export const App = observer(() => {
         setUserWalletAddress,
         setAssetsToCheck,
         assetsToCheck,
-        displayFarmInfo,
         userAssets,
         state,
         setState,

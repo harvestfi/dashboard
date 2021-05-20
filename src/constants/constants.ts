@@ -71,18 +71,17 @@ export const etheriumOutdatedVaults = new Set<string>([
   '0x63671425ef4d25ec2b12c7d05de855c143f16e3b',
   '0xb19ebfb37a936cce783142955d39ca70aa29d43c',
   '0xb1feb6ab4ef7d0f41363da33868e85eb0f3a57ee',
+  '0x59258f4e15a5fc74a7284055a8094f58108dbd4f',
+  '0xf4ead5142749316c8ca141959b510862fbba1807',
   '0xa860a99ba32f1768a4b46d898beae303637f0bc7',
   '0x8a0f6b8a53556bdceddb5c710bb8f27f4bea33e7',
 ])
 
 export const outdatedPools = new Set<string>([
-  '0x59258f4e15a5fc74a7284055a8094f58108dbd4f',
-  '0x8f5adc58b32d4e5ca02eac0e293d35855999436c',
+  // '0x8f5adc58b32d4e5ca02eac0e293d35855999436c',
 ])
 
-export const bscOutdatedVaults = new Set<string>([
-  '0x59258f4e15a5fc74a7284055a8094f58108dbd4f',
-])
+export const bscOutdatedVaults = new Set<string>([])
 
 export const ETHERIUM_CONTRACT_FOR_GETTING_PRICES =
   '0x48dc32eca58106f06b41de514f29780ffa59c279'

@@ -4,7 +4,6 @@ import BigNumber from 'bignumber.js'
 import { HarvestContext } from '../../Context/HarvestContext'
 import Container from './FarmInfoStyles'
 import { BluePanel } from '../bluePanel/BluePanel'
-import { LoadingBluePanel } from '../bluePanel/components/loadingBluePanel/LoadingBluePanel.styles'
 import { IAssetsInfo } from '../../types'
 import { prettyCurrency, convertStandardNumber } from '../../utils/utils'
 import { API } from '@/api'
@@ -37,12 +36,13 @@ export const FarmInfo: React.FC<IProps> = observer(() => {
 
   console.log('isLoading', isLoading)
 
+  const displayApy = apy ? `${apy}%` : 'Error'
   const cellsData = [
     {
       value: prettyCurrency(stakedBalance.toNumber(), baseCurrency),
       text: 'Staked Balance',
     },
-    { value: `${apy}%`, text: 'Profit Share APY' },
+    { value: displayApy, text: 'Profit Share APY' },
     { value: farmPriceValue, text: 'FARM price' },
     {
       value: prettyCurrency(savedGas, baseCurrency),
@@ -54,11 +54,7 @@ export const FarmInfo: React.FC<IProps> = observer(() => {
   ]
 
   const Cells = cellsData.map((item) => {
-    return isLoading ? (
-      <LoadingBluePanel key={item.text} />
-    ) : (
-      <BluePanel key={item.text} value={item.value} text={item.text} />
-    )
+    return <BluePanel key={item.text} value={item.value} text={item.text} />
   })
 
   return <Container>{Cells}</Container>
