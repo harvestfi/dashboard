@@ -22,25 +22,24 @@ export class AssetsStore extends FetchResource<any> {
 
   @computed
   get stakedBalance() {
-    const baseCurrency = this.settingsStore.settings.currency.value
-    const currentExchangeRate = this.exchangeRatesStore.value[baseCurrency]
-
-    if (this.value === null) {
+    if (this.value === null || this.exchangeRatesStore.value === null) {
       return new BigNumber(0)
     }
 
+    const baseCurrency = this.settingsStore.settings.currency.value
+    const currentExchangeRate = this.exchangeRatesStore.value[baseCurrency]
+
     return this.value
       .reduce((acc, currentAsset) => {
-        return acc.plus(currentAsset.value)
+        const currentAssetValue = currentAsset.value
+          ? currentAsset.value
+          : new BigNumber(0)
+        return acc.plus(currentAssetValue)
       }, new BigNumber(0))
       .multipliedBy(currentExchangeRate)
   }
 
-  constructor() {
-    super()
-  }
-
-  protected async fetchFn() {
+  protected fetchFn = async () => {
     console.log('this.address', this.address)
 
     if (!this.address) {
@@ -52,6 +51,8 @@ export class AssetsStore extends FetchResource<any> {
       getEtheriumAssets(this.address),
       getBSCAssets(this.address),
     ])
+
+    console.log('- - - - end fetch valuts')
 
     return [...etheriumAssets, ...BSCAssets]
   }

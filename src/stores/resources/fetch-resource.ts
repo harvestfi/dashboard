@@ -1,14 +1,17 @@
-import { observable, action } from 'mobx'
+import { observable, action, runInAction } from 'mobx'
 
 export class FetchResource<T> {
   @observable
-  error = null
+  error: string | null = null
 
   @observable
   value: T | null = null
 
   @observable
   isFetching = false
+
+  @observable
+  isFetched = false
 
   protected fetchFn?: Function
 
@@ -18,26 +21,46 @@ export class FetchResource<T> {
     }
   }
 
-  @action.bound
+  @action
+  private setError(error: string | null) {
+    this.error = error
+  }
+
+  @action
+  private setIsFetching(isFetching: boolean) {
+    this.isFetching = isFetching
+  }
+
+  @action
+  private setIsFetched(isFetched: boolean) {
+    this.isFetched = isFetched
+  }
+
+  @action
+  private setValue(value: T) {
+    this.value = value
+  }
+
   async fetch(params?: string) {
     if (this.error) {
-      this.error = null
+      this.setError(null)
     }
 
-    this.isFetching = true
+    this.setIsFetching(true)
 
     try {
       if (!this.fetchFn) {
         console.warn('[FetchResource.fetchFn] fetchFn must be defined')
-        this.isFetching = false
       } else {
         const response = await this.fetchFn(params)
-        this.value = response
-        this.isFetching = false
+        this.setValue(response)
         return response
       }
     } catch (error) {
-      this.error = error
+      this.setError(error)
+    } finally {
+      this.setIsFetching(false)
+      this.setIsFetched(true)
     }
   }
 }

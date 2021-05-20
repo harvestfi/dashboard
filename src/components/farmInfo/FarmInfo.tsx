@@ -35,6 +35,8 @@ export const FarmInfo: React.FC<IProps> = observer(() => {
     savedGasStore.isFetching ||
     apyStore.isFetching
 
+  console.log('isLoading', isLoading)
+
   const cellsData = [
     {
       value: prettyCurrency(stakedBalance.toNumber(), baseCurrency),

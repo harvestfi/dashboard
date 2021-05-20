@@ -27,7 +27,7 @@ export const UserDashboard: React.FC<UserDashboardProps> = observer(() => {
       <Wallet />
       <FarmInfo />
       <FarmingTable
-        display={!!userAssetsStore.value}
+        display={userAssetsStore.isFetched}
         assets={userAssetsStore.value}
       />
       <AddTokens />
