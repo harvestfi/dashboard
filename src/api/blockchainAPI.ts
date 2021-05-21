@@ -1,30 +1,30 @@
 import { POOL_WITH_EARNED_METHOD_WITH_2_ARGUMENTS } from '@/lib/data/ABIs'
 import { Contract } from 'web3-eth-contract'
-
+import Web3 from 'web3'
 export class blockchainAPI {
   static async makeRequest(
     contract: Contract,
     methodName: string,
     ...args: any[]
   ): Promise<string | null> {
-    let response: string
-
     try {
-      response = contract.methods[methodName](...args).call()
+      const response: string = contract.methods[methodName](...args).call()
+
+      return response
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(
         `An error occurred while calling blockchain method: ${methodName}. Contract address: ${contract._address}. Error: ${error}`,
       )
+      return null
     }
-
-    return response ?? null
   }
 
   //  the 'earned' method of a smart-contract can have one or two arguments
   static async getEarned(
     walletAddress: string,
     poolContract: Contract,
-    web3,
+    web3: Web3,
     poolAddress: string,
   ) {
     const poolContractHavingTwoArguments = new web3.eth.Contract(

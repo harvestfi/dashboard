@@ -6,7 +6,8 @@ import {
   farmDecimals,
   vaultsWithoutReward,
   farmAddress,
-  outdatedVaults,
+  etheriumOutdatedVaults,
+  bscOutdatedVaults,
   outdatedPools,
   bFarmAddress,
   BSC_URL,
@@ -14,6 +15,7 @@ import {
   LEGACY_BSC_FACTORY,
   LEGACY_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES,
   PSAddress,
+  iPSAddress,
 } from '../constants/constants'
 import {
   FTOKEN_ABI,
@@ -69,8 +71,10 @@ export const getEtheriumAssets = async (
   >([API.getPools(), API.getVaults(), API.getEtheriumPrice(farmAddress)])
 
   const actualVaults = vaults.filter((v) => {
-    return !outdatedVaults.has(v.contract.address)
+    return !etheriumOutdatedVaults.has(v.contract.address.toLowerCase())
   })
+
+  actualVaults.push(iPSAddress)
 
   const actualPools = pools.filter((p) => {
     return !outdatedPools.has(p.contract.address)
@@ -102,9 +106,7 @@ export const getEtheriumAssets = async (
       : pool.lpToken.address
     /**
      * lpTokenBalance - balance of a wallet in the liquidity-pool
-     * rewardTokenPrice - the price are in USD (for FARM or iFARM)
      * reward - reward of a wallet in the pool
-     * poolTotalSupply - the total number of tokens in the pool of all participants
      */
     let lpTokenBalance: string | null,
       poolBalance: string | null,
@@ -125,6 +127,7 @@ export const getEtheriumAssets = async (
         ),
       ])
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(
         `Error: some problem with this pool ${pool.contract.address}`,
         error,
@@ -151,6 +154,7 @@ export const getEtheriumAssets = async (
     /**
      * underlyingPrice - the price are in USD
      * iFarmPricePerFullShare = (iFARMPrice / farmPrice) * 10 ** rewardDecimals
+     * poolTotalSupply - the total number of tokens in the pool of all participants
      * poolBalance - balance of a wallet in the pool (are in fToken)
      * pricePerFullShareLpToken = (nativeToken / fToken ) * 10 ** lpTokenDecimals
      */
@@ -192,6 +196,7 @@ export const getEtheriumAssets = async (
         getDecimals(),
       ])
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(
         `Error: some problem with this pool ${pool.contract.address}`,
         error,
@@ -309,6 +314,7 @@ export const getEtheriumAssets = async (
             vaultContract.methods.getPricePerFullShare().call(),
           ])
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.log('Some problem with iFarm pool', error)
         }
 
@@ -474,8 +480,13 @@ export const getBSCAssets = async (
       ),
     ])
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log('Something wrong', error)
   }
+
+  const actualVaults = vaults.filter((v) => {
+    return !bscOutdatedVaults.has(v.contract.address)
+  })
 
   const getAssetsFromPool = async (
     pool: IPool,
@@ -517,6 +528,7 @@ export const getBSCAssets = async (
         poolContract.methods.earned(walletAddress).call(),
       ])
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(
         `Something wrong. Pool address: ${pool.contract.address}`,
         error,
@@ -574,6 +586,7 @@ export const getBSCAssets = async (
         getDecimals(),
       ])
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log('Something wrong', error)
     }
 
@@ -636,7 +649,7 @@ export const getBSCAssets = async (
   }
 
   const getAssetsFromVaults = (): Promise<IAssetsInfo>[] => {
-    return vaults.map(async (vault: IVault) => {
+    return actualVaults.map(async (vault: IVault) => {
       const vaultRelatedPool = pools.find((pool) => {
         return (
           vault.contract.address.toLowerCase() ===
@@ -658,6 +671,7 @@ export const getBSCAssets = async (
           await vaultContract.methods.balanceOf(walletAddress).call(),
         )
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.log(
           'Something wrong in the balanceOf method of the BSC Contract',
           error,
@@ -674,6 +688,7 @@ export const getBSCAssets = async (
             ? new BigNumber(await vaultContract.methods.totalSupply())
             : BigNumberOne
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.log(
           `Something wrong in the bsc method totalSupply. Vault address: ${vault.contract.address}`,
         )

@@ -73,6 +73,7 @@ export class API {
         `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/pools?network=bsc`,
       )
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(
         `An error occurred while receiving BSC vaults. Error: ${error}`,
       )
@@ -88,6 +89,7 @@ export class API {
         `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/vaults?network=bsc`,
       )
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(
         `An error occurred while receiving BSC vaults. Error: ${error}`,
       )
@@ -111,6 +113,7 @@ export class API {
     try {
       price = await gettingPricesContract.methods.getPrice(tokenAddress).call()
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(
         `Something wrong in the "getBSCPrice" method. Token address: ${tokenAddress}. Error ${error}`,
       )
