@@ -4,7 +4,6 @@
     "dev": "webpack-dev-server --port 3000 --mode development --open --hot",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
-    "start": "",
     "predeploy": "npm run build",
     "prettier": "prettier --write .",
     "lint": "eslint src/**/*.{js,ts,tsx} --quiet --fix --max-warnings 0",

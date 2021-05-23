@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import * as Styled from './styles'
-import { Wallet } from './components'
+import { Wallet } from '@/components/Wallet'
 import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
 import { FarmingTable } from '@/components/farmingTable/FarmingTable'
@@ -9,22 +9,22 @@ import AddTokens from '@/components/addTokens/AddTokens'
 
 type UserDashboardProps = {}
 
-export const UserDashboard: React.FC<UserDashboardProps> = observer(() => {
-  const { userAssetsStore, savedGasStore, metaMaskStore } = useStores()
+export const UserDashboard: React.FC<UserDashboardProps> = observer((props) => {
+  const { userAssetsStore, savedGasStore } = useStores()
 
   useEffect(() => {
-    if (!userAssetsStore.value && !userAssetsStore.isFetching) {
+    if (!userAssetsStore.isFetched) {
       userAssetsStore.fetch()
     }
 
-    if (!savedGasStore.value && !savedGasStore.isFetching) {
+    if (!savedGasStore.isFetched) {
       savedGasStore.fetch(userAssetsStore.address)
     }
   }, [])
 
   return (
     <Styled.Main>
-      <Wallet />
+      <Wallet address={userAssetsStore.address} />
       <FarmInfo />
       <FarmingTable
         display={userAssetsStore.isFetched}

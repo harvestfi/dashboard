@@ -1,17 +1,20 @@
-import React, { useState, useContext } from 'react'
-import { HarvestContext } from '../../Context/HarvestContext'
+import React, { useState } from 'react'
 import {
   PanelTab,
   PanelTabContainer,
   PanelTabContainerLeft,
 } from './TabContainerStyles'
 
-import AnalyticsTabs from './analyticsTabs/AnalyticsTabs'
+import { AnalyticsTabs } from './analyticsTabs'
 
-const TabContainer = () => {
-  const { toggleRadio } = useContext(HarvestContext)
+type TabContainerProps = {
+  toggleRadio(): void
+}
 
+const TabContainer: React.FC<TabContainerProps> = (props) => {
+  const { toggleRadio } = props
   const [showAnalytics, setShowAnalytics] = useState(false)
+
   return (
     <PanelTabContainer>
       <PanelTabContainerLeft>
@@ -41,9 +44,9 @@ const TabContainer = () => {
           onMouseEnter={() => {
             setShowAnalytics(true)
           }}
-          // onMouseLeave={() => {
-          //   setShowAnalytics(false);
-          // }}
+          onMouseLeave={() => {
+            setShowAnalytics(false)
+          }}
         >
           <p>analytics</p>
         </PanelTab>

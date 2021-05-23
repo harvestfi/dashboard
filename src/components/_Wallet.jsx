@@ -97,6 +97,10 @@ const WalletTab = styled.div`
   font-family: ${fonts.headerFont};
   font-size: 2rem;
 `
+
+/**
+ * @deprecated
+ */
 const Wallet = ({ address, provider, disconnect, buttonText }) => {
   const renderConnectStatus = () => {
     return (

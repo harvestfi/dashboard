@@ -1,6 +1,8 @@
 import React from 'react'
 import styled, { css, ThemeProvider } from 'styled-components'
 import { darkTheme, lightTheme, fonts } from '../styles/appStyles'
+import { useStores } from '@/stores/utils'
+import { observer } from 'mobx-react'
 
 const Container = styled.div`
   ${({ isOpen }) => {
@@ -69,18 +71,24 @@ const CloseIcon = styled.span`
   }
 `
 
-const ErrorModal = ({ state, onClose }) => (
-  <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
-    <Container isOpen={state.error.display}>
-      <Inner>
-        <h4 className="error-title">Whoa, partner!</h4>
-        <p>{state.error.message}</p>
-        <CloseIcon onClick={onClose}>
-          <i className="fas fa-times-circle fa-2x"></i>
-        </CloseIcon>
-      </Inner>
-    </Container>
-  </ThemeProvider>
-)
+const ErrorModal = observer((props) => {
+  const { onClose } = props
+
+  return null
+
+  return (
+    // <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
+    //   <Container isOpen={state.error.display}>
+    //     <Inner>
+    //       <h4 className="error-title">Whoa, partner!</h4>
+    //       <p>{state.error.message}</p>
+    //       <CloseIcon onClick={onClose}>
+    //         <i className="fas fa-times-circle fa-2x"></i>
+    //       </CloseIcon>
+    //     </Inner>
+    //   </Container>
+    // </ThemeProvider>
+  )
+})
 
 export default ErrorModal

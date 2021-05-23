@@ -4,22 +4,27 @@ import { prettyEthAddress } from '@/utils/utils'
 import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
 
-export const Wallet = observer(() => {
-  const { userAssetsStore, metaMaskStore } = useStores()
+type WalletProps = {
+  address: string
+}
+
+export const Wallet: React.FC<WalletProps> = observer((props) => {
+  const { address } = props
+  const { metaMaskStore } = useStores()
 
   return (
     <Styled.WalletContainer>
       <Styled.WalletTab>wallet</Styled.WalletTab>
-      {userAssetsStore.address && (
+      {address && (
         <Styled.WalletConnection>
           <span className="connect-status-container">
             <span id="address">
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href={`https://etherscan.io/address/${userAssetsStore.address}`}
+                href={`https://etherscan.io/address/${address}`}
               >
-                {prettyEthAddress(userAssetsStore.address) || ''}
+                {prettyEthAddress(address)}
               </a>
             </span>
 

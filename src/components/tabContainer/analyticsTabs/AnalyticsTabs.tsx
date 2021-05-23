@@ -1,10 +1,16 @@
-import React, { useContext } from 'react'
-import { HarvestContext } from '../../../Context/HarvestContext'
+import React from 'react'
 import { AnalyticsContainer } from './AnalyticsTabsStyles'
-
 import { PanelTab } from '../TabContainerStyles'
-const AnalyticsTabs = ({ showAnalytics, setShowAnalytics }) => {
-  const { state } = useContext(HarvestContext)
+
+type AnalyticsTabsProps = {
+  address: string
+  showAnalytics: boolean
+  setShowAnalytics(showAnalytics: boolean): void
+}
+
+export const AnalyticsTabs: React.FC<AnalyticsTabsProps> = (props) => {
+  const { address, setShowAnalytics, showAnalytics } = props
+
   return (
     <AnalyticsContainer onMouseLeave={() => setShowAnalytics(false)}>
       <PanelTab
@@ -55,7 +61,7 @@ const AnalyticsTabs = ({ showAnalytics, setShowAnalytics }) => {
           Profit calculator
         </a>
       </PanelTab>
-      {state.address ? (
+      {address && (
         <PanelTab
           className={
             showAnalytics
@@ -65,16 +71,14 @@ const AnalyticsTabs = ({ showAnalytics, setShowAnalytics }) => {
         >
           <a
             className="analyti-link"
-            href={`https://farmdashboard.xyz/history/${state.address}`}
+            href={`https://farmdashboard.xyz/history/${address}`}
             target="_blank"
             rel="noopener noreferrer"
           >
             Address history
           </a>
         </PanelTab>
-      ) : null}
+      )}
     </AnalyticsContainer>
   )
 }
-
-export default AnalyticsTabs

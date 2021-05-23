@@ -28,7 +28,7 @@ export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
   const [isNotValid, setIsNotValid] = useState(false)
   const history = useHistory()
 
-  const { metaMaskStore } = useStores()
+  const { assetToCheckStore } = useStores()
 
   const handleChange = (event: any) => {
     if (isNotValid) {
@@ -39,7 +39,7 @@ export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
 
   const checkBalance = () => {
     if (validateAddress(address!)) {
-      metaMaskStore.setAddressToCheck(address)
+      assetToCheckStore.setAddress(address)
       history.push(PATHS.checkBalance)
     } else {
       setIsNotValid(true)

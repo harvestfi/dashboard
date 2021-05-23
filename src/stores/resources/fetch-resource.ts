@@ -1,4 +1,4 @@
-import { observable, action, runInAction } from 'mobx'
+import { observable, action } from 'mobx'
 
 export class FetchResource<T> {
   @observable
@@ -21,22 +21,22 @@ export class FetchResource<T> {
     }
   }
 
-  @action
+  @action.bound
   private setError(error: string | null) {
     this.error = error
   }
 
-  @action
+  @action.bound
   private setIsFetching(isFetching: boolean) {
     this.isFetching = isFetching
   }
 
-  @action
+  @action.bound
   private setIsFetched(isFetched: boolean) {
     this.isFetched = isFetched
   }
 
-  @action
+  @action.bound
   private setValue(value: T) {
     this.value = value
   }
@@ -54,7 +54,6 @@ export class FetchResource<T> {
       } else {
         const response = await this.fetchFn(params)
         this.setValue(response)
-        return response
       }
     } catch (error) {
       this.setError(error)

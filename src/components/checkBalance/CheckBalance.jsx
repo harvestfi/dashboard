@@ -9,7 +9,7 @@ import { fonts } from '../../styles/appStyles'
 // COMPONENTS
 import { MainContent } from '../MainContent'
 import Radio from '../radio/Radio'
-import Wallet from '../Wallet'
+import { Wallet } from '@/components/Wallet'
 
 // CONTEXT
 import { HarvestContext } from '../../Context/HarvestContext'

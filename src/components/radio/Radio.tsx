@@ -1,14 +1,18 @@
-import React, { useContext } from 'react'
-import { HarvestContext } from '../../Context/HarvestContext'
+import React from 'react'
 import styled from 'styled-components'
 import ReactModal from 'react-modal-resizable-draggable'
 import { fonts } from '../../styles/appStyles'
 
-//COMPONENTS
 import RadioPanel from './RadioPanel'
 
-const Radio = () => {
-  const { radio, toggleRadio } = useContext(HarvestContext)
+type RadioProps = {
+  radio: boolean
+  toggleRadio(): void
+}
+
+const Radio: React.FC<RadioProps> = (props) => {
+  const { radio, toggleRadio } = props
+
   return (
     <ReactModal
       isOpen={radio}
