@@ -1,15 +1,16 @@
-import React, { useContext } from 'react'
-import { HarvestContext } from '../../../Context/HarvestContext'
+import React from 'react'
+
 import { Brand, Drawer, DrawerLink, Radio } from './SidedrawerStyles'
 import logo from '../../../assets/newLogo.png'
 
-// components
 import { Currency } from '../currency/Currency'
 import Backdrop from './backdrop/Backdrop'
 import ThemeSwitch from '../../tabContainer/themeSwitch/ThemeSwitch'
+import { useCurrentAddress } from '@/hooks'
 
-const Sidedrawer = () => {
-  const { state, openDrawer, toggleRadio } = useContext(HarvestContext)
+const Sidedrawer = (props) => {
+  const { openDrawer, toggleRadio } = props
+  const address = useCurrentAddress()
 
   return (
     <>
@@ -64,16 +65,16 @@ const Sidedrawer = () => {
           >
             Profit calculator
           </DrawerLink>
-          {state.address ? (
+          {address && (
             <DrawerLink
               className="drawer-link"
-              href={`https://farmdashboard.xyz/history/${state.address}`}
+              href={`https://farmdashboard.xyz/history/${address}`}
               target="_blank"
               rel="noopener noreferrer"
             >
               Address history
             </DrawerLink>
-          ) : null}
+          )}
         </div>
 
         <div className="drawer-user-settings">

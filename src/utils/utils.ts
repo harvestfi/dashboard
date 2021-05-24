@@ -184,7 +184,7 @@ export const getEtheriumAssets = async (
           : BigNumberZero,
 
         shouldGetPricePerFullShareBeCalled &&
-        iFarmRewardPool.methods.getPricePerFullShare().call(),
+          iFarmRewardPool.methods.getPricePerFullShare().call(),
 
         poolBalance !== '0'
           ? poolContract.methods.totalSupply().call()
@@ -214,8 +214,8 @@ export const getEtheriumAssets = async (
     const prettyPricePerFullShareLpToken =
       pricePerFullShareLpToken && lpTokenDecimals
         ? new BigNumber(pricePerFullShareLpToken).dividedBy(
-          10 ** lpTokenDecimals,
-        )
+            10 ** lpTokenDecimals,
+          )
         : 1
 
     const prettyRewardPricePerFullShare = iFarmPricePerFullShare
@@ -234,9 +234,9 @@ export const getEtheriumAssets = async (
     const calcValue = (): BigNumber | null => {
       return underlyingPrice.toString() !== '0'
         ? underlyingPrice
-          .multipliedBy(prettyPoolBalance)
-          .multipliedBy(prettyPricePerFullShareLpToken)
-          .plus(farmPrice.multipliedBy(rewardTokenAreInFARM))
+            .multipliedBy(prettyPoolBalance)
+            .multipliedBy(prettyPricePerFullShareLpToken)
+            .plus(farmPrice.multipliedBy(rewardTokenAreInFARM))
         : null
     }
 
@@ -378,8 +378,8 @@ export const getEtheriumAssets = async (
 
         const percentOfPool = totalValue
           ? new BigNumber(vaultBalance)
-            .dividedBy(new BigNumber(totalValue))
-            .multipliedBy(100)
+              .dividedBy(new BigNumber(totalValue))
+              .multipliedBy(100)
           : BigNumberZero
 
         const prettyVaultBalance = new BigNumber(vaultBalance).dividedBy(
@@ -568,9 +568,9 @@ export const getBSCAssets = async (
       >([
         poolBalance !== '0'
           ? Promise.resolve(
-            underlyingContract.methods.factory().call(),
-            // TODO create error handler
-          ).catch(() => { })
+              underlyingContract.methods.factory().call(),
+              // TODO create error handler
+            ).catch(() => {})
           : null,
 
         poolBalance !== '0' ? poolContract.methods.totalSupply().call() : null,
@@ -596,8 +596,8 @@ export const getBSCAssets = async (
     const lpTokenPrettyPricePerFullShare =
       lpTokenPricePerFullShare && lpTokenDecimals
         ? new BigNumber(lpTokenPricePerFullShare).dividedBy(
-          10 ** lpTokenDecimals,
-        )
+            10 ** lpTokenDecimals,
+          )
         : BigNumberOne
 
     const oracleAddressForGettingPrices =
@@ -619,9 +619,9 @@ export const getBSCAssets = async (
     const calcValue = () => {
       return underlyingPrice
         ? underlyingPrice
-          .multipliedBy(prettyPoolBalance)
-          .multipliedBy(lpTokenPrettyPricePerFullShare)
-          .plus(bFarmPrice.multipliedBy(prettyRewardTokenBalance))
+            .multipliedBy(prettyPoolBalance)
+            .multipliedBy(lpTokenPrettyPricePerFullShare)
+            .plus(bFarmPrice.multipliedBy(prettyRewardTokenBalance))
         : null
     }
     // fTokens balance in underlying Tokens;

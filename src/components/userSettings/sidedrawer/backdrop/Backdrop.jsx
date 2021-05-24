@@ -1,13 +1,9 @@
-import React, { useContext } from 'react'
-import { HarvestContext } from '../../../../Context/HarvestContext'
+import React from 'react'
 import { BackdropContainer } from './BackdropStyles'
 
-const Backdrop = () => {
-  const { toggleSideDrawer } = useContext(HarvestContext)
-  const backdropHander = () => {
-    toggleSideDrawer()
-  }
-  return <BackdropContainer onClick={backdropHander}></BackdropContainer>
+const Backdrop = (props) => {
+  const { toggleSideDrawer } = props
+  return <BackdropContainer onClick={toggleSideDrawer}></BackdropContainer>
 }
 
 export default Backdrop

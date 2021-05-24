@@ -30,8 +30,6 @@ class SettignsStore {
     this.readCache()
     const exchangeRatesResponse = await exchangeRatesStore.fetch('?base=USD')
 
-    console.log('exchangeRatesResponse', exchangeRatesResponse)
-
     this.settings.currency.options = Object.keys(exchangeRatesResponse)
     this.inited = true
   }

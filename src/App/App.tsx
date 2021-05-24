@@ -70,53 +70,8 @@ export const App = observer(() => {
             </Topbar>
           </Col>
         </Row>
-        {/* <Row>
-            <Col>
-              {!isCheckingBalance && (
-                <>
-                   <TabContainer /> 
-                  <Panel>
-                    <Radio />
-
-                    <TokenMessage />
-                    <HarvestAndStakeMessage />
-
-                    {metaMaskStore.isConnected ? (
-                      <>
-                        <ModeSelectBoard state={state} setState={setState} />
-                      </>
-                    ) : (
-                      <>
-                        { <WelcomeText
-                          state={state}
-                          openModal={openModal}
-                          disconnect={disconnect}
-                          setConnection={setConnection}
-                          setAddress={setUserWalletAddress}
-                        /> *
-                      </>
-                    )}
-                  </Panel>
-                </>
-              )}
-            </Col>
-          </Row> */}
-
         <TabContainer />
         <Routes />
-
-        {/* {metaMaskStore.isConnected && !isConnecting && (
-            <>
-              <Row>
-                <Col style={{ marginTop: '3rem', marginBottom: '3rem' }}>
-                  {isCheckingBalance ? <TabContainer /> : ''}
-                  <Panel>
-                    <CheckBalance state={state} />
-                  </Panel>
-                </Col>
-              </Row>
-            </>
-          )} */}
       </Container>
       <ErrorModal />
     </ThemeProvider>

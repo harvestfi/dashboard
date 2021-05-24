@@ -127,7 +127,6 @@ export class API {
     const response = await axios.get(
       `https://api.ratesapi.io/api/latest${params ?? ''}`,
     )
-    console.log('response', response)
     return response?.data?.rates ?? {}
   }
 }

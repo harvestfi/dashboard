@@ -5,15 +5,18 @@ import {
   PanelTabContainerLeft,
 } from './TabContainerStyles'
 
+import { observer } from 'mobx-react'
 import { AnalyticsTabs } from './analyticsTabs'
+import { useCurrentAddress } from '../../hooks'
 
 type TabContainerProps = {
   toggleRadio(): void
 }
 
-const TabContainer: React.FC<TabContainerProps> = (props) => {
+const TabContainer: React.FC<TabContainerProps> = observer((props) => {
   const { toggleRadio } = props
   const [showAnalytics, setShowAnalytics] = useState(false)
+  const address = useCurrentAddress()
 
   return (
     <PanelTabContainer>
@@ -54,10 +57,11 @@ const TabContainer: React.FC<TabContainerProps> = (props) => {
         <AnalyticsTabs
           setShowAnalytics={setShowAnalytics}
           showAnalytics={showAnalytics}
+          address={address}
         />
       </PanelTabContainerLeft>
     </PanelTabContainer>
   )
-}
+})
 
 export default TabContainer

@@ -1,11 +1,6 @@
 import React from 'react'
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from 'react-router-dom'
+import { Route, Redirect, Switch } from 'react-router-dom'
 
 import { ConnectWallet } from '@/pages/ConnectWallet'
 import { SwitchBalance } from '@/pages/SwitchBalance'
@@ -21,14 +16,12 @@ export const PATHS = {
 
 export const Routes = () => {
   return (
-    <Router>
-      <Switch>
-        <Route path={PATHS.main} component={ConnectWallet} exact />
-        <Route path={PATHS.switchBalance} component={SwitchBalance} />
-        <Route path={PATHS.checkBalance} component={CheckBalance} />
-        <Route path={PATHS.userDashboard} component={UserDashboard} />
-        <Redirect to={PATHS.main} />
-      </Switch>
-    </Router>
+    <Switch>
+      <Route path={PATHS.main} component={ConnectWallet} exact />
+      <Route path={PATHS.switchBalance} component={SwitchBalance} />
+      <Route path={PATHS.checkBalance} component={CheckBalance} />
+      <Route path={PATHS.userDashboard} component={UserDashboard} />
+      <Redirect to={PATHS.main} />
+    </Switch>
   )
 }

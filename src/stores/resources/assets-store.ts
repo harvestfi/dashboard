@@ -30,17 +30,8 @@ export class AssetsStore {
   @observable
   isFetched = false
 
-  @observable
-  count = 0
-
   constructor() {
     makeObservable(this)
-  }
-
-  @action.bound
-  increment() {
-    console.log('this.count', this.count)
-    this.count++
   }
 
   @action.bound

@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BigNumber from 'bignumber.js'
-
-import { HarvestContext } from '../../Context/HarvestContext'
 import Container from './FarmInfoStyles'
 import { BluePanel } from '../bluePanel/BluePanel'
 import { IAssetsInfo } from '../../types'
@@ -33,8 +31,6 @@ export const FarmInfo: React.FC<IProps> = observer(() => {
     farmPriceStore.isFetching ||
     savedGasStore.isFetching ||
     apyStore.isFetching
-
-  console.log('isLoading', isLoading)
 
   const displayApy = apy ? `${apy}%` : 'Error'
   const cellsData = [

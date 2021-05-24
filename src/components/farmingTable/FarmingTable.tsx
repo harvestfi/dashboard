@@ -53,8 +53,6 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
   const { display, assets } = props
   const { settingsStore, exchangeRatesStore } = useStores()
 
-  console.log('display', display)
-
   const baseCurrency = settingsStore.settings.currency.value
   const currentExchangeRate = exchangeRatesStore.value?.[baseCurrency]
 
