@@ -8,7 +8,7 @@ class ErrorModalStore {
   message = ''
   type: MessageType = MessageType.error
 
-  private display = false
+  display = false
 
   constructor() {
     makeAutoObservable(this)

@@ -1,10 +1,7 @@
-import React from 'react'
-import styled, { css, ThemeProvider } from 'styled-components'
-import { darkTheme, lightTheme, fonts } from '../styles/appStyles'
-import { useStores } from '@/stores/utils'
-import { observer } from 'mobx-react'
+import styled, { css } from 'styled-components'
+import { fonts } from '@/styles/appStyles'
 
-const Container = styled.div`
+export const Container = styled.div`
   ${({ isOpen }) => {
     if (isOpen) {
       return css`
@@ -29,7 +26,7 @@ const Container = styled.div`
   }}
 `
 
-const Inner = styled.div`
+export const Inner = styled.div`
   background-color: ${(props) => props.theme.style.wikiTabBackground};
   border-radius: 1.2rem;
   width: 56rem;
@@ -40,6 +37,7 @@ const Inner = styled.div`
   padding: 4rem 0;
   border: ${(props) => props.theme.style.mainBorder};
   box-shadow: ${(props) => props.theme.style.panelBoxShadow};
+
   .error-title {
     font-family: ${fonts.headerFont};
     font-size: 1.8rem;
@@ -55,7 +53,7 @@ const Inner = styled.div`
   }
 `
 
-const CloseIcon = styled.span`
+export const CloseIcon = styled.span`
   position: absolute;
   right: 2rem;
   top: 2rem;
@@ -70,25 +68,3 @@ const CloseIcon = styled.span`
     }
   }
 `
-
-const ErrorModal = observer((props) => {
-  const { onClose } = props
-
-  return null
-
-  return (
-    // <ThemeProvider theme={state.theme === 'dark' ? darkTheme : lightTheme}>
-    //   <Container isOpen={state.error.display}>
-    //     <Inner>
-    //       <h4 className="error-title">Whoa, partner!</h4>
-    //       <p>{state.error.message}</p>
-    //       <CloseIcon onClick={onClose}>
-    //         <i className="fas fa-times-circle fa-2x"></i>
-    //       </CloseIcon>
-    //     </Inner>
-    //   </Container>
-    // </ThemeProvider>
-  )
-})
-
-export default ErrorModal

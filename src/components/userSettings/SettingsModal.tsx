@@ -1,13 +1,15 @@
-import React, { useContext } from 'react'
-import { HarvestContext } from '../../Context/HarvestContext'
+import React from 'react'
 import { UserSettings, CloseIcon } from './SettingsModalStyles'
 
-//components
 import ThemeSwitch from '../tabContainer/themeSwitch/ThemeSwitch'
 import { Currency } from './currency/Currency'
 
-const SettingsModal = () => {
-  const { toggleUserSettings } = useContext(HarvestContext)
+type SettingsModalProps = {
+  toggleUserSettings(): void
+}
+
+const SettingsModal: React.FC<SettingsModalProps> = (props) => {
+  const { toggleUserSettings } = props
 
   return (
     <UserSettings>

@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 import { Row, Col } from 'styled-bootstrap-grid'
-import Loadable from 'react-loadable'
-
 import { darkTheme, lightTheme } from '@/styles/appStyles'
-// images
+
+import TabContainer from '@/components/tabContainer/TabContainer'
+import SettingsModal from '@/components/userSettings/SettingsModal'
+import Sidedrawer from '@/components/userSettings/sidedrawer/Sidedrawer'
+import { observer } from 'mobx-react'
+import { Routes } from '@/routes/'
+import { useStores } from '@/stores/utils'
+import { ErrorModal } from '@/components/ErrorModal'
+
 import logo from '@/assets/newLogo.png'
-// styles
+
 import {
   Topbar,
   GlobalStyle,
@@ -15,38 +21,10 @@ import {
   Container,
 } from '@/styles/AppJsStyles'
 
-// components
-import TabContainer from '@/components/tabContainer/TabContainer'
-import SettingsModal from '@/components/userSettings/SettingsModal'
-import Sidedrawer from '@/components/userSettings/sidedrawer/Sidedrawer'
-import { observer } from 'mobx-react'
-import { Routes } from '@/routes/'
-import { useStores } from '@/stores/utils'
-
-// TODO: remove this const because repeated in mobx store
-// const web3Modal = web3Store.web3modal
-
-const ErrorModal = Loadable({
-  loader: () => import('@/components/ErrorModal'),
-  loading() {
-    return null
-  },
-})
-
 export const App = observer(() => {
   const { settingsStore } = useStores()
   const [openDrawer, setOpenDrawer] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
-
-  // const [state, setState] = useState({
-  //   // provider: undefined,
-  //   error: { message: null, type: null, display: false },
-  //   theme: window.localStorage.getItem('HarvestFinance:Theme'),
-  //   minimumHarvestAmount: '0',
-  //   apy: '0',
-  //   farmPrice: new BigNumber(0),
-  //   totalFarmEarned: 0,
-  // })
 
   const toggleUserSettings = () => {
     setSettingsOpen(!settingsOpen)
@@ -79,7 +57,9 @@ export const App = observer(() => {
                 role="button"
                 tabIndex="0"
               />
-              {settingsOpen && <SettingsModal />}
+              {settingsOpen && (
+                <SettingsModal toggleUserSettings={toggleUserSettings} />
+              )}
               <i
                 className="fas fa-bars"
                 onClick={toggleSideDrawer}
