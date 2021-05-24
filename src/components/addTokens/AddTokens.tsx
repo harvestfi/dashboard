@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { ThemeProvider } from 'styled-components'
-import { darkTheme, lightTheme } from '../../styles/appStyles'
+import { darkTheme, lightTheme } from '../../App/styles/appStyles'
 import { tokens, tokens2 } from './AvailableTokens'
 import * as Styled from './styles'
 import { observer } from 'mobx-react'

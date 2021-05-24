@@ -12,6 +12,10 @@ const Sidedrawer = (props) => {
   const { openDrawer, toggleRadio } = props
   const address = useCurrentAddress()
 
+  if (!openDrawer) {
+    return null
+  }
+
   return (
     <>
       <Drawer>
@@ -82,7 +86,7 @@ const Sidedrawer = (props) => {
           <ThemeSwitch />
         </div>
       </Drawer>
-      {openDrawer ? <Backdrop /> : null}
+      {openDrawer && <Backdrop />}
     </>
   )
 }

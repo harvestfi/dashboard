@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { fonts } from '@/styles/appStyles'
+import { fonts } from '@/App/styles/appStyles'
 
 export const WalletConnection = styled.div`
   border: ${(props) => props.theme.style.mainBorder};

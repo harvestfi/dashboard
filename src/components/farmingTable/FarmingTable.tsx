@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { fonts } from '../../styles/appStyles'
+import { fonts } from '../../App/styles/appStyles'
 import { IAssetsInfo } from '../../types'
 import { prettyNumber, prettyCurrency } from '../../utils/utils'
 import {

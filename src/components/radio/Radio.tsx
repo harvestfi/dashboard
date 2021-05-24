@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import ReactModal from 'react-modal-resizable-draggable'
-import { fonts } from '../../styles/appStyles'
+import { fonts } from '../../App/styles/appStyles'
 
 import RadioPanel from './RadioPanel'
 

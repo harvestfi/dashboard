@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { fonts } from '@/styles/appStyles'
+import { fonts } from '@/App/styles/appStyles'
 
 export const NoAssetTable = styled.div`
   display: flex;

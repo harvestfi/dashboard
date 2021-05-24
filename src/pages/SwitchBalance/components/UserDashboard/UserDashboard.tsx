@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from '@/components/Button'
-import { Panel } from '@/styles/AppJsStyles'
+import { Panel } from '@/App/styles/AppJsStyles'
 import { useHistory } from 'react-router-dom'
 import { PATHS } from '@/routes'
 
