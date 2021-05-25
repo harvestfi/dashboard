@@ -41,6 +41,14 @@ export class FetchResource<T> {
     this.value = value
   }
 
+  @action.bound
+  reset() {
+    this.error = null
+    this.value = null
+    this.isFetching = false
+    this.isFetched = false
+  }
+
   async fetch(params?: string) {
     if (this.error) {
       this.setError(null)

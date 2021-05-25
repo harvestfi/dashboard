@@ -3,16 +3,15 @@ import { AnalyticsContainer } from './AnalyticsTabsStyles'
 import { PanelTab } from '../TabContainerStyles'
 
 type AnalyticsTabsProps = {
-  address: string
+  address: string | null
   showAnalytics: boolean
-  setShowAnalytics(showAnalytics: boolean): void
 }
 
 export const AnalyticsTabs: React.FC<AnalyticsTabsProps> = (props) => {
-  const { address, setShowAnalytics, showAnalytics } = props
+  const { address, showAnalytics } = props
 
   return (
-    <AnalyticsContainer onMouseLeave={() => setShowAnalytics(false)}>
+    <AnalyticsContainer>
       <PanelTab
         className={
           showAnalytics

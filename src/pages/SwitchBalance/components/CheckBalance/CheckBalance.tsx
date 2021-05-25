@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Panel, ValidationMessage } from './styles'
+import { ValidationMessage } from './styles'
+import { Panel } from './styles'
 import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
 import { useHistory } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { PATHS } from '@/routes'
+import * as Styled from '@/App/styles/AppJsStyles'
 
 export const validateAddress = (address: string) => {
   if (address === '') {
@@ -47,7 +49,7 @@ export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
   }
 
   return (
-    <>
+    <Styled.Panel>
       <Panel>
         {isNotValid && (
           <motion.div
@@ -60,6 +62,7 @@ export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
             </ValidationMessage>
           </motion.div>
         )}
+
         <div className="read-only-header">
           <h1>Or enter a wallet address for read-only mode</h1>
           <div className="address-input">
@@ -79,6 +82,6 @@ export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
           Check Balance
         </button>
       </Panel>
-    </>
+    </Styled.Panel>
   )
 })

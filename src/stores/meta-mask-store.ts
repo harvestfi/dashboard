@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx'
 import { ethers } from 'ethers'
 import { web3Store } from './web3-store'
 import { errorModalStore } from '@/stores/views'
-import { userAssetsStore } from './resources/assets-store'
+import { userAssetsStore, assetToCheckStore } from './resources/assets-store'
 import { Contract, providers } from 'ethers'
 
 const checkForToken = async (token: any) => {
@@ -40,6 +40,7 @@ class MetaMaskStore {
   private readonly web3Store = web3Store
   private readonly errorModalStore = errorModalStore
   private readonly userAssetsStore = userAssetsStore
+  private readonly assetToCheckStore = assetToCheckStore
 
   tokenAddedMessage = ''
 
@@ -62,6 +63,8 @@ class MetaMaskStore {
   disconnect() {
     this.web3Store.web3modal.clearCachedProvider()
     this.provider = null
+    this.assetToCheckStore.reset()
+    this.userAssetsStore.reset()
   }
 
   setTokenAddedMessage(message: string) {

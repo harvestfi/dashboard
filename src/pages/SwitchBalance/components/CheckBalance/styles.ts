@@ -20,6 +20,7 @@ export const Panel = styled.div`
 
   h1 {
     font-family: ${fonts.headerFont};
+    margin-top: 10px;
     margin-bottom: 2.2rem;
     font-size: 2.5rem;
     text-align: center;

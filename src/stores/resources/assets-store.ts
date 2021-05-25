@@ -2,10 +2,10 @@ import { getBSCAssets, getEtheriumAssets } from '@/utils/utils'
 import { FetchResource } from './fetch-resource'
 import { settingsStore } from '@/stores/settings-store'
 import { exchangeRatesStore } from './exchange-rates-store'
-import { observable, action, computed, makeObservable } from 'mobx'
+import { observable, action, computed, makeObservable, override } from 'mobx'
 import BigNumber from 'bignumber.js'
 
-export class AssetsStore {
+export class AssetsStore extends FetchResource {
   private readonly settingsStore = settingsStore
 
   private readonly exchangeRatesStore = exchangeRatesStore
@@ -18,62 +18,15 @@ export class AssetsStore {
     this.address = address
   }
 
-  @observable
-  error: string | null = null
-
-  @observable
-  value: T | null = null
-
-  @observable
-  isFetching = false
-
-  @observable
-  isFetched = false
-
   constructor() {
+    super()
     makeObservable(this)
   }
 
-  @action.bound
-  private setError(error: string | null) {
-    this.error = error
-  }
-
-  @action.bound
-  private setIsFetching(isFetching: boolean) {
-    this.isFetching = isFetching
-  }
-
-  @action.bound
-  private setIsFetched(isFetched: boolean) {
-    this.isFetched = isFetched
-  }
-
-  @action.bound
-  private setValue(value: T) {
-    this.value = value
-  }
-
-  async fetch(params?: string) {
-    if (this.error) {
-      this.setError(null)
-    }
-
-    this.setIsFetching(true)
-
-    try {
-      if (!this.fetchFn) {
-        console.warn('[FetchResource.fetchFn] fetchFn must be defined')
-      } else {
-        const response = await this.fetchFn(params)
-        this.setValue(response)
-      }
-    } catch (error) {
-      this.setError(error)
-    } finally {
-      this.setIsFetching(false)
-      this.setIsFetched(true)
-    }
+  @override
+  reset() {
+    super.reset()
+    this.address = undefined
   }
 
   @computed

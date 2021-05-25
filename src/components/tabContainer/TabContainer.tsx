@@ -10,7 +10,7 @@ import { AnalyticsTabs } from './analyticsTabs'
 import { useCurrentAddress } from '../../hooks'
 
 type TabContainerProps = {
-  toggleRadio(): void
+  toggleRadio?(): void
 }
 
 const TabContainer: React.FC<TabContainerProps> = observer((props) => {
@@ -47,18 +47,11 @@ const TabContainer: React.FC<TabContainerProps> = observer((props) => {
           onMouseEnter={() => {
             setShowAnalytics(true)
           }}
-          onMouseLeave={() => {
-            setShowAnalytics(false)
-          }}
         >
           <p>analytics</p>
         </PanelTab>
 
-        <AnalyticsTabs
-          setShowAnalytics={setShowAnalytics}
-          showAnalytics={showAnalytics}
-          address={address}
-        />
+        <AnalyticsTabs showAnalytics={showAnalytics} address={address} />
       </PanelTabContainerLeft>
     </PanelTabContainer>
   )

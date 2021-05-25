@@ -10,6 +10,7 @@ import { Routes } from '@/routes'
 import { useStores } from '@/stores/utils'
 
 import { GlobalStyle, Container } from '@/App/styles/AppJsStyles'
+import './styles/App.scss'
 
 export const App = observer(() => {
   const { settingsStore } = useStores()

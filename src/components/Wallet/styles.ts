@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { fonts } from '@/App/styles/appStyles'
 
-export const WalletConnection = styled.div`
+export const Connection = styled.div`
   border: ${(props) => props.theme.style.mainBorder};
   border-radius: 0.5rem;
   border-top-right-radius: 0rem;
@@ -74,7 +74,7 @@ export const WalletConnection = styled.div`
   }
 `
 
-export const WalletContainer = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -87,7 +87,7 @@ export const WalletContainer = styled.div`
   }
 `
 
-export const WalletTab = styled.div`
+export const Tab = styled.div`
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   margin-bottom: -1rem;
