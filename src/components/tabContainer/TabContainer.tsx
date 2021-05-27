@@ -7,16 +7,11 @@ import {
 
 import { observer } from 'mobx-react'
 import { AnalyticsTabs } from './analyticsTabs'
-import { useCurrentAddress } from '../../hooks'
+import { useStores } from '@/stores/utils'
 
-type TabContainerProps = {
-  toggleRadio?(): void
-}
-
-const TabContainer: React.FC<TabContainerProps> = observer((props) => {
-  const { toggleRadio } = props
+const TabContainer: React.FC = observer(() => {
   const [showAnalytics, setShowAnalytics] = useState(false)
-  const address = useCurrentAddress()
+  const { appStore } = useStores()
 
   return (
     <PanelTabContainer>
@@ -39,7 +34,7 @@ const TabContainer: React.FC<TabContainerProps> = observer((props) => {
             wiki
           </a>
         </PanelTab>
-        <PanelTab className="radio-tab" onClick={toggleRadio}>
+        <PanelTab className="radio-tab" onClick={appStore.toggleEnableRadio}>
           <p>radio</p>
         </PanelTab>
         <PanelTab
@@ -51,7 +46,10 @@ const TabContainer: React.FC<TabContainerProps> = observer((props) => {
           <p>analytics</p>
         </PanelTab>
 
-        <AnalyticsTabs showAnalytics={showAnalytics} address={address} />
+        <AnalyticsTabs
+          showAnalytics={showAnalytics}
+          address={appStore.address}
+        />
       </PanelTabContainerLeft>
     </PanelTabContainer>
   )

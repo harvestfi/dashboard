@@ -17,6 +17,7 @@ export const FarmInfo: React.FC<FarmInfoProps> = observer((props) => {
   const { farmPriceStore, settingsStore, savedGasStore, apyStore } = useStores()
 
   const farmPriceValue = farmPriceStore.getValue()
+
   const baseCurrency = settingsStore.settings.currency.value
   const apy = apyStore.value
   const savedGas = savedGasStore.value

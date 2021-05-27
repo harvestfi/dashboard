@@ -3,14 +3,15 @@ import { API } from '@/api'
 import { convertStandardNumber } from '@/utils/utils'
 import { exchangeRatesStore } from './exchange-rates-store'
 import { settingsStore } from '@/stores/settings-store'
+import { farmAddress } from '@/constants/constants'
 
 class FarmPriceStore extends FetchResource<any> {
   constructor() {
-    super(API.getEtheriumPrice)
+    super(API.getEtheriumPrice.bind(null, farmAddress))
   }
 
   getValue() {
-    if (this.value === null) {
+    if (this.value === null || exchangeRatesStore.value === null) {
       return 0
     }
 

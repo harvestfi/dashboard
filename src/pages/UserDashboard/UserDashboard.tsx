@@ -6,37 +6,34 @@ import { observer } from 'mobx-react'
 import { FarmingTable } from '@/components/farmingTable/FarmingTable'
 import { FarmInfo } from '@/components/farmInfo/FarmInfo'
 import AddTokens from '@/components/addTokens/AddTokens'
-import { Panel } from '@/App/styles/AppJsStyles'
 
 type UserDashboardProps = {}
 
-export const UserDashboard: React.FC<UserDashboardProps> = observer((props) => {
-  const { userAssetsStore, savedGasStore } = useStores()
+export const UserDashboard: React.FC<UserDashboardProps> = observer(() => {
+  const { assetsStore, appStore, savedGasStore } = useStores()
 
   useEffect(() => {
-    if (!userAssetsStore.isFetched) {
-      userAssetsStore.fetch()
+    if (!assetsStore.isFetched) {
+      assetsStore.fetch()
     }
 
-    if (!savedGasStore.isFetched) {
-      savedGasStore.fetch(userAssetsStore.address)
-    }
+    savedGasStore.fetch(appStore.address)
   }, [])
 
   return (
     <Styled.Main>
-      <Panel>
-        <Wallet address={userAssetsStore.address} />
+      <>
+        <Wallet address={appStore.address} />
         <FarmInfo
-          isLoadingAssets={userAssetsStore.isFetching}
-          stakedBalance={userAssetsStore.stakedBalance}
+          isLoadingAssets={assetsStore.isFetching}
+          stakedBalance={assetsStore.stakedBalance}
         />
         <FarmingTable
-          display={userAssetsStore.isFetched}
-          assets={userAssetsStore.value}
+          display={assetsStore.isFetched}
+          assets={assetsStore.value}
         />
         <AddTokens />
-      </Panel>
+      </>
     </Styled.Main>
   )
 })

@@ -4,19 +4,16 @@ import ReactModal from 'react-modal-resizable-draggable'
 import { fonts } from '../../App/styles/appStyles'
 
 import RadioPanel from './RadioPanel'
+import { observer } from 'mobx-react'
+import { useStores } from '@/stores/utils'
 
-type RadioProps = {
-  radio: boolean
-  toggleRadio(): void
-}
-
-const Radio: React.FC<RadioProps> = (props) => {
-  const { radio, toggleRadio } = props
+export const Radio: React.FC = observer(() => {
+  const { appStore } = useStores()
 
   return (
     <ReactModal
-      isOpen={radio}
-      onRequestClose={toggleRadio}
+      isOpen={appStore.isEnableRadio}
+      onRequestClose={appStore.toggleEnableRadio}
       className={'my-modal-custom-class'}
       initWidth={325}
       initHeight={100}
@@ -26,30 +23,28 @@ const Radio: React.FC<RadioProps> = (props) => {
     >
       <RadioTitle>
         <h4>harvest radio</h4>
-        <CloseIcon onClick={toggleRadio}>
+        <CloseIcon onClick={appStore.toggleEnableRadio}>
           <i className="fas fa-times-circle "></i>
         </CloseIcon>
       </RadioTitle>
-      <RadioPanel toggleRadio={toggleRadio} />
+      <RadioPanel />
     </ReactModal>
   )
-}
-
-export default Radio
+})
 
 const RadioTitle = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-text-align: center;
-font-family: ${fonts.headerFont};
-font-size: 1.7rem;
-position: relative:
-z-index: 400;
-pointer-events: auto;
-h4 {
-  margin-top: .2rem;
-}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: ${fonts.headerFont};
+  font-size: 1.7rem;
+  position: relative:
+  z-index: 400;
+  pointer-events: auto;
+  h4 {
+    margin-top: .2rem;
+  }
 `
 
 const CloseIcon = styled.span`

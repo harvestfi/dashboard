@@ -4,6 +4,9 @@ import { darkTheme, lightTheme } from '@/App/styles/appStyles'
 
 import { ErrorModal } from '@/components/ErrorModal'
 import { Header } from '@/components/Header'
+import { SideDrawer } from '@/components/SlideDrawer'
+import { Radio } from '@/components/radio/Radio'
+import { Panel } from '@/App/styles/AppJsStyles'
 
 import { observer } from 'mobx-react'
 import { Routes } from '@/routes'
@@ -21,9 +24,13 @@ export const App = observer(() => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
+      <SideDrawer />
       <Container>
         <Header />
-        <Routes />
+        <Panel>
+          <Radio />
+          <Routes />
+        </Panel>
       </Container>
       <ErrorModal />
     </ThemeProvider>

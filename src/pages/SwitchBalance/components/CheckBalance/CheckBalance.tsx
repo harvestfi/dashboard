@@ -7,7 +7,6 @@ import { observer } from 'mobx-react'
 import { useHistory } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { PATHS } from '@/routes'
-import * as Styled from '@/App/styles/AppJsStyles'
 
 export const validateAddress = (address: string) => {
   if (address === '') {
@@ -30,7 +29,7 @@ export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
   const [isNotValid, setIsNotValid] = useState(false)
   const history = useHistory()
 
-  const { assetToCheckStore } = useStores()
+  const { appStore } = useStores()
 
   const handleChange = (event: any) => {
     if (isNotValid) {
@@ -41,7 +40,7 @@ export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
 
   const checkBalance = () => {
     if (validateAddress(address!)) {
-      assetToCheckStore.setAddress(address)
+      appStore.setAddress(address)
       history.push(PATHS.checkBalance)
     } else {
       setIsNotValid(true)
@@ -49,39 +48,33 @@ export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
   }
 
   return (
-    <Styled.Panel>
-      <Panel>
-        {isNotValid && (
-          <motion.div
-            initial={{ x: 0, y: -100, opacity: 0 }}
-            animate={{ x: 0, y: 0, opacity: 1 }}
-            exit={{ x: 0, y: -100, opacity: 1 }}
-          >
-            <ValidationMessage className="validation-message">
-              <p>You must enter a valid address</p>
-            </ValidationMessage>
-          </motion.div>
-        )}
-
-        <div className="read-only-header">
-          <h1>Or enter a wallet address for read-only mode</h1>
-          <div className="address-input">
-            <input
-              type="text"
-              value={address}
-              placeholder="Enter address"
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-        <button
-          onClick={checkBalance}
-          className="check-all button"
-          type="button"
+    <Panel>
+      {isNotValid && (
+        <motion.div
+          initial={{ x: 0, y: -100, opacity: 0 }}
+          animate={{ x: 0, y: 0, opacity: 1 }}
+          exit={{ x: 0, y: -100, opacity: 1 }}
         >
-          Check Balance
-        </button>
-      </Panel>
-    </Styled.Panel>
+          <ValidationMessage className="validation-message">
+            <p>You must enter a valid address</p>
+          </ValidationMessage>
+        </motion.div>
+      )}
+
+      <div className="read-only-header">
+        <h1>Or enter a wallet address for read-only mode</h1>
+        <div className="address-input">
+          <input
+            type="text"
+            value={address}
+            placeholder="Enter address"
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+      <button onClick={checkBalance} className="check-all button" type="button">
+        Check Balance
+      </button>
+    </Panel>
   )
 })

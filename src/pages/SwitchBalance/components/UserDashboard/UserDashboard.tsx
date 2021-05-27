@@ -4,6 +4,7 @@ import { Panel } from '@/App/styles/AppJsStyles'
 import { useHistory } from 'react-router-dom'
 import { PATHS } from '@/routes'
 import { Row, Col } from 'styled-bootstrap-grid'
+import { useStores } from '@/stores/utils'
 
 type UserDashboardProps = {}
 
@@ -15,7 +16,7 @@ export const UserDashboard: React.FC<UserDashboardProps> = (props) => {
   }
 
   return (
-    <Panel style={{ marginBottom: '4.5rem' }}>
+    <div style={{ marginBottom: '4.5rem' }}>
       <Row>
         <Col>
           <div className="mode-select-container">
@@ -26,6 +27,6 @@ export const UserDashboard: React.FC<UserDashboardProps> = (props) => {
           </div>
         </Col>
       </Row>
-    </Panel>
+    </div>
   )
 }

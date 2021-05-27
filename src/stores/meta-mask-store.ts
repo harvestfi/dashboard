@@ -2,7 +2,8 @@ import { makeAutoObservable } from 'mobx'
 import { ethers } from 'ethers'
 import { web3Store } from './web3-store'
 import { errorModalStore } from '@/stores/views'
-import { userAssetsStore, assetToCheckStore } from './resources/assets-store'
+import { appStore } from './app-store'
+import { assetsStore } from './resources/assets-store'
 import { Contract, providers } from 'ethers'
 
 const checkForToken = async (token: any) => {
@@ -32,15 +33,15 @@ const checkForToken = async (token: any) => {
     providers.getDefaultProvider(),
   )
   // calculate a balance
-  const balance = await contract.balanceOf(userAssetsStore.address)
+  const balance = await contract.balanceOf(appStore.address)
   return parseInt(balance, 16)
 }
 
 class MetaMaskStore {
   private readonly web3Store = web3Store
   private readonly errorModalStore = errorModalStore
-  private readonly userAssetsStore = userAssetsStore
-  private readonly assetToCheckStore = assetToCheckStore
+  private readonly assetsStore = assetsStore
+  private readonly appStore = appStore
 
   tokenAddedMessage = ''
 
@@ -63,8 +64,8 @@ class MetaMaskStore {
   disconnect() {
     this.web3Store.web3modal.clearCachedProvider()
     this.provider = null
-    this.assetToCheckStore.reset()
-    this.userAssetsStore.reset()
+    this.assetsStore.reset()
+    this.appStore.setAddress(null)
   }
 
   setTokenAddedMessage(message: string) {
@@ -78,7 +79,8 @@ class MetaMaskStore {
 
     try {
       const address = await signer.getAddress()
-      this.userAssetsStore.setAddress(address)
+      // TODO: save address in localStorage
+      this.appStore.setAddress(address)
     } catch (error) {
       this.errorModalStore.open(
         'Something has gone wrong, retrying...',

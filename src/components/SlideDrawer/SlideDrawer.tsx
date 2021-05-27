@@ -1,83 +1,87 @@
 import React from 'react'
+import * as Styled from './styles'
+import logo from '@/assets/newLogo.png'
 
-import { Brand, Drawer, DrawerLink, Radio } from './SidedrawerStyles'
-import logo from '../../../assets/newLogo.png'
+import { Currency } from '@/components/userSettings/currency/Currency'
+import { Backdrop } from './Backdrop'
+import ThemeSwitch from '@/components/tabContainer/themeSwitch/ThemeSwitch'
 
-import { Currency } from '../currency/Currency'
-import Backdrop from './backdrop/Backdrop'
-import ThemeSwitch from '../../tabContainer/themeSwitch/ThemeSwitch'
-import { useCurrentAddress } from '@/hooks'
+import { observer } from 'mobx-react'
+import { useStores } from '@/stores/utils'
 
-const Sidedrawer = (props) => {
-  const { openDrawer, toggleRadio } = props
-  const address = useCurrentAddress()
+export const SideDrawer = observer(() => {
+  const { appStore } = useStores()
 
-  if (!openDrawer) {
+  if (!appStore.isOpenDrawer) {
     return null
   }
 
   return (
     <>
-      <Drawer>
-        <Brand>
+      <Styled.Drawer>
+        <Styled.Brand>
           <img src={logo} alt="harvest finance logo" />{' '}
-        </Brand>
-        <DrawerLink
+        </Styled.Brand>
+        <Styled.DrawerLink
           href="https://farm.chainwiki.dev/en/home"
           target="_blank"
           rel="noopener noreferrer"
           className="drawer-link harvest"
         >
           harvest.finance
-        </DrawerLink>
+        </Styled.DrawerLink>
         <div className="wiki-radio">
-          <DrawerLink
+          <Styled.DrawerLink
             href="https://farm.chainwiki.dev/en/home"
             target="_blank"
             rel="noopener noreferrer"
             className="drawer-link"
           >
             wiki
-          </DrawerLink>
-          <Radio onClick={toggleRadio} className="drawer-link radio">
+          </Styled.DrawerLink>
+          <Styled.Radio
+            onClick={appStore.toggleEnableRadio}
+            className="drawer-link radio"
+          >
             radio
-          </Radio>
+          </Styled.Radio>
         </div>
         <div className="drawer-analytics">
           <h3 className="analytics-header">analytics</h3>
-          <DrawerLink
+          <Styled.DrawerLink
             className="drawer-link"
             href="https://farmdashboard.xyz/"
             target="_blank"
             rel="noopener noreferrer"
           >
             FARM statistics
-          </DrawerLink>
-          <DrawerLink
+          </Styled.DrawerLink>
+          <Styled.DrawerLink
             className="drawer-link"
             href="https://duneanalytics.com/0xBoxer/-grain"
             target="_blank"
             rel="noopener noreferrer"
           >
             GRAIN statistics
-          </DrawerLink>
-          <DrawerLink
+          </Styled.DrawerLink>
+          <Styled.DrawerLink
             className="drawer-link"
             href="https://cultivator.finance/"
             target="_blank"
             rel="noopener noreferrer"
           >
             Profit calculator
-          </DrawerLink>
-          {address && (
-            <DrawerLink
+          </Styled.DrawerLink>
+
+          {appStore.address && (
+            <Styled.DrawerLink
               className="drawer-link"
-              href={`https://farmdashboard.xyz/history/${address}`}
+              href={`https://farmdashboard.xyz/history/${appStore.address}`}
               target="_blank"
               rel="noopener noreferrer"
             >
               Address history
-            </DrawerLink>
+            </Styled.DrawerLink>
           )}
         </div>
 
@@ -85,10 +89,10 @@ const Sidedrawer = (props) => {
           <Currency />
           <ThemeSwitch />
         </div>
-      </Drawer>
-      {openDrawer && <Backdrop />}
+      </Styled.Drawer>
+      {appStore.isOpenDrawer && (
+        <Backdrop toggleSideDrawer={appStore.toggleOpenDrawer} />
+      )}
     </>
   )
-}
-
-export default Sidedrawer
+})

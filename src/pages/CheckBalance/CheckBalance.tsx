@@ -10,29 +10,26 @@ import { Panel } from '@/App/styles/AppJsStyles'
 type CheckBalanceProps = {}
 
 export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
-  const { assetToCheckStore } = useStores()
+  const { assetsStore, appStore, savedGasStore } = useStores()
 
   useEffect(() => {
-    if (!assetToCheckStore.isFetched) {
-      assetToCheckStore.fetch()
-    }
+    assetsStore.fetch()
+    savedGasStore.fetch(appStore.address)
   }, [])
 
   return (
-    <Panel>
-      <Styled.Main style={{ padding: '30px 0' }}>
-        <Panel>
-          <Wallet address={assetToCheckStore.address} />
-          <FarmInfo
-            isLoadingAssets={assetToCheckStore.isFetching}
-            stakedBalance={assetToCheckStore.stakedBalance}
-          />
-          <FarmingTable
-            display={assetToCheckStore.isFetched}
-            assets={assetToCheckStore.value}
-          />
-        </Panel>
-      </Styled.Main>
-    </Panel>
+    <Styled.Main style={{ padding: '30px 0' }}>
+      <Panel>
+        <Wallet address={appStore.address} />
+        <FarmInfo
+          isLoadingAssets={assetsStore.isFetching}
+          stakedBalance={assetsStore.stakedBalance}
+        />
+        <FarmingTable
+          display={assetsStore.isFetched}
+          assets={assetsStore.value}
+        />
+      </Panel>
+    </Styled.Main>
   )
 })

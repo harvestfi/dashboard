@@ -4,7 +4,6 @@ import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
 import { useHistory } from 'react-router-dom'
 import { PATHS } from '@/routes'
-import { Panel } from '@/App/styles/AppJsStyles'
 
 type ConnectWalletProps = {}
 
@@ -19,7 +18,7 @@ export const ConnectWallet: React.FC<ConnectWalletProps> = observer((props) => {
   }
 
   return (
-    <Panel>
+    <>
       <Styled.WelcomeTextPanel>
         <h1>Harvest Finance Dashboard</h1>
         <h4>Connect a wallet to get started</h4>
@@ -33,6 +32,6 @@ export const ConnectWallet: React.FC<ConnectWalletProps> = observer((props) => {
           application.
         </h6>
       </Styled.WelcomeTextPanel>
-    </Panel>
+    </>
   )
 })

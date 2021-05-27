@@ -45,6 +45,7 @@ export class API {
     )
 
     const savedGas = response?.data?.data ?? 0
+
     return savedGas
   }
 
@@ -63,6 +64,7 @@ export class API {
     const prettyPrice = price
       ? new BigNumber(price).dividedBy(10 ** PRICE_DECIMALS)
       : new BigNumber(0)
+
     return prettyPrice
   }
 

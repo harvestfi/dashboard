@@ -1,7 +1,7 @@
 {
   "version": "0.1.0",
   "scripts": {
-    "dev": "webpack-dev-server --port 3000 --mode development --open --hot",
+    "dev": "webpack-dev-server --port 3001 --mode development --open --hot",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
     "predeploy": "npm run build",
