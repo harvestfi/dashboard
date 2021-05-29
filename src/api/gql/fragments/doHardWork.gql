@@ -1,0 +1,25 @@
+#import "./transaction"
+#import "./strategy"
+#import "./sharePriceChangeLog"
+#import "./profitLog"
+
+fragment DoHardWorkFields on DoHardWork {
+  id
+  timestamp
+  transaction {
+    ...TransactionFields
+  }
+  # vault Vault!
+  strategy {
+    ...StrategyFields
+  }
+  pricePerFullShare
+  balanceInVault
+  balanceWithInvestment
+  sharePriceChangeLog {
+    ...SharePriceChangeLogFields
+  }
+  profitLog {
+    ...ProfitLogFields
+  }
+}

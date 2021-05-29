@@ -1,0 +1,22 @@
+#import "./token"
+#import "./reward"
+#import "./vault"
+#import "./transaction"
+
+fragment PoolFields on Pool {
+  id
+  timestamp
+  transaction {
+    ...TransactionFields
+  }
+  type
+  vault {
+    ...VaultFields
+  }
+  rewardTokens {
+    ...TokenFields
+  }
+  rewards {
+    ...RewardFields
+  }
+}

@@ -1,0 +1,6 @@
+fragment ProfitLogFields on ProfitLog {
+  id
+  type
+  profitAmount
+  feeAmount
+}

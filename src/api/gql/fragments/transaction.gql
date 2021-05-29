@@ -1,0 +1,11 @@
+fragment TransactionFields on Transaction {
+  id
+  timestamp
+  blockNumber
+  blockHash
+  from
+  to
+  value
+  gasUsed
+  gasPrice
+}

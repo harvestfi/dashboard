@@ -1,0 +1,17 @@
+#import "./transaction"
+#import "./token"
+
+fragment RewardFields on Reward {
+  id
+  timestamp
+  transaction {
+    ...TransactionFields
+  }
+  # pool Pool!
+  token {
+    ...TokenFields
+  }
+  reward
+  rewardRate
+  periodFinish
+}

@@ -1,0 +1,13 @@
+#import "./transaction"
+
+fragment WithdrawalFields on Withdrawal {
+  id
+  timestamp
+  transaction {
+    ...TransactionFields
+  }
+  user {
+    id
+  }
+  amount
+}

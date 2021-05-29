@@ -1,0 +1,27 @@
+#import "./fragments/pool"
+
+query POOL_QUERY($id: ID!, $blockHeight: Block_height) {
+  pool(id: $id, block: $blockHeight) {
+    ...PoolFields
+  }
+}
+
+query POOLS_QUERY(
+  $skip: Int
+  $first: Int = 100
+  $orderBy: Pool_orderBy
+  $orderDirection: OrderDirection
+  $where: Pool_filter
+  $block: Block_height
+) {
+  pools(
+    skip: $skip
+    first: $first
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    where: $where
+    block: $block
+  ) {
+    ...PoolFields
+  }
+}

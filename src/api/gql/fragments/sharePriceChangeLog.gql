@@ -1,0 +1,5 @@
+fragment SharePriceChangeLogFields on SharePriceChangeLog {
+  id
+  oldSharePrice
+  newSharePrice
+}

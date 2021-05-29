@@ -1,0 +1,6 @@
+fragment TokenFields on Token {
+  id
+  name
+  symbol
+  decimals
+}
