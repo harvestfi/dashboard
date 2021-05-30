@@ -1,5 +1,5 @@
-#import "./transaction"
-#import "./token"
+#import "./transaction.gql"
+#import "./token.gql"
 
 fragment RewardFields on Reward {
   id

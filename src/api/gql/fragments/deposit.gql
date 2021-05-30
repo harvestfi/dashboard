@@ -1,4 +1,4 @@
-#import "./transaction"
+#import "./transaction.gql"
 
 fragment DepositFields on Deposit {
   id

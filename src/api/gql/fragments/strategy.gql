@@ -1,6 +1,4 @@
 #import "./transaction.gql"
-#import "./doHardWork.gql"
-#import "./va"
 
 fragment StrategyFields on Strategy {
   id

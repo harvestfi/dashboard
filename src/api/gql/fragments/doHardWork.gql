@@ -1,7 +1,7 @@
-#import "./transaction"
-#import "./strategy"
-#import "./sharePriceChangeLog"
-#import "./profitLog"
+#import "./transaction.gql"
+#import "./strategy.gql"
+#import "./sharePriceChangeLog.gql"
+#import "./profitLog.gql"
 
 fragment DoHardWorkFields on DoHardWork {
   id

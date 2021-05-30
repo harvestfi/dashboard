@@ -16765,18 +16765,14 @@
         "name": "entity",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "OBJECT"
-        ],
+        "locations": ["OBJECT"],
         "args": []
       },
       {
         "name": "derivedFrom",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION"],
         "args": [
           {
             "name": "field",
@@ -16796,9 +16792,7 @@
         "name": "subgraphId",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "OBJECT"
-        ],
+        "locations": ["OBJECT"],
         "args": [
           {
             "name": "id",

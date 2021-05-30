@@ -1,7 +1,7 @@
-#import "./token"
-#import "./reward"
-#import "./vault"
-#import "./transaction"
+#import "./token.gql"
+#import "./reward.gql"
+#import "./vault.gql"
+#import "./transaction.gql"
 
 fragment PoolFields on Pool {
   id
