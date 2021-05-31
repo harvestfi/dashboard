@@ -1,2 +1,2 @@
-export { API } from './Api'
-export { blockchainAPI } from './blockchainAPI'
+export { API } from './API/Api'
+export { blockchainAPI } from './BlockchainAPI'

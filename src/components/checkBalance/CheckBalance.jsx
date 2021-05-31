@@ -14,7 +14,8 @@ import Wallet from '../Wallet'
 // CONTEXT
 import { HarvestContext } from '../../Context/HarvestContext'
 
-import { getEtheriumAssets, getBSCAssets } from '../../utils/utils'
+import { EthereumService } from '@/services/EthereumService'
+import { BSCService } from '@/services/BSCService'
 
 const CheckBalance = () => {
   const {
@@ -51,12 +52,13 @@ const CheckBalance = () => {
 
       setWalletAddressToCheck(addressFromChangeEvent)
 
-      const [etheriumAssetsToCheck, BSCAssetsToCheck] = await Promise.all([
-        getEtheriumAssets(addressFromChangeEvent, state.provider),
-        getBSCAssets(addressFromChangeEvent),
+
+      const [ethereumAssetsToCheck, BSCAssetsToCheck] = await Promise.all([
+        EthereumService.getAssets(addressFromChangeEvent),
+        BSCService.getAssets(addressFromChangeEvent),
       ])
 
-      setAssetsToCheck([...etheriumAssetsToCheck, ...BSCAssetsToCheck])
+      setAssetsToCheck([...ethereumAssetsToCheck, ...BSCAssetsToCheck])
       setShowAssetsToCheck(true)
     } else {
       setValidationMessage('You must enter a valid address')

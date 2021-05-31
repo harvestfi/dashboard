@@ -33,6 +33,7 @@
     "axios": "0.21.1",
     "bignumber.js": "9.0.1",
     "browserify": "16.5.2",
+    "dotenv": "10.0.0",
     "ethers": "5.1.0",
     "framer-motion": "3.0.0",
     "mobx": "6.2.0",
@@ -73,6 +74,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
     "@typescript-eslint/parser": "^2.31.0",
+    "@emotion/jest": "11.0.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.1.0",
@@ -97,7 +99,6 @@
     "husky": "^4.2.5",
     "image-webpack-loader": "^7.0.1",
     "jest": "^24.9.0",
-    "jest-emotion": "^11.0.0",
     "jest-environment-jsdom-fourteen": "1.0.1",
     "jest-resolve": "24.9.0",
     "jest-watch-typeahead": "0.4.2",
@@ -126,5 +127,8 @@
   "engines": {
     "node": "12.x",
     "npm": "6.x"
+  },
+  "browser": {
+    "fs": false
   }
 }
