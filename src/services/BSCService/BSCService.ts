@@ -81,12 +81,6 @@ export class BSCService {
       string | null,
       number | string | null
     >([
-      // poolBalance !== '0'
-      //   ? blockchainAPI.getPriceUsingFactory(
-      //       relatedVault,
-      //       pool.lpToken?.address,
-      //     )
-      //   : null,
       BlockchainService.calcUnderlyingPrice(
         poolBalance,
         priceAddress,
@@ -105,7 +99,7 @@ export class BSCService {
     ])
 
     const prettyLpTokenBalance =
-      lpTokenDecimals && lpTokenBalance && lpTokenBalance !== '0'
+      lpTokenDecimals && lpTokenBalance
         ? new BigNumber(lpTokenBalance).dividedBy(10 ** Number(lpTokenDecimals))
         : null
 

@@ -179,7 +179,10 @@ describe('EthereumService', () => {
           assetsInfo.value?.constructor.name === 'BigNumber' &&
           assetsInfo.address.vault?.toLocaleLowerCase() ===
             '0x639d4f3f41daa5f4b94d63c2a5f3e18139ba9e54'.toLocaleLowerCase() &&
-          assetsInfo.underlyingBalance?.toString().substring(0, 6) === '1.1446'
+          assetsInfo.underlyingBalance?.toString().substring(0, 6) ===
+            '1.1446' &&
+          assetsInfo.unstakedBalance?.toString() === '0' &&
+          assetsInfo.farmToClaim?.constructor.name === 'BigNumber'
 
         expect(isTrue).toBe(true)
       })

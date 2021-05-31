@@ -74,12 +74,8 @@ export const WelcomeText = ({
   setConnection,
   openModal,
 }) => {
-  const {
-    setIsConnecting,
-    setCheckingBalance,
-    web3Modal,
-    isConnecting,
-  } = useContext(HarvestContext)
+  const { setIsConnecting, setCheckingBalance, web3Modal, isConnecting } =
+    useContext(HarvestContext)
 
   const setProvider = useCallback(
     async (provider) => {

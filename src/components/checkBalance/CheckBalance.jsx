@@ -52,7 +52,6 @@ const CheckBalance = () => {
 
       setWalletAddressToCheck(addressFromChangeEvent)
 
-
       const [ethereumAssetsToCheck, BSCAssetsToCheck] = await Promise.all([
         EthereumService.getAssets(addressFromChangeEvent),
         BSCService.getAssets(addressFromChangeEvent),

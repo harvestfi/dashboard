@@ -1,8 +1,5 @@
 import BigNumber from 'bignumber.js'
-
-import { BigNumberZero } from '@/constants'
 import { BSCService } from './BSCService'
-import { IAssetsInfo } from '@/types'
 
 describe('BSCService', () => {
   describe('getPriceUsingFactory', () => {
@@ -181,17 +178,7 @@ describe('BSCService', () => {
       const testWalletAddressFoBSC =
         '0xecf0545684a06a4ea7b9c2fb1b6c08f50436e9db'
       const bFarmPrice = new BigNumber(111)
-      const expectedAssetsInfo: IAssetsInfo = {
-        name: 'BTCB',
-        earnFarm: true,
-        farmToClaim: BigNumberZero,
-        stakedBalance: BigNumberZero,
-        percentOfPool: BigNumberZero,
-        value: BigNumberZero,
-        unstakedBalance: BigNumberZero,
-        address: { vault: '0xd75ffa16ffbcf4078d55ff246cfba79bb8ce3f63' },
-        underlyingBalance: BigNumberZero,
-      }
+
       return BSCService.getAssetsFromPool(
         poolWithVault,
         testWalletAddressFoBSC,
@@ -201,13 +188,15 @@ describe('BSCService', () => {
         const isTrue =
           assetsInfo.name === 'BTCB' &&
           assetsInfo.earnFarm === true &&
-          assetsInfo.stakedBalance?.constructor.name === 'BigNumber' &&
+          assetsInfo.stakedBalance?.toString().substring(0, 7) === '0.00058' &&
           assetsInfo.percentOfPool?.constructor.name === 'BigNumber' &&
           assetsInfo.value?.constructor.name === 'BigNumber' &&
           assetsInfo.address.vault?.toLocaleLowerCase() ===
             '0xd75ffa16ffbcf4078d55ff246cfba79bb8ce3f63'.toLocaleLowerCase() &&
-          assetsInfo.underlyingBalance?.constructor.name === 'BigNumber'
-
+          assetsInfo.underlyingBalance?.toString().substring(0, 7) ===
+            '0.00058' &&
+          assetsInfo.unstakedBalance?.toString() === '0' &&
+          assetsInfo.farmToClaim?.constructor.name === 'BigNumber'
         expect(isTrue).toBe(true)
       })
     })
@@ -329,17 +318,6 @@ describe('BSCService', () => {
       const testWalletAddressFoBSC =
         '0xecf0545684a06a4ea7b9c2fb1b6c08f50436e9db'
       const bFarmPrice = null
-      const expectedAssetsInfo: IAssetsInfo = {
-        name: 'BTCB',
-        earnFarm: true,
-        farmToClaim: BigNumberZero,
-        stakedBalance: BigNumberZero,
-        percentOfPool: BigNumberZero,
-        value: BigNumberZero,
-        unstakedBalance: BigNumberZero,
-        address: { vault: '0xd75ffa16ffbcf4078d55ff246cfba79bb8ce3f63' },
-        underlyingBalance: BigNumberZero,
-      }
       return BSCService.getAssetsFromPool(
         poolWithVault,
         testWalletAddressFoBSC,
@@ -354,7 +332,8 @@ describe('BSCService', () => {
           assetsInfo.value === null &&
           assetsInfo.address.vault?.toLocaleLowerCase() ===
             '0xd75ffa16ffbcf4078d55ff246cfba79bb8ce3f63'.toLocaleLowerCase() &&
-          assetsInfo.underlyingBalance?.constructor.name === 'BigNumber'
+          assetsInfo.underlyingBalance?.constructor.name === 'BigNumber' &&
+          assetsInfo.farmToClaim?.constructor.name === 'BigNumber'
 
         expect(isTrue).toBe(true)
       })
