@@ -3,15 +3,7 @@ import { BSCService } from './BSCService'
 
 describe('BSCService', () => {
   describe('getPriceUsingFactory', () => {
-    // TODO find underlying address with default factory
-    //   test('positive scenario: if factory !== LEGACY_BSC_FACTORY', () => {
-    //     return BSCService.getBSCPriceUsingFactory(
-    //       '0xcd8fb1302c30fde56bce5b34211e84561bbf0df1',
-    //     ).then((price) => {
-    //       expect(!!price?.toNumber()).toBe(true)
-    //     })
-    //   })
-
+    // TODO find underlying address with default factory and write test
     test('if smart-contract hasn`t Factory, the price is valid ', () => {
       const vaultWithoutFactory = '0xcf6bb5389c92bdda8a3747ddb454cb7a64626c63'
 
