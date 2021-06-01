@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { ThemeProvider } from 'styled-components'
 import { Row, Col } from 'styled-bootstrap-grid'
 import Loadable from 'react-loadable'
-import axios from 'axios'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import { ModeSelectBoard } from './components/ModeSelectBoard'
@@ -30,8 +29,10 @@ import TokenMessage from './components/statusMessages/TokenMessage'
 import HarvestAndStakeMessage from './components/statusMessages/HarvestAndStakeMessage'
 import Sidedrawer from './components/userSettings/sidedrawer/Sidedrawer'
 
-import { getEtheriumAssets, getBSCAssets } from './utils/utils'
+import { getEthereumAssets, getBSCAssets } from './utils/utils'
 import BigNumber from 'bignumber.js'
+import { EthereumService } from './services/EthereumService'
+import { BSCService } from './services/BSCService'
 
 const web3Modal = new Web3Modal({
   network: 'mainnet', // optional
@@ -92,25 +93,26 @@ export function App() {
   })
 
   const memoizeExchangeRates = () => {
-    axios
-      .get('https://api.ratesapi.io/api/latest?base=USD')
-      .then((res) => {
-        setExchangeRates(res.data.rates)
-      })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log(err)
-      })
+    // TODO: fix bad url
+    // axios
+    //   .get('https://api.ratesapi.io/api/latest?base=USD')
+    //   .then((res) => {
+    //     setExchangeRates(res.data.rates)
+    //   })
+    //   .catch((err) => {
+    //     // eslint-disable-next-line no-console
+    //     console.log(err)
+    //   })
   }
 
   useEffect(() => {
     const setAssets = async () => {
       if (state.provider && userWalletAddress) {
-        const [userEtheriumAssets, userBSCAssets] = await Promise.all([
-          getEtheriumAssets(userWalletAddress),
-          getBSCAssets(userWalletAddress),
+        const [userEthereumAssets, userBSCAssets] = await Promise.all([
+          EthereumService.getAssets(userWalletAddress),
+          BSCService.getAssets(userWalletAddress),
         ])
-        setUserAssets([...userEtheriumAssets, ...userBSCAssets])
+        setUserAssets([...userEthereumAssets, ...userBSCAssets])
         setShowUserAssets(true)
       }
     }

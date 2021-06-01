@@ -6,8 +6,8 @@ import Container from './FarmInfoStyles'
 import { BluePanel } from '../bluePanel/BluePanel'
 import { IAssetsInfo } from '../../types'
 import { prettyCurrency, convertStandardNumber } from '../../utils/utils'
-import { API } from '@/api'
 import { farmAddress } from '@/constants/constants'
+import { EthereumService } from '@/services/EthereumService'
 
 interface IProps {
   assets: IAssetsInfo[]
@@ -15,13 +15,14 @@ interface IProps {
 }
 
 export const FarmInfo: React.FC<IProps> = ({ assets, savedGas }) => {
-  const { state, currentExchangeRate, baseCurrency, setState } = useContext(
-    HarvestContext,
-  )
+  const { state, currentExchangeRate, baseCurrency, setState } =
+    useContext(HarvestContext)
 
   useEffect(() => {
     const getFarmPrice = async () => {
-      const farmPrice = await API.getEtheriumPrice(farmAddress)
+      const farmPrice: BigNumber | null = await EthereumService.getPrice(
+        farmAddress,
+      )
 
       setState((prevState) => ({
         ...prevState,

@@ -1,6 +1,1 @@
-export type {
-  IPool,
-  IVault,
-  IAssetsInfo,
-  IAssetsInfoBigNumber,
-} from './Entities'
+export type { IPool, IVault, IAssetsInfo } from './entities'
