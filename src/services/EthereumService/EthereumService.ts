@@ -282,10 +282,9 @@ export class EthereumService {
           ? new BigNumber(vaultBalance).dividedBy(10 ** vault.decimals!)
           : null
 
-        const prettyUnderlyingBalanceWithInvestmentForHolder =
-          underlyingBalanceWithInvestmentForHolder
-            ? new BigNumber(underlyingBalanceWithInvestmentForHolder)
-            : null
+        const prettyUnderlyingBalanceWithInvestmentForHolder = underlyingBalanceWithInvestmentForHolder
+          ? new BigNumber(underlyingBalanceWithInvestmentForHolder)
+          : null
 
         const prettyPricePerFullShare: BigNumber | null = pricePerFullShare
           ? new BigNumber(pricePerFullShare).dividedBy(10 ** vault.decimals!)

@@ -16,8 +16,9 @@ interface IProps {
 }
 
 export const FarmInfo: React.FC<IProps> = ({ assets, savedGas }) => {
-  const { state, currentExchangeRate, baseCurrency, setState } =
-    useContext(HarvestContext)
+  const { state, currentExchangeRate, baseCurrency, setState } = useContext(
+    HarvestContext,
+  )
 
   useEffect(() => {
     const getFarmPrice = async () => {

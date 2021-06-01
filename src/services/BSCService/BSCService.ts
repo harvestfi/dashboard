@@ -235,13 +235,12 @@ export class BSCService {
       return !bscOutdatedVaults.has(v.contract.address)
     })
 
-    const assetsFromVaultsPromises: Promise<IAssetsInfo>[] =
-      BSCService.getAssetsFromVaults(
-        actualVaults,
-        pools,
-        walletAddress,
-        bFarmPrice,
-      )
+    const assetsFromVaultsPromises: Promise<IAssetsInfo>[] = BSCService.getAssetsFromVaults(
+      actualVaults,
+      pools,
+      walletAddress,
+      bFarmPrice,
+    )
 
     const poolsWithoutVaults = pools.filter((pool: IPool) => {
       return !vaults.find(
@@ -249,10 +248,9 @@ export class BSCService {
       )
     })
 
-    const assetsFromPoolsWithoutVaultsPromises: Promise<IAssetsInfo>[] =
-      poolsWithoutVaults.map((pool) =>
-        BSCService.getAssetsFromPool(pool, walletAddress, bFarmPrice),
-      )
+    const assetsFromPoolsWithoutVaultsPromises: Promise<IAssetsInfo>[] = poolsWithoutVaults.map(
+      (pool) => BSCService.getAssetsFromPool(pool, walletAddress, bFarmPrice),
+    )
 
     const assetsDataResolved: IAssetsInfo[] = await Promise.all([
       ...assetsFromVaultsPromises,
