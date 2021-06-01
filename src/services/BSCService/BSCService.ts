@@ -270,7 +270,6 @@ export class BSCService {
         asset.farmToClaim?.toNumber() ||
         asset.stakedBalance?.toNumber() ||
         asset.value?.toNumber() ||
-        asset.unstakedBalance?.toNumber() ||
         asset.underlyingBalance?.toNumber()
       )
     })

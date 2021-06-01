@@ -463,7 +463,6 @@ export class EthereumService {
         asset.farmToClaim?.toNumber() ||
         asset.stakedBalance?.toNumber() ||
         (asset.value && asset.value.toNumber()) ||
-        asset.unstakedBalance?.toNumber() ||
         asset.underlyingBalance?.toNumber()
       )
     })
