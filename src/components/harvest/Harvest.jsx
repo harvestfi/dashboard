@@ -5,8 +5,12 @@ import { HarvestContext } from '../../Context/HarvestContext'
 import { fonts } from '../../styles/appStyles'
 
 const Harvest = () => {
-  const { state, setState, harvestAndStakeMessage, setHarvestAndStakeMessage } =
-    useContext(HarvestContext)
+  const {
+    state,
+    setState,
+    harvestAndStakeMessage,
+    setHarvestAndStakeMessage,
+  } = useContext(HarvestContext)
 
   // const [isHarvesting, setHarvesting] = useState(false);
 

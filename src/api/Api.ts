@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { IPool, IVault } from '../../types/entities'
+import { IPool, IVault } from '../types/entities'
 
 // methods of working with third party api
 export class API {

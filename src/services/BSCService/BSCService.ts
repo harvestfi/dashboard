@@ -5,12 +5,15 @@ import {
   bFarmAddress,
   bscOutdatedVaults,
   LEGACY_BSC_FACTORY,
+  CONTRACTS_FOR_PRICES,
+  CONTRACTS_FOR_PRICES_KEYS,
+  PRICE_DECIMALS,
 } from '@/constants/constants'
 
 import { BSC_UNDERLYING_ABI, FTOKEN_ABI, REWARDS_ABI } from '@/lib/data/ABIs'
-import { IAssetsInfo, IPool, IVault } from '@types/entities'
+import { IAssetsInfo, IPool, IVault } from '@/types/entities'
 import { BigNumber } from 'bignumber.js'
-import { API, blockchainAPI } from '@/api'
+import { API } from '@/api'
 import { BlockchainService } from '../BlockchainService.ts'
 
 export class BSCService {
@@ -41,9 +44,13 @@ export class BSCService {
       string | null,
       string | null
     >([
-      blockchainAPI.makeRequest(lpTokenContract, 'balanceOf', walletAddress),
-      blockchainAPI.makeRequest(poolContract, 'balanceOf', walletAddress),
-      blockchainAPI.makeRequest(poolContract, 'earned', walletAddress),
+      BlockchainService.makeRequest(
+        lpTokenContract,
+        'balanceOf',
+        walletAddress,
+      ),
+      BlockchainService.makeRequest(poolContract, 'balanceOf', walletAddress),
+      BlockchainService.makeRequest(poolContract, 'earned', walletAddress),
     ])
 
     const prettyRewardTokenBalance =
@@ -60,7 +67,7 @@ export class BSCService {
         lpTokenBalance === null ||
         poolBalance === '0' ||
         poolBalance === null
-        ? blockchainAPI.makeRequest(lpTokenContract, 'decimals')
+        ? BlockchainService.makeRequest(lpTokenContract, 'decimals')
         : null
     }
 
@@ -88,11 +95,11 @@ export class BSCService {
       ),
 
       poolBalance !== '0'
-        ? blockchainAPI.makeRequest(poolContract, 'totalSupply')
+        ? BlockchainService.makeRequest(poolContract, 'totalSupply')
         : null,
 
       relatedVault && poolBalance !== '0'
-        ? blockchainAPI.makeRequest(lpTokenContract, 'getPricePerFullShare')
+        ? BlockchainService.makeRequest(lpTokenContract, 'getPricePerFullShare')
         : null,
 
       getDecimals(),
@@ -183,7 +190,7 @@ export class BSCService {
         vault.contract.address,
       )
 
-      const vaultBalance: string | null = await blockchainAPI.makeRequest(
+      const vaultBalance: string | null = await BlockchainService.makeRequest(
         vaultContract,
         'balanceOf',
         walletAddress,
@@ -196,7 +203,7 @@ export class BSCService {
 
       const totalSupply =
         vaultBalance && vaultBalance.toString() !== '0'
-          ? await blockchainAPI.makeRequest(vaultContract, 'totalSupply')
+          ? await BlockchainService.makeRequest(vaultContract, 'totalSupply')
           : null
 
       const percentOfPool: BigNumber | null =
@@ -228,19 +235,20 @@ export class BSCService {
     >([
       API.getBSCVaults(),
       API.getBSCPools(),
-      blockchainAPI.getBSCPrice(bFarmAddress, 'default'),
+      BSCService.getBSCPrice(bFarmAddress, 'default'),
     ])
 
     const actualVaults = vaults.filter((v) => {
       return !bscOutdatedVaults.has(v.contract.address)
     })
 
-    const assetsFromVaultsPromises: Promise<IAssetsInfo>[] = BSCService.getAssetsFromVaults(
-      actualVaults,
-      pools,
-      walletAddress,
-      bFarmPrice,
-    )
+    const assetsFromVaultsPromises: Promise<IAssetsInfo>[] =
+      BSCService.getAssetsFromVaults(
+        actualVaults,
+        pools,
+        walletAddress,
+        bFarmPrice,
+      )
 
     const poolsWithoutVaults = pools.filter((pool: IPool) => {
       return !vaults.find(
@@ -248,9 +256,10 @@ export class BSCService {
       )
     })
 
-    const assetsFromPoolsWithoutVaultsPromises: Promise<IAssetsInfo>[] = poolsWithoutVaults.map(
-      (pool) => BSCService.getAssetsFromPool(pool, walletAddress, bFarmPrice),
-    )
+    const assetsFromPoolsWithoutVaultsPromises: Promise<IAssetsInfo>[] =
+      poolsWithoutVaults.map((pool) =>
+        BSCService.getAssetsFromPool(pool, walletAddress, bFarmPrice),
+      )
 
     const assetsDataResolved: IAssetsInfo[] = await Promise.all([
       ...assetsFromVaultsPromises,
@@ -283,7 +292,7 @@ export class BSCService {
 
     // TODO how to distinguish a network error from a non-existent method?
     // factory - determines which contract address should be used to get underlying token prices
-    const factory: string | null = await blockchainAPI.makeRequest(
+    const factory: string | null = await BlockchainService.makeRequest(
       underlyingContract,
       'factory',
     )
@@ -296,11 +305,31 @@ export class BSCService {
         : 'default'
 
     // underlyingPrice - the price are in USD
-    const underlyingPrice: BigNumber | null = await blockchainAPI.getBSCPrice(
+    const underlyingPrice: BigNumber | null = await BSCService.getBSCPrice(
       underlyingAddress,
       oracleAddressForGettingPrices,
     )
 
     return underlyingPrice
+  }
+
+  static async getBSCPrice(
+    tokenAddress: string | undefined | null,
+    contractsForGettingPrices: CONTRACTS_FOR_PRICES_KEYS,
+  ): Promise<BigNumber | null> {
+    const gettingPricesContract =
+      CONTRACTS_FOR_PRICES[contractsForGettingPrices]
+
+    const price: string | null = await BlockchainService.makeRequest(
+      gettingPricesContract,
+      'getPrice',
+      tokenAddress,
+    )
+
+    const prettyPrice = price
+      ? new BigNumber(price).dividedBy(10 ** PRICE_DECIMALS)
+      : null
+
+    return prettyPrice
   }
 }

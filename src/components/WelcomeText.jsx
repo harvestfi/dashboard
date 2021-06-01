@@ -120,12 +120,14 @@ export const WelcomeText = ({
               setProvider(provider)
             })
             .catch((err) => {
+              // eslint-disable-next-line no-console
               console.log(err)
               openModal('Something has gone wrong, retrying...', 'error')
             })
         }
       })
       .catch((err) => {
+        // eslint-disable-next-line no-console
         console.log(err)
       })
   }, [openModal, setCheckingBalance, setIsConnecting, setProvider, web3Modal])

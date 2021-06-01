@@ -6,7 +6,6 @@ import Container from './FarmInfoStyles'
 import { BluePanel } from '../bluePanel/BluePanel'
 import { IAssetsInfo } from '../../types'
 import { prettyCurrency, convertStandardNumber } from '../../utils/utils'
-import { blockchainAPI } from '@/api'
 import { farmAddress } from '@/constants/constants'
 import { EthereumService } from '@/services/EthereumService'
 
@@ -16,9 +15,8 @@ interface IProps {
 }
 
 export const FarmInfo: React.FC<IProps> = ({ assets, savedGas }) => {
-  const { state, currentExchangeRate, baseCurrency, setState } = useContext(
-    HarvestContext,
-  )
+  const { state, currentExchangeRate, baseCurrency, setState } =
+    useContext(HarvestContext)
 
   useEffect(() => {
     const getFarmPrice = async () => {

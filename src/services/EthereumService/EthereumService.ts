@@ -22,9 +22,9 @@ import {
   PS_VAULT_ABI,
   REWARDS_ABI,
 } from '@/lib/data/ABIs'
-import { IAssetsInfo, IPool, IVault } from '@types/entities'
+import { IAssetsInfo, IPool, IVault } from '@/types/entities'
 import { BigNumber } from 'bignumber.js'
-import { API, blockchainAPI } from '@/api'
+import { API } from '@/api'
 import { BlockchainService } from '../BlockchainService.ts'
 import Web3 from 'web3'
 
@@ -64,8 +64,12 @@ export class EthereumService {
       string | null,
       string | null
     >([
-      blockchainAPI.makeRequest(lpTokenContract, 'balanceOf', walletAddress),
-      blockchainAPI.makeRequest(poolContract, 'balanceOf', walletAddress),
+      BlockchainService.makeRequest(
+        lpTokenContract,
+        'balanceOf',
+        walletAddress,
+      ),
+      BlockchainService.makeRequest(poolContract, 'balanceOf', walletAddress),
       EthereumService.getEarned(
         walletAddress,
         poolContract,
@@ -89,7 +93,7 @@ export class EthereumService {
         return relatedVault.decimals
       }
       return lpTokenBalance !== '0' || poolBalance !== '0'
-        ? await blockchainAPI.makeRequest(lpTokenContract, 'decimals')
+        ? await BlockchainService.makeRequest(lpTokenContract, 'decimals')
         : null
     }
 
@@ -121,7 +125,7 @@ export class EthereumService {
       ),
 
       shouldGetPricePerFullShareBeCalled
-        ? blockchainAPI.makeRequest(iFarmRewardPool, 'getPricePerFullShare')
+        ? BlockchainService.makeRequest(iFarmRewardPool, 'getPricePerFullShare')
         : null,
 
       poolBalance !== '0'
@@ -263,15 +267,23 @@ export class EthereumService {
           string | null,
           string | null
         >([
-          blockchainAPI.makeRequest(vaultContract, 'balanceOf', walletAddress),
-          blockchainAPI.makeRequest(farmContract, 'balanceOf', walletAddress),
-          blockchainAPI.makeRequest(vaultContract, 'totalSupply'),
-          blockchainAPI.makeRequest(
+          BlockchainService.makeRequest(
+            vaultContract,
+            'balanceOf',
+            walletAddress,
+          ),
+          BlockchainService.makeRequest(
+            farmContract,
+            'balanceOf',
+            walletAddress,
+          ),
+          BlockchainService.makeRequest(vaultContract, 'totalSupply'),
+          BlockchainService.makeRequest(
             vaultContract,
             'underlyingBalanceWithInvestmentForHolder',
             walletAddress,
           ),
-          blockchainAPI.makeRequest(vaultContract, 'getPricePerFullShare'),
+          BlockchainService.makeRequest(vaultContract, 'getPricePerFullShare'),
         ])
 
         const prettyFarmBalance: BigNumber | null = farmBalance
@@ -282,9 +294,10 @@ export class EthereumService {
           ? new BigNumber(vaultBalance).dividedBy(10 ** vault.decimals!)
           : null
 
-        const prettyUnderlyingBalanceWithInvestmentForHolder = underlyingBalanceWithInvestmentForHolder
-          ? new BigNumber(underlyingBalanceWithInvestmentForHolder)
-          : null
+        const prettyUnderlyingBalanceWithInvestmentForHolder =
+          underlyingBalanceWithInvestmentForHolder
+            ? new BigNumber(underlyingBalanceWithInvestmentForHolder)
+            : null
 
         const prettyPricePerFullShare: BigNumber | null = pricePerFullShare
           ? new BigNumber(pricePerFullShare).dividedBy(10 ** vault.decimals!)
@@ -464,7 +477,7 @@ export class EthereumService {
       ETHEREUM_CONTRACT_FOR_GETTING_PRICES,
     )
 
-    const price: string | null = await blockchainAPI.makeRequest(
+    const price: string | null = await BlockchainService.makeRequest(
       gettingPricesContract,
       'getPrice',
       tokenAddress,
@@ -489,14 +502,14 @@ export class EthereumService {
     )
 
     let earned: string | null = ''
-    earned = await blockchainAPI.makeRequest(
+    earned = await BlockchainService.makeRequest(
       poolContract,
       'earned',
       walletAddress,
     )
 
     if (earned === null) {
-      earned = await blockchainAPI.makeRequest(
+      earned = await BlockchainService.makeRequest(
         poolContractHavingTwoArguments,
         'earned',
         0,

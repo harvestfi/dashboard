@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
 import Web3 from 'web3'
+import { Contract } from 'web3-eth-contract'
 
 import { BigNumberZero } from '@/constants'
 
@@ -27,5 +28,24 @@ export class BlockchainService {
       console.log(`address ${address} is not valid`)
     }
     return isValid
+  }
+
+  static async makeRequest(
+    contract: Contract,
+    methodName: string,
+    ...args: any[]
+  ): Promise<string | null> {
+    try {
+      const response: string = await contract.methods[methodName](
+        ...args,
+      ).call()
+      return response
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(
+        `An error occurred while calling blockchain method: ${methodName}. Contract address: ${contract?._address}. ${error}`,
+      )
+      return Promise.resolve(null)
+    }
   }
 }
