@@ -381,7 +381,6 @@ export class EthereumService {
         const prettyFarmBalance = farmBalance
           ? new BigNumber(farmBalance).dividedBy(10 ** farmDecimals)
           : null
-        debugger
 
         const value: BigNumber | null =
           prettyVaultBalance && farmPrice
