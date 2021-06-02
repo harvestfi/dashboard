@@ -346,33 +346,47 @@ export class EthereumService {
           vault.contract.address,
         )
 
-        const [vaultBalance, farmBalance] = await Promise.all<string, string>([
-          PSvaultContract.methods.balanceOf(walletAddress).call(),
-          farmContract.methods.balanceOf(walletAddress).call(),
+        const [vaultBalance, farmBalance] = await Promise.all<
+          string | null,
+          string | null
+        >([
+          BlockchainService.makeRequest(
+            PSvaultContract,
+            'balanceOf',
+            walletAddress,
+          ),
+          BlockchainService.makeRequest(
+            farmContract,
+            'balanceOf',
+            walletAddress,
+          ),
         ])
 
         const totalValue: string | null =
-          vaultBalance !== '0'
-            ? await PSvaultContract.methods.totalValue().call()
+          vaultBalance && vaultBalance !== '0'
+            ? await BlockchainService.makeRequest(PSvaultContract, 'totalValue')
             : null
 
-        const percentOfPool = totalValue
-          ? new BigNumber(vaultBalance)
-              .dividedBy(new BigNumber(totalValue))
-              .multipliedBy(100)
-          : BigNumberZero
+        const percentOfPool =
+          totalValue && vaultBalance
+            ? new BigNumber(vaultBalance)
+                .dividedBy(new BigNumber(totalValue))
+                .multipliedBy(100)
+            : BigNumberZero
 
-        const prettyVaultBalance = new BigNumber(vaultBalance).dividedBy(
-          10 ** vault.decimals!,
-        )
+        const prettyVaultBalance = vaultBalance
+          ? new BigNumber(vaultBalance).dividedBy(10 ** vault.decimals!)
+          : null
 
-        const prettyFarmBalance = new BigNumber(farmBalance).dividedBy(
-          10 ** farmDecimals,
-        )
+        const prettyFarmBalance = farmBalance
+          ? new BigNumber(farmBalance).dividedBy(10 ** farmDecimals)
+          : null
+        debugger
 
         const value: BigNumber | null =
-          farmPrice && prettyVaultBalance.multipliedBy(farmPrice)
-
+          prettyVaultBalance && farmPrice
+            ? prettyVaultBalance.multipliedBy(farmPrice)
+            : null
         return {
           name: vault.contract?.name || 'no name',
           earnFarm: !vaultsWithoutReward.has(vault.contract.name),
