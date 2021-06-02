@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col } from 'styled-bootstrap-grid'
-import TabContainer from '@/components/tabContainer/TabContainer'
-import SettingsModal from '@/components/userSettings/SettingsModal'
+import { TabContainer } from '@/components/tabContainer/TabContainer'
+import { SettingsModal } from '@/components/userSettings/SettingsModal'
 
 import logo from '@/assets/newLogo.png'
 
@@ -27,7 +27,7 @@ export const Header = observer(() => {
               onKeyUp={appStore.toggleOpenUserSettings}
               className="fas fa-user-cog"
               role="button"
-              tabIndex="0"
+              tabIndex={0}
             />
             {appStore.isOpenUserSettings && (
               <SettingsModal
@@ -39,7 +39,7 @@ export const Header = observer(() => {
               onClick={appStore.toggleOpenDrawer}
               onKeyUp={appStore.toggleOpenDrawer}
               role="button"
-              tabIndex="0"
+              tabIndex={0}
             />
           </Topbar>
         </Col>

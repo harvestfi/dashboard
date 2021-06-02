@@ -5,7 +5,7 @@ import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
 import { FarmingTable } from '@/components/farmingTable/FarmingTable'
 import { FarmInfo } from '@/components/farmInfo/FarmInfo'
-import AddTokens from '@/components/addTokens/AddTokens'
+import { AddTokens } from '@/components/addTokens/AddTokens'
 
 type UserDashboardProps = {}
 
