@@ -56,48 +56,55 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
   const baseCurrency = settingsStore.settings.currency.value
   const currentExchangeRate = exchangeRatesStore.value?.[baseCurrency]
 
-  const assetRows =
-    assets?.map((asset) => {
-      const prettyFarmToClaim = prettyNumber(asset.farmToClaim.toNumber())
-      const prettyStakedBalance = prettyNumber(asset.stakedBalance.toNumber())
+  const assetRows = assets.map((asset) => {
+    const prettyFarmToClaim: string = asset.farmToClaim
+      ? prettyNumber(asset.farmToClaim.toNumber())
+      : '-'
+    const prettyStakedBalance: string = asset.stakedBalance
+      ? prettyNumber(asset.stakedBalance.toNumber())
+      : '-'
 
-      const prettyUnderlyingBalance = prettyNumber(
-        asset.underlyingBalance.toNumber(),
-      )
+    const prettyUnderlyingBalance: string = asset.underlyingBalance
+      ? prettyNumber(asset.underlyingBalance.toNumber())
+      : '-'
 
-      const prettyValue = asset.value
-        ? prettyCurrency(
-            Number(asset.value.toNumber() * currentExchangeRate),
-            baseCurrency,
-          )
-        : '-'
+    const prettyValue: string = asset.value
+      ? prettyCurrency(
+          Number(asset.value.toNumber() * currentExchangeRate),
+          baseCurrency,
+        )
+      : '-'
 
-      const prettyUnstakedBalance = prettyNumber(
-        asset.unstakedBalance.toNumber(),
-      )
+    const prettyUnstakedBalance: string = asset.unstakedBalance
+      ? prettyNumber(asset.unstakedBalance.toNumber())
+      : '-'
 
-      return (
-        <MainTableRow key={asset.address}>
-          <div className="name">{asset.name}</div>
-          <div className="active">{asset.earnFarm.toString()}</div>
-          <div
-            className="earned-rewards"
-            // TODO: implements it
-            // onKeyUp={() => getThisReward(summary.earnedRewards)}
-            // onClick={() => getThisReward(summary.earnedRewards)}
-            role="button"
-            tabIndex={0}
-          >
-            {prettyFarmToClaim}
-          </div>
-          <div className="staked">{prettyStakedBalance}</div>
-          <div className="pool">{`${asset.percentOfPool.toFixed(6)}%`}</div>
-          <div className="underlying">{prettyUnderlyingBalance}</div>
-          <div className="value">{prettyValue}</div>
-          <div className="unstaked">{prettyUnstakedBalance}</div>
-        </MainTableRow>
-      )
-    }) ?? null
+    const persentOfPool: string = asset.percentOfPool
+      ? `${asset.percentOfPool.toFixed(6)}%`
+      : '-'
+
+    return (
+      <MainTableRow key={asset.address.pool || asset.address.vault}>
+        <div className="name">{asset.name}</div>
+        <div className="active">{asset.earnFarm.toString()}</div>
+        <div
+          className="earned-rewards"
+          // TODO: implements it
+          // onKeyUp={() => getThisReward(summary.earnedRewards)}
+          // onClick={() => getThisReward(summary.earnedRewards)}
+          role="button"
+          tabIndex={0}
+        >
+          {prettyFarmToClaim}
+        </div>
+        <div className="staked">{prettyStakedBalance}</div>
+        <div className="pool">{persentOfPool}</div>
+        <div className="underlying">{prettyUnderlyingBalance}</div>
+        <div className="value">{prettyValue}</div>
+        <div className="unstaked">{prettyUnstakedBalance}</div>
+      </MainTableRow>
+    )
+  })
 
   return (
     <>

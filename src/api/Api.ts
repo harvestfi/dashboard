@@ -1,29 +1,17 @@
 import axios from 'axios'
-import Web3 from 'web3'
-import { Contract } from 'web3-eth-contract'
-import BigNumber from 'bignumber.js'
 
-import { IPool, IVault } from '../types/Entities'
-import {
-  ETHERIUM_CONTRACT_FOR_GETTING_PRICES,
-  BSC_URL,
-  PRICE_DECIMALS,
-} from '@/constants/constants'
-import {
-  ETH_ORACLE_ABI_FOR_GETTING_PRICES,
-  BSC_ORACLE_ABI_FOR_GETTING_PRICES,
-  POOL_WITH_EARNED_METHOD_WITH_2_ARGUMENTS,
-} from '@/lib/data/ABIs'
-import { blockchainAPI } from './blockchainAPI'
+import { IPool, IVault } from '../types/entities'
+
+// methods of working with third party api
 export class API {
-  static async getPools(): Promise<IPool[]> {
+  static async getEthereumPools(): Promise<IPool[]> {
     const response = await axios.get(
       `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/pools`,
     )
     return response?.data?.data ?? []
   }
 
-  static async getVaults(): Promise<IVault[]> {
+  static async getEthereumVaults(): Promise<IVault[]> {
     const response = await axios.get(
       `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/vaults`,
     )
@@ -49,80 +37,36 @@ export class API {
     return savedGas
   }
 
-  static async getEtheriumPrice(tokenAddress: string): Promise<BigNumber> {
-    const web3 = new Web3(process.env.REACT_APP_ETH_URL!)
-
-    const gettingPricesContract = new web3.eth.Contract(
-      ETH_ORACLE_ABI_FOR_GETTING_PRICES,
-      ETHERIUM_CONTRACT_FOR_GETTING_PRICES,
-    )
-
-    const price: string = await gettingPricesContract.methods
-      .getPrice(tokenAddress)
-      .call()
-
-    const prettyPrice = price
-      ? new BigNumber(price).dividedBy(10 ** PRICE_DECIMALS)
-      : new BigNumber(0)
-
-    return prettyPrice
-  }
-
   static async getBSCPools(): Promise<IPool[]> {
-    let response: IPool[] = []
+    let response
     try {
-      response = await axios.get(
+      response = await axios.get<{ data: IPool[] }>(
         `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/pools?network=bsc`,
       )
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(
         `An error occurred while receiving BSC vaults. Error: ${error}`,
       )
     }
 
-    return response?.data?.data ?? []
+    return response?.data.data ?? []
   }
 
   static async getBSCVaults(): Promise<IVault[]> {
-    const response: IVault[] = []
+    let response
     try {
-      const response = await axios.get(
+      response = await axios.get<{ data: IVault[] }>(
         `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/vaults?network=bsc`,
       )
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(
         `An error occurred while receiving BSC vaults. Error: ${error}`,
       )
     }
 
-    return response?.data?.data ?? []
-  }
-
-  static async getBSCPrice(
-    tokenAddress: string,
-    oracleAddressForGettingPrices: string,
-  ): Promise<BigNumber> {
-    const web3 = new Web3(BSC_URL)
-
-    const gettingPricesContract = new web3.eth.Contract(
-      BSC_ORACLE_ABI_FOR_GETTING_PRICES,
-      oracleAddressForGettingPrices,
-    )
-    let price: string
-
-    try {
-      price = await gettingPricesContract.methods.getPrice(tokenAddress).call()
-    } catch (error) {
-      console.log(
-        `Something wrong in the "getBSCPrice" method. Token address: ${tokenAddress}. Error ${error}`,
-      )
-    }
-
-    const prettyPrice = price
-      ? new BigNumber(price).dividedBy(10 ** PRICE_DECIMALS)
-      : new BigNumber(0)
-
-    return prettyPrice
+    return response?.data.data ?? []
   }
 
   static async getExchangeRates(params?: string) {

@@ -5,10 +5,11 @@ import { prettyCurrency } from '../../utils/utils'
 import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
 import { LoadingBluePanel } from '@components/bluePanel/components/loadingBluePanel/LoadingBluePanel.styles'
+import BigNumber from 'bignumber.js'
 
 type FarmInfoProps = {
   isLoadingAssets: boolean
-  stakedBalance: number
+  stakedBalance: BigNumber
 }
 
 export const FarmInfo: React.FC<FarmInfoProps> = observer((props) => {
@@ -28,7 +29,7 @@ export const FarmInfo: React.FC<FarmInfoProps> = observer((props) => {
     savedGasStore.isFetching ||
     apyStore.isFetching
 
-  const displayApy = apy ? `${apy}%` : 'Error'
+  const displayApy = apy && apy !== '0' ? `${apy}%` : 'Error'
   const cellsData = [
     {
       value: prettyCurrency(stakedBalance.toNumber(), baseCurrency),
