@@ -1,4 +1,4 @@
-//style variables for the whole dash
+// style variables for the whole dash
 
 export const screen = {
   xs: '320',

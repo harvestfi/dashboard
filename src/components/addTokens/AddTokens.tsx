@@ -6,7 +6,7 @@ import * as Styled from './styles'
 import { observer } from 'mobx-react'
 import { useStores } from '@/stores/utils'
 
-const AddTokens = observer(() => {
+export const AddTokens = observer(() => {
   const { settingsStore, metaMaskStore } = useStores()
 
   const theme = settingsStore.settings.theme
@@ -49,5 +49,3 @@ const AddTokens = observer(() => {
     </ThemeProvider>
   )
 })
-
-export default AddTokens

@@ -1,10 +1,9 @@
 import { makeAutoObservable } from 'mobx'
-import { ethers } from 'ethers'
+import { ethers, Contract, providers } from 'ethers'
 import { web3Store } from './web3-store'
 import { errorModalStore } from '@/stores/views'
 import { appStore } from './app-store'
 import { assetsStore } from './resources/assets-store'
-import { Contract, providers } from 'ethers'
 
 const checkForToken = async (token: any) => {
   // The minimum ABI to get ERC20 Token balance
@@ -86,6 +85,7 @@ class MetaMaskStore {
         'Something has gone wrong, retrying...',
         'error',
       )
+      // eslint-disable-next-line no-console
       console.log(error)
     }
   }
@@ -107,6 +107,7 @@ class MetaMaskStore {
           'Something has gone wrong, retrying...',
           'error',
         )
+        // eslint-disable-next-line no-console
         console.log(error)
       }
     }
