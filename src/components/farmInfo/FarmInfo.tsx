@@ -1,56 +1,56 @@
-import React, { useContext } from 'react'
-
-import { HarvestContext } from '../../Context/HarvestContext'
+import React from 'react'
 import Container from './FarmInfoStyles'
 import { BluePanel } from '../bluePanel/BluePanel'
-import { LoadingBluePanel } from '../bluePanel/components/loadingBluePanel/LoadingBluePanel.styles'
-import { IAssetsInfo } from '../../types'
-import { prettyBalance, convertStandardNumber } from '../../utils/utils'
+import { prettyCurrency } from '../../utils/utils'
+import { useStores } from '@/stores/utils'
+import { observer } from 'mobx-react'
+import { LoadingBluePanel } from '@components/bluePanel/components/loadingBluePanel/LoadingBluePanel.styles'
+import BigNumber from 'bignumber.js'
 
-interface IProps {
-  assets: IAssetsInfo[]
-  savedGas: number
+type FarmInfoProps = {
+  isLoadingAssets: boolean
+  stakedBalance: BigNumber
 }
 
-export const FarmInfo: React.FC<IProps> = ({ assets, savedGas }) => {
-  const {
-    state,
-    currentExchangeRate,
-    displayFarmInfo,
-    baseCurrency,
-  } = useContext(HarvestContext)
+export const FarmInfo: React.FC<FarmInfoProps> = observer((props) => {
+  const { stakedBalance, isLoadingAssets } = props
 
-  const farmPriceValue = convertStandardNumber(
-    state.farmPrice * currentExchangeRate,
-    baseCurrency,
-  )
+  const { farmPriceStore, settingsStore, savedGasStore, apyStore } = useStores()
 
-  const pretySavedGas = new Intl.NumberFormat('en').format(Math.round(savedGas))
+  const farmPriceValue = farmPriceStore.getValue() ?? '-'
 
-  const stakedBalance = assets.reduce((acc, currentAsset) => {
-    return acc + currentAsset.value
-  }, 0)
+  const baseCurrency = settingsStore.settings.currency.value
+  const apy = apyStore.value
+  const savedGas = savedGasStore.value
 
+  const isLoading =
+    isLoadingAssets ||
+    farmPriceStore.isFetching ||
+    savedGasStore.isFetching ||
+    apyStore.isFetching
+
+  const displayApy = apy && apy !== '0' ? `${apy}%` : 'Error'
   const cellsData = [
     {
-      value: prettyBalance(stakedBalance, baseCurrency),
+      value: prettyCurrency(stakedBalance.toNumber(), baseCurrency),
       text: 'Staked Balance',
     },
-    { value: `${state.apy}%`, text: 'Profit Share APY' },
+    { value: displayApy, text: 'Profit Share APY' },
     { value: farmPriceValue, text: 'FARM price' },
-    { value: pretySavedGas, text: 'Personal Saved Gas' },
-    // TODO: fix 'farm earned'
-    // { value: state.totalFarmEarned?.toFixed(6), text: 'Farm Earned' },
+    {
+      value: prettyCurrency(savedGas, baseCurrency),
+      text: 'Personal Saved Gas',
+    },
     { value: '-', text: 'Farm Earned' },
   ]
 
   const Cells = cellsData.map((item) => {
-    return displayFarmInfo ? (
-      <BluePanel key={item.text} value={item.value} text={item.text} />
-    ) : (
+    return isLoading ? (
       <LoadingBluePanel key={item.text} />
+    ) : (
+      <BluePanel key={item.text} value={item.value} text={item.text} />
     )
   })
 
   return <Container>{Cells}</Container>
-}
+})

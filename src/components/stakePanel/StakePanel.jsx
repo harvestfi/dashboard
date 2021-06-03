@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { ethers } from 'ethers'
 
-import { fonts } from '../../styles/appStyles'
+import { fonts } from '../../App/styles/appStyles'
 
 // components
 import NoFarmModal from './NoFarmModal'

@@ -1,79 +1,78 @@
 import axios from 'axios'
 
-import { IPool, IVault } from '../types/Entities'
+import { IPool, IVault } from '../types/entities'
 
-interface ITokenPriceResponce {
-  data: number
-}
-
+// methods of working with third party api
 export class API {
-  static async getPools(): Promise<IPool[]> {
+  static async getEthereumPools(): Promise<IPool[]> {
     const response = await axios.get(
       `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/pools`,
     )
-    return response ? response.data.data : []
+    return response?.data?.data ?? []
   }
 
-  static async getVaults(): Promise<IVault[]> {
+  static async getEthereumVaults(): Promise<IVault[]> {
     const response = await axios.get(
       `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/vaults`,
     )
-    return response ? response.data.data : []
+    return response?.data?.data ?? []
   }
 
-  static async getTokenPrice(tokenAddress: string): Promise<number> {
-    const response = await axios.get<ITokenPriceResponce>(
-      `${process.env.REACT_APP_ETH_PARSER_URL}/price/token/${tokenAddress}`,
+  static async getAPY(): Promise<string | null> {
+    const response = await axios.get(
+      `https://api-ui.harvest.finance/pools?key=${process.env.REACT_APP_HARVEST_KEY}`,
     )
 
-    // TODO ask about these addreses 0xb19059ebb43466c323583928285a49f558e572fd, 0x5b5cfe992adac0c9d48e05854b2d91c73a003858,
-    // 0x64eda51d3ad40d56b9dfc5554e06f94e1dd786fd
-    if (response && JSON.stringify(response.data.data) !== '{}') {
-      return response.data.data
-    }
-    return 0
-  }
-
-  static async getAPY(): Promise<number> {
-    const response = await axios
-      .get(
-        `https://api-ui.harvest.finance/pools?key=${process.env.REACT_APP_HARVEST_KEY}`,
-      )
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log(err)
-      })
-
-    const APY = response ? response.data.eth[0].rewardAPY : 0
+    const APY = response?.data?.eth[0].rewardAPY ?? null
     return APY
   }
 
-  // TODO: remove, move to getAssets-method who gets farm-price
-  static async getFarmPrice(): Promise<any> {
-    const response = await axios
-      .get(
-        `${process.env.REACT_APP_ETH_PARSER_URL}/price/token/0xa0246c9032bC3A600820415aE600c6388619A14D`,
-      )
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log(err)
-      })
+  static async getPersonalGasSaved(address: string) {
+    const response = await axios.get(
+      `${process.env.REACT_APP_ETH_PARSER_URL}/total_saved_gas_fee_by_address?address=${address}`,
+    )
 
-    const farmPrice = response ? response.data.data : 0
-    return farmPrice
+    const savedGas = response?.data?.data ?? 0
+
+    return savedGas
   }
 
-  static async getPersonalGasSaved(address: string) {
-    const response = await axios
-      .get(
-        `${process.env.REACT_APP_ETH_PARSER_URL}/total_saved_gas_fee_by_address?address=${address}`,
+  static async getBSCPools(): Promise<IPool[]> {
+    let response
+    try {
+      response = await axios.get<{ data: IPool[] }>(
+        `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/pools?network=bsc`,
       )
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log(err)
-      })
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(
+        `An error occurred while receiving BSC vaults. Error: ${error}`,
+      )
+    }
 
-    const savedGas = response ? response.data.data : 0
-    return savedGas
+    return response?.data.data ?? []
+  }
+
+  static async getBSCVaults(): Promise<IVault[]> {
+    let response
+    try {
+      response = await axios.get<{ data: IVault[] }>(
+        `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/vaults?network=bsc`,
+      )
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(
+        `An error occurred while receiving BSC vaults. Error: ${error}`,
+      )
+    }
+
+    return response?.data.data ?? []
+  }
+
+  static async getExchangeRates(params?: string) {
+    const response = await axios.get(
+      `https://api.ratesapi.io/api/latest${params ?? ''}`,
+    )
+    return response?.data?.rates ?? {}
   }
 }

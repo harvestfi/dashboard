@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { fonts } from '../../styles/appStyles'
+import { fonts } from '../../App/styles/appStyles'
 
 export const Col = styled.div(() => {
   return {

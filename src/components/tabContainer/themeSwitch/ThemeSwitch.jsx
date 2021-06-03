@@ -1,29 +1,31 @@
-import React, { useContext } from 'react'
-import { HarvestContext } from '../../../Context/HarvestContext'
+import React, { useCallback } from 'react'
 import { PanelTabContainerRight } from './ThemeSwitchStyles'
+import { useStores } from '@/stores/utils'
+import { observer } from 'mobx-react'
 
-const ThemeSwitch = () => {
-  const { state, setState } = useContext(HarvestContext)
+const ThemeSwitch = observer(() => {
+  const { settingsStore } = useStores()
 
-  const toggleTheme = (theme) => {
-    setState((prevState) => ({ ...prevState, theme }))
-    window.localStorage.setItem('HarvestFinance:Theme', theme)
-  }
+  const theme = settingsStore.settings.theme.value
+
+  const toggleTheme = useCallback(() => {
+    const value = theme === 'dark' ? 'light' : 'dark'
+    settingsStore.change('theme', value)
+  }, [theme])
+
   return (
     <PanelTabContainerRight>
-      <h3>Current theme is: {state.theme}</h3>
+      <h3>Current theme is: {theme}</h3>
       <label className="switch">
         <input
           type="checkbox"
-          checked={state.theme === 'dark'}
-          onChange={() =>
-            toggleTheme(state.theme === 'dark' ? 'light' : 'dark')
-          }
+          checked={theme === 'dark'}
+          onChange={toggleTheme}
         />
         <span className="slider round" />
       </label>
     </PanelTabContainerRight>
   )
-}
+})
 
 export default ThemeSwitch

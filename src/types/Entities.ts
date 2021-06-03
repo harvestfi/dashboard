@@ -1,50 +1,55 @@
+import BigNumber from 'bignumber.js'
+
 interface IContract {
   id: number
   address: string
   name: string
-  created: number
-  type: number
+  created?: number
+  type?: number
   /** TODO: to type */
-  network: null
+  network?: null | string
+}
+
+interface IVaultAndPoolAddresses {
+  vault?: string
+  pool?: string
 }
 
 interface IRewardToken extends IContract {
-  address:
-    | '0x1571ed0bed4d987fe2b498ddbae7dfa19519f651'
-    | '0xa0246c9032bc3a600820415ae600c6388619a14d'
+  address: string
 }
 
 export interface IPool {
   id: number
   contract: IContract
-  updatedBlock: number
-  governance: IContract
-  owner: IContract
-  lpToken: IContract
-  rewardToken: IRewardToken
+  updatedBlock?: number
+  governance?: IContract
+  owner?: IContract
+  lpToken?: IContract
+  rewardToken?: IRewardToken
 }
 
 export interface IVault {
   id: number
   contract: IContract
-  updatedBlock: number
-  governance: IContract
-  strategy: IContract
-  underlying: IContract
+  updatedBlock: number | null
+  governance?: IContract
+  strategy: IContract | null
+  underlying: IContract | null
   name: string
   symbol: string
-  decimals: number
-  underlyingUnit: number
+  decimals?: number
+  underlyingUnit?: number
 }
 
 export interface IAssetsInfo {
   name: string
   earnFarm: boolean
-  farmToClaim: number
-  stakedBalance: number
-  percentOfPool: number
-  value: number
-  unstakedBalance: number
-  address: string
-  underlyingBalance: number
+  farmToClaim: BigNumber | null
+  stakedBalance: BigNumber | null
+  percentOfPool: BigNumber | null
+  value: BigNumber | null
+  unstakedBalance: BigNumber | null
+  address: IVaultAndPoolAddresses
+  underlyingBalance: BigNumber | null
 }

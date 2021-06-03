@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 
+// TODO revert back or not LoadingBluePanel into FarmInfo
 export const LoadingBluePanel = styled.div`
   display: flex;
   flex-direction: column;

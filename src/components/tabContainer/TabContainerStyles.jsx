@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { fonts } from '../../styles/appStyles'
+import { fonts } from '../../App/styles/appStyles'
 
 export const PanelTab = styled.div`
   margin-right: 0.75rem;
@@ -7,7 +7,7 @@ export const PanelTab = styled.div`
   border-top: ${(props) => props.theme.style.mainBorder};
   border-left: ${(props) => props.theme.style.mainBorder};
   border-right: ${(props) => props.theme.style.mainBorder};
-  padding: 0.75rem 2rem 2.25rem 2rem;
+  padding: 0.75rem 2rem 1rem 2rem;
   background-color: ${(props) => props.theme.style.highlight};
   box-shadow: ${(props) => props.theme.style.panelTabBoxShadow};
 

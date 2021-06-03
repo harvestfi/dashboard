@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { fonts } from '../../styles/appStyles'
+import { fonts } from '../../App/styles/appStyles'
 import { IAssetsInfo } from '../../types'
-import { prettyBalance } from '../../utils/utils'
+import { prettyNumber, prettyCurrency } from '../../utils/utils'
 import {
   TableContainer,
   MainTableInner,
@@ -14,15 +14,13 @@ import {
   Tabs,
 } from './FarmingTableStyles'
 import FarmTableSkeleton from './FarmTableSkeleton'
+import { observer } from 'mobx-react'
+import { useStores } from '@/stores/utils'
 
 interface IProps {
   display: boolean
   assets: IAssetsInfo[]
-  currentExchangeRate: number
-  baseCurrency: string
 }
-
-// const { utils } = harvest;
 
 const columns = [
   {
@@ -51,78 +49,44 @@ const columns = [
   },
 ]
 
-export const FarmingTable: React.FC<IProps> = ({
-  display,
-  assets,
-  currentExchangeRate,
-  baseCurrency,
-}) => {
-  // TODO: implement sorting on the table and remove the commented out code
+export const FarmingTable: React.FC<IProps> = observer((props) => {
+  const { display, assets } = props
+  const { settingsStore, exchangeRatesStore } = useStores()
 
-  // const [sortedSummary, setSortedSummary] = useState([]);
-  // const [sortDirection, setSortDirection] = useState(1);
-  // const sortSummary = (_col, index) => {
-  //   // earnedRewards, stakedBalance, percentOfPool, usdValueOf, unstakedBalance
-  //   const filteredArray = sortedSummary;
-  //   if (index >= 2 && index <= 6) {
-  //     filteredArray.sort((a, b) => {
-  //       const first =
-  //         index === 2
-  //           ? a.earnedRewards
-  //           : index === 3
-  //             ? a.stakedBalance
-  //             : index === 4
-  //               ? a.percentOfPool.substr(0, a.percentOfPool.length - 1)
-  //               : index === 5
-  //                 ? a.usdValueOf
-  //                 : index === 6
-  //                   ? a.unstakedBalance
-  //                   : 0;
-  //       const second =
-  //         index === 2
-  //           ? b.earnedRewards
-  //           : index === 3
-  //             ? b.stakedBalance
-  //             : index === 4
-  //               ? b.percentOfPool.substr(0, b.percentOfPool.length - 1)
-  //               : index === 5
-  //                 ? b.usdValueOf
-  //                 : index === 6
-  //                   ? b.unstakedBalance
-  //                   : 0;
-  //       return parseFloat(first) >= parseFloat(second) ? sortDirection : -sortDirection;
-  //     });
-  //   } else if (index === 1) {
-  //     filteredArray.sort((a, b) => {
-  //       return (a.isActive || 0) >= (b.isActive || 0) ? sortDirection : -sortDirection;
-  //     });
-  //   }
-  //   setSortedSummary([...filteredArray]);
-  //   setSortDirection(-sortDirection);
-  // };
+  const baseCurrency = settingsStore.settings.currency.value
+  // TODO fix
+  // const currentExchangeRate = exchangeRatesStore.value?.[baseCurrency]
 
-  // const getTotalFarmEarned = useCallback(() => {
-  //   let total = 0;
-  //   if (state.summaries.length !== 0) {
-  //     // eslint-disable-next-line
-  //     state.summaries.map(utils.prettyPosition).map((summary, _index) => {
-  //       total += parseFloat(summary.historicalRewards);
-  //       setState(prevState => ({
-  //         ...prevState,
-  //         totalFarmEarned: total,
-  //       }));
-  //     });
-  //   }
-  // }, [setState, state.summaries]);
+  const assetRows = assets?.map((asset) => {
+    const prettyFarmToClaim: string = asset.farmToClaim
+      ? prettyNumber(asset.farmToClaim.toNumber())
+      : '-'
+    const prettyStakedBalance: string = asset.stakedBalance
+      ? prettyNumber(asset.stakedBalance.toNumber())
+      : '-'
 
-  const assetRows = assets.map((asset) => {
-    const prettyValue = prettyBalance(
-      Number((asset.value * currentExchangeRate).toFixed(2)),
-      baseCurrency,
-    )
+    const prettyUnderlyingBalance: string = asset.underlyingBalance
+      ? prettyNumber(asset.underlyingBalance.toNumber())
+      : '-'
+
+    const prettyValue: string = asset.value
+      ? prettyCurrency(
+          // Number(asset.value.toNumber() * currentExchangeRate),
+          Number(asset.value.toNumber() * 1),
+          baseCurrency,
+        )
+      : '-'
+
+    const prettyUnstakedBalance: string = asset.unstakedBalance
+      ? prettyNumber(asset.unstakedBalance.toNumber())
+      : '-'
+
+    const persentOfPool: string = asset.percentOfPool
+      ? `${asset.percentOfPool.toFixed(6)}%`
+      : '-'
 
     return (
-      <MainTableRow key={asset.address}>
+      <MainTableRow key={asset.address.pool || asset.address.vault}>
         <div className="name">{asset.name}</div>
         <div className="active">{asset.earnFarm.toString()}</div>
         <div
@@ -133,13 +97,13 @@ export const FarmingTable: React.FC<IProps> = ({
           role="button"
           tabIndex={0}
         >
-          {asset.farmToClaim.toFixed(6)}
+          {prettyFarmToClaim}
         </div>
-        <div className="staked">{asset.stakedBalance.toFixed(6)}</div>
-        <div className="pool">{`${asset.percentOfPool.toFixed(6)}%`}</div>
-        <div className="underlying">{asset.underlyingBalance.toFixed(6)}</div>
+        <div className="staked">{prettyStakedBalance}</div>
+        <div className="pool">{persentOfPool}</div>
+        <div className="underlying">{prettyUnderlyingBalance}</div>
         <div className="value">{prettyValue}</div>
-        <div className="unstaked">{asset.unstakedBalance.toFixed(6)}</div>
+        <div className="unstaked">{prettyUnstakedBalance}</div>
       </MainTableRow>
     )
   })
@@ -178,8 +142,6 @@ export const FarmingTable: React.FC<IProps> = ({
                       className={`${col.name} table-header`}
                       key={col.name}
                       // TODO: implement sorting
-                      // onKeyUp={() => sortSummary(col, i)}
-                      // onClick={() => sortSummary(col, i)}
                       role="button"
                       tabIndex={0}
                     >
@@ -197,7 +159,7 @@ export const FarmingTable: React.FC<IProps> = ({
       )}
     </>
   )
-}
+})
 
 const NoAssetTable = styled.div`
   display: flex;
