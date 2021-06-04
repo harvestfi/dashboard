@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom'
 import * as Styled from './styles'
 import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
+import { runInAction } from 'mobx'
 import { useHistory } from 'react-router-dom'
 import { PATHS } from '@/routes'
 
@@ -11,17 +12,20 @@ type ConnectWalletProps = {}
 export const ConnectWallet: React.FC<ConnectWalletProps> = observer((props) => {
   const { metaMaskStore } = useStores()
   const history = useHistory()
+  let isConnecting = false
 
   const connectWallet = () => {
+    // Users who have a cachedProvider might land here, on the index page.
+    // Since this is the index, we should transparetly disconnect them and
+    // allow them to re-connect their wallet.
+    if (!isConnecting && metaMaskStore.isConnected) {
+      metaMaskStore.disconnect()
+    }
+
     metaMaskStore.connectMetaMask().then(() => {
+      isConnecting = true
       history.push(PATHS.switchBalance)
     })
-  }
-
-  // Users who have a cachedProvider might land here. Since this is the index page,
-  // we should disconnect them and allow them to re-connect their wallet.
-  if (metaMaskStore.isConnected) {
-    metaMaskStore.disconnect()
   }
 
   return (

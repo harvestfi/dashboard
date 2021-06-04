@@ -20,11 +20,7 @@ export const UserDashboard: React.FC<UserDashboardProps> = observer(() => {
 
       savedGasStore.fetch(appStore.address)
     }
-
-    if (!appStore.address) {
-      metaMaskStore.connectMetaMask()
-    }
-  }, [])
+  }, [appStore.address])
 
   return (
     <Styled.Main>
