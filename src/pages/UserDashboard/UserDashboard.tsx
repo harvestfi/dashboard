@@ -20,14 +20,14 @@ export const UserDashboard: React.FC<UserDashboardProps> = observer(() => {
 
       savedGasStore.fetch(appStore.address)
     }
-  }, [appStore.address])
+  }, [appStore.address]) // this effect runs whenever appStore.address is changed
 
   return (
     <Styled.Main>
       <>
         <Wallet address={appStore.address} />
         <FarmInfo
-          isLoadingAssets={assetsStore.isFetching}
+          isLoadingAssets={!assetsStore.isFetched}
           stakedBalance={assetsStore.stakedBalance}
         />
         <FarmingTable
