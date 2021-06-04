@@ -61,10 +61,8 @@ module.exports = {
       template: './public/index.html',
     }),
     new CopyWebpackPlugin({
-      patterns: [
-        { from: 'public' }
-      ]
-    })
+      patterns: [{ from: 'public' }],
+    }),
   ],
   devServer: {
     historyApiFallback: true,
