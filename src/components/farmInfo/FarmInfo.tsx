@@ -29,7 +29,7 @@ export const FarmInfo: React.FC<FarmInfoProps> = observer((props) => {
     savedGasStore.isFetching ||
     apyStore.isFetching
 
-  const displayApy = apy && apy !== '0' ? `${apy}%` : 'Error'
+  const displayApy = apy && apy !== '0' ? `${apy}%` : '-'
   const cellsData = [
     {
       value: prettyCurrency(stakedBalance.toNumber(), baseCurrency),

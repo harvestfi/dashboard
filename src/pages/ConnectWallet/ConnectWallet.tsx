@@ -1,4 +1,5 @@
 import React from 'react'
+import { Redirect } from 'react-router-dom'
 import * as Styled from './styles'
 import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
@@ -15,6 +16,12 @@ export const ConnectWallet: React.FC<ConnectWalletProps> = observer((props) => {
     metaMaskStore.connectMetaMask().then(() => {
       history.push(PATHS.switchBalance)
     })
+  }
+
+  // Users who have a cachedProvider might land here. Since this is the index page,
+  // we should disconnect them and allow them to re-connect their wallet.
+  if (metaMaskStore.isConnected) {
+    metaMaskStore.disconnect()
   }
 
   return (

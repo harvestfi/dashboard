@@ -10,14 +10,20 @@ import { AddTokens } from '@/components/addTokens/AddTokens'
 type UserDashboardProps = {}
 
 export const UserDashboard: React.FC<UserDashboardProps> = observer(() => {
-  const { assetsStore, appStore, savedGasStore } = useStores()
+  const { assetsStore, appStore, savedGasStore, metaMaskStore } = useStores()
 
   useEffect(() => {
-    if (!assetsStore.isFetched) {
-      assetsStore.fetch()
+    if (appStore.address) {
+      if (!assetsStore.isFetched) {
+        assetsStore.fetch()
+      }
+
+      savedGasStore.fetch(appStore.address)
     }
 
-    savedGasStore.fetch(appStore.address)
+    if (!appStore.address) {
+      metaMaskStore.connectMetaMask()
+    }
   }, [])
 
   return (
