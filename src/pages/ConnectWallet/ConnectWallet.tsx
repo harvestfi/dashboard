@@ -1,6 +1,7 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import * as Styled from './styles'
+import { EnterReadOnlyAddress } from '@/components/EnterReadOnlyAddress'
 import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
 import { runInAction } from 'mobx'
@@ -24,7 +25,7 @@ export const ConnectWallet: React.FC<ConnectWalletProps> = observer((props) => {
 
     metaMaskStore.connectMetaMask().then(() => {
       isConnecting = true
-      history.push(PATHS.switchBalance)
+      history.push(PATHS.userDashboard)
     })
   }
 
@@ -43,6 +44,8 @@ export const ConnectWallet: React.FC<ConnectWalletProps> = observer((props) => {
           application.
         </h6>
       </Styled.WelcomeTextPanel>
+
+      <EnterReadOnlyAddress />
     </>
   )
 })

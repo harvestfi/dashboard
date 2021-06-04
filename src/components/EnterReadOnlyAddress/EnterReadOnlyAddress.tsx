@@ -22,9 +22,7 @@ export const validateAddress = (address: string) => {
   return true
 }
 
-type CheckBalanceProps = {}
-
-export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
+export const EnterReadOnlyAddress: React.FC = observer((props) => {
   const [address, setAddress] = useState()
   const [isNotValid, setIsNotValid] = useState(false)
   const history = useHistory()
