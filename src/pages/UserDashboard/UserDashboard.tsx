@@ -14,10 +14,7 @@ export const UserDashboard: React.FC<UserDashboardProps> = observer(() => {
 
   useEffect(() => {
     if (appStore.address) {
-      if (!assetsStore.isFetched) {
-        assetsStore.fetch()
-      }
-
+      assetsStore.fetch()
       savedGasStore.fetch(appStore.address)
     }
   }, [appStore.address]) // this effect runs whenever appStore.address is changed

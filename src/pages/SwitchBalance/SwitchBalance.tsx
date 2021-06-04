@@ -7,13 +7,6 @@ import { useStores } from '@/stores/utils'
 type CheckBalanceProps = {}
 
 export const SwitchBalance: React.FC<CheckBalanceProps> = observer((props) => {
-  const { apyStore, farmPriceStore } = useStores()
-
-  useEffect(() => {
-    apyStore.fetch()
-    farmPriceStore.fetch()
-  }, [])
-
   return (
     <>
       <UserDashboard />
