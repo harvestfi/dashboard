@@ -4,6 +4,11 @@ import { IPool, IVault } from '../types/entities'
 
 // methods of working with third party api
 export class API {
+  static async getEthereumPools2(): Promise<any[]> {
+    const response = await axios.get(`https://reqres.in/api/users?page=2`)
+    return response?.data?.data ?? []
+  }
+
   static async getEthereumPools(): Promise<IPool[]> {
     const response = await axios.get(
       `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/pools`,
