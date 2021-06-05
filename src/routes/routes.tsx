@@ -8,7 +8,7 @@ import { UserDashboard } from '@/pages/UserDashboard'
 
 export const PATHS = {
   main: '/',
-  checkBalance: '/check-balance',
+  checkBalance: '/check-balance/:address',
   userDashboard: '/user-dashboard',
 }
 

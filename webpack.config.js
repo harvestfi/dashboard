@@ -48,6 +48,7 @@ module.exports = {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
+    publicPath: '/'
   },
   plugins: [
     new Dotenv({
@@ -58,7 +59,7 @@ module.exports = {
       defaults: false,
     }),
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: './public/index.html'
     }),
     new CopyWebpackPlugin({
       patterns: [{ from: 'public' }],
