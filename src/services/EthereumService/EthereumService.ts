@@ -13,6 +13,7 @@ import {
   PRICE_DECIMALS,
   PSAddress,
   vaultsWithoutReward,
+  SNOWSWAP,
 } from '@/constants/constants'
 import {
   ERC20_ABI_GET_PRICE_PER_FULL_SHARE,
@@ -482,6 +483,69 @@ export class EthereumService {
     })
 
     return nonZeroAssets
+  }
+
+  static getSnowswapAssets = async (
+    walletAddress: string,
+  ): Promise<IAssetsInfo[]> => {
+    const stakingPool = new ethWeb3.eth.Contract(
+      SNOWSWAP.fSnowStakingPool.abi,
+      SNOWSWAP.fSnowStakingPool.address,
+    )
+
+    const [
+      stakingPoolBalanceRaw,
+      snowEarnedBalanceRaw,
+      stakingPoolTotalRaw,
+      snowPrice,
+    ] = await Promise.all<
+      string | null,
+      string | null,
+      string | null,
+      BigNumber
+    >([
+      BlockchainService.makeRequest(stakingPool, 'balanceOf', walletAddress),
+      BlockchainService.makeRequest(stakingPool, 'earned', walletAddress),
+      BlockchainService.makeRequest(stakingPool, 'totalSupply'),
+      EthereumService.getPrice(SNOWSWAP.fSnow.address),
+    ])
+
+    const stakingPoolBalance = new BigNumber(stakingPoolBalanceRaw).dividedBy(
+      10 ** Number(18),
+    )
+
+    if (stakingPoolBalance.toNumber() === 0) return []
+
+    const snowEarnedBalance = new BigNumber(snowEarnedBalanceRaw).dividedBy(
+      10 ** Number(18),
+    )
+    const stakingPoolTotal = new BigNumber(stakingPoolTotalRaw).dividedBy(
+      10 ** Number(18),
+    )
+    const userPercentOfPool = stakingPoolBalance
+      .dividedBy(stakingPoolTotal)
+      .multipliedBy(100)
+
+    const snowValue = BigNumber.sum(
+      stakingPoolBalance,
+      snowEarnedBalance.multipliedBy(snowPrice),
+    )
+
+    return [
+      {
+        name: 'SNOW_DONNER_POOL',
+        earnFarm: false,
+        farmToClaim: null,
+        stakedBalance: stakingPoolBalance,
+        percentOfPool: userPercentOfPool,
+        value: snowValue,
+        unstakedBalance: null,
+        address: {
+          pool: SNOWSWAP.fSnowStakingPool.address,
+        },
+        underlyingBalance: stakingPoolBalance,
+      },
+    ]
   }
 
   static async getPrice(tokenAddress?: string): Promise<BigNumber | null> {
