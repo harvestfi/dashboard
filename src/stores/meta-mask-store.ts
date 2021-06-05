@@ -78,7 +78,6 @@ class MetaMaskStore {
 
     try {
       const address = await signer.getAddress()
-      // TODO: save address in localStorage
       this.appStore.setAddress(address)
     } catch (error) {
       this.errorModalStore.open(
