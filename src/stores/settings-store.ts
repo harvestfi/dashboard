@@ -1,12 +1,11 @@
 import { makeAutoObservable } from 'mobx'
-import { exchangeRatesStore } from './resources'
+import { exchangeRatesStore } from './resources/exchange-rates-store'
 
 class SettingsStore {
   initialized = false
 
   settings = {
     currency: {
-      options: ['USD'],
       value: 'USD',
     },
     theme: {
@@ -19,6 +18,12 @@ class SettingsStore {
   constructor() {
     makeAutoObservable(this)
     this.init()
+  }
+
+  updateCurrency(value: string) {
+    if (exchangeRatesStore.supportedCurrencies.includes(value)) {
+      this.change('currency', value)
+    }
   }
 
   change(key: keyof typeof settingsStore.settings, value: string | boolean) {

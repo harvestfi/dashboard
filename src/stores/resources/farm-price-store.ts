@@ -12,21 +12,11 @@ class FarmPriceStore extends FetchResource<any> {
   }
 
   getValue() {
-    // TODO fix exchangeRatesStore
-    // if (this.value === null || exchangeRatesStore.value === null) {
     if (this.value === null) {
       return null
+    } else {
+      return this.value.toNumber()
     }
-
-    // const currency = settingsStore.settings.currency.value
-    // const currentExchangeRate = exchangeRatesStore.value[currency]
-
-    return convertStandardNumber(
-      // this.value.toNumber() * currentExchangeRate,
-      // currency,
-      this.value.toNumber(),
-      'USD',
-    )
   }
 }
 
