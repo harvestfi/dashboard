@@ -1,5 +1,4 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
 import * as Styled from './styles'
 import { EnterReadOnlyAddress } from '@/components/EnterReadOnlyAddress'
 import { useStores } from '@/stores/utils'
