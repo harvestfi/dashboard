@@ -42,6 +42,7 @@ class MetaMaskStore {
   private readonly assetsStore = assetsStore
   private readonly appStore = appStore
 
+  isConnecting = false
   tokenAddedMessage = ''
 
   provider: any = null
@@ -90,6 +91,7 @@ class MetaMaskStore {
   }
 
   async connectMetaMask() {
+    this.isConnecting = true
     const provider = await this.web3Store.web3modal.connect()
 
     if (!provider) {
@@ -110,6 +112,8 @@ class MetaMaskStore {
         console.log(error)
       }
     }
+
+    this.isConnecting = false
   }
 
   async addTokenToWallet(token: any) {
