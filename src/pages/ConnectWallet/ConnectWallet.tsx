@@ -3,7 +3,6 @@ import * as Styled from './styles'
 import { EnterReadOnlyAddress } from '@/components/EnterReadOnlyAddress'
 import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
-import { runInAction } from 'mobx'
 import { useHistory } from 'react-router-dom'
 import { PATHS } from '@/routes'
 
