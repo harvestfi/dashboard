@@ -11,18 +11,16 @@ type ConnectWalletProps = {}
 export const ConnectWallet: React.FC<ConnectWalletProps> = observer((props) => {
   const { metaMaskStore } = useStores()
   const history = useHistory()
-  let isConnecting = false
 
   const connectWallet = () => {
     // Users who have a cachedProvider might land here, on the index page.
     // Since this is the index, we should transparetly disconnect them and
     // allow them to re-connect their wallet.
-    if (!isConnecting && metaMaskStore.isConnected) {
+    if (!metaMaskStore.isConnecting && metaMaskStore.isConnected) {
       metaMaskStore.disconnect()
     }
 
     metaMaskStore.connectMetaMask().then(() => {
-      isConnecting = true
       history.push(PATHS.userDashboard)
     })
   }
