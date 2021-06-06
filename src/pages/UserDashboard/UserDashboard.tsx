@@ -33,7 +33,7 @@ export const UserDashboard: React.FC<UserDashboardProps> = observer(() => {
       <>
         <Wallet address={appStore.address} />
         <FarmInfo
-          isLoadingAssets={!assetsStore.isFetched}
+          isLoadingAssets={assetsStore.isFetching}
           stakedBalance={assetsStore.stakedBalance}
         />
         <FarmingTable
