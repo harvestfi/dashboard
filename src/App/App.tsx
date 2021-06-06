@@ -17,12 +17,6 @@ import './styles/App.scss'
 export const App = observer(() => {
   const { settingsStore, apyStore, farmPriceStore } = useStores()
 
-  // This data can be fetched on load since it's not address-dependent
-  useEffect(() => {
-    apyStore.fetch()
-    farmPriceStore.fetch()
-  })
-
   const theme =
     settingsStore.settings.theme.value === 'dark' ? darkTheme : lightTheme
 
