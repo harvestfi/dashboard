@@ -113,6 +113,7 @@ describe('EthereumService', () => {
             let isValid: boolean = false
 
             if (!assetFromMock) {
+              // eslint-disable-next-line no-console
               console.log(
                 `Test name: obtained testWallet asset values are valid. testValues object does not contain this address ${address}.`,
               )

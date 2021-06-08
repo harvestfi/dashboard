@@ -8,6 +8,7 @@ export class API {
     const response = await axios
       .get(`${process.env.REACT_APP_ETH_PARSER_URL}/contracts/pools`)
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.log('getEthereumPools', error)
       })
     return response?.data?.data ?? []
@@ -17,6 +18,7 @@ export class API {
     const response = await axios
       .get(`${process.env.REACT_APP_ETH_PARSER_URL}/contracts/vaults`)
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.log('getEthereumVaults', error)
       })
     return response?.data?.data ?? []
