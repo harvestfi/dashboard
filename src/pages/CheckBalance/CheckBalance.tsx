@@ -1,26 +1,31 @@
 import React, { useEffect } from 'react'
-import { FarmingTable } from '@/components/farmingTable/FarmingTable'
-import { FarmInfo } from '@/components/farmInfo/FarmInfo'
+
 import { observer } from 'mobx-react'
 import { useStores } from '@/stores/utils'
-import * as Styled from './styles'
+
+import { FarmingTable } from '@/components/farmingTable/FarmingTable'
+import { FarmInfo } from '@/components/farmInfo/FarmInfo'
 import { Wallet } from '@/components/Wallet'
 import { Panel } from '@/App/styles/AppJsStyles'
+import { AddTokens } from '@/components/addTokens/AddTokens'
+
+import * as Styled from './styles'
 
 type CheckBalanceProps = {}
 
 export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
-  const { assetsStore, appStore, savedGasStore } = useStores()
+  const { assetsStore, appStore, savedGasStore, metaMaskStore } = useStores()
 
   useEffect(() => {
-    assetsStore.fetch()
+    console.log('effect', appStore.address)
+    assetsStore.fetch(appStore.address)
     savedGasStore.fetch(appStore.address)
-  }, [])
+  }, [appStore.address])
 
   return (
     <Styled.Main style={{ padding: '30px 0' }}>
       <Panel>
-        <Wallet address={appStore.address} />
+        <Wallet />
         <FarmInfo
           isLoadingAssets={assetsStore.isFetching}
           stakedBalance={assetsStore.stakedBalance}
@@ -29,6 +34,7 @@ export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
           display={assetsStore.isFetched}
           assets={assetsStore.value}
         />
+        {metaMaskStore.walletAddress === appStore.address && <AddTokens />}
       </Panel>
     </Styled.Main>
   )

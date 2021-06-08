@@ -2,10 +2,10 @@ import React from 'react'
 
 import { Route, Redirect, Switch } from 'react-router-dom'
 
-import { ConnectWallet } from '@/pages/ConnectWallet'
 import { SwitchBalance } from '@/pages/SwitchBalance'
+import { CheckBalance as CheckBalanceComponent } from '@/pages/SwitchBalance/components/CheckBalance'
 import { CheckBalance } from '@/pages/CheckBalance'
-import { UserDashboard } from '@/pages/UserDashboard'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 
 export const PATHS = {
   main: '/',
@@ -17,11 +17,13 @@ export const PATHS = {
 export const Routes = () => {
   return (
     <Switch>
-      <Route path={PATHS.main} component={ConnectWallet} exact />
-      <Route path={PATHS.switchBalance} component={SwitchBalance} />
-      <Route path={PATHS.checkBalance} component={CheckBalance} />
-      <Route path={PATHS.userDashboard} component={UserDashboard} />
-      <Redirect to={PATHS.main} />
+      <ErrorBoundary>
+        <Route path={PATHS.main} component={CheckBalanceComponent} exact />
+        <Route path={PATHS.switchBalance} component={SwitchBalance} />
+        <Route path={PATHS.checkBalance} component={CheckBalance} />
+
+        <Redirect to={PATHS.main} />
+      </ErrorBoundary>
     </Switch>
   )
 }

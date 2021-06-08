@@ -62,7 +62,7 @@ export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
       )}
 
       <div className="read-only-header">
-        <h1>Or enter a wallet address for read-only mode</h1>
+        <h1>enter a wallet address for read-only mode</h1>
         <div className="address-input">
           <input
             type="text"

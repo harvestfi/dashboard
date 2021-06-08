@@ -11,6 +11,9 @@ export const Connection = styled.div`
   padding-bottom: 0.7rem;
   background-color: ${(props) => props.theme.style.lightBackground};
   font-size: 2rem;
+
+  min-width: 86px;
+
   @media (max-width: 610px) {
     width: 100%;
     font-size: 1.8rem;
