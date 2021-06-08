@@ -3,6 +3,7 @@ import {
   BigNumberOne,
   BigNumberZero,
   ethereumOutdatedVaults,
+  ethereumPoolsWithEarnedMethodTaking2Arguments,
   ETHEREUM_CONTRACT_FOR_GETTING_PRICES,
   ethWeb3,
   farmAddress,
@@ -514,6 +515,20 @@ export class EthereumService {
     )
 
     let earned: string | null = ''
+
+    if (
+      ethereumPoolsWithEarnedMethodTaking2Arguments.has(
+        poolAddress.toLocaleLowerCase(),
+      )
+    ) {
+      return await BlockchainService.makeRequest(
+        poolContractHavingTwoArguments,
+        'earned',
+        0,
+        walletAddress,
+      )
+    }
+
     earned = await BlockchainService.makeRequest(
       poolContract,
       'earned',
