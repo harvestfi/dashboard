@@ -9,7 +9,7 @@ import { observer } from 'mobx-react'
 import { AnalyticsTabs } from './analyticsTabs'
 import { useStores } from '@/stores/utils'
 
-const TabContainer: React.FC = observer(() => {
+export const TabContainer: React.FC = observer(() => {
   const [showAnalytics, setShowAnalytics] = useState(false)
   const { appStore } = useStores()
 
@@ -54,5 +54,3 @@ const TabContainer: React.FC = observer(() => {
     </PanelTabContainer>
   )
 })
-
-export default TabContainer

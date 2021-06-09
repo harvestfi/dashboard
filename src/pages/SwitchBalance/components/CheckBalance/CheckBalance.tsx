@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ValidationMessage } from './styles'
-import { Panel } from './styles'
+import { ValidationMessage, Panel } from './styles'
+
 import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
 import { useHistory } from 'react-router-dom'

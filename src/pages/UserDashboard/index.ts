@@ -1,1 +1,1 @@
-export * from './UserDashboard'
+export { UserDashboard } from './UserDashboard'

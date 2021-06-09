@@ -6,13 +6,12 @@ import { ErrorModal } from '@/components/ErrorModal'
 import { Header } from '@/components/Header'
 import { SideDrawer } from '@/components/SlideDrawer'
 import { Radio } from '@/components/radio/Radio'
-import { Panel } from '@/App/styles/AppJsStyles'
+import { Panel, GlobalStyle, Container } from '@/App/styles/AppJsStyles'
 
 import { observer } from 'mobx-react'
 import { Routes } from '@/routes'
 import { useStores } from '@/stores/utils'
 
-import { GlobalStyle, Container } from '@/App/styles/AppJsStyles'
 import './styles/App.scss'
 
 export const App = observer(() => {

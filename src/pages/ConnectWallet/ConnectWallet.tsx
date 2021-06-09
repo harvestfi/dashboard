@@ -1,12 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import * as Styled from './styles'
 import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
 import { useHistory } from 'react-router-dom'
 import { PATHS } from '@/routes'
-import { client } from '@/api/apolloClient'
-import { POOLS_QUERY } from '@/api/gql/pool-query.gql'
-import { VAULTS_QUERY } from '@/api/gql/vault-query.gql'
 
 type ConnectWalletProps = {}
 
@@ -19,26 +16,6 @@ export const ConnectWallet: React.FC<ConnectWalletProps> = observer((props) => {
       history.push(PATHS.switchBalance)
     })
   }
-
-  useEffect(() => {
-    client
-      .query({
-        query: VAULTS_QUERY,
-        variables: {},
-      })
-      .then((response) => {
-        console.log('vaults response', response)
-      })
-
-    client
-      .query({
-        query: POOLS_QUERY,
-        variables: {},
-      })
-      .then((response) => {
-        console.log('pools response', response)
-      })
-  }, [])
 
   return (
     <>

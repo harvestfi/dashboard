@@ -27,10 +27,11 @@ class SettignsStore {
   }
 
   private async init() {
-    this.readCache()
-    const exchangeRatesResponse = await exchangeRatesStore.fetch('?base=USD')
+    // TODO fix
+    // this.readCache()
+    // const exchangeRatesResponse = await exchangeRatesStore.fetch('?base=USD')
 
-    this.settings.currency.options = Object.keys(exchangeRatesResponse)
+    // this.settings.currency.options = Object.keys(exchangeRatesResponse)
     this.inited = true
   }
 

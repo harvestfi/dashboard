@@ -8,7 +8,7 @@ type SettingsModalProps = {
   toggleUserSettings(): void
 }
 
-const SettingsModal: React.FC<SettingsModalProps> = (props) => {
+export const SettingsModal: React.FC<SettingsModalProps> = (props) => {
   const { toggleUserSettings } = props
 
   return (
@@ -21,5 +21,3 @@ const SettingsModal: React.FC<SettingsModalProps> = (props) => {
     </UserSettings>
   )
 }
-
-export default SettingsModal

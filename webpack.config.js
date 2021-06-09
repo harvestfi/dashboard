@@ -65,4 +65,7 @@ module.exports = {
       template: './public/index.html',
     }),
   ],
+  node: {
+    fs: 'empty',
+  },
 }
