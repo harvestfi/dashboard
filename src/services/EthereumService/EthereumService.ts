@@ -25,7 +25,7 @@ import {
 import { IAssetsInfo, IPool, IVault } from '@/types/entities'
 import { BigNumber } from 'bignumber.js'
 import { API } from '@/api'
-import { BlockchainService } from '../BlockchainService.ts'
+import { BlockchainService } from '../BlockchainService'
 import Web3 from 'web3'
 
 export class EthereumService {

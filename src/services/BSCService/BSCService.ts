@@ -14,7 +14,7 @@ import { BSC_UNDERLYING_ABI, FTOKEN_ABI, REWARDS_ABI } from '@/lib/data/ABIs'
 import { IAssetsInfo, IPool, IVault } from '@/types/entities'
 import { BigNumber } from 'bignumber.js'
 import { API } from '@/api'
-import { BlockchainService } from '../BlockchainService.ts'
+import { BlockchainService } from '../BlockchainService'
 
 export class BSCService {
   static async getAssetsFromPool(
