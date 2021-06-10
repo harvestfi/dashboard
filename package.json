@@ -79,6 +79,7 @@
     "babel-jest": "27.0.2",
     "babel-loader": "8.1.0",
     "babel-plugin-named-asset-import": "^0.3.6",
+    "copy-webpack-plugin": "^6.4.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "css-loader": "3.4.2",
     "dotenv-webpack": "^7.0.2",

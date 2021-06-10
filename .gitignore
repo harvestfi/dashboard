@@ -32,3 +32,4 @@ storybook-static
 workingFiles
 .idea
 .env
+.node-version
