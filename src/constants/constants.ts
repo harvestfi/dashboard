@@ -110,3 +110,15 @@ export type CONTRACTS_FOR_PRICES_KEYS = keyof typeof CONTRACTS_FOR_PRICES
 export const BigNumberZero = new BigNumber(0)
 
 export const BigNumberOne = new BigNumber(1)
+
+export const ethereumPoolsWithEarnedMethodTaking2Arguments = new Set<string>([
+  '0x59a87ab7407371b933cad65001400342519a79bb',
+  '0xf4ead5142749316c8ca141959b510862fbba1807'.toLocaleLowerCase(),
+])
+
+export const BSCContractsWithoutFactoryMethod = new Set<string>([
+  '0xecf0545684a06a4ea7b9c2fb1b6c08f50436e9db',
+  '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c',
+  '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
+  '0xcf6bb5389c92bdda8a3747ddb454cb7a64626c63',
+])

@@ -9,7 +9,7 @@ export class BlockchainService {
   static async calcUnderlyingPrice(
     poolBalance: string | null,
     priceAddress: string | undefined,
-    getPrice: (priceAddress: string | undefined) => Promise<BigNumber | null>,
+    getPrice: (priceAddress: string) => Promise<BigNumber | null>,
   ): Promise<BigNumber | null> {
     if (!poolBalance) {
       return null
@@ -18,7 +18,7 @@ export class BlockchainService {
     if (poolBalance === '0') {
       return BigNumberZero
     }
-    return await getPrice(priceAddress)
+    return priceAddress ? await getPrice(priceAddress) : null
   }
 
   static isValidAddress(address: any, web3: Web3): boolean {
