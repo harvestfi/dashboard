@@ -6,7 +6,7 @@ const path = require('path')
 const filepath = path.resolve(__dirname, '../src/static/vaultNames.json')
 
 async function main() {
-  let vaults;
+  let vaults
 
   try {
     vaults = JSON.parse(fs.readFileSync(filepath), 'utf-8')
@@ -14,7 +14,9 @@ async function main() {
     vaults = {}
   }
 
-  const resp = await axios.get(`${process.env.REACT_APP_ETH_PARSER_URL}/contracts/vaults`)
+  const resp = await axios.get(
+    `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/vaults`,
+  )
   const apiVaults = resp.data.data
 
   // Add vaults that do not exist in our config
@@ -23,7 +25,7 @@ async function main() {
       let name = vault.contract.name
 
       // Remove leading "V_"
-      if (name.startsWith('V_')) name = name.substring(2);
+      if (name.startsWith('V_')) name = name.substring(2)
 
       vaults[vault.contract.address] = name
     }
@@ -32,7 +34,7 @@ async function main() {
   // Write JSON, with hacks to sort the resulting object by *values* to allow
   // for easy editing of our vaults list
   let filedata = JSON.stringify(vaults, null, 2)
-  let fileLines = filedata.split("\n")
+  let fileLines = filedata.split('\n')
 
   // Remove bracket lines
   fileLines.shift()
@@ -48,12 +50,12 @@ async function main() {
   let numLines = sortedFileLines.length
 
   sortedFileLines.forEach((line, i) => {
-    if (line[line.length - 1] === ',' && (i === numLines - 1)) {
+    if (line[line.length - 1] === ',' && i === numLines - 1) {
       sortedFileLines[i] = line.slice(0, -1)
     }
   })
 
-  let newFileString = ["{", ...sortedFileLines, "}"].join("\n")
+  let newFileString = ['{', ...sortedFileLines, '}'].join('\n')
 
   // Write the .json
   fs.writeFileSync(filepath, newFileString, 'utf-8')
