@@ -31,7 +31,6 @@ node scripts/getVaultsFromEthparser.js
 
 again to re-alphabetize the file.
 
-
 ## Tracking an address and logging to disk
 
 `$ node --experimental-modules scripts/track.js $ADDRESS $INFURA_PROJECT_ID`
