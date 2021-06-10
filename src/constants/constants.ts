@@ -30,7 +30,7 @@ export const iPSAddress: IVault = {
   contract: {
     id: 0,
     address: '0x1571eD0bed4D987fe2b498DdBaE7DFA19519F651',
-    name: 'iPS',
+    name: 'iFarm',
     created: 0,
     type: 0,
     network: 'eth',
@@ -60,8 +60,8 @@ export const iPSAddress: IVault = {
     network: 'eth',
   },
   updatedBlock: 0,
-  name: 'iPS',
-  symbol: 'iPS',
+  name: 'iFarm',
+  symbol: 'iFarm',
   decimals: 18,
   underlyingUnit: 18,
 }
