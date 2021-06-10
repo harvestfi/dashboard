@@ -5,16 +5,22 @@ import { IPool, IVault } from '../types/entities'
 // methods of working with third party api
 export class API {
   static async getEthereumPools(): Promise<IPool[]> {
-    const response = await axios.get(
-      `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/pools`,
-    )
+    const response = await axios
+      .get(`${process.env.REACT_APP_ETH_PARSER_URL}/contracts/pools`)
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log('getEthereumPools', error)
+      })
     return response?.data?.data ?? []
   }
 
   static async getEthereumVaults(): Promise<IVault[]> {
-    const response = await axios.get(
-      `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/vaults`,
-    )
+    const response = await axios
+      .get(`${process.env.REACT_APP_ETH_PARSER_URL}/contracts/vaults`)
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log('getEthereumVaults', error)
+      })
     return response?.data?.data ?? []
   }
 

@@ -176,22 +176,27 @@ describe('BSCService', () => {
         testWalletAddressFoBSC,
         bFarmPrice,
         relatedVault,
-      ).then((assetsInfo) => {
-        const isTrue =
-          assetsInfo.name === 'BTCB' &&
-          assetsInfo.earnFarm === true &&
-          assetsInfo.stakedBalance?.toString().substring(0, 7) === '0.00058' &&
-          assetsInfo.percentOfPool?.constructor.name === 'BigNumber' &&
-          assetsInfo.value?.constructor.name === 'BigNumber' &&
-          assetsInfo.address.vault?.toLocaleLowerCase() ===
-            '0xd75ffa16ffbcf4078d55ff246cfba79bb8ce3f63'.toLocaleLowerCase() &&
-          assetsInfo.underlyingBalance?.toString().substring(0, 7) ===
-            '0.00058' &&
-          assetsInfo.unstakedBalance?.toString() === '0' &&
-          assetsInfo.farmToClaim?.constructor.name === 'BigNumber'
-        expect(isTrue).toBe(true)
-      })
-    })
+      )
+        .then((assetsInfo) => {
+          const isTrue =
+            assetsInfo.name === 'BTCB' &&
+            assetsInfo.earnFarm === true &&
+            assetsInfo.stakedBalance?.toString().substring(0, 7) ===
+              '0.00058' &&
+            assetsInfo.percentOfPool?.constructor.name === 'BigNumber' &&
+            assetsInfo.value?.constructor.name === 'BigNumber' &&
+            assetsInfo.address.vault?.toLocaleLowerCase() ===
+              '0xd75ffa16ffbcf4078d55ff246cfba79bb8ce3f63'.toLocaleLowerCase() &&
+            assetsInfo.underlyingBalance?.toString().substring(0, 7) ===
+              '0.00058' &&
+            assetsInfo.unstakedBalance?.toString() === '0' &&
+            assetsInfo.farmToClaim?.constructor.name === 'BigNumber'
+          expect(isTrue).toBe(true)
+        })
+        .catch(() => {
+          expect(true).toBe(false)
+        })
+    }, 10000)
     test('if bFarm is null, then Value is null', () => {
       const poolWithVault = {
         id: 2,
@@ -315,20 +320,24 @@ describe('BSCService', () => {
         testWalletAddressFoBSC,
         bFarmPrice,
         relatedVault,
-      ).then((assetsInfo) => {
-        const isTrue =
-          assetsInfo.name === 'BTCB' &&
-          assetsInfo.earnFarm === true &&
-          assetsInfo.stakedBalance?.constructor.name === 'BigNumber' &&
-          assetsInfo.percentOfPool?.constructor.name === 'BigNumber' &&
-          assetsInfo.value === null &&
-          assetsInfo.address.vault?.toLocaleLowerCase() ===
-            '0xd75ffa16ffbcf4078d55ff246cfba79bb8ce3f63'.toLocaleLowerCase() &&
-          assetsInfo.underlyingBalance?.constructor.name === 'BigNumber' &&
-          assetsInfo.farmToClaim?.constructor.name === 'BigNumber'
+      )
+        .then((assetsInfo) => {
+          const isTrue =
+            assetsInfo.name === 'BTCB' &&
+            assetsInfo.earnFarm === true &&
+            assetsInfo.stakedBalance?.constructor.name === 'BigNumber' &&
+            assetsInfo.percentOfPool?.constructor.name === 'BigNumber' &&
+            assetsInfo.value === null &&
+            assetsInfo.address.vault?.toLocaleLowerCase() ===
+              '0xd75ffa16ffbcf4078d55ff246cfba79bb8ce3f63'.toLocaleLowerCase() &&
+            assetsInfo.underlyingBalance?.constructor.name === 'BigNumber' &&
+            assetsInfo.farmToClaim?.constructor.name === 'BigNumber'
 
-        expect(isTrue).toBe(true)
-      })
-    })
+          expect(isTrue).toBe(true)
+        })
+        .catch(() => {
+          expect(true).toBe(false)
+        })
+    }, 10000)
   })
 })
