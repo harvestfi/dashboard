@@ -43,11 +43,35 @@ export class AssetsStore extends FetchResource<any> {
       return
     }
 
-    const [etheriumAssets, BSCAssets, snowswapAssets] = await Promise.all([
+    const [etheriumAssets, BSCAssets, snowswapAssets] = await Promise.all<
+      IAssetsInfo[],
+      IAssetsInfo[],
+      IAssetsInfo[]
+    >([
       EthereumService.getAssets(appStore.address),
       BSCService.getAssets(appStore.address),
       EthereumService.getSnowswapAssets(appStore.address),
     ])
+
+    // const assetsEth = {}
+    // ethereumAssets.forEach((element) => {
+    //   const address = element?.address?.pool
+    //     ? element.address.pool
+    //     : element.address?.vault
+    //   const { name, stakedBalance, earnFarm, unstakedBalance, farmToClaim } =
+    //     element
+    //   if (!element?.address?.pool && !element?.address?.vault) {
+    //     debugger
+    //   }
+    //   assetsEth[address] = {
+    //     name,
+    //     stakedBalance: stakedBalance?.toString(),
+    //     unstakedBalance: unstakedBalance?.toString(),
+    //     earnFarm: earnFarm,
+    //     farmToClaim: farmToClaim?.toNumber(),
+    //   }
+    // })
+    // console.log({ ethereumAssets }, { BSCAssets }, { assetsEth })
 
     return [...etheriumAssets, ...BSCAssets, ...snowswapAssets]
   }
