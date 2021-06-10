@@ -3,7 +3,7 @@ const axios = require('axios')
 var sortBy = require('lodash.sortby')
 const fs = require('fs')
 const path = require('path')
-const filepath = path.resolve(__dirname, '../src/constants/vaults.json')
+const filepath = path.resolve(__dirname, '../src/constants/vaultNames.json')
 
 async function main() {
   let vaults;
