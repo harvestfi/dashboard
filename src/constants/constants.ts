@@ -9,7 +9,7 @@ import dotenv from 'dotenv'
 // this is needed to define .env-variables during test execution
 dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
-export const vaultsWithoutReward = new Set<string>([])
+export const vaultsWithoutReward = new Set<string>(['UNI_COMFI_WETH'])
 
 // FARM decimals
 export const farmDecimals = 18

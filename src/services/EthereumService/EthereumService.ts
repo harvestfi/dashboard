@@ -28,6 +28,7 @@ import { BigNumber } from 'bignumber.js'
 import { API } from '@/api'
 import { BlockchainService } from '../BlockchainService.ts'
 import Web3 from 'web3'
+import { contractToName } from '@/utils/utils'
 
 export class EthereumService {
   static async getAssetsFromPool(
@@ -194,12 +195,12 @@ export class EthereumService {
       : null
 
     const name = relatedVault
-      ? relatedVault.contract?.name || 'no name'
-      : pool.contract?.name || 'no name'
+      ? contractToName(relatedVault.contract)
+      : contractToName(pool.contract)
 
     return {
       name,
-      earnFarm: true,
+      earnFarm: !vaultsWithoutReward.has(name),
       farmToClaim: rewardTokenAreInFARM,
       stakedBalance: prettyPoolBalance,
       percentOfPool,
@@ -324,7 +325,7 @@ export class EthereumService {
             : null
 
         return {
-          name: vault.contract.name,
+          name: contractToName(vault.contract),
           earnFarm: true,
           farmToClaim: BigNumberZero,
           stakedBalance: prettyVaultBalance,
@@ -388,8 +389,8 @@ export class EthereumService {
             ? prettyVaultBalance.multipliedBy(farmPrice)
             : null
         return {
-          name: vault.contract?.name || 'no name',
-          earnFarm: !vaultsWithoutReward.has(vault.contract.name),
+          name: contractToName(vault.contract),
+          earnFarm: !vaultsWithoutReward.has(contractToName(vault.contract)),
           farmToClaim: BigNumberZero,
           stakedBalance: prettyVaultBalance,
           percentOfPool,
@@ -411,7 +412,7 @@ export class EthereumService {
 
       return {
         name: `${vault.contract.name} (has not pool)`,
-        earnFarm: !vaultsWithoutReward.has(vault.contract.name),
+        earnFarm: !vaultsWithoutReward.has(contractToName(vault.contract)),
         farmToClaim: BigNumberZero,
         stakedBalance: BigNumberZero,
         percentOfPool: BigNumberZero,
