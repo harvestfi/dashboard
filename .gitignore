@@ -33,3 +33,5 @@ workingFiles
 .idea
 .env
 .node-version
+
+package-lock.json

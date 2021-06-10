@@ -27,12 +27,12 @@ export class API {
     return APY
   }
 
-  static async getPersonalGasSaved(address: string) {
+  static async getPersonalGasSaved(address: string): Promise<null | number> {
     const response = await axios.get(
       `${process.env.REACT_APP_ETH_PARSER_URL}/total_saved_gas_fee_by_address?address=${address}`,
     )
 
-    const savedGas = response?.data?.data ?? 0
+    const savedGas = response?.data?.data ?? null
 
     return savedGas
   }

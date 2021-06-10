@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Container from './FarmInfoStyles'
 import { BluePanel } from '../bluePanel/BluePanel'
 import { prettyCurrency } from '../../utils/utils'
@@ -16,6 +16,10 @@ export const FarmInfo: React.FC<FarmInfoProps> = observer((props) => {
   const { stakedBalance, isLoadingAssets } = props
 
   const { farmPriceStore, settingsStore, savedGasStore, apyStore } = useStores()
+
+  useEffect(() => {
+    apyStore.fetch()
+  }, [])
 
   const farmPriceValue = farmPriceStore.getValue() ?? '-'
 

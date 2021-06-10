@@ -4,7 +4,6 @@ import { API } from '@/api'
 class APYStore extends FetchResource<any> {
   constructor() {
     super(API.getAPY)
-    this.fetch()
   }
 }
 
