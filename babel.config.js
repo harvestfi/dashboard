@@ -1,6 +1,6 @@
 module.exports = {
   presets: [
-    ['@babel/preset-env', { targets: { node: 'current' } }],
+    ['@babel/preset-env', { targets: { node: 'current' }, modules: false }],
     '@babel/preset-react',
     '@babel/preset-typescript',
   ],
@@ -15,6 +15,9 @@ module.exports = {
     },
     development: {
       plugins: [['@emotion', { sourceMap: true }]],
+    },
+    test: {
+      plugins: ['transform-es2015-modules-commonjs'],
     },
   },
 }

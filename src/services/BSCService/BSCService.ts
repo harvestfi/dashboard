@@ -8,6 +8,7 @@ import {
   CONTRACTS_FOR_PRICES,
   CONTRACTS_FOR_PRICES_KEYS,
   PRICE_DECIMALS,
+  BSCContractsWithoutFactoryMethod,
 } from '@/constants/constants'
 
 import { BSC_UNDERLYING_ABI, FTOKEN_ABI, REWARDS_ABI } from '@/lib/data/ABIs'
@@ -278,7 +279,7 @@ export class BSCService {
   }
 
   static async getPriceUsingFactory(
-    underlyingAddress: string | undefined,
+    underlyingAddress: string,
   ): Promise<BigNumber | null> {
     if (!BlockchainService.isValidAddress(underlyingAddress, BSCWeb3)) {
       return null
@@ -291,11 +292,11 @@ export class BSCService {
 
     // TODO how to distinguish a network error from a non-existent method?
     // factory - determines which contract address should be used to get underlying token prices
-    const factory: string | null = await BlockchainService.makeRequest(
-      underlyingContract,
-      'factory',
+    const factory: string | null = BSCContractsWithoutFactoryMethod.has(
+      underlyingAddress.toLowerCase(),
     )
-
+      ? null
+      : await BlockchainService.makeRequest(underlyingContract, 'factory')
     // if the smart contract does not have the Factori method (factory === null), then we use the default
     // DEFAULT_BSC_ORACLE_CONTRACT_FOR_GETTING_PRICES
     const oracleAddressForGettingPrices =
