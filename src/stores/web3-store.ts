@@ -10,7 +10,7 @@ class Web3Store {
 
     this.web3modal = new Web3Modal({
       network: 'mainnet',
-      cacheProvider: false,
+      cacheProvider: true,
       providerOptions: {
         walletconnect: {
           package: WalletConnectProvider,

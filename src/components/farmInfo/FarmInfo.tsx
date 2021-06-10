@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Container from './FarmInfoStyles'
 import { BluePanel } from '../bluePanel/BluePanel'
 import { prettyCurrency } from '../../utils/utils'
@@ -17,6 +17,10 @@ export const FarmInfo: React.FC<FarmInfoProps> = observer((props) => {
 
   const { farmPriceStore, settingsStore, savedGasStore, apyStore } = useStores()
 
+  useEffect(() => {
+    apyStore.fetch()
+  }, [])
+
   const farmPriceValue = farmPriceStore.getValue() ?? '-'
 
   const baseCurrency = settingsStore.settings.currency.value
@@ -29,7 +33,7 @@ export const FarmInfo: React.FC<FarmInfoProps> = observer((props) => {
     savedGasStore.isFetching ||
     apyStore.isFetching
 
-  const displayApy = apy && apy !== '0' ? `${apy}%` : 'Error'
+  const displayApy = apy && apy !== '0' ? `${apy}%` : '-'
   const cellsData = [
     {
       value: prettyCurrency(stakedBalance.toNumber(), baseCurrency),

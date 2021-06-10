@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const Dotenv = require('dotenv-webpack')
 
 module.exports = {
@@ -47,6 +48,7 @@ module.exports = {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
+    publicPath: '/',
   },
   plugins: [
     new Dotenv({
@@ -59,7 +61,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
+    new CopyWebpackPlugin({
+      patterns: [{ from: 'public' }],
+    }),
   ],
+  devServer: {
+    historyApiFallback: true,
+  },
   node: {
     fs: 'empty',
   },

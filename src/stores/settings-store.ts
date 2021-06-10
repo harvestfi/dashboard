@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx'
 import { exchangeRatesStore } from './resources'
 
-class SettignsStore {
-  inited = false
+class SettingsStore {
+  initialized = false
 
   settings = {
     currency: {
@@ -27,12 +27,8 @@ class SettignsStore {
   }
 
   private async init() {
-    // TODO fix
-    // this.readCache()
-    // const exchangeRatesResponse = await exchangeRatesStore.fetch('?base=USD')
-
-    // this.settings.currency.options = Object.keys(exchangeRatesResponse)
-    this.inited = true
+    this.readCache()
+    this.initialized = true
   }
 
   private readCache() {
@@ -48,4 +44,4 @@ class SettignsStore {
   }
 }
 
-export const settingsStore = new SettignsStore()
+export const settingsStore = new SettingsStore()
