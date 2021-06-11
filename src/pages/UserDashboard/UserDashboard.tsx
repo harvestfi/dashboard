@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import * as Styled from './styles'
 import { Wallet } from '@/components/Wallet'
 import { useStores } from '@/stores/utils'
@@ -6,19 +7,26 @@ import { observer } from 'mobx-react'
 import { FarmingTable } from '@/components/farmingTable/FarmingTable'
 import { FarmInfo } from '@/components/farmInfo/FarmInfo'
 import { AddTokens } from '@/components/addTokens/AddTokens'
+import { PATHS } from '@/routes'
 
 type UserDashboardProps = {}
 
 export const UserDashboard: React.FC<UserDashboardProps> = observer(() => {
-  const { assetsStore, appStore, savedGasStore } = useStores()
+  const { assetsStore, appStore, savedGasStore, metaMaskStore } = useStores()
+  const history = useHistory()
 
   useEffect(() => {
-    if (!assetsStore.isFetched) {
-      assetsStore.fetch()
+    if (!appStore.address && !metaMaskStore.isConnecting) {
+      history.push(PATHS.main)
     }
+  })
 
-    savedGasStore.fetch(appStore.address)
-  }, [])
+  useEffect(() => {
+    if (appStore.address) {
+      assetsStore.fetch()
+      savedGasStore.fetch(appStore.address)
+    }
+  }, [appStore.address]) // this effect runs whenever appStore.address is changed
 
   return (
     <Styled.Main>

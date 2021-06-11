@@ -1,5 +1,6 @@
 import React from 'react'
 import * as Styled from './styles'
+import { EnterReadOnlyAddress } from '@/components/EnterReadOnlyAddress'
 import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
 import { useHistory } from 'react-router-dom'
@@ -12,8 +13,15 @@ export const ConnectWallet: React.FC<ConnectWalletProps> = observer((props) => {
   const history = useHistory()
 
   const connectWallet = () => {
+    // Users who have a cachedProvider might land here, on the index page.
+    // Since this is the index, we should transparetly disconnect them and
+    // allow them to re-connect their wallet.
+    if (!metaMaskStore.isConnecting && metaMaskStore.isConnected) {
+      metaMaskStore.disconnect()
+    }
+
     metaMaskStore.connectMetaMask().then(() => {
-      history.push(PATHS.switchBalance)
+      history.push(PATHS.userDashboard)
     })
   }
 
@@ -32,6 +40,8 @@ export const ConnectWallet: React.FC<ConnectWalletProps> = observer((props) => {
           application.
         </h6>
       </Styled.WelcomeTextPanel>
+
+      <EnterReadOnlyAddress />
     </>
   )
 })

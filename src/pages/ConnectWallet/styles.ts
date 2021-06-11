@@ -3,8 +3,6 @@ import styled from 'styled-components'
 import { fonts } from '@/App/styles/appStyles'
 
 export const WelcomeTextPanel = styled.div`
-  width: 98%;
-  margin: 0 auto;
   position: relative;
   padding: 2.5rem 2.5rem;
   border: ${(props) => props.theme.style.mainBorder};

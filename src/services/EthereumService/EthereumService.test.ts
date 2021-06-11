@@ -1,19 +1,22 @@
-import { ethWeb3 } from '@/constants'
+import { ethWeb3, PSAddress } from '@/constants'
 import { EthereumService } from './EthereumService'
 import BigNumber from 'bignumber.js'
 import { REWARDS_ABI } from '@/lib/data/ABIs'
+import { testValues, testPoolWithVault, testRelatedVault } from './testData'
 
 describe('EthereumService', () => {
   describe('getPrice', () => {
     test('if tokenAddress is valid, then result is valid', () => {
       const validTokenAddress = '0xa0246c9032bc3a600820415ae600c6388619a14d'
 
-      return EthereumService.getPrice(validTokenAddress).then(
-        (price: BigNumber | null) => {
+      return EthereumService.getPrice(validTokenAddress)
+        .then((price: BigNumber | null) => {
           expect(price?.constructor.name).toBe('BigNumber')
-        },
-      )
-    })
+        })
+        .catch(() => {
+          expect(true).toBe(false)
+        })
+    }, 15000)
   })
 
   describe('getEarned', () => {
@@ -27,10 +30,14 @@ describe('EthereumService', () => {
         poolContract,
         ethWeb3,
         poolAddress,
-      ).then((reward) => {
-        expect(reward).toBe('0')
-      })
-    })
+      )
+        .then((reward) => {
+          expect(reward).toBe('0')
+        })
+        .catch(() => {
+          expect(true).toBe(false)
+        })
+    }, 10000)
 
     test('If pool has earned method having 2 arguments, then getEarned runs without error', () => {
       const testWallet = '0x814055779f8d2f591277b76c724b7adc74fb82d9'
@@ -42,150 +49,142 @@ describe('EthereumService', () => {
         poolContract,
         ethWeb3,
         poolAddress,
-      ).then((reward) => {
-        expect(reward).toBe('0')
-      })
-    })
+      )
+        .then((reward) => {
+          expect(reward).toBe('0')
+        })
+        .catch(() => {
+          expect(true).toBe(false)
+        })
+    }, 10000)
   })
   describe('getAssetsFromPool', () => {
     test('positive scenario', () => {
-      const poolWithVault = {
-        id: 138,
-        contract: {
-          id: 432,
-          address: '0xf5b221e1d9c3a094fb6847bc3e241152772bbbf8',
-          name: 'ST_UNI_DAI_BSG_#V1',
-          created: 11660866,
-          updated: 11662009,
-          type: 1,
-          network: 'eth',
-          underlying: null,
-        },
-        updatedBlock: 11660866,
-        controller: {
-          id: 146,
-          address: '0x222412af183bceadefd72e4cb1b71f1889953b1c',
-          name: 'CONTROLLER',
-          created: 0,
-          updated: null,
-          type: 3,
-          network: 'eth',
-          underlying: null,
-        },
-        governance: {
-          id: 147,
-          address: '0xf00dd244228f51547f0563e60bca65a30fbf5f7f',
-          name: 'GOVERNANCE',
-          created: 0,
-          updated: null,
-          type: 3,
-          network: 'eth',
-          underlying: null,
-        },
-        owner: {
-          id: 147,
-          address: '0xf00dd244228f51547f0563e60bca65a30fbf5f7f',
-          name: 'GOVERNANCE',
-          created: 0,
-          updated: null,
-          type: 3,
-          network: 'eth',
-          underlying: null,
-        },
-        lpToken: {
-          id: 430,
-          address: '0x639d4f3f41daa5f4b94d63c2a5f3e18139ba9e54',
-          name: 'UNI_DAI_BSG_#V1',
-          created: 11660621,
-          updated: null,
-          type: 0,
-          network: 'eth',
-          underlying: null,
-        },
-        rewardToken: {
-          id: 157,
-          address: '0xa0246c9032bc3a600820415ae600c6388619a14d',
-          name: 'FARM',
-          created: 10770203,
-          updated: 12093879,
-          type: 4,
-          network: 'eth',
-          underlying: null,
-        },
-      }
-      const relatedVault = {
-        id: 99,
-        contract: {
-          id: 430,
-          address: '0x639d4f3f41daa5f4b94d63c2a5f3e18139ba9e54',
-          name: 'UNI_DAI_BSG_#V1',
-          created: 11660621,
-          updated: null,
-          type: 0,
-          network: 'eth',
-          underlying: null,
-        },
-        updatedBlock: 11660621,
-        controller: {
-          id: 146,
-          address: '0x222412af183bceadefd72e4cb1b71f1889953b1c',
-          name: 'CONTROLLER',
-          created: 0,
-          updated: null,
-          type: 3,
-          network: 'eth',
-          underlying: null,
-        },
-        governance: {
-          id: 147,
-          address: '0xf00dd244228f51547f0563e60bca65a30fbf5f7f',
-          name: 'GOVERNANCE',
-          created: 0,
-          updated: null,
-          type: 3,
-          network: 'eth',
-          underlying: null,
-        },
-        strategy: null,
-        underlying: {
-          id: 420,
-          address: '0x4a9596e5d2f9bef50e4de092ad7181ae3c40353e',
-          name: 'UNI_LP_DAI_BSG',
-          created: 11655635,
-          updated: 11662009,
-          type: 2,
-          network: 'eth',
-          underlying: null,
-        },
-        name: 'FARM_UNI-V2',
-        symbol: 'fUNI-V2',
-        decimals: 18,
-        underlyingUnit: 1000000000000000000,
-      }
-
       const testWallet = '0x814055779f8d2f591277b76c724b7adc74fb82d9'
       const farmPrice = new BigNumber(111)
       return EthereumService.getAssetsFromPool(
-        poolWithVault,
+        testPoolWithVault,
         testWallet,
         farmPrice,
-        relatedVault,
-      ).then((assetsInfo) => {
-        const isTrue =
-          assetsInfo.name === 'UNI_DAI_BSG_#V1' &&
-          assetsInfo.earnFarm === true &&
-          assetsInfo.stakedBalance?.toString().substring(0, 6) === '1.1446' &&
-          assetsInfo.percentOfPool?.constructor.name === 'BigNumber' &&
-          assetsInfo.value?.constructor.name === 'BigNumber' &&
-          assetsInfo.address.vault?.toLocaleLowerCase() ===
-            '0x639d4f3f41daa5f4b94d63c2a5f3e18139ba9e54'.toLocaleLowerCase() &&
-          assetsInfo.underlyingBalance?.toString().substring(0, 6) ===
-            '1.1446' &&
-          assetsInfo.unstakedBalance?.toString() === '0' &&
-          assetsInfo.farmToClaim?.constructor.name === 'BigNumber'
+        testRelatedVault,
+      )
+        .then((assetsInfo) => {
+          const isTrue =
+            assetsInfo.name === 'UNI_DAI_BSG_#V1' &&
+            assetsInfo.earnFarm === true &&
+            assetsInfo.stakedBalance?.toString().substring(0, 6) === '1.1446' &&
+            assetsInfo.percentOfPool?.constructor.name === 'BigNumber' &&
+            assetsInfo.value?.constructor.name === 'BigNumber' &&
+            assetsInfo.address.vault?.toLocaleLowerCase() ===
+              '0x639d4f3f41daa5f4b94d63c2a5f3e18139ba9e54'.toLocaleLowerCase() &&
+            assetsInfo.underlyingBalance?.toString().substring(0, 6) ===
+              '1.1446' &&
+            assetsInfo.unstakedBalance?.toString() === '0' &&
+            assetsInfo.farmToClaim?.constructor.name === 'BigNumber'
 
-        expect(isTrue).toBe(true)
-      })
-    })
+          expect(isTrue).toBe(true)
+        })
+        .catch(() => {
+          expect(true).toBe(false)
+        })
+    }, 10000)
+  })
+
+  describe('getAssets', () => {
+    test('number of testWallet assets equal 76', () => {
+      const testWallet = '0x814055779f8d2f591277b76c724b7adc74fb82d9'
+      return EthereumService.getAssets(testWallet)
+        .then((assets) => {
+          expect(assets.length).toBe(76)
+        })
+        .catch(() => {
+          expect(true).toBe(false)
+        })
+    }, 30000)
+
+    test('obtained testWallet asset values are valid', () => {
+      const testWallet = '0x814055779f8d2f591277b76c724b7adc74fb82d9'
+      return EthereumService.getAssets(testWallet)
+        .then((assets) => {
+          let isUndefined = null
+          isUndefined = assets.find((element) => {
+            const address = element.address.pool ?? element.address.vault
+            const assetFromMock = testValues[address]
+            let isValid: boolean = false
+
+            if (!assetFromMock) {
+              // eslint-disable-next-line no-console
+              console.log(
+                `Test name: obtained testWallet asset values are valid. testValues object does not contain this address ${address}.`,
+              )
+              return true
+            }
+
+            try {
+              const isPS = address?.toLowerCase() === PSAddress
+
+              isValid =
+                element.earnFarm === assetFromMock.earnFarm &&
+                Number(element.farmToClaim) >= assetFromMock.farmToClaim &&
+                element.name === assetFromMock.name &&
+                (isPS
+                  ? element.stakedBalance?.toNumber() >
+                    Number(assetFromMock.stakedBalance)
+                  : element.stakedBalance?.toString() ===
+                    assetFromMock.stakedBalance) &&
+                element.unstakedBalance?.toString() ===
+                  assetFromMock.unstakedBalance &&
+                element.percentOfPool?.constructor.name === 'BigNumber' &&
+                element.underlyingBalance?.constructor.name === 'BigNumber' &&
+                element.value?.constructor.name === 'BigNumber'
+            } catch (error) {
+              // eslint-disable-next-line no-console
+              console.log(
+                `Test name: obtained testWallet asset values are valid. Some error with ${address}. ${error}`,
+              )
+              return true
+            }
+            if (!isValid) {
+              // eslint-disable-next-line no-console
+              console.log(
+                'Test name: obtained testWallet asset values are valid. Some problem with:',
+                {
+                  element,
+                  assetFromMock,
+                },
+                {
+                  earnFarm: element.earnFarm === assetFromMock.earnFarm,
+                  farmToClaim:
+                    Number(element.farmToClaim) >= assetFromMock.farmToClaim,
+                  name: element.name === assetFromMock.name,
+                  stakedBalance:
+                    element.stakedBalance?.toString() ===
+                    assetFromMock.stakedBalance,
+                  unstakedBalance:
+                    element.unstakedBalance?.toString() ===
+                    assetFromMock.unstakedBalance,
+                  percentOfPool:
+                    element.percentOfPool?.constructor.name === 'BigNumber',
+                  underlyingBalance:
+                    element.underlyingBalance?.constructor.name === 'BigNumber',
+                  value: element.value?.constructor.name === 'BigNumber',
+                },
+                {
+                  ElementStakedBalanceToString:
+                    element.stakedBalance?.toString(),
+                },
+              )
+              return true
+            }
+            return false
+          })
+          expect(isUndefined).toBe(undefined)
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log(error)
+          expect(true).toBe(false)
+        })
+    }, 30000)
   })
 })

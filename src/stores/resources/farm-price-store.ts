@@ -8,6 +8,7 @@ import { EthereumService } from '@/services/EthereumService'
 class FarmPriceStore extends FetchResource<any> {
   constructor() {
     super(() => EthereumService.getPrice(farmAddress))
+    this.fetch()
   }
 
   getValue() {
