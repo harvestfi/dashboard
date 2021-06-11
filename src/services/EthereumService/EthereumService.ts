@@ -493,28 +493,24 @@ export class EthereumService {
       SNOWSWAP.fSnowStakingPool.address,
     )
 
-    const [
-      stakingPoolBalanceRaw,
-      snowEarnedBalanceRaw,
-      stakingPoolTotalRaw,
-      snowPrice,
-    ] = await Promise.all<
-      string | null,
-      string | null,
-      string | null,
-      BigNumber
-    >([
-      BlockchainService.makeRequest(stakingPool, 'balanceOf', walletAddress),
-      BlockchainService.makeRequest(stakingPool, 'earned', walletAddress),
-      BlockchainService.makeRequest(stakingPool, 'totalSupply'),
-      EthereumService.getPrice(SNOWSWAP.fSnow.address),
-    ])
-
+    const stakingPoolBalanceRaw = await BlockchainService.makeRequest(
+      stakingPool,
+      'balanceOf',
+      walletAddress,
+    )
     const stakingPoolBalance = new BigNumber(stakingPoolBalanceRaw).dividedBy(
       10 ** Number(18),
     )
 
-    if (stakingPoolBalance.toNumber() === 0) return []
+    // Return early if user is not in the pool
+    if (stakingPoolBalance.isZero()) return []
+
+    const [snowEarnedBalanceRaw, stakingPoolTotalRaw, snowPrice] =
+      await Promise.all<string | null, string | null, BigNumber | null>([
+        BlockchainService.makeRequest(stakingPool, 'earned', walletAddress),
+        BlockchainService.makeRequest(stakingPool, 'totalSupply'),
+        EthereumService.getPrice(SNOWSWAP.fSnow.address),
+      ])
 
     const snowEarnedBalance = new BigNumber(snowEarnedBalanceRaw).dividedBy(
       10 ** Number(18),
