@@ -1,0 +1,38 @@
+#import "./strategy.gql"
+#import "./token.gql"
+#import "./transaction.gql"
+#import "./doHardWork.gql"
+#import "./withdrawal.gql"
+#import "./deposit.gql"
+
+fragment VaultFields on Vault {
+  id
+  timestamp
+  transaction {
+    ...TransactionFields
+  }
+  currStrategy {
+    ...StrategyFields
+  }
+  strategies {
+    ...StrategyFields
+  }
+  underlying {
+    ...TokenFields
+  }
+  fToken {
+    ...TokenFields
+  }
+  currPool {
+    id
+  }
+  doHardWorks {
+    ...DoHardWorkFields
+  }
+  withdrawals {
+    ...WithdrawalFields
+  }
+  deposits {
+    ...DepositFields
+  }
+}

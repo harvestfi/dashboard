@@ -44,12 +44,13 @@ export class AssetsStore extends FetchResource<any> {
       return
     }
 
-    const [etheriumAssets, BSCAssets] = await Promise.all([
-      EthereumService.getAssets(address),
-      BSCService.getAssets(address),
+    const [ethereumAssets, BSCAssets] = await Promise.all<
+      IAssetsInfo[],
+      IAssetsInfo[]
+    >([
+      EthereumService.getAssets(appStore.address),
+      BSCService.getAssets(appStore.address),
     ])
-
-    console.log('resp', { etheriumAssets, BSCAssets })
 
     return [...etheriumAssets, ...BSCAssets]
   }

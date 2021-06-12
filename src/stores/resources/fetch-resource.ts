@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { observable, action, makeObservable } from 'mobx'
 
 export class FetchResource<T> {
   @observable
@@ -16,6 +16,7 @@ export class FetchResource<T> {
   protected fetchFn?: Function
 
   constructor(fetchFn?: Function) {
+    makeObservable(this)
     if (fetchFn) {
       this.fetchFn = fetchFn
     }

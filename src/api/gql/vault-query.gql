@@ -1,0 +1,27 @@
+#import "./fragments/vault.gql"
+
+query VAULT_QUERY($id: ID!, $block: Block_height) {
+  vault(id: $id, block: $block) {
+    ...VaultFields
+  }
+}
+
+query VAULTS_QUERY(
+  $skip: Int = 0
+  $first: Int = 100
+  $orderBy: Vault_orderBy
+  $orderDirection: OrderDirection
+  $where: Vault_filter
+  $block: Block_height
+) {
+  vaults(
+    skip: $skip
+    first: $first
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    where: $where
+    block: $block
+  ) {
+    ...VaultFields
+  }
+}

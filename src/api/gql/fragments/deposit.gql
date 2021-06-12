@@ -1,0 +1,13 @@
+#import "./transaction.gql"
+
+fragment DepositFields on Deposit {
+  id
+  timestamp
+  transaction {
+    ...TransactionFields
+  }
+  user {
+    id
+  }
+  amount
+}

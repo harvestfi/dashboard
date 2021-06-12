@@ -10,7 +10,7 @@ import { ErrorBoundary } from '@/components/ErrorBoundary'
 export const PATHS = {
   main: '/',
   switchBalance: '/switch-balance',
-  checkBalance: '/check-balance',
+  checkBalance: '/check-balance/:address',
   userDashboard: '/user-dashboard',
 }
 

@@ -5,26 +5,10 @@ import { ValidationMessage, Panel } from './styles'
 import { useStores } from '@/stores/utils'
 import { observer } from 'mobx-react'
 import { useHistory } from 'react-router-dom'
-import { ethers } from 'ethers'
 import { PATHS } from '@/routes'
+import { validateAddress } from '@/utils/utils'
 
-export const validateAddress = (address: string) => {
-  if (address === '') {
-    return false
-  }
-
-  try {
-    ethers.utils.getAddress(address)
-  } catch (e) {
-    return false
-  }
-
-  return true
-}
-
-type CheckBalanceProps = {}
-
-export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
+export const EnterReadOnlyAddress: React.FC = observer((props) => {
   const [address, setAddress] = useState()
   const [isNotValid, setIsNotValid] = useState(false)
   const history = useHistory()
@@ -41,7 +25,7 @@ export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
   const checkBalance = () => {
     if (validateAddress(address!)) {
       appStore.setAddress(address)
-      history.push(PATHS.checkBalance)
+      history.push(PATHS.checkBalance.replace(':address', address))
     } else {
       setIsNotValid(true)
     }
