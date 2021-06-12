@@ -2,8 +2,7 @@ import React from 'react'
 
 import { Route, Redirect, Switch } from 'react-router-dom'
 
-import { SwitchBalance } from '@/pages/SwitchBalance'
-import { CheckBalance as CheckBalanceComponent } from '@/pages/SwitchBalance/components/CheckBalance'
+import { ConnectWallet } from '@/pages/ConnectWallet'
 import { CheckBalance } from '@/pages/CheckBalance'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 
@@ -18,8 +17,7 @@ export const Routes = () => {
   return (
     <Switch>
       <ErrorBoundary>
-        <Route path={PATHS.main} component={CheckBalanceComponent} exact />
-        <Route path={PATHS.switchBalance} component={SwitchBalance} />
+        <Route path={PATHS.main} component={ConnectWallet} exact />
         <Route path={PATHS.checkBalance} component={CheckBalance} />
 
         <Redirect to={PATHS.main} />

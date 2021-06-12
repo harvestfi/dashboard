@@ -8,12 +8,14 @@ import * as Styled from './styles'
 import { Wallet } from '@/components/Wallet'
 import { validateAddress } from '@/utils/utils'
 import { PATHS } from '@/routes'
+import { Panel } from '@/App/styles/AppJsStyles'
+import { AddTokens } from '@/components/addTokens/AddTokens'
 
 type CheckBalanceProps = {}
 
 export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
   const { assetsStore, appStore, savedGasStore, metaMaskStore } = useStores()
-  const { address } = useParams()
+  const { address } = useParams<{ address: string }>()
   const history = useHistory()
 
   useEffect(() => {
