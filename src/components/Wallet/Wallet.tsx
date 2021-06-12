@@ -20,6 +20,9 @@ export const Wallet: React.FC<WalletProps> = observer((props) => {
   const connect = async () => {
     await metaMaskStore.connectMetaMask()
     appStore.setAddress(metaMaskStore.walletAddress)
+    history.push(
+      PATHS.checkBalance.replace(':address', metaMaskStore.walletAddress),
+    )
   }
 
   return (

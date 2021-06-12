@@ -6,6 +6,7 @@ type ErrorBoundaryProps = RouteComponentProps & {}
 
 class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
   componentDidCatch(_error: Error, _errorInfo: ErrorInfo) {
+    console.log('- - - ', { _error, _errorInfo })
     this.props.history.push(PATHS.main)
   }
 

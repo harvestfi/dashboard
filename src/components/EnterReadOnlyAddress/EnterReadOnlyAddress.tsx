@@ -9,7 +9,7 @@ import { PATHS } from '@/routes'
 import { validateAddress } from '@/utils/utils'
 
 export const EnterReadOnlyAddress: React.FC = observer((props) => {
-  const [address, setAddress] = useState()
+  const [address, setAddress] = useState('')
   const [isNotValid, setIsNotValid] = useState(false)
   const history = useHistory()
 

@@ -19,19 +19,12 @@ export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
   const history = useHistory()
 
   useEffect(() => {
-    // If we land on this page directly, we set the address in the appStore
-    if (!appStore.address && validateAddress(address)) {
-      appStore.setAddress(address)
-    }
-
-    // If the address is not valid, redirect the user back to the main page
     if (!address || !validateAddress(address)) {
       return history.push(PATHS.main)
     }
-
     assetsStore.fetch(address)
     savedGasStore.fetch(address)
-  }, [appStore.address])
+  }, [address])
 
   return (
     <Styled.Main style={{ padding: '30px 0' }}>

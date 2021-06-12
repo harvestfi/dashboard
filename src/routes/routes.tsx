@@ -8,9 +8,7 @@ import { ErrorBoundary } from '@/components/ErrorBoundary'
 
 export const PATHS = {
   main: '/',
-  switchBalance: '/switch-balance',
   checkBalance: '/check-balance/:address',
-  userDashboard: '/user-dashboard',
 }
 
 export const Routes = () => {
@@ -19,7 +17,6 @@ export const Routes = () => {
       <ErrorBoundary>
         <Route path={PATHS.main} component={ConnectWallet} exact />
         <Route path={PATHS.checkBalance} component={CheckBalance} />
-
         <Redirect to={PATHS.main} />
       </ErrorBoundary>
     </Switch>
