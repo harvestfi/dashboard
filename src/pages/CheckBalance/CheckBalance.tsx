@@ -15,15 +15,24 @@ type CheckBalanceProps = {}
 
 export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
   const { assetsStore, appStore, savedGasStore, metaMaskStore } = useStores()
-  const { address } = useParams<{ address: string }>()
+  const { address } = useParams()
   const history = useHistory()
 
   useEffect(() => {
+    // If we land on this page directly, we set the address in the appStore
+    if (!appStore.address && validateAddress(address)) {
+      appStore.setAddress(address)
+    }
+
+    // If the address is not valid, redirect the user back to the main page
     if (!address || !validateAddress(address)) {
       return history.push(PATHS.main)
     }
-    assetsStore.fetch(address)
-    savedGasStore.fetch(address)
+
+    history.push(PATHS.checkBalance.replace(':address', address))
+
+    assetsStore.fetch(appStore.address)
+    savedGasStore.fetch(appStore.address)
   }, [address])
 
   return (
