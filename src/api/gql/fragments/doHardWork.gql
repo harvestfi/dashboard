@@ -1,0 +1,25 @@
+#import "./transaction.gql"
+#import "./strategy.gql"
+#import "./sharePriceChangeLog.gql"
+#import "./profitLog.gql"
+
+fragment DoHardWorkFields on DoHardWork {
+  id
+  timestamp
+  transaction {
+    ...TransactionFields
+  }
+  # vault Vault!
+  strategy {
+    ...StrategyFields
+  }
+  pricePerFullShare
+  balanceInVault
+  balanceWithInvestment
+  sharePriceChangeLog {
+    ...SharePriceChangeLogFields
+  }
+  profitLog {
+    ...ProfitLogFields
+  }
+}

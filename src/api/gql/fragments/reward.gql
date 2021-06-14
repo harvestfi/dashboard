@@ -1,0 +1,17 @@
+#import "./transaction.gql"
+#import "./token.gql"
+
+fragment RewardFields on Reward {
+  id
+  timestamp
+  transaction {
+    ...TransactionFields
+  }
+  # pool Pool!
+  token {
+    ...TokenFields
+  }
+  reward
+  rewardRate
+  periodFinish
+}

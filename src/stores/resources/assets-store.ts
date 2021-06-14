@@ -21,8 +21,9 @@ export class AssetsStore extends FetchResource<any> {
   @computed
   get stakedBalance() {
     // TODO fix exchangeRatesStore
-    // if (this.value === null || this.exchangeRatesStore.value === null) {
-    if (this.value === null) {
+    // if (this.value === null || this.exchangeRatesStore.value === null)
+
+    if (this.value === null || this.value === undefined) {
       return new BigNumber(0)
     }
 
@@ -37,8 +38,8 @@ export class AssetsStore extends FetchResource<any> {
     // .multipliedBy(currentExchangeRate)
   }
 
-  protected fetchFn = async () => {
-    if (!appStore.address) {
+  protected fetchFn = async (address: string) => {
+    if (!address) {
       console.warn('[AssetsStore.fetchFn] address must be defined')
       return
     }
@@ -48,30 +49,10 @@ export class AssetsStore extends FetchResource<any> {
       IAssetsInfo[],
       IAssetsInfo[]
     >([
-      EthereumService.getAssets(appStore.address),
-      BSCService.getAssets(appStore.address),
-      EthereumService.getSnowswapAssets(appStore.address),
+      EthereumService.getAssets(address),
+      BSCService.getAssets(address),
+      EthereumService.getSnowswapAssets(address),
     ])
-
-    // const assetsEth = {}
-    // ethereumAssets.forEach((element) => {
-    //   const address = element?.address?.pool
-    //     ? element.address.pool
-    //     : element.address?.vault
-    //   const { name, stakedBalance, earnFarm, unstakedBalance, farmToClaim } =
-    //     element
-    //   if (!element?.address?.pool && !element?.address?.vault) {
-    //     debugger
-    //   }
-    //   assetsEth[address] = {
-    //     name,
-    //     stakedBalance: stakedBalance?.toString(),
-    //     unstakedBalance: unstakedBalance?.toString(),
-    //     earnFarm: earnFarm,
-    //     farmToClaim: farmToClaim?.toNumber(),
-    //   }
-    // })
-    // console.log({ ethereumAssets }, { BSCAssets }, { assetsEth })
 
     return [...etheriumAssets, ...BSCAssets, ...snowswapAssets]
   }

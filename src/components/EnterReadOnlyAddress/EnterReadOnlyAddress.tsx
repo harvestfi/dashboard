@@ -9,7 +9,7 @@ import { PATHS } from '@/routes'
 import { validateAddress } from '@/utils/utils'
 
 export const EnterReadOnlyAddress: React.FC = observer((props) => {
-  const [address, setAddress] = useState()
+  const [address, setAddress] = useState('')
   const [isNotValid, setIsNotValid] = useState(false)
   const history = useHistory()
 
@@ -46,7 +46,7 @@ export const EnterReadOnlyAddress: React.FC = observer((props) => {
       )}
 
       <div className="read-only-header">
-        <h1>Or enter a wallet address for read-only mode</h1>
+        <h1>enter a wallet address for read-only mode</h1>
         <div className="address-input">
           <input
             type="text"

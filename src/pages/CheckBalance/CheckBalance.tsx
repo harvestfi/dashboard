@@ -8,11 +8,13 @@ import * as Styled from './styles'
 import { Wallet } from '@/components/Wallet'
 import { validateAddress } from '@/utils/utils'
 import { PATHS } from '@/routes'
+import { Panel } from '@/App/styles/AppJsStyles'
+import { AddTokens } from '@/components/addTokens/AddTokens'
 
 type CheckBalanceProps = {}
 
 export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
-  const { assetsStore, appStore, savedGasStore } = useStores()
+  const { assetsStore, appStore, savedGasStore, metaMaskStore } = useStores()
   const { address } = useParams()
   const history = useHistory()
 
@@ -27,14 +29,16 @@ export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
       return history.push(PATHS.main)
     }
 
-    assetsStore.fetch()
+    history.push(PATHS.checkBalance.replace(':address', address))
+
+    assetsStore.fetch(appStore.address)
     savedGasStore.fetch(appStore.address)
-  }, [])
+  }, [address])
 
   return (
-    <Styled.Main>
-      <>
-        <Wallet address={appStore.address} />
+    <Styled.Main style={{ padding: '30px 0' }}>
+      <Panel>
+        <Wallet />
         <FarmInfo
           isLoadingAssets={assetsStore.isFetching}
           stakedBalance={assetsStore.stakedBalance}
@@ -43,7 +47,8 @@ export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
           display={assetsStore.isFetched}
           assets={assetsStore.value}
         />
-      </>
+        {metaMaskStore.walletAddress === appStore.address && <AddTokens />}
+      </Panel>
     </Styled.Main>
   )
 })

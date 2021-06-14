@@ -2,23 +2,28 @@ import React from 'react'
 import { Row, Col } from 'styled-bootstrap-grid'
 import { TabContainer } from '@/components/tabContainer/TabContainer'
 import { SettingsModal } from '@/components/userSettings/SettingsModal'
-
 import logo from '@/assets/newLogo.png'
-
+import { PATHS } from '@/routes'
 import { observer } from 'mobx-react'
 import { useStores } from '@/stores/utils'
+import { useHistory } from 'react-router-dom'
 
 import { Topbar, Brand } from '@/App/styles/AppJsStyles'
 
 export const Header = observer(() => {
   const { appStore } = useStores()
+  const history = useHistory()
 
   return (
     <>
       <Row>
         <Col col>
           <Topbar>
-            <Brand>
+            <Brand
+              onClick={() => {
+                history.push(PATHS.main)
+              }}
+            >
               <img src={logo} alt="harvest finance logo" />{' '}
               {!appStore.isOpenDrawer && <span>harvest.dashboard</span>}
             </Brand>

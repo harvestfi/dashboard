@@ -50,7 +50,7 @@ export class FetchResource<T> {
     this.isFetched = false
   }
 
-  async fetch(params?: string) {
+  async fetch(...params: any) {
     if (this.error) {
       this.setError(null)
     }
@@ -61,7 +61,7 @@ export class FetchResource<T> {
       if (!this.fetchFn) {
         console.warn('[FetchResource.fetchFn] fetchFn must be defined')
       } else {
-        const response = await this.fetchFn(params)
+        const response = await this.fetchFn(...params)
         this.setValue(response)
       }
     } catch (error) {

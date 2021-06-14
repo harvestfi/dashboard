@@ -42,6 +42,8 @@ class MetaMaskStore {
   private readonly assetsStore = assetsStore
   private readonly appStore = appStore
 
+  walletAddress: string | null = null
+
   isConnecting = false
   tokenAddedMessage = ''
 
@@ -66,10 +68,15 @@ class MetaMaskStore {
     this.provider = null
     this.assetsStore.reset()
     this.appStore.setAddress(null)
+    this.setWalletAddress(null)
   }
 
   setTokenAddedMessage(message: string) {
     this.tokenAddedMessage = message
+  }
+
+  setWalletAddress(address: string | null) {
+    this.walletAddress = address
   }
 
   async setProvider(provider: any) {
@@ -79,7 +86,7 @@ class MetaMaskStore {
 
     try {
       const address = await signer.getAddress()
-      this.appStore.setAddress(address)
+      this.setWalletAddress(address)
     } catch (error) {
       this.errorModalStore.open(
         'Something has gone wrong, retrying...',

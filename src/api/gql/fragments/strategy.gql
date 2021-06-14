@@ -1,0 +1,13 @@
+#import "./transaction.gql"
+
+fragment StrategyFields on Strategy {
+  id
+  timestamp
+  transaction {
+    ...TransactionFields
+  }
+  # vault Vault!
+  # doHardWorks(...) [DoHardWork!]!
+  aggregatedProfit
+  aggregatedFee
+}

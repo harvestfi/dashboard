@@ -121,7 +121,7 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
       )}
       {display ? (
         <TableContainer>
-          {assets.length === 0 ? (
+          {assets?.length === 0 ? (
             <NoAssetTable>
               <div className="header">
                 <p>You currently are not staking any assets</p>

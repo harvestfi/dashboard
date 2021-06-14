@@ -6,13 +6,10 @@ import { observer } from 'mobx-react'
 import { useHistory } from 'react-router-dom'
 import { PATHS } from '@/routes'
 
-type WalletProps = {
-  address: string
-}
+type WalletProps = {}
 
 export const Wallet: React.FC<WalletProps> = observer((props) => {
-  const { address } = props
-  const { metaMaskStore } = useStores()
+  const { metaMaskStore, appStore } = useStores()
   const history = useHistory()
 
   const disconnect = () => {
@@ -20,19 +17,39 @@ export const Wallet: React.FC<WalletProps> = observer((props) => {
     history.push(PATHS.main)
   }
 
+  const connect = async () => {
+    await metaMaskStore.connectMetaMask()
+    appStore.setAddress(metaMaskStore.walletAddress)
+    history.push(
+      PATHS.checkBalance.replace(':address', metaMaskStore.walletAddress),
+    )
+  }
+
   return (
     <Styled.Container>
       <Styled.Tab>wallet</Styled.Tab>
-      {address && (
+      {!metaMaskStore.walletAddress && (
+        <Styled.Connection>
+          <div className="connect-status-container">
+            <div className="button-div connect">
+              <button onClick={connect} className="clear button" type="button">
+                Connect
+              </button>
+            </div>
+          </div>
+        </Styled.Connection>
+      )}
+
+      {metaMaskStore.walletAddress && (
         <Styled.Connection>
           <span className="connect-status-container">
             <span id="address">
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href={`https://etherscan.io/address/${address}`}
+                href={`https://etherscan.io/address/${metaMaskStore.walletAddress}`}
               >
-                {prettyEthAddress(address)}
+                {prettyEthAddress(metaMaskStore.walletAddress)}
               </a>
             </span>
 

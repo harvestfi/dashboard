@@ -160,6 +160,7 @@ export const Brand = styled.div`
   display: flex !important;
   align-items: center;
   padding-bottom: 2rem;
+  cursor: pointer;
 
   img {
     width: 3.5rem;
