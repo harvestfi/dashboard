@@ -91,15 +91,11 @@ describe('EthereumService', () => {
   })
 
   describe('getAssets', () => {
-    test('number of testWallet assets equal 76', () => {
+    test('number of testWallet assets equal 85', () => {
       const testWallet = '0x814055779f8d2f591277b76c724b7adc74fb82d9'
-      return EthereumService.getAssets(testWallet)
-        .then((assets) => {
-          expect(assets.length).toBe(76)
-        })
-        .catch(() => {
-          expect(true).toBe(false)
-        })
+      return EthereumService.getAssets(testWallet).then((assets) => {
+        expect(assets.length).toBe(85)
+      })
     }, 30000)
 
     test('obtained testWallet asset values are valid', () => {
@@ -117,7 +113,7 @@ describe('EthereumService', () => {
               console.log(
                 `Test name: obtained testWallet asset values are valid. testValues object does not contain this address ${address}.`,
               )
-              return true
+              return
             }
 
             try {

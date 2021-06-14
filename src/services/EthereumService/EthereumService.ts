@@ -430,59 +430,65 @@ export class EthereumService {
   // Case 4: Vault it is iFarm.
   // Case 5: Vault it is PS.
   static getAssets = async (walletAddress: string): Promise<IAssetsInfo[]> => {
-    // get all pools and vaults
-    const [pools, vaults, farmPrice] = await Promise.all<
-      IPool[],
-      IVault[],
-      BigNumber | null
-    >([
-      API.getEthereumPools(),
-      API.getEthereumVaults(),
-      EthereumService.getPrice(farmAddress),
-    ])
+    try {
+      // get all pools and vaults
+      const [pools, vaults, farmPrice] = await Promise.all<
+        IPool[],
+        IVault[],
+        BigNumber | null
+      >([
+        API.getEthereumPools(),
+        API.getEthereumVaults(),
+        EthereumService.getPrice(farmAddress),
+      ])
 
-    const actualVaults = vaults.filter((v) => {
-      return !ethereumOutdatedVaults.has(v.contract.address.toLowerCase())
-    })
+      const actualVaults = vaults.filter((v) => {
+        return !ethereumOutdatedVaults.has(v.contract.address.toLowerCase())
+      })
 
-    actualVaults.push(iPSAddress)
+      actualVaults.push(iPSAddress)
 
-    const actualPools = pools.filter((p) => {
-      return p.contract?.address && !outdatedPools.has(p.contract.address)
-    })
+      const actualPools = pools.filter((p) => {
+        return p.contract?.address && !outdatedPools.has(p.contract.address)
+      })
 
-    const assetsFromVaultsPromises = EthereumService.getAssetsFromVaults(
-      actualVaults,
-      actualPools,
-      walletAddress,
-      farmPrice,
-    )
-
-    const poolsWithoutVaults = actualPools.filter((pool) => {
-      return !vaults.find(
-        (vault) => vault.contract.address === pool.lpToken?.address,
+      const assetsFromVaultsPromises = EthereumService.getAssetsFromVaults(
+        actualVaults,
+        actualPools,
+        walletAddress,
+        farmPrice,
       )
-    })
 
-    const assetsFromPoolsWithoutVaultsPromises = poolsWithoutVaults.map(
-      (pool) =>
-        EthereumService.getAssetsFromPool(pool, walletAddress, farmPrice),
-    )
+      const poolsWithoutVaults = actualPools.filter((pool) => {
+        return !vaults.find(
+          (vault) => vault.contract.address === pool.lpToken?.address,
+        )
+      })
 
-    const assetsDataResolved: IAssetsInfo[] = await Promise.all([
-      ...assetsFromVaultsPromises,
-      ...assetsFromPoolsWithoutVaultsPromises,
-    ])
-    const nonZeroAssets = assetsDataResolved.filter((asset) => {
-      return (
-        asset.farmToClaim?.toNumber() ||
-        asset.stakedBalance?.toNumber() ||
-        (asset.value && asset.value.toNumber()) ||
-        asset.underlyingBalance?.toNumber()
+      const assetsFromPoolsWithoutVaultsPromises = poolsWithoutVaults.map(
+        (pool) =>
+          EthereumService.getAssetsFromPool(pool, walletAddress, farmPrice),
       )
-    })
 
-    return nonZeroAssets
+      const assetsDataResolved: IAssetsInfo[] = await Promise.all([
+        ...assetsFromVaultsPromises,
+        ...assetsFromPoolsWithoutVaultsPromises,
+      ])
+      const nonZeroAssets = assetsDataResolved.filter((asset) => {
+        return (
+          asset.farmToClaim?.toNumber() ||
+          asset.stakedBalance?.toNumber() ||
+          (asset.value && asset.value.toNumber()) ||
+          asset.underlyingBalance?.toNumber()
+        )
+      })
+
+      return nonZeroAssets
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(`Error in the getAssets: ${error}`)
+      return await []
+    }
   }
 
   static getSnowswapAssets = async (
