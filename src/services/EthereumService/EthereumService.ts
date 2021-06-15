@@ -487,7 +487,7 @@ export class EthereumService {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(`Error in the getAssets: ${error}`)
-      return await []
+      return []
     }
   }
 
