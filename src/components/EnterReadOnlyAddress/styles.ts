@@ -2,21 +2,23 @@ import styled from 'styled-components'
 import { fonts } from '@/App/styles/appStyles'
 
 export const Panel = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 2rem auto;
-  background-color: ${(props) => props.theme.style.panelBackground};
-  color: ${(props) => props.theme.style.primaryFontColor};
-  font-size: 1.7rem;
-  font-family: ${fonts.contentFont};
-  padding: 1rem 1.5rem 0rem 1.5rem;
-  border: ${(props) => props.theme.style.mainBorder};
-  border-radius: 0.5rem;
-  box-sizing: border-box;
-  box-shadow: ${(props) => props.theme.style.panelBoxShadow};
-  z-index: 100;
-  position: relative;
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 2rem auto;
+    background-color: ${(props) => props.theme.style.panelBackground};
+    color: ${(props) => props.theme.style.primaryFontColor};
+    font-size: 1.7rem;
+    font-family: ${fonts.contentFont};
+    padding: 1rem 1.5rem 0rem 1.5rem;
+    border: ${(props) => props.theme.style.mainBorder};
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    box-shadow: ${(props) => props.theme.style.panelBoxShadow};
+    z-index: 100;
+    position: relative;
+  }
 
   h1 {
     font-family: ${fonts.headerFont};

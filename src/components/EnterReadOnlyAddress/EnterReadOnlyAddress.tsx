@@ -22,7 +22,9 @@ export const EnterReadOnlyAddress: React.FC = observer((props) => {
     setAddress(event.target.value)
   }
 
-  const checkBalance = () => {
+  const checkBalance = (e) => {
+    e.preventDefault()
+
     if (validateAddress(address!)) {
       appStore.setAddress(address)
       history.push(PATHS.checkBalance.replace(':address', address))
@@ -33,32 +35,34 @@ export const EnterReadOnlyAddress: React.FC = observer((props) => {
 
   return (
     <Panel>
-      {isNotValid && (
-        <motion.div
-          initial={{ x: 0, y: -100, opacity: 0 }}
-          animate={{ x: 0, y: 0, opacity: 1 }}
-          exit={{ x: 0, y: -100, opacity: 1 }}
-        >
-          <ValidationMessage className="validation-message">
-            <p>You must enter a valid address</p>
-          </ValidationMessage>
-        </motion.div>
-      )}
+      <form onSubmit={checkBalance}>
+        {isNotValid && (
+          <motion.div
+            initial={{ x: 0, y: -100, opacity: 0 }}
+            animate={{ x: 0, y: 0, opacity: 1 }}
+            exit={{ x: 0, y: -100, opacity: 1 }}
+          >
+            <ValidationMessage className="validation-message">
+              <p>You must enter a valid address</p>
+            </ValidationMessage>
+          </motion.div>
+        )}
 
-      <div className="read-only-header">
-        <h1>Or enter a wallet address for read-only mode</h1>
-        <div className="address-input">
-          <input
-            type="text"
-            value={address}
-            placeholder="Enter address"
-            onChange={handleChange}
-          />
+        <div className="read-only-header">
+          <h1>Or enter a wallet address for read-only mode</h1>
+          <div className="address-input">
+            <input
+              type="text"
+              value={address}
+              placeholder="Enter address"
+              onChange={handleChange}
+            />
+          </div>
         </div>
-      </div>
-      <button onClick={checkBalance} className="check-all button" type="button">
-        Check Balance
-      </button>
+        <button className="check-all button" type="submit">
+          Check Balance
+        </button>
+      </form>
     </Panel>
   )
 })
