@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-
 import { fonts } from '../../App/styles/appStyles'
 import { IAssetsInfo } from '../../types'
 import { prettyNumber, prettyCurrency } from '../../utils/utils'
@@ -36,6 +35,21 @@ const columns = [
     name: 'Value',
   },
 ]
+
+function importAll(r: any) {
+  let images: any = {}
+  r.keys().map((item: string) => {
+    images[item.replace('./', '')] = r(item)
+  })
+  return images
+}
+const icons = importAll(
+  require.context(
+    '../../assets/harvest-icons/vaults/',
+    false,
+    /\.(png|jpe?g|svg)$/,
+  ),
+)
 
 export const FarmingTable: React.FC<IProps> = observer((props) => {
   const { display, assets } = props
@@ -78,28 +92,37 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
       ? `${asset.percentOfPool.toFixed(6)}%`
       : '-'
 
+    const VaultIcon = (props: any) => {
+      const { vaultName } = props
+      return (
+        <img
+          className="vault-icon"
+          src={`${
+            icons[vaultName.replace(/^V_/, '').replace(/_#V1$/, '') + '.png']
+          }`}
+        ></img>
+      )
+    }
+
     return (
       <>
         <MainTableRow
           key={asset.address.pool || asset.address.vault}
           className={accordion.includes(asset.name) ? 'open' : ''}
+          onClick={() => {
+            toggleAccordion(asset.name)
+          }}
         >
           <div
             className="name"
             title={asset.earnFarm ? 'Earn FARM: true' : undefined}
           >
+            <VaultIcon vaultName={asset.name} />
             {asset.name}{' '}
             {asset.earnFarm && <img className="flash" src={flash} alt="" />}
           </div>
           {/* <div className="active">{asset.earnFarm.toString()}</div> */}
-          <div
-            className="earned-rewards"
-            // TODO: implements it
-            // onKeyUp={() => getThisReward(summary.earnedRewards)}
-            // onClick={() => getThisReward(summary.earnedRewards)}
-            role="button"
-            tabIndex={0}
-          >
+          <div className="earned-rewards" role="button" tabIndex={0}>
             {prettyFarmToClaim}
           </div>
           <div className="pool">{persentOfPool}</div>
@@ -108,11 +131,9 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
             className={`details ${
               accordion.includes(asset.name) ? 'open' : ''
             }`}
-            onClick={() => {
-              toggleAccordion(asset.name)
-            }}
           >
-            details <i></i>
+            {' '}
+            <i></i>
           </div>
         </MainTableRow>
         <div

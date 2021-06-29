@@ -45,6 +45,7 @@ export const MainTableInner = styled.div`
   .details {
     text-decoration: underline;
     cursor: pointer;
+    height: 100%;
 
     &:hover {
       text-decoration: none;
@@ -100,11 +101,12 @@ export const MainTableInner = styled.div`
       border-bottom: 1.2px solid rgba(53, 53, 53, 0.15);
     }
   }
-`
+`;
 
 export const MainTableRow = styled.div`
   display: grid;
-  grid-template-columns: 0.75fr 0.3fr 0.5fr 0.5fr 0.5fr;
+  cursor: pointer;
+  grid-template-columns: 0.75fr 0.3fr 0.5fr 0.5fr 0.2fr;
   font-size: 1.7rem;
   align-items: center;
   font-family: ${fonts.contentFont};
@@ -141,15 +143,8 @@ export const MainTableRow = styled.div`
   .active {
   }
   .earned-rewards {
-    cursor: pointer;
-    transition: scale 200ms ease;
     border-radius: 0.5rem;
     margin-right: 2rem;
-    &:hover {
-      width: 35%;
-      margin: 0 auto;
-      transform: scale(1.1);
-    }
   }
   .staked {
   }
@@ -187,11 +182,17 @@ export const MainTableRow = styled.div`
       color: ${({ theme }) => theme.style.buttonDisabledFontColor};
     }
   }
+  .vault-icon {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+  }
+  
 `
-// 0.5fr 0.5fr 0.5fr
+
 export const MainTableHeader = styled.div`
   display: grid;
-  grid-template-columns: 0.75fr 0.3fr 0.5fr 0.5fr 0.5fr;
+  grid-template-columns: 0.75fr 0.3fr 0.5fr 0.5fr 0.2fr;
   //grid-gap: 20px;
   font-size: 1.7rem;
   font-family: ${fonts.headerFont};
@@ -296,4 +297,4 @@ export const PanelTab = styled.div`
   @media (max-width: 333px) {
     margin-right: 0.3rem;
   }
-`
+`;
