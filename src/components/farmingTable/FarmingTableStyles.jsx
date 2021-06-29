@@ -41,16 +41,77 @@ export const MainTableInner = styled.div`
     background-color: black;
     background-color: ${(props) => props.theme.style.scrollBarColor};
   }
+
+  .details {
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    i {
+      position: relative;
+      &:before {
+        content: '';
+        position: absolute;
+        top: 3px;
+        right: -15px;
+        width: 10px;
+        height: 10px;
+        border-left: 2px solid #000;
+        border-bottom: 2px solid #000;
+        transform: rotate(-45deg);
+        transition: transform 0.333s;
+      }
+    }
+
+    &.open i:before {
+      transform: rotate(135deg);
+      top: 8px;
+    }
+  }
+
+  .accordion-row {
+    opacity: 0.8;
+    background-color: #ffcd8d;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.333s;
+
+    .inner {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    .inner-row {
+      display: flex;
+      justify-content: space-around;
+      font-size: 1.4rem;
+      align-items: center;
+      font-family: ${fonts.contentFont};
+      padding-top: 15px;
+      padding-bottom: 15px;
+      padding-right: 18%;
+    }
+
+    &.open {
+      height: 43px;
+      border-bottom: 1.2px solid rgba(53, 53, 53, 0.15);
+    }
+  }
 `
+
 export const MainTableRow = styled.div`
   display: grid;
-  grid-template-columns: 0.75fr 0.3fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
+  grid-template-columns: 0.75fr 0.3fr 0.5fr 0.5fr 0.5fr;
   font-size: 1.7rem;
   align-items: center;
   font-family: ${fonts.contentFont};
   padding: 1.5rem 1rem;
   width: 100%;
   border-bottom: 1.2px solid rgba(53, 53, 53, 0.15);
+
   @media (max-width: 1920px) {
     width: 100%;
   }
@@ -62,8 +123,21 @@ export const MainTableRow = styled.div`
     text-align: center;
     width: 100%;
   }
+
   .name {
+    display: flex;
+    justify-content: center;
+
+    .flash {
+      height: 15px;
+      width: 15px;
+    }
   }
+
+  &.open {
+    border-bottom: none;
+  }
+
   .active {
   }
   .earned-rewards {
@@ -114,9 +188,10 @@ export const MainTableRow = styled.div`
     }
   }
 `
+// 0.5fr 0.5fr 0.5fr
 export const MainTableHeader = styled.div`
   display: grid;
-  grid-template-columns: 0.75fr 0.3fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
+  grid-template-columns: 0.75fr 0.3fr 0.5fr 0.5fr 0.5fr;
   //grid-gap: 20px;
   font-size: 1.7rem;
   font-family: ${fonts.headerFont};

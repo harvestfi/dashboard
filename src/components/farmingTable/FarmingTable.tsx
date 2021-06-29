@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import { fonts } from '../../App/styles/appStyles'
@@ -16,7 +16,7 @@ import {
 import FarmTableSkeleton from './FarmTableSkeleton'
 import { observer } from 'mobx-react'
 import { useStores } from '@/stores/utils'
-
+import flash from '@/assets/flash.svg'
 interface IProps {
   display: boolean
   assets: IAssetsInfo[]
@@ -27,31 +27,28 @@ const columns = [
     name: 'Rewards Pool',
   },
   {
-    name: 'Earn FARM',
-  },
-  {
     name: 'FARM to Claim',
-  },
-  {
-    name: 'Staked Asset',
   },
   {
     name: '% of Pool',
   },
   {
-    name: 'Underlying balance',
-  },
-  {
     name: 'Value',
-  },
-  {
-    name: 'Unstaked',
   },
 ]
 
 export const FarmingTable: React.FC<IProps> = observer((props) => {
   const { display, assets } = props
   const { settingsStore, exchangeRatesStore } = useStores()
+  const [accordion, setAccordion] = useState<string[]>([])
+
+  const toggleAccordion = (id: string) => {
+    if (accordion.includes(id)) {
+      setAccordion(accordion.filter((item) => item !== id))
+    } else {
+      setAccordion([...accordion, id])
+    }
+  }
 
   const displayCurrency = settingsStore.settings.currency.value
   const currentExchangeRate =
@@ -82,25 +79,56 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
       : '-'
 
     return (
-      <MainTableRow key={asset.address.pool || asset.address.vault}>
-        <div className="name">{asset.name}</div>
-        <div className="active">{asset.earnFarm.toString()}</div>
-        <div
-          className="earned-rewards"
-          // TODO: implements it
-          // onKeyUp={() => getThisReward(summary.earnedRewards)}
-          // onClick={() => getThisReward(summary.earnedRewards)}
-          role="button"
-          tabIndex={0}
+      <>
+        <MainTableRow
+          key={asset.address.pool || asset.address.vault}
+          className={accordion.includes(asset.name) ? 'open' : ''}
         >
-          {prettyFarmToClaim}
+          <div
+            className="name"
+            title={asset.earnFarm ? 'Earn FARM: true' : undefined}
+          >
+            {asset.name}{' '}
+            {asset.earnFarm && <img className="flash" src={flash} alt="" />}
+          </div>
+          {/* <div className="active">{asset.earnFarm.toString()}</div> */}
+          <div
+            className="earned-rewards"
+            // TODO: implements it
+            // onKeyUp={() => getThisReward(summary.earnedRewards)}
+            // onClick={() => getThisReward(summary.earnedRewards)}
+            role="button"
+            tabIndex={0}
+          >
+            {prettyFarmToClaim}
+          </div>
+          <div className="pool">{persentOfPool}</div>
+          <div className="value">{prettyValue}</div>
+          <div
+            className={`details ${
+              accordion.includes(asset.name) ? 'open' : ''
+            }`}
+            onClick={() => {
+              toggleAccordion(asset.name)
+            }}
+          >
+            details <i></i>
+          </div>
+        </MainTableRow>
+        <div
+          className={`accordion-row ${
+            accordion.includes(asset.name) ? 'open' : ''
+          }`}
+        >
+          <div className="inner-row">
+            <div className="staked">Staked Asset: {prettyStakedBalance}</div>
+            <div className="underlying">
+              Underlying balance: {prettyUnderlyingBalance}
+            </div>
+            <div className="unstaked">Unstaked: {prettyUnstakedBalance}</div>
+          </div>
         </div>
-        <div className="staked">{prettyStakedBalance}</div>
-        <div className="pool">{persentOfPool}</div>
-        <div className="underlying">{prettyUnderlyingBalance}</div>
-        <div className="value">{prettyValue}</div>
-        <div className="unstaked">{prettyUnstakedBalance}</div>
-      </MainTableRow>
+      </>
     )
   })
 
