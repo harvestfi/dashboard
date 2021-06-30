@@ -98,7 +98,12 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
         <img
           className="vault-icon"
           src={`${
-            icons[vaultName.replace(/^V_/, '').replace(/_#V\d$/, '') + '.png']
+            icons[
+              vaultName
+                .replace(/^V_/, '')
+                .replace(/^P_[f]?/, '')
+                .replace(/_#V\d$/, '') + '.png'
+            ]
           }`}
         ></img>
       )
