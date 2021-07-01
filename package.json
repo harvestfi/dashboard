@@ -7,7 +7,7 @@
     "start": "",
     "predeploy": "npm run build",
     "prettier": "prettier --write .",
-    "lint": "eslint src/**/*.{js,ts,tsx} --fix --max-warnings 0",
+    "lint": "eslint src/**/*.{js,ts,tsx} --fix --max-warnings 0 --no-error-on-unmatched-pattern",
     "test": "jest --no-cache",
     "test:coverage": "npx jest --silent --ci --coverage --coverageReporters='text' --coverageReporters='text-summary'",
     "test:watch": "npm test -- --watch",
