@@ -297,10 +297,9 @@ export class EthereumService {
           ? new BigNumber(vaultBalance).dividedBy(10 ** vault.decimals!)
           : null
 
-        const prettyUnderlyingBalanceWithInvestmentForHolder =
-          underlyingBalanceWithInvestmentForHolder
-            ? new BigNumber(underlyingBalanceWithInvestmentForHolder)
-            : null
+        const prettyUnderlyingBalanceWithInvestmentForHolder = underlyingBalanceWithInvestmentForHolder
+          ? new BigNumber(underlyingBalanceWithInvestmentForHolder)
+          : null
 
         const prettyPricePerFullShare: BigNumber | null = pricePerFullShare
           ? new BigNumber(pricePerFullShare).dividedBy(10 ** vault.decimals!)
@@ -512,12 +511,15 @@ export class EthereumService {
     // Return early if user is not in the pool
     if (stakingPoolBalance.isZero()) return []
 
-    const [snowEarnedBalanceRaw, stakingPoolTotalRaw, snowPrice] =
-      await Promise.all<string | null, string | null, BigNumber | null>([
-        BlockchainService.makeRequest(stakingPool, 'earned', walletAddress),
-        BlockchainService.makeRequest(stakingPool, 'totalSupply'),
-        EthereumService.getPrice(SNOWSWAP.fSnow.address),
-      ])
+    const [
+      snowEarnedBalanceRaw,
+      stakingPoolTotalRaw,
+      snowPrice,
+    ] = await Promise.all<string | null, string | null, BigNumber | null>([
+      BlockchainService.makeRequest(stakingPool, 'earned', walletAddress),
+      BlockchainService.makeRequest(stakingPool, 'totalSupply'),
+      EthereumService.getPrice(SNOWSWAP.fSnow.address),
+    ])
 
     const snowEarnedBalance = new BigNumber(snowEarnedBalanceRaw).dividedBy(
       10 ** Number(18),
