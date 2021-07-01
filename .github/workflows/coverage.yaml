@@ -7,7 +7,6 @@ on:
 jobs:
   coverage:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.messaage, '[skip ci]')"
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
