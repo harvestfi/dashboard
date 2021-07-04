@@ -48,7 +48,7 @@ const columns = [
   },
 ]
 
-function importAll(requiredContext: __WebpackModuleApi.RequireContext) {
+const importAll = (requiredContext: __WebpackModuleApi.RequireContext) => {
   const images: IVaultIconNames = {}
   requiredContext.keys().forEach((item: string) => {
     images[item.replace('./', '')] = requiredContext(item)
