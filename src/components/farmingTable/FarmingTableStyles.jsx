@@ -41,39 +41,7 @@ export const MainTableInner = styled.div`
     background-color: black;
     background-color: ${(props) => props.theme.style.scrollBarColor};
   }
-
-  .details {
-    text-decoration: underline;
-    cursor: pointer;
-    height: 100%;
-
-    &:hover {
-      text-decoration: none;
-    }
-
-    i {
-      position: relative;
-      &:before {
-        content: '';
-        position: absolute;
-        top: 3px;
-        right: -15px;
-        width: 10px;
-        height: 10px;
-        border-left: 2px solid #000;
-        border-bottom: 2px solid #000;
-        transform: rotate(-45deg);
-        transition: transform 0.333s;
-      }
-    }
-
-    &.open i:before {
-      transform: rotate(135deg);
-      top: 8px;
-    }
-  }
-
-`;
+`
 
 export const MainTableRow = styled.div`
   display: grid;
@@ -84,7 +52,8 @@ export const MainTableRow = styled.div`
   font-family: ${fonts.contentFont};
   padding: 1.5rem 1rem;
   width: 100%;
-  border-bottom: ${props => props.open ? "none" : "1.2px solid rgba(53, 53, 53, 0.15)"};
+  border-bottom: ${(props) =>
+    props.open ? 'none' : '1.2px solid rgba(53, 53, 53, 0.15)'};
 
   @media (max-width: 1920px) {
     width: 100%;
@@ -141,10 +110,11 @@ export const MainTableRow = styled.div`
 export const AccordionRow = styled.div`
   opacity: 0.8;
   background-color: #ffcd8d;
-  height: ${props => props.open ? "43px": "0"};
+  height: ${(props) => (props.open ? '43px' : '0')};
   overflow: hidden;
   transition: height 0.333s;
-  border-bottom: ${props => props.open ? "1.2px solid rgba(53, 53, 53, 0.15)" : "none"};
+  border-bottom: ${(props) =>
+    props.open ? '1.2px solid rgba(53, 53, 53, 0.15)' : 'none'};
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   font-size: 1.4rem;
@@ -156,7 +126,7 @@ export const AccordionRow = styled.div`
     padding-top: 15px;
     padding-bottom: 15px;
   }
-`;
+`
 
 export const MainTableHeader = styled.div`
   display: grid;
@@ -265,15 +235,41 @@ export const PanelTab = styled.div`
   @media (max-width: 333px) {
     margin-right: 0.3rem;
   }
-`;
+`
 
 export const VaultIconImg = styled.img`
   width: 15px;
   height: 15px;
   margin-right: 5px;
-`;
+`
 
 export const Flash = styled.img`
   width: 15px;
   height: 15px;
-`;
+`
+
+export const AccordionToggle = styled.div`
+  text-decoration: underline;
+  cursor: pointer;
+  height: 100%;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  i {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      top: ${props => props.open ? "8px": "3px"};
+      right: -15px;
+      width: 10px;
+      height: 10px;
+      border-left: 2px solid #000;
+      border-bottom: 2px solid #000;
+      transform: ${props => props.open ? "rotate(135deg)": "rotate(-45deg)"};
+      transition: transform 0.333s;
+    }
+  }
+`

@@ -14,6 +14,7 @@ import {
   VaultIconImg,
   AccordionRow,
   Flash,
+  AccordionToggle,
 } from './FarmingTableStyles'
 import FarmTableSkeleton from './FarmTableSkeleton'
 import { observer } from 'mobx-react'
@@ -117,19 +118,13 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
             {asset.name} {asset.earnFarm && <Flash src={flashSvg} alt="" />}
           </div>
           {/* <div className="active">{asset.earnFarm.toString()}</div> */}
-          <div className="earned-rewards" role="button" tabIndex={0}>
-            {prettyFarmToClaim}
-          </div>
-          <div className="pool">{persentOfPool}</div>
-          <div className="value">{prettyValue}</div>
-          <div
-            className={`details ${
-              accordion.includes(asset.name) ? 'open' : ''
-            }`}
-          >
+          <div tabIndex={0}>{prettyFarmToClaim}</div>
+          <div>{persentOfPool}</div>
+          <div>{prettyValue}</div>
+          <AccordionToggle open={accordion.includes(asset.name)}>
             {' '}
             <i></i>
-          </div>
+          </AccordionToggle>
         </MainTableRow>
         <AccordionRow open={accordion.includes(asset.name)}>
           <div>Staked Asset: {prettyStakedBalance}</div>
