@@ -15,17 +15,33 @@ type FarmInfoProps = {
 export const FarmInfo: React.FC<FarmInfoProps> = observer((props) => {
   const { stakedBalance, isLoadingAssets } = props
 
-  const { farmPriceStore, settingsStore, savedGasStore, apyStore } = useStores()
+  const {
+    farmPriceStore,
+    settingsStore,
+    exchangeRatesStore,
+    savedGasStore,
+    apyStore,
+  } = useStores()
+
+  const displayCurrency = settingsStore.settings.currency.value
+
+  const currentExchangeRate =
+    exchangeRatesStore.exchangeRates.values[displayCurrency]
+
+  const farmPriceValue = farmPriceStore.getValue()
+    ? prettyCurrency(
+        farmPriceStore.getValue(),
+        displayCurrency,
+        currentExchangeRate,
+      )
+    : '-'
 
   useEffect(() => {
     apyStore.fetch()
   }, [])
 
-  const farmPriceValue = farmPriceStore.getValue() ?? '-'
-
-  const baseCurrency = settingsStore.settings.currency.value
   const apy = apyStore.value
-  const savedGas = savedGasStore.value
+  const savedGas = savedGasStore.gasSaved
 
   const isLoading =
     isLoadingAssets ||
@@ -36,13 +52,17 @@ export const FarmInfo: React.FC<FarmInfoProps> = observer((props) => {
   const displayApy = apy && apy !== '0' ? `${apy}%` : '-'
   const cellsData = [
     {
-      value: prettyCurrency(stakedBalance.toNumber(), baseCurrency),
+      value: prettyCurrency(
+        stakedBalance.toNumber(),
+        displayCurrency,
+        currentExchangeRate,
+      ),
       text: 'Staked Balance',
     },
     { value: displayApy, text: 'Profit Share APY' },
     { value: farmPriceValue, text: 'FARM price' },
     {
-      value: prettyCurrency(savedGas, baseCurrency),
+      value: prettyCurrency(savedGas, displayCurrency, currentExchangeRate),
       text: 'Personal Saved Gas',
     },
     { value: '-', text: 'Farm Earned' },

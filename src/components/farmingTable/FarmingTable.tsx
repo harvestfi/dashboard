@@ -53,9 +53,9 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
   const { display, assets } = props
   const { settingsStore, exchangeRatesStore } = useStores()
 
-  const baseCurrency = settingsStore.settings.currency.value
-  // TODO fix
-  // const currentExchangeRate = exchangeRatesStore.value?.[baseCurrency]
+  const displayCurrency = settingsStore.settings.currency.value
+  const currentExchangeRate =
+    exchangeRatesStore.exchangeRates.values[displayCurrency]
 
   const assetRows = assets?.map((asset) => {
     const prettyFarmToClaim: string = asset.farmToClaim
@@ -70,11 +70,7 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
       : '-'
 
     const prettyValue: string = asset.value
-      ? prettyCurrency(
-          // Number(asset.value.toNumber() * currentExchangeRate),
-          Number(asset.value.toNumber() * 1),
-          baseCurrency,
-        )
+      ? prettyCurrency(asset.value, displayCurrency, currentExchangeRate)
       : '-'
 
     const prettyUnstakedBalance: string = asset.unstakedBalance

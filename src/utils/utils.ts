@@ -14,8 +14,12 @@ export const prettyNumber = (number: number) => {
   return numberFormatter().format(number)
 }
 
-export const prettyCurrency = (balance: number, currency: string) => {
-  return currencyFormatter(currency).format(balance)
+export const prettyCurrency = (
+  balance: number,
+  currency: string,
+  exchangeRate: number,
+) => {
+  return currencyFormatter(currency).format(balance * exchangeRate)
 }
 
 export const convertStandardNumber = (num: number, currency: string) => {

@@ -75,10 +75,23 @@ export class API {
     return response?.data.data ?? []
   }
 
-  static async getExchangeRates(params?: string) {
-    const response = await axios.get(
-      `https://api.ratesapi.io/api/latest${params ?? ''}`,
-    )
-    return response?.data?.rates ?? {}
+  static async getExchangeRates() {
+    let response
+
+    try {
+      response = await axios.get(
+        `https://api.zapper.fi/v1/fiat-rates?api_key=${process.env.ZAPPER_API_KEY}`,
+      )
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(
+        `An error occurred while getting exchange rates from Zapper: ${error}`,
+      )
+    }
+
+    const responseData = response?.data
+
+    // basic sanity checking on Zapper's API response...
+    if (responseData && responseData['USD']) return responseData
   }
 }
