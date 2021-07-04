@@ -11,14 +11,25 @@ import {
   PanelTabContainerLeft,
   PanelTab,
   Tabs,
+  VaultIconImg,
+  AccordionRow,
+  Flash,
 } from './FarmingTableStyles'
 import FarmTableSkeleton from './FarmTableSkeleton'
 import { observer } from 'mobx-react'
 import { useStores } from '@/stores/utils'
-import flash from '@/assets/flash.svg'
+import flashSvg from '@/assets/flash.svg'
 interface IProps {
   display: boolean
   assets: IAssetsInfo[]
+}
+
+interface IVaultIconNames {
+  [key: string]: string
+}
+
+interface IVaultIconProps {
+  vaultName: string
 }
 
 const columns = [
@@ -36,10 +47,10 @@ const columns = [
   },
 ]
 
-function importAll(r: any) {
-  let images: any = {}
-  r.keys().map((item: string) => {
-    images[item.replace('./', '')] = r(item)
+function importAll(requiredContext: __WebpackModuleApi.RequireContext) {
+  const images: IVaultIconNames = {}
+  requiredContext.keys().forEach((item: string) => {
+    images[item.replace('./', '')] = requiredContext(item)
   })
   return images
 }
@@ -92,39 +103,18 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
       ? `${asset.percentOfPool.toFixed(6)}%`
       : '-'
 
-    const VaultIcon = (props: any) => {
-      const { vaultName } = props
-      return (
-        <img
-          className="vault-icon"
-          src={`${
-            icons[
-              vaultName
-                .replace(/^V_/, '')
-                .replace(/^P_[f]?/, '')
-                .replace(/_#V\d$/, '') + '.png'
-            ]
-          }`}
-        ></img>
-      )
-    }
-
     return (
       <>
         <MainTableRow
           key={asset.address.pool || asset.address.vault}
-          className={accordion.includes(asset.name) ? 'open' : ''}
+          open={accordion.includes(asset.name)}
           onClick={() => {
             toggleAccordion(asset.name)
           }}
         >
-          <div
-            className="name"
-            title={asset.earnFarm ? 'Earn FARM: true' : undefined}
-          >
+          <div title={asset.earnFarm ? 'Earn FARM: true' : undefined}>
             <VaultIcon vaultName={asset.name} />
-            {asset.name}{' '}
-            {asset.earnFarm && <img className="flash" src={flash} alt="" />}
+            {asset.name} {asset.earnFarm && <Flash src={flashSvg} alt="" />}
           </div>
           {/* <div className="active">{asset.earnFarm.toString()}</div> */}
           <div className="earned-rewards" role="button" tabIndex={0}>
@@ -141,19 +131,11 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
             <i></i>
           </div>
         </MainTableRow>
-        <div
-          className={`accordion-row ${
-            accordion.includes(asset.name) ? 'open' : ''
-          }`}
-        >
-          <div className="inner-row">
-            <div className="staked">Staked Asset: {prettyStakedBalance}</div>
-            <div className="underlying">
-              Underlying balance: {prettyUnderlyingBalance}
-            </div>
-            <div className="unstaked">Unstaked: {prettyUnstakedBalance}</div>
-          </div>
-        </div>
+        <AccordionRow open={accordion.includes(asset.name)}>
+          <div>Staked Asset: {prettyStakedBalance}</div>
+          <div>Underlying balance: {prettyUnderlyingBalance}</div>
+          <div className="unstaked">Unstaked: {prettyUnstakedBalance}</div>
+        </AccordionRow>
       </>
     )
   })
@@ -210,6 +192,22 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
     </>
   )
 })
+
+const VaultIcon: React.FC<IVaultIconProps> = (props) => {
+  const { vaultName } = props
+  return (
+    <VaultIconImg
+      src={`${
+        icons[
+          vaultName
+            .replace(/^V_/, '')
+            .replace(/^P_[f]?/, '')
+            .replace(/_#V\d$/, '') + '.png'
+        ]
+      }`}
+    ></VaultIconImg>
+  )
+}
 
 const NoAssetTable = styled.div`
   display: flex;

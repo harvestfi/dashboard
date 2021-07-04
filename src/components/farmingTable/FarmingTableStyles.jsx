@@ -73,34 +73,6 @@ export const MainTableInner = styled.div`
     }
   }
 
-  .accordion-row {
-    opacity: 0.8;
-    background-color: #ffcd8d;
-    height: 0;
-    overflow: hidden;
-    transition: height 0.333s;
-
-    .inner {
-      padding-top: 20px;
-      padding-bottom: 20px;
-    }
-
-    .inner-row {
-      display: flex;
-      justify-content: space-around;
-      font-size: 1.4rem;
-      align-items: center;
-      font-family: ${fonts.contentFont};
-      padding-top: 15px;
-      padding-bottom: 15px;
-      padding-right: 18%;
-    }
-
-    &.open {
-      height: 43px;
-      border-bottom: 1.2px solid rgba(53, 53, 53, 0.15);
-    }
-  }
 `;
 
 export const MainTableRow = styled.div`
@@ -112,7 +84,7 @@ export const MainTableRow = styled.div`
   font-family: ${fonts.contentFont};
   padding: 1.5rem 1rem;
   width: 100%;
-  border-bottom: 1.2px solid rgba(53, 53, 53, 0.15);
+  border-bottom: ${props => props.open ? "none" : "1.2px solid rgba(53, 53, 53, 0.15)"};
 
   @media (max-width: 1920px) {
     width: 100%;
@@ -126,27 +98,11 @@ export const MainTableRow = styled.div`
     width: 100%;
   }
 
-  .name {
-    display: flex;
-    justify-content: center;
-
-    .flash {
-      height: 15px;
-      width: 15px;
-    }
-  }
-
-  &.open {
-    border-bottom: none;
-  }
-
   .active {
   }
   .earned-rewards {
     border-radius: 0.5rem;
     margin-right: 2rem;
-  }
-  .staked {
   }
   .pool {
   }
@@ -160,8 +116,6 @@ export const MainTableRow = styled.div`
     @media (max-width: 1280px) {
       margin-left: 1.5rem;
     }
-  }
-  .underlying {
   }
   .stake-but {
     margin-right: 10px;
@@ -182,13 +136,27 @@ export const MainTableRow = styled.div`
       color: ${({ theme }) => theme.style.buttonDisabledFontColor};
     }
   }
-  .vault-icon {
-    width: 15px;
-    height: 15px;
-    margin-right: 5px;
-  }
-  
 `
+
+export const AccordionRow = styled.div`
+  opacity: 0.8;
+  background-color: #ffcd8d;
+  height: ${props => props.open ? "43px": "0"};
+  overflow: hidden;
+  transition: height 0.333s;
+  border-bottom: ${props => props.open ? "1.2px solid rgba(53, 53, 53, 0.15)" : "none"};
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  font-size: 1.4rem;
+  font-family: ${fonts.contentFont};
+
+  div {
+    justify-content: space-around;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+`;
 
 export const MainTableHeader = styled.div`
   display: grid;
@@ -297,4 +265,15 @@ export const PanelTab = styled.div`
   @media (max-width: 333px) {
     margin-right: 0.3rem;
   }
+`;
+
+export const VaultIconImg = styled.img`
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+`;
+
+export const Flash = styled.img`
+  width: 15px;
+  height: 15px;
 `;
