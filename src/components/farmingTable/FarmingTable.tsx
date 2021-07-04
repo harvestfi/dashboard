@@ -129,7 +129,7 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
         <AccordionRow open={accordion.includes(asset.name)}>
           <div>Staked Asset: {prettyStakedBalance}</div>
           <div>Underlying balance: {prettyUnderlyingBalance}</div>
-          <div className="unstaked">Unstaked: {prettyUnstakedBalance}</div>
+          <div>Unstaked: {prettyUnstakedBalance}</div>
         </AccordionRow>
       </>
     )

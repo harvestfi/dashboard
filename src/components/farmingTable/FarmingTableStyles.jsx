@@ -69,23 +69,6 @@ export const MainTableRow = styled.div`
 
   .active {
   }
-  .earned-rewards {
-    border-radius: 0.5rem;
-    margin-right: 2rem;
-  }
-  .pool {
-  }
-  .unstaked {
-    @media (max-width: 1280px) {
-      margin-left: 1.5rem;
-    }
-  }
-  .value {
-    margin-left: 1rem;
-    @media (max-width: 1280px) {
-      margin-left: 1.5rem;
-    }
-  }
   .stake-but {
     margin-right: 10px;
   }
@@ -262,13 +245,14 @@ export const AccordionToggle = styled.div`
     &:before {
       content: '';
       position: absolute;
-      top: ${props => props.open ? "8px": "3px"};
+      top: ${(props) => (props.open ? '8px' : '3px')};
       right: -15px;
       width: 10px;
       height: 10px;
       border-left: 2px solid #000;
       border-bottom: 2px solid #000;
-      transform: ${props => props.open ? "rotate(135deg)": "rotate(-45deg)"};
+      transform: ${(props) =>
+        props.open ? 'rotate(135deg)' : 'rotate(-45deg)'};
       transition: transform 0.333s;
     }
   }
