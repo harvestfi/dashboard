@@ -8,6 +8,10 @@ build
 # Ignore all HTML files:
 *.html
 
+# Ignore yml files
+*.yaml
+*.yml
+
 # gql generated
 src/**/__generated__/*
 src/types/globalTypes

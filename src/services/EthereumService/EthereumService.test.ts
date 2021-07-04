@@ -159,8 +159,7 @@ describe('EthereumService', () => {
                   value: element.value?.constructor.name === 'BigNumber',
                 },
                 {
-                  ElementStakedBalanceToString:
-                    element.stakedBalance?.toString(),
+                  ElementStakedBalanceToString: element.stakedBalance?.toString(),
                 },
               )
               return true

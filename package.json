@@ -7,7 +7,7 @@
     "start": "",
     "predeploy": "npm run build",
     "prettier": "prettier --write .",
-    "lint": "eslint src/**/*.{js,ts,tsx} --fix --max-warnings 0",
+    "lint": "eslint src/**/*.{js,ts,tsx} --fix --max-warnings 0 --no-error-on-unmatched-pattern",
     "test": "jest --no-cache",
     "test:coverage": "npx jest --silent --ci --coverage --coverageReporters='text' --coverageReporters='text-summary'",
     "test:watch": "npm test -- --watch",
@@ -17,7 +17,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "download-schema": "apollo service:download --endpoint=https://api.thegraph.com/subgraphs/name/harvestfi/harvest-finance graphql-schema.json",
-    "codegen": "npm run download-schema && apollo codegen:generate  --globalTypesFile=./src/types/globalTypes.d.ts --localSchemaFile=./graphql-schema.json --target=typescript --tagName=gql"
+    "codegen": "npm run download-schema && apollo codegen:generate  --globalTypesFile=./src/types/globalTypes.d.ts --localSchemaFile=./graphql-schema.json --target=typescript --tagName=gql",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
@@ -107,7 +108,7 @@
     "gh-pages": "^3.1.0",
     "graphql-tag": "^2.12.4",
     "html-webpack-plugin": "4.0.0-beta.11",
-    "husky": "^4.2.5",
+    "husky": "^7.0.0",
     "image-webpack-loader": "^7.0.1",
     "jest": "27.0.3",
     "jest-emotion": "^11.0.0",
