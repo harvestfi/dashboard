@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 
-interface IContract {
+export interface IContract {
   id: number
   address: string
   name: string
@@ -43,7 +43,9 @@ export interface IVault {
 }
 
 export interface IAssetsInfo {
+  id: string
   name: string
+  prettyName: string
   earnFarm: boolean
   farmToClaim: BigNumber | null
   stakedBalance: BigNumber | null

@@ -33,8 +33,8 @@ async function main() {
 
   // Write JSON, with hacks to sort the resulting object by *values* to allow
   // for easy editing of our vaults list
-  let filedata = JSON.stringify(vaults, null, 2)
-  let fileLines = filedata.split('\n')
+  const filedata = JSON.stringify(vaults, null, 2)
+  const fileLines = filedata.split('\n')
 
   // Remove bracket lines
   fileLines.shift()
@@ -44,10 +44,10 @@ async function main() {
   fileLines[fileLines.length - 1] = fileLines[fileLines.length - 1] + ','
 
   // Sort the lines
-  let sortedFileLines = sortBy(fileLines, (line) => line.split('": "')[1])
+  const sortedFileLines = sortBy(fileLines, (line) => line.split('": "')[1])
 
   // Rejoin them, removing the comma from the last line
-  let numLines = sortedFileLines.length
+  const numLines = sortedFileLines.length
 
   sortedFileLines.forEach((line, i) => {
     if (line[line.length - 1] === ',' && i === numLines - 1) {
@@ -55,7 +55,7 @@ async function main() {
     }
   })
 
-  let newFileString = ['{', ...sortedFileLines, '}'].join('\n')
+  const newFileString = ['{', ...sortedFileLines, '}'].join('\n')
 
   // Write the .json
   fs.writeFileSync(filepath, newFileString, 'utf-8')

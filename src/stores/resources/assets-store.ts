@@ -1,12 +1,11 @@
 import { FetchResource } from './fetch-resource'
 import { computed, makeObservable } from 'mobx'
 import BigNumber from 'bignumber.js'
-import { appStore } from '@/stores/app-store'
 import { EthereumService } from '@/services/EthereumService'
 import { BSCService } from '@/services/BSCService'
 import { IAssetsInfo } from '@/types'
 
-export class AssetsStore extends FetchResource<any> {
+class AssetsStore extends FetchResource<any> {
   constructor() {
     super()
     makeObservable(this)

@@ -15,7 +15,7 @@ type CheckBalanceProps = {}
 
 export const CheckBalance: React.FC<CheckBalanceProps> = observer((props) => {
   const { assetsStore, appStore, savedGasStore, metaMaskStore } = useStores()
-  const { address } = useParams()
+  const { address } = useParams<{ address: string }>()
   const history = useHistory()
 
   useEffect(() => {

@@ -18,7 +18,7 @@ In this repo, we have a static file that maps contract addresses to human-readab
 To grab the list of vaults from ethparser, run:
 
 ```sh
-node scripts/getVaultsFromEthparser.js
+node scripts/getvaultsfromethparser.js
 ```
 
 Notice that the result will be in alphabetical order.

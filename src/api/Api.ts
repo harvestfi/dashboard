@@ -1,3 +1,10 @@
+import {
+  bscOutdatedPools,
+  bscOutdatedVaults,
+  ethereumOutdatedPools,
+  ethereumOutdatedVaults,
+  iPSAddress,
+} from '@/constants'
 import axios from 'axios'
 
 import { IPool, IVault } from '../types/entities'
@@ -6,22 +13,37 @@ import { IPool, IVault } from '../types/entities'
 export class API {
   static async getEthereumPools(): Promise<IPool[]> {
     const response = await axios
-      .get(`${process.env.REACT_APP_ETH_PARSER_URL}/contracts/pools`)
+      .get<{ data: IPool[] }>(
+        `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/pools`,
+      )
       .catch((error) => {
         // eslint-disable-next-line no-console
         console.log('getEthereumPools', error)
       })
-    return response?.data?.data ?? []
+    return (
+      response?.data?.data.filter((pool) => {
+        return !ethereumOutdatedPools.has(pool.contract.address.toLowerCase())
+      }) ?? []
+    )
   }
 
   static async getEthereumVaults(): Promise<IVault[]> {
     const response = await axios
-      .get(`${process.env.REACT_APP_ETH_PARSER_URL}/contracts/vaults`)
+      .get<{ data: IVault[] }>(
+        `${process.env.REACT_APP_ETH_PARSER_URL}/contracts/vaults`,
+      )
       .catch((error) => {
         // eslint-disable-next-line no-console
         console.log('getEthereumVaults', error)
       })
-    return response?.data?.data ?? []
+
+    response?.data?.data.push(iPSAddress)
+
+    return (
+      response?.data?.data.filter((vault) => {
+        return !ethereumOutdatedVaults.has(vault.contract.address.toLowerCase())
+      }) ?? []
+    )
   }
 
   static async getAPY(): Promise<string | null> {
@@ -56,7 +78,11 @@ export class API {
       )
     }
 
-    return response?.data.data ?? []
+    return (
+      response?.data.data.filter((vault) => {
+        return !bscOutdatedPools.has(vault.contract.address.toLowerCase())
+      }) ?? []
+    )
   }
 
   static async getBSCVaults(): Promise<IVault[]> {
@@ -72,7 +98,11 @@ export class API {
       )
     }
 
-    return response?.data.data ?? []
+    return (
+      response?.data.data.filter((vault) => {
+        return !bscOutdatedVaults.has(vault.contract.address.toLowerCase())
+      }) ?? []
+    )
   }
 
   static async getExchangeRates() {
@@ -92,6 +122,6 @@ export class API {
     const responseData = response?.data
 
     // basic sanity checking on Zapper's API response...
-    if (responseData && responseData['USD']) return responseData
+    if (responseData && responseData.USD) return responseData
   }
 }

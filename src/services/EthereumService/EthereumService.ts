@@ -2,14 +2,11 @@ import { Contract } from 'web3-eth-contract'
 import {
   BigNumberOne,
   BigNumberZero,
-  ethereumOutdatedVaults,
   ethereumPoolsWithEarnedMethodTaking2Arguments,
   ETHEREUM_CONTRACT_FOR_GETTING_PRICES,
   ethWeb3,
   farmAddress,
   farmDecimals,
-  iPSAddress,
-  outdatedPools,
   PRICE_DECIMALS,
   PSAddress,
   vaultsWithoutReward,
@@ -196,12 +193,21 @@ export class EthereumService {
       : null
 
     const name = relatedVault
+      ? relatedVault.contract.name || 'no name'
+      : pool.contract.name || 'no name'
+
+    const prettyName = relatedVault
       ? contractToName(relatedVault.contract)
       : contractToName(pool.contract)
 
+    const id =
+      pool.contract?.address || (relatedVault?.contract?.address as string)
+
     return {
+      id,
       name,
-      earnFarm: !vaultsWithoutReward.has(name),
+      prettyName,
+      earnFarm: !vaultsWithoutReward.has(id),
       farmToClaim: rewardTokenAreInFARM,
       stakedBalance: prettyPoolBalance,
       percentOfPool,
@@ -325,15 +331,19 @@ export class EthereumService {
             ? prettyVaultBalance.multipliedBy(prettyPricePerFullShare)
             : null
 
+        const address = vault.contract.address
+
         return {
+          id: address,
           name: contractToName(vault.contract),
+          prettyName: contractToName(vault.contract),
           earnFarm: true,
           farmToClaim: BigNumberZero,
           stakedBalance: prettyVaultBalance,
           percentOfPool,
           value,
           unstakedBalance: prettyFarmBalance,
-          address: { vault: vault.contract.address },
+          address: { vault: address },
           underlyingBalance,
         }
       }
@@ -389,15 +399,20 @@ export class EthereumService {
           prettyVaultBalance && farmPrice
             ? prettyVaultBalance.multipliedBy(farmPrice)
             : null
+
+        const address = vault.contract.address
+
         return {
+          id: address,
           name: contractToName(vault.contract),
+          prettyName: contractToName(vault.contract),
           earnFarm: !vaultsWithoutReward.has(contractToName(vault.contract)),
           farmToClaim: BigNumberZero,
           stakedBalance: prettyVaultBalance,
           percentOfPool,
           value,
           unstakedBalance: prettyFarmBalance,
-          address: { vault: vault.contract.address },
+          address: { vault: address },
           underlyingBalance: prettyVaultBalance,
         }
       }
@@ -411,9 +426,13 @@ export class EthereumService {
         ? new BigNumber(vaultBalance).dividedBy(10 ** vault.decimals)
         : null
 
+      const address = vault.contract.address
+
       return {
+        id: address,
         name: `${vault.contract.name} (has not pool)`,
-        earnFarm: !vaultsWithoutReward.has(contractToName(vault.contract)),
+        prettyName: contractToName(vault.contract),
+        earnFarm: !vaultsWithoutReward.has(vault.contract.address),
         farmToClaim: BigNumberZero,
         stakedBalance: BigNumberZero,
         percentOfPool: BigNumberZero,
@@ -443,24 +462,14 @@ export class EthereumService {
         EthereumService.getPrice(farmAddress),
       ])
 
-      const actualVaults = vaults.filter((v) => {
-        return !ethereumOutdatedVaults.has(v.contract.address.toLowerCase())
-      })
-
-      actualVaults.push(iPSAddress)
-
-      const actualPools = pools.filter((p) => {
-        return p.contract?.address && !outdatedPools.has(p.contract.address)
-      })
-
       const assetsFromVaultsPromises = EthereumService.getAssetsFromVaults(
-        actualVaults,
-        actualPools,
+        vaults,
+        pools,
         walletAddress,
         farmPrice,
       )
 
-      const poolsWithoutVaults = actualPools.filter((pool) => {
+      const poolsWithoutVaults = pools.filter((pool) => {
         return !vaults.find(
           (vault) => vault.contract.address === pool.lpToken?.address,
         )
@@ -505,12 +514,11 @@ export class EthereumService {
       'balanceOf',
       walletAddress,
     )
-    const stakingPoolBalance = new BigNumber(stakingPoolBalanceRaw).dividedBy(
-      10 ** Number(18),
-    )
-
+    const stakingPoolBalance = stakingPoolBalanceRaw
+      ? new BigNumber(stakingPoolBalanceRaw).dividedBy(10 ** Number(18))
+      : null
     // Return early if user is not in the pool
-    if (stakingPoolBalance.isZero()) return []
+    if (stakingPoolBalance && stakingPoolBalance.isZero()) return []
 
     const [snowEarnedBalanceRaw, stakingPoolTotalRaw, snowPrice] =
       await Promise.all<string | null, string | null, BigNumber | null>([
@@ -519,24 +527,32 @@ export class EthereumService {
         EthereumService.getPrice(SNOWSWAP.fSnow.address),
       ])
 
-    const snowEarnedBalance = new BigNumber(snowEarnedBalanceRaw).dividedBy(
-      10 ** Number(18),
-    )
-    const stakingPoolTotal = new BigNumber(stakingPoolTotalRaw).dividedBy(
-      10 ** Number(18),
-    )
-    const userPercentOfPool = stakingPoolBalance
-      .dividedBy(stakingPoolTotal)
-      .multipliedBy(100)
+    const snowEarnedBalance = snowEarnedBalanceRaw
+      ? new BigNumber(snowEarnedBalanceRaw).dividedBy(10 ** Number(18))
+      : null
+    const stakingPoolTotal = stakingPoolTotalRaw
+      ? new BigNumber(stakingPoolTotalRaw).dividedBy(10 ** Number(18))
+      : null
+    const userPercentOfPool =
+      stakingPoolBalance && stakingPoolTotal
+        ? stakingPoolBalance.dividedBy(stakingPoolTotal).multipliedBy(100)
+        : null
 
-    const snowValue = BigNumber.sum(
-      stakingPoolBalance,
-      snowEarnedBalance.multipliedBy(snowPrice),
-    )
+    const snowValue =
+      stakingPoolBalance && snowEarnedBalance && snowPrice
+        ? BigNumber.sum(
+            stakingPoolBalance,
+            snowEarnedBalance.multipliedBy(snowPrice),
+          )
+        : null
+
+    const address = SNOWSWAP.fSnowStakingPool.address
 
     return [
       {
+        id: address,
         name: 'SNOW_DONNER_POOL',
+        prettyName: 'SNOW_DONNER_POOL',
         earnFarm: false,
         farmToClaim: null,
         stakedBalance: stakingPoolBalance,

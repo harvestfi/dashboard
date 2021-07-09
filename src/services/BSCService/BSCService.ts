@@ -3,7 +3,6 @@ import {
   farmDecimals,
   vaultsWithoutReward,
   bFarmAddress,
-  bscOutdatedVaults,
   LEGACY_BSC_FACTORY,
   CONTRACTS_FOR_PRICES,
   CONTRACTS_FOR_PRICES_KEYS,
@@ -149,8 +148,19 @@ export class BSCService {
         ? prettyPoolBalance.multipliedBy(lpTokenPrettyPricePerFullShare)
         : null
 
+    const address = relatedVault
+      ? relatedVault.contract.address
+      : pool.contract.address
+
+    // TODO: create pretty name list for BSC assets
+    const name = relatedVault
+      ? relatedVault.contract.name || 'no name'
+      : pool.contract.name || 'no name'
+
     return {
-      name: relatedVault ? relatedVault.contract.name : pool.contract.name,
+      id: address,
+      prettyName: name,
+      name,
       earnFarm: true,
       farmToClaim: prettyRewardTokenBalance,
       stakedBalance: prettyPoolBalance,
@@ -214,8 +224,14 @@ export class BSCService {
               .multipliedBy(100)
           : null
 
+      const address = vault.contract.address
+
+      const name = vault.contract.name
+
       return {
-        name: vault.contract.name,
+        id: address,
+        prettyName: name,
+        name,
         earnFarm: !vaultsWithoutReward.has(vault.contract.name),
         farmToClaim: null,
         stakedBalance: null,
@@ -239,17 +255,8 @@ export class BSCService {
       BSCService.getBSCPrice(bFarmAddress, 'default'),
     ])
 
-    const actualVaults = vaults.filter((v) => {
-      return !bscOutdatedVaults.has(v.contract.address)
-    })
-
     const assetsFromVaultsPromises: Promise<IAssetsInfo>[] =
-      BSCService.getAssetsFromVaults(
-        actualVaults,
-        pools,
-        walletAddress,
-        bFarmPrice,
-      )
+      BSCService.getAssetsFromVaults(vaults, pools, walletAddress, bFarmPrice)
 
     const poolsWithoutVaults = pools.filter((pool: IPool) => {
       return !vaults.find(
