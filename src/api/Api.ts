@@ -37,6 +37,7 @@ export class API {
         console.log('getEthereumVaults', error)
       })
 
+    // eslint-disable-next-line no-unused-expressions
     response?.data?.data.push(iPSAddress)
 
     return (

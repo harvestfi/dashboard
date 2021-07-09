@@ -1,5 +1,5 @@
-import { makeAutoObservable } from 'mobx'
-import { computed } from 'mobx'
+import { makeAutoObservable, computed } from 'mobx'
+
 import { API } from '@/api'
 
 const RATES_CACHE_LENGTH = 60 * 60 * 1000 // one hour in ms
