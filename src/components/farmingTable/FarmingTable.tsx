@@ -16,7 +16,8 @@ import {
   Flash,
   AccordionToggle,
 } from './FarmingTableStyles'
-import FarmTableSkeleton from './FarmTableSkeleton'
+import { FarmTableSkeleton } from './FarmTableSkeleton'
+import { TooltipCustom } from '../Tooltip'
 import { observer } from 'mobx-react'
 import { useStores } from '@/stores/utils'
 import flashSvg from '@/assets/flash.svg'
@@ -113,11 +114,55 @@ export const FarmingTable: React.FC<IProps> = observer((props) => {
     return (
       <div key={asset.id}>
         <MainTableRow open={isOpen} onClick={() => toggleAccordion(asset.id)}>
-          <div title={asset.earnFarm ? 'Earn FARM: true' : undefined}>
-            <VaultIcon vaultName={asset.name} />
-            {asset.prettyName}{' '}
-            {asset.earnFarm && <Flash src={flashSvg} alt="" />}
-          </div>
+          <TooltipCustom
+            activator={
+              <div title={asset.earnFarm ? 'Earn FARM: true' : undefined}>
+                <VaultIcon vaultName={asset.name} />
+                {asset.prettyName}{' '}
+                {asset.earnFarm && <Flash src={flashSvg} alt="" />}
+              </div>
+            }
+          >
+            <p>
+              Pool address:
+              <a
+                href={`https://etherscan.io/address/${asset.address.pool}`}
+                target="_blank"
+                style={{
+                  textDecoration: 'none',
+                  color: '#000',
+                  fontWeight: 700,
+                }}
+                rel="noreferrer"
+              >
+                {asset.address.pool &&
+                  ` ${asset.address.pool.slice(
+                    0,
+                    5,
+                  )}...${asset.address.pool.slice(-4)}`}
+              </a>
+            </p>
+            <p>
+              Vault address:
+              <a
+                href={`https://etherscan.io/address/${asset.address.vault}`}
+                target="_blank"
+                style={{
+                  textDecoration: 'none',
+                  color: '#000',
+                  fontWeight: 700,
+                }}
+                rel="noreferrer"
+              >
+                {asset.address.vault &&
+                  ` ${asset.address.vault.slice(
+                    0,
+                    5,
+                  )}...${asset.address.vault.slice(-4)}`}
+              </a>
+            </p>
+          </TooltipCustom>
+
           {/* <div className="active">{asset.earnFarm.toString()}</div> */}
           <div tabIndex={0}>{prettyFarmToClaim}</div>
           <div>{persentOfPool}</div>

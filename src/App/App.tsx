@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { ThemeProvider } from 'styled-components'
 import { darkTheme, lightTheme } from '@/App/styles/appStyles'
 
@@ -15,7 +15,7 @@ import { useStores } from '@/stores/utils'
 import './styles/App.scss'
 
 export const App = observer(() => {
-  const { settingsStore, apyStore, farmPriceStore } = useStores()
+  const { settingsStore } = useStores()
 
   const theme =
     settingsStore.settings.theme.value === 'dark' ? darkTheme : lightTheme

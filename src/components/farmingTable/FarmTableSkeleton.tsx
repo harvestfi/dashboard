@@ -89,7 +89,7 @@ const PanelTab = styled.div`
   }
 `
 
-const FarmTableSkeleton = () => {
+export const FarmTableSkeleton = () => {
   return (
     <>
       <PanelTabContainerLeft>
@@ -99,5 +99,3 @@ const FarmTableSkeleton = () => {
     </>
   )
 }
-
-export default FarmTableSkeleton
